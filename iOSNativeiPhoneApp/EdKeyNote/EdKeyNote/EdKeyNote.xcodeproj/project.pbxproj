@@ -1,0 +1,374 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0E18378819D2692D0049C71E /* libADALiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18378519D2692D0049C71E /* libADALiOS.a */; };
+		0E18378919D2692D0049C71E /* liboffice365-base-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18378619D2692D0049C71E /* liboffice365-base-sdk.a */; };
+		0E18378A19D2692D0049C71E /* liboffice365-lists-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18378719D2692D0049C71E /* liboffice365-lists-sdk.a */; };
+		0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */; };
+		0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */; };
+		0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
+		0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
+		0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
+		0EC4F5C419CFF2C600BEF583 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EC4F5C219CFF2C600BEF583 /* InfoPlist.strings */; };
+		0EC4F5C619CFF2C600BEF583 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5C519CFF2C600BEF583 /* main.m */; };
+		0EC4F5CA19CFF2C600BEF583 /* EKNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5C919CFF2C600BEF583 /* EKNAppDelegate.m */; };
+		0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */; };
+		0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */; };
+		0EC4F5ED19CFFD0200BEF583 /* EKNDeskTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5EC19CFFD0200BEF583 /* EKNDeskTopViewController.m */; };
+		F331241819D7EAE6000B20DC /* EKNIncidentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F331241719D7EAE6000B20DC /* EKNIncidentViewController.m */; };
+		F331241B19D7F661000B20DC /* EKNIncidentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F331241A19D7F661000B20DC /* EKNIncidentDetailViewController.m */; };
+		F3942BEF19D53F2300F31B28 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3942BEE19D53F2300F31B28 /* MobileCoreServices.framework */; };
+		F3AA0E5319D3E53900DC587F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F3AA0E5219D3E53900DC587F /* logo.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0E18378519D2692D0049C71E /* libADALiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libADALiOS.a; path = "../../../Library/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos/libADALiOS.a"; sourceTree = "<group>"; };
+		0E18378619D2692D0049C71E /* liboffice365-base-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboffice365-base-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos/liboffice365-base-sdk.a"; sourceTree = "<group>"; };
+		0E18378719D2692D0049C71E /* liboffice365-lists-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboffice365-lists-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos/liboffice365-lists-sdk.a"; sourceTree = "<group>"; };
+		0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboffice365-exchange-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos/liboffice365-exchange-sdk.a"; sourceTree = "<group>"; };
+		0E18390D19D2A7FA0049C71E /* EKNEKNGlobalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNEKNGlobalInfo.h; sourceTree = "<group>"; };
+		0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNEKNGlobalInfo.m; sourceTree = "<group>"; };
+		0EC4F5B619CFF2C600BEF583 /* EdKeyNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EdKeyNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0EC4F5C119CFF2C600BEF583 /* EdKeyNote-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EdKeyNote-Info.plist"; sourceTree = "<group>"; };
+		0EC4F5C319CFF2C600BEF583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0EC4F5C519CFF2C600BEF583 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0EC4F5C719CFF2C600BEF583 /* EdKeyNote-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EdKeyNote-Prefix.pch"; sourceTree = "<group>"; };
+		0EC4F5C819CFF2C600BEF583 /* EKNAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKNAppDelegate.h; sourceTree = "<group>"; };
+		0EC4F5C919CFF2C600BEF583 /* EKNAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKNAppDelegate.m; sourceTree = "<group>"; };
+		0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0EC4F5E819CFF9FD00BEF583 /* EKNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNLoginViewController.h; sourceTree = "<group>"; };
+		0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNLoginViewController.m; sourceTree = "<group>"; };
+		0EC4F5EB19CFFD0200BEF583 /* EKNDeskTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNDeskTopViewController.h; sourceTree = "<group>"; };
+		0EC4F5EC19CFFD0200BEF583 /* EKNDeskTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNDeskTopViewController.m; sourceTree = "<group>"; };
+		F331241619D7EAE6000B20DC /* EKNIncidentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNIncidentViewController.h; sourceTree = "<group>"; };
+		F331241719D7EAE6000B20DC /* EKNIncidentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNIncidentViewController.m; sourceTree = "<group>"; };
+		F331241919D7F661000B20DC /* EKNIncidentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNIncidentDetailViewController.h; sourceTree = "<group>"; };
+		F331241A19D7F661000B20DC /* EKNIncidentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNIncidentDetailViewController.m; sourceTree = "<group>"; };
+		F3942BEE19D53F2300F31B28 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		F3AA0E5219D3E53900DC587F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0EC4F5B319CFF2C600BEF583 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3942BEF19D53F2300F31B28 /* MobileCoreServices.framework in Frameworks */,
+				0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */,
+				0E18378819D2692D0049C71E /* libADALiOS.a in Frameworks */,
+				0E18378919D2692D0049C71E /* liboffice365-base-sdk.a in Frameworks */,
+				0E18378A19D2692D0049C71E /* liboffice365-lists-sdk.a in Frameworks */,
+				0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */,
+				0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */,
+				0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0EC4F5AD19CFF2C600BEF583 = {
+			isa = PBXGroup;
+			children = (
+				0EC4F5BF19CFF2C600BEF583 /* EdKeyNote */,
+				0EC4F5B819CFF2C600BEF583 /* Frameworks */,
+				0EC4F5B719CFF2C600BEF583 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0EC4F5B719CFF2C600BEF583 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0EC4F5B619CFF2C600BEF583 /* EdKeyNote.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0EC4F5B819CFF2C600BEF583 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F3942BEE19D53F2300F31B28 /* MobileCoreServices.framework */,
+				0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */,
+				0E18378519D2692D0049C71E /* libADALiOS.a */,
+				0E18378619D2692D0049C71E /* liboffice365-base-sdk.a */,
+				0E18378719D2692D0049C71E /* liboffice365-lists-sdk.a */,
+				0EC4F5B919CFF2C600BEF583 /* Foundation.framework */,
+				0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */,
+				0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0EC4F5BF19CFF2C600BEF583 /* EdKeyNote */ = {
+			isa = PBXGroup;
+			children = (
+				0EC4F5C819CFF2C600BEF583 /* EKNAppDelegate.h */,
+				0EC4F5C919CFF2C600BEF583 /* EKNAppDelegate.m */,
+				0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */,
+				0EC4F5C019CFF2C600BEF583 /* Supporting Files */,
+				0EC4F5E819CFF9FD00BEF583 /* EKNLoginViewController.h */,
+				0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */,
+				0EC4F5EB19CFFD0200BEF583 /* EKNDeskTopViewController.h */,
+				0EC4F5EC19CFFD0200BEF583 /* EKNDeskTopViewController.m */,
+				0E18390D19D2A7FA0049C71E /* EKNEKNGlobalInfo.h */,
+				0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */,
+				F331241619D7EAE6000B20DC /* EKNIncidentViewController.h */,
+				F331241719D7EAE6000B20DC /* EKNIncidentViewController.m */,
+				F331241919D7F661000B20DC /* EKNIncidentDetailViewController.h */,
+				F331241A19D7F661000B20DC /* EKNIncidentDetailViewController.m */,
+			);
+			path = EdKeyNote;
+			sourceTree = "<group>";
+		};
+		0EC4F5C019CFF2C600BEF583 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F3AA0E5219D3E53900DC587F /* logo.png */,
+				0EC4F5C119CFF2C600BEF583 /* EdKeyNote-Info.plist */,
+				0EC4F5C219CFF2C600BEF583 /* InfoPlist.strings */,
+				0EC4F5C519CFF2C600BEF583 /* main.m */,
+				0EC4F5C719CFF2C600BEF583 /* EdKeyNote-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0EC4F5B519CFF2C600BEF583 /* EdKeyNote */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0EC4F5E219CFF2C600BEF583 /* Build configuration list for PBXNativeTarget "EdKeyNote" */;
+			buildPhases = (
+				0EC4F5B219CFF2C600BEF583 /* Sources */,
+				0EC4F5B319CFF2C600BEF583 /* Frameworks */,
+				0EC4F5B419CFF2C600BEF583 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EdKeyNote;
+			productName = EdKeyNote;
+			productReference = 0EC4F5B619CFF2C600BEF583 /* EdKeyNote.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0EC4F5AE19CFF2C600BEF583 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = EKN;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = canviz;
+			};
+			buildConfigurationList = 0EC4F5B119CFF2C600BEF583 /* Build configuration list for PBXProject "EdKeyNote" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0EC4F5AD19CFF2C600BEF583;
+			productRefGroup = 0EC4F5B719CFF2C600BEF583 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0EC4F5B519CFF2C600BEF583 /* EdKeyNote */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0EC4F5B419CFF2C600BEF583 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EC4F5C419CFF2C600BEF583 /* InfoPlist.strings in Resources */,
+				0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */,
+				F3AA0E5319D3E53900DC587F /* logo.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0EC4F5B219CFF2C600BEF583 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EC4F5ED19CFFD0200BEF583 /* EKNDeskTopViewController.m in Sources */,
+				F331241B19D7F661000B20DC /* EKNIncidentDetailViewController.m in Sources */,
+				0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */,
+				0EC4F5C619CFF2C600BEF583 /* main.m in Sources */,
+				F331241819D7EAE6000B20DC /* EKNIncidentViewController.m in Sources */,
+				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
+				0EC4F5CA19CFF2C600BEF583 /* EKNAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0EC4F5C219CFF2C600BEF583 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0EC4F5C319CFF2C600BEF583 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0EC4F5E019CFF2C600BEF583 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		0EC4F5E119CFF2C600BEF583 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0EC4F5E319CFF2C600BEF583 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EdKeyNote/EdKeyNote-Prefix.pch";
+				INFOPLIST_FILE = "EdKeyNote/EdKeyNote-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos",
+					"/Users/canviz/Desktop/EdKeyNote/office365-exchange-sdk/build/Debug-iphoneos",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos8.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0EC4F5E419CFF2C600BEF583 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EdKeyNote/EdKeyNote-Prefix.pch";
+				INFOPLIST_FILE = "EdKeyNote/EdKeyNote-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos",
+					"/Users/canviz/Desktop/EdKeyNote/office365-exchange-sdk/build/Debug-iphoneos",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos8.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0EC4F5B119CFF2C600BEF583 /* Build configuration list for PBXProject "EdKeyNote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0EC4F5E019CFF2C600BEF583 /* Debug */,
+				0EC4F5E119CFF2C600BEF583 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0EC4F5E219CFF2C600BEF583 /* Build configuration list for PBXNativeTarget "EdKeyNote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0EC4F5E319CFF2C600BEF583 /* Debug */,
+				0EC4F5E419CFF2C600BEF583 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0EC4F5AE19CFF2C600BEF583 /* Project object */;
+}
