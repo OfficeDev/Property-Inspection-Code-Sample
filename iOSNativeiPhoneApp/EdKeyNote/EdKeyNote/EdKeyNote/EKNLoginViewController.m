@@ -9,11 +9,7 @@
 #import "EKNLoginViewController.h"
 #import "EKNIncidentViewController.h"
 
-#import <office365-base-sdk/Credentials.h>
-#import <office365-base-sdk/LoginClient.h>
-
 @interface EKNLoginViewController ()
-
 
 @end
 
@@ -31,24 +27,10 @@ static int imageCounter = 0, navHieght = 0;
 }
 - (void)loginButtonAction
 {
-    NSString *name = self.nameTxt.text;
-    NSString *pwd = self.pwdTxt.text;
-    
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Title"
-                          message:[NSString stringWithFormat:@"You entered name %@, password %@",name,pwd]
-                          delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    
-    //[alert show];
-    //[self.navigationController popToRootViewControllerAnimated:YES];
+    //[self performLogin:NO];
     
     EKNIncidentViewController *incident = [[EKNIncidentViewController alloc] init];
     [self.navigationController pushViewController:incident animated:YES];
-    
-    //incident.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    //[self presentModalViewController:incident animated:YES];
 }
 
 - (void)takePhoto
@@ -140,7 +122,6 @@ static int imageCounter = 0, navHieght = 0;
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"You click on %d", buttonIndex);
     if(buttonIndex == 0)//take new photo
     {
         [self openCamera];
@@ -169,6 +150,7 @@ static int imageCounter = 0, navHieght = 0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     
     //set title
     self.title = @"Login";
@@ -225,7 +207,7 @@ static int imageCounter = 0, navHieght = 0;
     [photo setTitle:@"Take Photo" forState:UIControlStateNormal];
     [photo setBackgroundColor:[UIColor redColor]];
     [self.view addSubview:photo];
-
+    
     
     //bind event
     [self.nameTxt addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -254,26 +236,24 @@ static int imageCounter = 0, navHieght = 0;
     // Pass the selected object to the new view controller.
 }
 */
-NSString* token;
-
 - (void) performLogin: (BOOL) clearCache{
     
-    NSString* authority = [NSString alloc];
-    NSString* resourceId = [NSString alloc];
-    NSString* clientId = [NSString alloc];
-    NSString* redirectUriString = [NSString alloc];
-    authority = @"https://login.windows.net/common";
-    resourceId = @"https://lagashsystems365.sharepoint.com";//@"https://lagashsystems365-my.sharepoint.com/";
-    clientId = @"778a099e-ed6e-49a2-9f15-92c01366ad7d";//@"a31be332-2598-42e6-97f1-d8ac87370367";
-    redirectUriString = @"https://lagash.com/oauth";
-    token = [NSString alloc];
+    self.authority = @"https://login.windows.net/common";
+    self.resourceId = @"https://lagashsystems365.sharepoint.com";//@"https://lagashsystems365-my.sharepoint.com/";
+    self.clientId = @"778a099e-ed6e-49a2-9f15-92c01366ad7d";//@"a31be332-2598-42e6-97f1-d8ac87370367";
+    self.redirectUriString = @"https://lagash.com/oauth";
     
-    LoginClient *client = [[LoginClient alloc] initWithParameters: clientId: redirectUriString:resourceId :authority];
+
+    
+    LoginClient *client = [[LoginClient alloc] initWithParameters:self.clientId
+                                                                 :self.redirectUriString
+                                                                 :self.resourceId
+                                                                 :self.authority];
     
     [client login:clearCache completionHandler:^(NSString *t, NSError *e) {
         if(e == nil)
         {
-            token = t;
+            self.token = t;
         }
         else
         {

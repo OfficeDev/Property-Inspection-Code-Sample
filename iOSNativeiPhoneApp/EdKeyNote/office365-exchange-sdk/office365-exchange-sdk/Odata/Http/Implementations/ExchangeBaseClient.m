@@ -1,6 +1,5 @@
 ﻿//
 //  BaseClient.m
-//  office365-base-sdk
 //
 //  Copyright (c) 2014 Microsoft Open Technologies, Inc.
 //  All rights reserved.
@@ -10,7 +9,7 @@
 
 @implementation ExchangeBaseClient
 
-- (id)initWithUrl:(NSString *)url credentials:(Credentials *)credentials
+- (id)initWithUrl:(NSString *)url credentials:(ExchangeCredentials *)credentials
 {
     self.Credential = credentials;
     self.Url = url;

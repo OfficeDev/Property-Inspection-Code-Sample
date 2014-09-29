@@ -11,11 +11,11 @@
 		0E18387A19D273AD0049C71E /* office365_exchange_sdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18387919D273AD0049C71E /* office365_exchange_sdk.m */; };
 		0E1838E919D284440049C71E /* Actions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18389919D284430049C71E /* Actions.m */; };
 		0E1838EA19D284440049C71E /* EntityContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18389A19D284430049C71E /* EntityContainer.m */; };
-		0E1838EB19D284440049C71E /* BaseClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A519D284430049C71E /* BaseClient.m */; };
-		0E1838EC19D284440049C71E /* Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A619D284430049C71E /* Credentials.m */; };
-		0E1838ED19D284440049C71E /* HttpConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A719D284430049C71E /* HttpConnection.m */; };
+		0E1838EB19D284440049C71E /* ExchangeBaseClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A519D284430049C71E /* ExchangeBaseClient.m */; };
+		0E1838EC19D284440049C71E /* ExchangeCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A619D284430049C71E /* ExchangeCredentials.m */; };
+		0E1838ED19D284440049C71E /* ExchangeHttpConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A719D284430049C71E /* ExchangeHttpConnection.m */; };
 		0E1838EE19D284440049C71E /* NSURLSessionDataTaskOdata.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A819D284430049C71E /* NSURLSessionDataTaskOdata.m */; };
-		0E1838EF19D284440049C71E /* OAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A919D284430049C71E /* OAuthentication.m */; };
+		0E1838EF19D284440049C71E /* ExchangeOAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838A919D284430049C71E /* ExchangeOAuthentication.m */; };
 		0E1838F019D284440049C71E /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838AF19D284430049C71E /* JsonParser.m */; };
 		0E1838F119D284440049C71E /* Property.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838B019D284430049C71E /* Property.m */; };
 		0E1838F219D284440049C71E /* Attachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838D419D284440049C71E /* Attachment.m */; };
@@ -39,6 +39,48 @@
 		0E18390419D284440049C71E /* RecurrenceRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838E619D284440049C71E /* RecurrenceRange.m */; };
 		0E18390519D284440049C71E /* ResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838E719D284440049C71E /* ResponseStatus.m */; };
 		0E18390619D284440049C71E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1838E819D284440049C71E /* User.m */; };
+		0EA2D9C819D8087000465DA2 /* Actions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E18389519D284430049C71E /* Actions.h */; };
+		0EA2D9C919D8087000465DA2 /* EntityContainer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E18389619D284430049C71E /* EntityContainer.h */; };
+		0EA2D9CA19D8087000465DA2 /* Protocols.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E18389719D284430049C71E /* Protocols.h */; };
+		0EA2D9CB19D8087000465DA2 /* ExchangeBaseClient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E18389D19D284430049C71E /* ExchangeBaseClient.h */; };
+		0EA2D9CC19D8087000465DA2 /* ExchangeCredentials.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E18389E19D284430049C71E /* ExchangeCredentials.h */; };
+		0EA2D9CD19D8087000465DA2 /* ExchangeHttpConnection.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E18389F19D284430049C71E /* ExchangeHttpConnection.h */; };
+		0EA2D9CE19D8087000465DA2 /* NSURLSessionDataTaskOdata.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838A019D284430049C71E /* NSURLSessionDataTaskOdata.h */; };
+		0EA2D9CF19D8087000465DA2 /* ExchangeOAuthentication.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838A119D284430049C71E /* ExchangeOAuthentication.h */; };
+		0EA2D9D019D8087000465DA2 /* JsonParser.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838AC19D284430049C71E /* JsonParser.h */; };
+		0EA2D9D119D8087000465DA2 /* Property.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838AD19D284430049C71E /* Property.h */; };
+		0EA2D9D219D8087000465DA2 /* Attachment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838B319D284430049C71E /* Attachment.h */; };
+		0EA2D9D319D8087000465DA2 /* Attendee.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838B419D284430049C71E /* Attendee.h */; };
+		0EA2D9D419D8087000465DA2 /* AttendeeType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838B519D284440049C71E /* AttendeeType.h */; };
+		0EA2D9D519D8087000465DA2 /* BodyType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838B619D284440049C71E /* BodyType.h */; };
+		0EA2D9D619D8087000465DA2 /* Calendar.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838B719D284440049C71E /* Calendar.h */; };
+		0EA2D9D719D8087000465DA2 /* CalendarGroup.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838B819D284440049C71E /* CalendarGroup.h */; };
+		0EA2D9D819D8087000465DA2 /* Contact.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838B919D284440049C71E /* Contact.h */; };
+		0EA2D9D919D8087000465DA2 /* ContactFolder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838BA19D284440049C71E /* ContactFolder.h */; };
+		0EA2D9DA19D8087000465DA2 /* DayOfWeek.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838BB19D284440049C71E /* DayOfWeek.h */; };
+		0EA2D9DB19D8087000465DA2 /* Entity.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838BC19D284440049C71E /* Entity.h */; };
+		0EA2D9DC19D8087000465DA2 /* Event.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838BD19D284440049C71E /* Event.h */; };
+		0EA2D9DD19D8087000465DA2 /* EventType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838BE19D284440049C71E /* EventType.h */; };
+		0EA2D9DE19D8087000465DA2 /* FileAttachment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838BF19D284440049C71E /* FileAttachment.h */; };
+		0EA2D9DF19D8087000465DA2 /* Folder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C019D284440049C71E /* Folder.h */; };
+		0EA2D9E019D8087000465DA2 /* FreeBusyStatus.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C119D284440049C71E /* FreeBusyStatus.h */; };
+		0EA2D9E119D8087000465DA2 /* Importance.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C219D284440049C71E /* Importance.h */; };
+		0EA2D9E219D8087000465DA2 /* Item.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C319D284440049C71E /* Item.h */; };
+		0EA2D9E319D8087000465DA2 /* ItemAttachment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C419D284440049C71E /* ItemAttachment.h */; };
+		0EA2D9E419D8087000465DA2 /* ItemBody.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C519D284440049C71E /* ItemBody.h */; };
+		0EA2D9E519D8087000465DA2 /* Location.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C619D284440049C71E /* Location.h */; };
+		0EA2D9E619D8087000465DA2 /* MeetingMessageType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C719D284440049C71E /* MeetingMessageType.h */; };
+		0EA2D9E719D8087000465DA2 /* Message.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C819D284440049C71E /* Message.h */; };
+		0EA2D9E819D8087000465DA2 /* PatternedRecurrence.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838C919D284440049C71E /* PatternedRecurrence.h */; };
+		0EA2D9E919D8087000465DA2 /* Recipient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838CA19D284440049C71E /* Recipient.h */; };
+		0EA2D9EA19D8087000465DA2 /* RecurrencePattern.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838CB19D284440049C71E /* RecurrencePattern.h */; };
+		0EA2D9EB19D8087000465DA2 /* RecurrencePatternType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838CC19D284440049C71E /* RecurrencePatternType.h */; };
+		0EA2D9EC19D8087000465DA2 /* RecurrenceRange.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838CD19D284440049C71E /* RecurrenceRange.h */; };
+		0EA2D9ED19D8087000465DA2 /* RecurrenceRangeType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838CE19D284440049C71E /* RecurrenceRangeType.h */; };
+		0EA2D9EE19D8087000465DA2 /* ResponseStatus.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838CF19D284440049C71E /* ResponseStatus.h */; };
+		0EA2D9EF19D8087000465DA2 /* ResponseType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838D019D284440049C71E /* ResponseType.h */; };
+		0EA2D9F019D8087000465DA2 /* User.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838D119D284440049C71E /* User.h */; };
+		0EA2D9F119D8087000465DA2 /* WeekIndex.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E1838D219D284440049C71E /* WeekIndex.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +90,48 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				0EA2D9C819D8087000465DA2 /* Actions.h in CopyFiles */,
+				0EA2D9C919D8087000465DA2 /* EntityContainer.h in CopyFiles */,
+				0EA2D9CA19D8087000465DA2 /* Protocols.h in CopyFiles */,
+				0EA2D9CB19D8087000465DA2 /* ExchangeBaseClient.h in CopyFiles */,
+				0EA2D9CC19D8087000465DA2 /* ExchangeCredentials.h in CopyFiles */,
+				0EA2D9CD19D8087000465DA2 /* ExchangeHttpConnection.h in CopyFiles */,
+				0EA2D9CE19D8087000465DA2 /* NSURLSessionDataTaskOdata.h in CopyFiles */,
+				0EA2D9CF19D8087000465DA2 /* ExchangeOAuthentication.h in CopyFiles */,
+				0EA2D9D019D8087000465DA2 /* JsonParser.h in CopyFiles */,
+				0EA2D9D119D8087000465DA2 /* Property.h in CopyFiles */,
+				0EA2D9D219D8087000465DA2 /* Attachment.h in CopyFiles */,
+				0EA2D9D319D8087000465DA2 /* Attendee.h in CopyFiles */,
+				0EA2D9D419D8087000465DA2 /* AttendeeType.h in CopyFiles */,
+				0EA2D9D519D8087000465DA2 /* BodyType.h in CopyFiles */,
+				0EA2D9D619D8087000465DA2 /* Calendar.h in CopyFiles */,
+				0EA2D9D719D8087000465DA2 /* CalendarGroup.h in CopyFiles */,
+				0EA2D9D819D8087000465DA2 /* Contact.h in CopyFiles */,
+				0EA2D9D919D8087000465DA2 /* ContactFolder.h in CopyFiles */,
+				0EA2D9DA19D8087000465DA2 /* DayOfWeek.h in CopyFiles */,
+				0EA2D9DB19D8087000465DA2 /* Entity.h in CopyFiles */,
+				0EA2D9DC19D8087000465DA2 /* Event.h in CopyFiles */,
+				0EA2D9DD19D8087000465DA2 /* EventType.h in CopyFiles */,
+				0EA2D9DE19D8087000465DA2 /* FileAttachment.h in CopyFiles */,
+				0EA2D9DF19D8087000465DA2 /* Folder.h in CopyFiles */,
+				0EA2D9E019D8087000465DA2 /* FreeBusyStatus.h in CopyFiles */,
+				0EA2D9E119D8087000465DA2 /* Importance.h in CopyFiles */,
+				0EA2D9E219D8087000465DA2 /* Item.h in CopyFiles */,
+				0EA2D9E319D8087000465DA2 /* ItemAttachment.h in CopyFiles */,
+				0EA2D9E419D8087000465DA2 /* ItemBody.h in CopyFiles */,
+				0EA2D9E519D8087000465DA2 /* Location.h in CopyFiles */,
+				0EA2D9E619D8087000465DA2 /* MeetingMessageType.h in CopyFiles */,
+				0EA2D9E719D8087000465DA2 /* Message.h in CopyFiles */,
+				0EA2D9E819D8087000465DA2 /* PatternedRecurrence.h in CopyFiles */,
+				0EA2D9E919D8087000465DA2 /* Recipient.h in CopyFiles */,
+				0EA2D9EA19D8087000465DA2 /* RecurrencePattern.h in CopyFiles */,
+				0EA2D9EB19D8087000465DA2 /* RecurrencePatternType.h in CopyFiles */,
+				0EA2D9EC19D8087000465DA2 /* RecurrenceRange.h in CopyFiles */,
+				0EA2D9ED19D8087000465DA2 /* RecurrenceRangeType.h in CopyFiles */,
+				0EA2D9EE19D8087000465DA2 /* ResponseStatus.h in CopyFiles */,
+				0EA2D9EF19D8087000465DA2 /* ResponseType.h in CopyFiles */,
+				0EA2D9F019D8087000465DA2 /* User.h in CopyFiles */,
+				0EA2D9F119D8087000465DA2 /* WeekIndex.h in CopyFiles */,
 				0E18387819D273AD0049C71E /* office365_exchange_sdk.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,17 +147,17 @@
 		0E18389719D284430049C71E /* Protocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocols.h; sourceTree = "<group>"; };
 		0E18389919D284430049C71E /* Actions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Actions.m; sourceTree = "<group>"; };
 		0E18389A19D284430049C71E /* EntityContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityContainer.m; sourceTree = "<group>"; };
-		0E18389D19D284430049C71E /* BaseClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseClient.h; sourceTree = "<group>"; };
-		0E18389E19D284430049C71E /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
-		0E18389F19D284430049C71E /* HttpConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpConnection.h; sourceTree = "<group>"; };
+		0E18389D19D284430049C71E /* ExchangeBaseClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeBaseClient.h; sourceTree = "<group>"; };
+		0E18389E19D284430049C71E /* ExchangeCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeCredentials.h; sourceTree = "<group>"; };
+		0E18389F19D284430049C71E /* ExchangeHttpConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeHttpConnection.h; sourceTree = "<group>"; };
 		0E1838A019D284430049C71E /* NSURLSessionDataTaskOdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionDataTaskOdata.h; sourceTree = "<group>"; };
-		0E1838A119D284430049C71E /* OAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthentication.h; sourceTree = "<group>"; };
+		0E1838A119D284430049C71E /* ExchangeOAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeOAuthentication.h; sourceTree = "<group>"; };
 		0E1838A319D284430049C71E /* BaseClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseClient.h; sourceTree = "<group>"; };
-		0E1838A519D284430049C71E /* BaseClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseClient.m; sourceTree = "<group>"; };
-		0E1838A619D284430049C71E /* Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Credentials.m; sourceTree = "<group>"; };
-		0E1838A719D284430049C71E /* HttpConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpConnection.m; sourceTree = "<group>"; };
+		0E1838A519D284430049C71E /* ExchangeBaseClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeBaseClient.m; sourceTree = "<group>"; };
+		0E1838A619D284430049C71E /* ExchangeCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeCredentials.m; sourceTree = "<group>"; };
+		0E1838A719D284430049C71E /* ExchangeHttpConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeHttpConnection.m; sourceTree = "<group>"; };
 		0E1838A819D284430049C71E /* NSURLSessionDataTaskOdata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionDataTaskOdata.m; sourceTree = "<group>"; };
-		0E1838A919D284430049C71E /* OAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthentication.m; sourceTree = "<group>"; };
+		0E1838A919D284430049C71E /* ExchangeOAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeOAuthentication.m; sourceTree = "<group>"; };
 		0E1838AC19D284430049C71E /* JsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonParser.h; sourceTree = "<group>"; };
 		0E1838AD19D284430049C71E /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Property.h; sourceTree = "<group>"; };
 		0E1838AF19D284430049C71E /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
@@ -224,11 +308,11 @@
 		0E18389C19D284430049C71E /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				0E18389D19D284430049C71E /* BaseClient.h */,
-				0E18389E19D284430049C71E /* Credentials.h */,
-				0E18389F19D284430049C71E /* HttpConnection.h */,
+				0E18389D19D284430049C71E /* ExchangeBaseClient.h */,
+				0E18389E19D284430049C71E /* ExchangeCredentials.h */,
+				0E18389F19D284430049C71E /* ExchangeHttpConnection.h */,
 				0E1838A019D284430049C71E /* NSURLSessionDataTaskOdata.h */,
-				0E1838A119D284430049C71E /* OAuthentication.h */,
+				0E1838A119D284430049C71E /* ExchangeOAuthentication.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -244,11 +328,11 @@
 		0E1838A419D284430049C71E /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
-				0E1838A519D284430049C71E /* BaseClient.m */,
-				0E1838A619D284430049C71E /* Credentials.m */,
-				0E1838A719D284430049C71E /* HttpConnection.m */,
+				0E1838A519D284430049C71E /* ExchangeBaseClient.m */,
+				0E1838A619D284430049C71E /* ExchangeCredentials.m */,
+				0E1838A719D284430049C71E /* ExchangeHttpConnection.m */,
 				0E1838A819D284430049C71E /* NSURLSessionDataTaskOdata.m */,
-				0E1838A919D284430049C71E /* OAuthentication.m */,
+				0E1838A919D284430049C71E /* ExchangeOAuthentication.m */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -429,23 +513,23 @@
 				0E18390219D284440049C71E /* Recipient.m in Sources */,
 				0E1838F219D284440049C71E /* Attachment.m in Sources */,
 				0E18390119D284440049C71E /* PatternedRecurrence.m in Sources */,
-				0E1838EB19D284440049C71E /* BaseClient.m in Sources */,
+				0E1838EB19D284440049C71E /* ExchangeBaseClient.m in Sources */,
 				0E1838EA19D284440049C71E /* EntityContainer.m in Sources */,
 				0E18390619D284440049C71E /* User.m in Sources */,
 				0E1838FD19D284440049C71E /* ItemAttachment.m in Sources */,
 				0E1838F619D284440049C71E /* Contact.m in Sources */,
-				0E1838EF19D284440049C71E /* OAuthentication.m in Sources */,
+				0E1838EF19D284440049C71E /* ExchangeOAuthentication.m in Sources */,
 				0E18390019D284440049C71E /* Message.m in Sources */,
 				0E1838EE19D284440049C71E /* NSURLSessionDataTaskOdata.m in Sources */,
 				0E1838FC19D284440049C71E /* Item.m in Sources */,
 				0E1838F319D284440049C71E /* Attendee.m in Sources */,
 				0E1838F919D284440049C71E /* Event.m in Sources */,
-				0E1838ED19D284440049C71E /* HttpConnection.m in Sources */,
+				0E1838ED19D284440049C71E /* ExchangeHttpConnection.m in Sources */,
 				0E1838F819D284440049C71E /* Entity.m in Sources */,
 				0E1838F019D284440049C71E /* JsonParser.m in Sources */,
 				0E18390519D284440049C71E /* ResponseStatus.m in Sources */,
 				0E1838E919D284440049C71E /* Actions.m in Sources */,
-				0E1838EC19D284440049C71E /* Credentials.m in Sources */,
+				0E1838EC19D284440049C71E /* ExchangeCredentials.m in Sources */,
 				0E1838FB19D284440049C71E /* Folder.m in Sources */,
 				0E1838FF19D284440049C71E /* Location.m in Sources */,
 				0E18390319D284440049C71E /* RecurrencePattern.m in Sources */,

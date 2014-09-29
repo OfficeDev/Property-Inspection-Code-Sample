@@ -6,7 +6,7 @@
 //
 
 #import "EntityContainer.h"
-#import "HttpConnection.h"
+#import "ExchangeHttpConnection.h"//cloris modify to avoid use the base sdk and exchange sdk in the same time
 #import "Message.h"
 @implementation EntityContainer
 
@@ -15,7 +15,7 @@
 
 static EntityContainer *entityContainer;
 
-+(id)initializeEntityContainer:(NSString *)url credentials:(Credentials *)credentials{
++(id)initializeEntityContainer:(NSString *)url credentials:(ExchangeCredentials *)credentials{
     entityContainer = nil;
     
     @synchronized(self) {
@@ -37,7 +37,7 @@ static EntityContainer *entityContainer;
     
     NSString *url =  [NSString stringWithFormat:@"%@%@", self.Url ,path];
     
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
+    ExchangeHttpConnection *connection = [[ExchangeHttpConnection alloc] initWithCredentials:self.Credential
                                                                          url:url
                                                                    bodyArray:body];
     
@@ -61,7 +61,7 @@ static EntityContainer *entityContainer;
     
     NSData *body = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
+    ExchangeHttpConnection *connection = [[ExchangeHttpConnection alloc] initWithCredentials:self.Credential
                                                                          url:url
                                                                    bodyArray:body];
     
@@ -79,7 +79,7 @@ static EntityContainer *entityContainer;
     NSString *name = NSStringFromClass (classType);
     NSString *url =  [NSString stringWithFormat:@"%@/%@('%@')", self.Url , name, entityId];
     
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
+    ExchangeHttpConnection *connection = [[ExchangeHttpConnection alloc] initWithCredentials:self.Credential
                                                                          url:url];
     
     return [connection execute:@"DELETE" callback:^(NSData  *data, NSURLResponse *reponse, NSError *error) {
@@ -127,7 +127,7 @@ static EntityContainer *entityContainer;
     
     NSData *body = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
+    ExchangeHttpConnection *connection = [[ExchangeHttpConnection alloc] initWithCredentials:self.Credential
                                                                          url:url
                                                                    bodyArray:body];
     

@@ -16,6 +16,5 @@
 
 @property (strong, nonatomic) EKNLoginViewController *viewController;
 @property (strong, nonatomic) UINavigationController *naviController;
-@property (strong, nonatomic) EKNDeskTopViewController *deskTopController;
 
 @end

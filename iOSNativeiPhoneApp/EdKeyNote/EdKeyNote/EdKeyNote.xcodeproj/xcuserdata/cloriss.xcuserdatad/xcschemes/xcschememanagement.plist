@@ -6,8 +6,6 @@
 	<dict>
 		<key>EdKeyNote.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
@@ -15,11 +13,6 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>0EC4F5B519CFF2C600BEF583</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>0EC4F5D019CFF2C600BEF583</key>
 		<dict>
 			<key>primary</key>
 			<true/>

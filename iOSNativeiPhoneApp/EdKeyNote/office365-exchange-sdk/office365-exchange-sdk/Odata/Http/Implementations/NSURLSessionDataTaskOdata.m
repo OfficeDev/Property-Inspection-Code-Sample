@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NSURLSessionDataTaskOdata.h"
-#import "HttpConnection.h"
+#import "ExchangeHttpConnection.h"
 #import "JsonParser.h"
 
 @interface NSURLSessionDataTaskOdata()
@@ -85,7 +85,7 @@
     
     NSData *body = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
+    ExchangeHttpConnection *connection = [[ExchangeHttpConnection alloc] initWithCredentials:self.Credential
                                                                          url:url
                                                                    bodyArray:body];
     

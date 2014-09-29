@@ -6,7 +6,7 @@
 //
 #import <Foundation/Foundation.h>
 #import "NSURLSessionDataTaskOdata.h"
-#import "BaseClient.h"
+#import "ExchangeBaseClient.h"
 #import "JsonParser.h"
 
 @class BodyType;
@@ -42,9 +42,9 @@
 @class Contact;
 @class ContactFolder;
 
-@interface EntityContainer : BaseClient
+@interface EntityContainer : ExchangeBaseClient
 
-+(id)initializeEntityContainer:(NSString *)url credentials:(Credentials *)credentials;
++(id)initializeEntityContainer:(NSString *)url credentials:(ExchangeCredentials *)credentials;
 +(id)getEntityContainer;
 
 - (NSURLSessionDataTask *)executeForPath :(NSString*)path Method:(NSString*)method Body:(NSData *)body Callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback;

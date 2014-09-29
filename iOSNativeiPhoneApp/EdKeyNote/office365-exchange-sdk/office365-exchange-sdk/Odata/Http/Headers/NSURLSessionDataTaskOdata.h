@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Microsoft. All rights reserved.
 //
 
-#import "BaseClient.h"
+#import "ExchangeBaseClient.h"
 
-@interface NSURLSessionDataTaskOdata : BaseClient
+@interface NSURLSessionDataTaskOdata : ExchangeBaseClient
 
 @property Class ClassType;
 @property id entity;

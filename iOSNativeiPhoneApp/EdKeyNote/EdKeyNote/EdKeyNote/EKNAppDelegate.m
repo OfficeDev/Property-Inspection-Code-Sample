@@ -13,35 +13,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //NSLog(@"EKNAppDelegate %d",(int)[[UIApplication sharedApplication] statusBarOrientation]);
+    NSLog(@"EKNAppDelegate %d",(int)[[UIApplication sharedApplication] statusBarOrientation]);
     
     self.window = [[UIWindow alloc] initWithFrame:
                    [[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
     self.viewController = [[EKNLoginViewController alloc] init];
-    self.naviController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
-
+    self.naviController = [[UINavigationController alloc]
+                           initWithRootViewController:self.viewController];
+    
     self.window.rootViewController = self.naviController;
 
+    
+    
     [self.window makeKeyAndVisible];
+    return YES;
     
     return YES;
 }
-
-- (void)backgroundTap
-{
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Title"
-                          message:@"You click on login"
-                          delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    
-    [alert show];
-    [self.window.rootViewController resignFirstResponder];
-}
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
@@ -73,8 +63,6 @@
 
 -(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    //return UIInterfaceOrientationMaskLandscape;
-    // set to portrait
     return UIInterfaceOrientationMaskPortrait;
 }
 

@@ -10,68 +10,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "office365-base-sdk/office365-base-sdk/LoginClient.m"
-            timestampString = "433220588.503262"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "-login:completionHandler:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "office365-base-sdk/office365-base-sdk/LoginClient.m"
-            timestampString = "433220736.775206"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "-login:completionHandler:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[LoginClient login:completionHandler:]"
-                  moduleName = "EdKeyNote"
-                  urlString = "file:///Users/canviz/Desktop/EdKeyNote/office365-base-sdk/office365-base-sdk/LoginClient.m"
-                  timestampString = "433255695.083165"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "232">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__39-[LoginClient login:completionHandler:]_block_invoke"
-                  moduleName = "EdKeyNote"
-                  urlString = "file:///Users/canviz/Desktop/EdKeyNote/office365-base-sdk/office365-base-sdk/LoginClient.m"
-                  timestampString = "433255695.083498"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "76">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "office365-base-sdk/office365-base-sdk/LoginClient.m"
             timestampString = "433220783.423492"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"

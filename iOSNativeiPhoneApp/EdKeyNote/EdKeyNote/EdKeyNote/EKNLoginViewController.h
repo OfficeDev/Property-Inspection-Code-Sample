@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+#import <office365-base-sdk/Credentials.h>
+#import <office365-base-sdk/LoginClient.h>
+
 @interface EKNLoginViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property(retain, nonatomic) IBOutlet UITextField *nameTxt;
 @property(retain, nonatomic) IBOutlet UITextField *pwdTxt;
 
-
+@property (strong, nonatomic)NSString* authority;
+@property (strong, nonatomic)NSString* redirectUriString;
+@property (strong, nonatomic)NSString* resourceId;
+@property (strong, nonatomic)NSString* clientId;
+@property (strong, nonatomic)Credentials* credentials;
+@property (strong, nonatomic)NSString* token;
 @end
