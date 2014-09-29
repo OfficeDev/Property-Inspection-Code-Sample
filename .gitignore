@@ -40,7 +40,7 @@ dlldata.c
 *.ilk
 *.meta
 *.obj
-*.pch
+#*.pch
 *.pdb
 *.pgc
 *.pgd
