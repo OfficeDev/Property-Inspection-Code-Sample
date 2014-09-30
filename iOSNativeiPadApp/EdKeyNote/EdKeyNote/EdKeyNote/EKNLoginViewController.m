@@ -13,6 +13,11 @@
 
 @implementation EKNLoginViewController
 
+NSString *clientId;
+NSString *redirectUriString;
+NSString *authority;
+NSString *resourceId;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -23,6 +28,60 @@
 }
 - (void)loginButtonAction
 {
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    //Check to see if the clientId setting exists
+    if (nil != [standardUserDefaults objectForKey:@"clientId"])
+    {
+        clientId = [standardUserDefaults objectForKey:@"clientId"];    }
+    else
+    {
+        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"clientID not set. Please update settings for the application."];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+        [alert show];
+        [standardUserDefaults setValue:@"41492250-4c4f-4cf2-9c59-baac51ba67ca" forKey:@"clientId"];
+        [standardUserDefaults synchronize];
+    }
+    
+    //Check to see if the authority setting exists
+    if (nil != [standardUserDefaults objectForKey:@"authority"])
+    {
+        authority = [standardUserDefaults objectForKey:@"authority"];    }
+    else
+    {
+        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"authority not set. Please update settings for the application."];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+        [alert show];
+        [standardUserDefaults setValue:@"https://login.windows-ppe.net/common" forKey:@"authority"];
+        [standardUserDefaults synchronize];
+    }
+    
+    //Check to see if the resourceId setting exists
+    if (nil != [standardUserDefaults objectForKey:@"resourceId"])
+    {
+        resourceId = [standardUserDefaults objectForKey:@"resourceId"];    }
+    else
+    {
+        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"resourceId not set. Please update settings for the application."];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+        [alert show];
+        [standardUserDefaults setValue:@"https://techedairlift04-admin.spoppe.com" forKey:@"resourceId"];
+        [standardUserDefaults synchronize];
+    }
+    
+    //Check to see if the redirectUriString setting exists
+    if (nil != [standardUserDefaults objectForKey:@"redirectUriString"])
+    {
+        redirectUriString = [standardUserDefaults objectForKey:@"redirectUriString"];    }
+    else
+    {
+        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"redirectUriString not set. Please update settings for the application."];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+        [alert show];
+        [standardUserDefaults setValue:@"/8220c7c1-fa64-452f-87e5-7550c4825312.axd" forKey:@"redirectUriString"];
+        [standardUserDefaults synchronize];
+    }
+    
     [self performLogin:NO];
     
     //[self.navigationController popToRootViewControllerAnimated:YES];
@@ -31,7 +90,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     
     self.title = @"Login";
     
@@ -62,11 +120,15 @@
 }
 */
 - (void) performLogin: (BOOL) clearCache{
+    self.authority = authority;
+    self.resourceId = resourceId;
+    self.clientId = clientId;
+    self.redirectUriString = redirectUriString;
     
-    self.authority = @"https://login.windows-ppe.net/common";
-    self.resourceId = @"https://techedairlift04-admin.spoppe.com";
-    self.clientId = @"41492250-4c4f-4cf2-9c59-baac51ba67ca";
-    self.redirectUriString = @"/8220c7c1-fa64-452f-87e5-7550c4825312.axd";
+    //self.authority = @"https://login.windows-ppe.net/common";
+    //self.resourceId = @"https://techedairlift04-admin.spoppe.com";
+    //self.clientId = @"41492250-4c4f-4cf2-9c59-baac51ba67ca";
+    //self.redirectUriString = @"/8220c7c1-fa64-452f-87e5-7550c4825312.axd";
     //@"https://lagash.com/oauth";
     
     LoginClient *client = [[LoginClient alloc] initWithParameters:self.clientId
