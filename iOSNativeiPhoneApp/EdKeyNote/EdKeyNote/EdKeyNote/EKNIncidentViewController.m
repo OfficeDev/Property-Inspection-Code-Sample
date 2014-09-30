@@ -7,7 +7,6 @@
 //
 
 #import "EKNIncidentViewController.h"
-#import "EKNIncidentDetailViewController.h"
 
 @interface EKNIncidentViewController ()
 
@@ -41,11 +40,33 @@
                            @"Incidents 14",
                            @"Incidents 15",];
     
+    [self loadIincidents];
+    
 }
 
 - (void)loadIincidents
 {
-    
+    NSString *url = [[NSString alloc] init];
+    NSString *listTitle = [[NSString alloc] init];
+    Credentials *credentials = [[Credentials alloc] init];
+    ListClient *list = [[ListClient alloc] initWithUrl:url credentials:credentials];
+    [list getListItems:listTitle callback:^(NSMutableArray *listItems, NSError *error) {
+        
+        if(error == nil)
+        {
+            //error
+        }
+        else
+        {
+            [self bindListView:listItems];
+        }
+        
+    }];
+}
+
+- (void)bindListView:(NSMutableArray*)listItems
+{
+    //do something
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -73,6 +94,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     EKNIncidentDetailViewController *detail = [[EKNIncidentDetailViewController alloc] init];
+    detail.incidentId = 0;
+    detail.propertyId = 0;
+    detail.roomId = 0;
+    detail.inspectionId = 0;
     [self.navigationController pushViewController:detail animated:YES];
 }
 
@@ -80,6 +105,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation

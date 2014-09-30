@@ -12,7 +12,107 @@
 
 @end
 
+static int imageCounter = 0, navHieght = 0;
+
 @implementation EKNIncidentDetailViewController
+
+- (void)takePhoto
+{
+    UIActionSheet *sheet;
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"Take Photo", @"Select Photo", nil];
+    }
+    else
+    {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"Select Photo", nil];
+    }
+    sheet.actionSheetStyle = UIActionSheetStyleDefault;
+    [sheet showInView:self.view];
+}
+
+- (void)openCamera
+{
+    [self pickMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+}
+
+-(void)selectPicture
+{
+    [self pickMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
+}
+
+-(void)pickMediaFromSource:(UIImagePickerControllerSourceType)sourceType
+{
+    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+    if([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediaTypes count] > 0)
+    {
+        //NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        //picker.mediaTypes = mediaTypes;
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:NULL];
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Error accessing media"
+                              message:@"Device doesn't support that media source."
+                              delegate:nil
+                              cancelButtonTitle:@"Drat"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (UIImage *)shrinkImage:(UIImage *)original toSize:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+    [original drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *final = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return final;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    //UIImage *shrunkenImage = [self shrinkImage:chosenImage toSize:chosenImage.size];
+    
+    UIImageView *imgview = [[UIImageView alloc] initWithFrame:CGRectMake(100, 340 + navHieght + (imageCounter * 50), 40 , 40)];
+    imgview.image = chosenImage;
+    [self.view addSubview:imgview];
+    imageCounter++;
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0)//take new photo
+    {
+        [self openCamera];
+    }else if(buttonIndex == 1)//select photo
+    {
+        [self selectPicture];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,13 +126,13 @@
     
     NSLog(@"Navigation height is %d",navHieght);
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, navHieght, self.view.frame.size.width, self.view.frame.size.height - navHieght - 10)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - navHieght - 10)];
     
-    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 20, 120, 30)];
+    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 20, 140, 30)];
     [nameLab setText:@"Property Name:"];
     [nameLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:nameLab];
-    UILabel *nameValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 20, 140, 30)];
+    UILabel *nameValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 20, 120, 30)];
     [nameValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:nameValueLab];
     tempRowCounter++;
@@ -152,10 +252,10 @@
     repairCommentLab.layer.borderWidth = 1;
     [self.scrollView addSubview:repairCommentLab];
     
-    UIButton *takePhoto = [[UIButton alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 680, 60, 40)];
-    [takePhoto setTitle:@"Take Photo" forState:UIControlStateNormal];
-    [takePhoto setBackgroundColor:[UIColor blueColor]];
-    [self.scrollView addSubview:takePhoto];
+    UIButton *takePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 680, 60, 40)];
+    [takePhotoButton setTitle:@"Take Photo" forState:UIControlStateNormal];
+    [takePhotoButton setBackgroundColor:[UIColor blueColor]];
+    [self.scrollView addSubview:takePhotoButton];
 
     UIButton *savePhoto = [[UIButton alloc] initWithFrame:CGRectMake(90, navHieght + (tempRowCounter * 30) + 1100, 60, 40)];
     [savePhoto setTitle:@"Save" forState:UIControlStateNormal];
@@ -167,7 +267,9 @@
     [repairCompletePhoto setBackgroundColor:[UIColor blueColor]];
     [self.scrollView addSubview:repairCompletePhoto];
     
-    self.scrollView.contentSize =CGSizeMake(self.view.frame.size.width, 2000);
+    [takePhotoButton addTarget:self action:@selector(takePhoto) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.scrollView.contentSize =CGSizeMake(self.view.frame.size.width, 1200);
     [self.view addSubview:self.scrollView];
     
 }

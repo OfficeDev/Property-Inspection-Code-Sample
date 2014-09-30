@@ -7,13 +7,12 @@
 //
 
 #import "EKNLoginViewController.h"
-#import "EKNIncidentViewController.h"
 
 @interface EKNLoginViewController ()
 
 @end
 
-static int imageCounter = 0, navHieght = 0;
+static int navHieght = 0;
 
 @implementation EKNLoginViewController
 
@@ -30,107 +29,8 @@ static int imageCounter = 0, navHieght = 0;
     [self performLogin:NO];
 }
 
-- (void)takePhoto
-{
-    UIActionSheet *sheet;
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-    {
-        sheet = [[UIActionSheet alloc]
-                 initWithTitle:nil
-                 delegate:self
-                 cancelButtonTitle:@"Cancel"
-                 destructiveButtonTitle:nil
-                 otherButtonTitles:@"Take Photo", @"Select Photo", nil];
-    }
-    else
-    {
-        sheet = [[UIActionSheet alloc]
-                 initWithTitle:nil
-                 delegate:self
-                 cancelButtonTitle:@"Cancel"
-                 destructiveButtonTitle:nil
-                 otherButtonTitles:@"Select Photo", nil];
-    }
-    sheet.actionSheetStyle = UIActionSheetStyleDefault;
-    [sheet showInView:self.view];
-}
-
-- (void)openCamera
-{
-    [self pickMediaFromSource:UIImagePickerControllerSourceTypeCamera];
-}
-
--(void)selectPicture
-{
-    [self pickMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
-}
-
--(void)pickMediaFromSource:(UIImagePickerControllerSourceType)sourceType
-{
-    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
-    if([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediaTypes count] > 0)
-    {
-        //NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        //picker.mediaTypes = mediaTypes;
-        picker.delegate = self;
-        picker.allowsEditing = YES;
-        picker.sourceType = sourceType;
-        [self presentViewController:picker animated:YES completion:NULL];
-    }
-    else{
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Error accessing media"
-                              message:@"Device doesn't support that media source."
-                              delegate:nil
-                              cancelButtonTitle:@"Drat"
-                              otherButtonTitles:nil];
-        [alert show];
-    }
-}
-
-- (UIImage *)shrinkImage:(UIImage *)original toSize:(CGSize)size
-{
-    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
-    [original drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage *final = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return final;
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    //UIImage *shrunkenImage = [self shrinkImage:chosenImage toSize:chosenImage.size];
-    
-    UIImageView *imgview = [[UIImageView alloc] initWithFrame:CGRectMake(100, 340 + navHieght + (imageCounter * 50), 40 , 40)];
-    imgview.image = chosenImage;
-    [self.view addSubview:imgview];
-    imageCounter++;
-    [picker dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [picker dismissViewControllerAnimated:YES completion:NULL];
-}
-
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex == 0)//take new photo
-    {
-        [self openCamera];
-    }else if(buttonIndex == 1)//select photo
-    {
-        [self selectPicture];
-    }
-}
-
 - (BOOL)textFieldDoneEditing:(id)sender
 {
-    NSLog(@"Run text field return");
     [sender resignFirstResponder];
     return YES;
 }
@@ -199,19 +99,10 @@ static int imageCounter = 0, navHieght = 0;
     [login_bt setBackgroundColor:[UIColor blueColor]];
     [self.view addSubview:login_bt];
     
-    //set take photo button
-    UIButton *photo = [[UIButton alloc] initWithFrame:CGRectMake(80, navHieght + 280, 160, 40)];
-    [photo setTitle:@"Take Photo" forState:UIControlStateNormal];
-    [photo setBackgroundColor:[UIColor redColor]];
-    [self.view addSubview:photo];
-    
-    
     //bind event
     [self.nameTxt addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [self.pwdTxt addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [login_bt addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [photo addTarget:self action:@selector(takePhoto) forControlEvents:UIControlEventTouchUpInside];
-    
     
     // Do any additional setup after loading the view.
 }

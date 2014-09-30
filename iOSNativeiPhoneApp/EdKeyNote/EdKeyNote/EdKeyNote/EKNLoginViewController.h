@@ -10,6 +10,7 @@
 
 #import <office365-base-sdk/Credentials.h>
 #import <office365-base-sdk/LoginClient.h>
+#import "EKNIncidentViewController.h"
 
 @interface EKNLoginViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
