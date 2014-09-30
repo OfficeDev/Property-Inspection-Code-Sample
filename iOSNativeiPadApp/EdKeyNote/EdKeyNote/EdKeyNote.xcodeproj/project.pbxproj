@@ -10,6 +10,10 @@
 		0E18378919D2692D0049C71E /* liboffice365-base-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18378619D2692D0049C71E /* liboffice365-base-sdk.a */; };
 		0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */; };
 		0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */; };
+		0E68CEAE19DB7A5A00E29C4A /* EKNInSpectionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEA719DB7A5A00E29C4A /* EKNInSpectionData.m */; };
+		0E68CEAF19DB7A5A00E29C4A /* EKNPropertyData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEA919DB7A5A00E29C4A /* EKNPropertyData.m */; };
+		0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */; };
+		0E68CEB119DB7A5A00E29C4A /* EKNRoomData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEAD19DB7A5A00E29C4A /* EKNRoomData.m */; };
 		0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA2D9F319D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard */; };
 		0EA2D9FA19D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA2D9F419D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard */; };
 		0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EA2D9F519D8094400465DA2 /* ADALiOSBundle-Info.plist */; };
@@ -22,7 +26,6 @@
 		0EC4F5CA19CFF2C600BEF583 /* EKNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5C919CFF2C600BEF583 /* EKNAppDelegate.m */; };
 		0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */; };
 		0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */; };
-		0EC4F5ED19CFFD0200BEF583 /* EKNDeskTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5EC19CFFD0200BEF583 /* EKNDeskTopViewController.m */; };
 		3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3006E1F119DA131B00557CE2 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +34,14 @@
 		0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboffice365-exchange-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos/liboffice365-exchange-sdk.a"; sourceTree = "<group>"; };
 		0E18390D19D2A7FA0049C71E /* EKNEKNGlobalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNEKNGlobalInfo.h; sourceTree = "<group>"; };
 		0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNEKNGlobalInfo.m; sourceTree = "<group>"; };
+		0E68CEA619DB7A5A00E29C4A /* EKNInSpectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNInSpectionData.h; sourceTree = "<group>"; };
+		0E68CEA719DB7A5A00E29C4A /* EKNInSpectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNInSpectionData.m; sourceTree = "<group>"; };
+		0E68CEA819DB7A5A00E29C4A /* EKNPropertyData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNPropertyData.h; sourceTree = "<group>"; };
+		0E68CEA919DB7A5A00E29C4A /* EKNPropertyData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNPropertyData.m; sourceTree = "<group>"; };
+		0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNPropertyDetailsViewController.h; sourceTree = "<group>"; };
+		0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNPropertyDetailsViewController.m; sourceTree = "<group>"; };
+		0E68CEAC19DB7A5A00E29C4A /* EKNRoomData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNRoomData.h; sourceTree = "<group>"; };
+		0E68CEAD19DB7A5A00E29C4A /* EKNRoomData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNRoomData.m; sourceTree = "<group>"; };
 		0EA2D9F319D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ADAL_iPad_Storyboard.storyboard; sourceTree = "<group>"; };
 		0EA2D9F419D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ADAL_iPhone_Storyboard.storyboard; sourceTree = "<group>"; };
 		0EA2D9F519D8094400465DA2 /* ADALiOSBundle-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ADALiOSBundle-Info.plist"; sourceTree = "<group>"; };
@@ -49,8 +60,6 @@
 		0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0EC4F5E819CFF9FD00BEF583 /* EKNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNLoginViewController.h; sourceTree = "<group>"; };
 		0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNLoginViewController.m; sourceTree = "<group>"; };
-		0EC4F5EB19CFFD0200BEF583 /* EKNDeskTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNDeskTopViewController.h; sourceTree = "<group>"; };
-		0EC4F5EC19CFFD0200BEF583 /* EKNDeskTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNDeskTopViewController.m; sourceTree = "<group>"; };
 		3006E1F119DA131B00557CE2 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = EdKeyNote/Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,6 +79,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E68CEB219DB7A6600E29C4A /* Property Detail page */ = {
+			isa = PBXGroup;
+			children = (
+				0E68CEA619DB7A5A00E29C4A /* EKNInSpectionData.h */,
+				0E68CEA719DB7A5A00E29C4A /* EKNInSpectionData.m */,
+				0E68CEA819DB7A5A00E29C4A /* EKNPropertyData.h */,
+				0E68CEA919DB7A5A00E29C4A /* EKNPropertyData.m */,
+				0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */,
+				0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */,
+				0E68CEAC19DB7A5A00E29C4A /* EKNRoomData.h */,
+				0E68CEAD19DB7A5A00E29C4A /* EKNRoomData.m */,
+			);
+			name = "Property Detail page";
+			sourceTree = "<group>";
+		};
 		0EA2D9F219D8094400465DA2 /* ADALiOSBundle */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,14 +141,13 @@
 		0EC4F5BF19CFF2C600BEF583 /* EdKeyNote */ = {
 			isa = PBXGroup;
 			children = (
+				0E68CEB219DB7A6600E29C4A /* Property Detail page */,
 				0EC4F5C819CFF2C600BEF583 /* EKNAppDelegate.h */,
 				0EC4F5C919CFF2C600BEF583 /* EKNAppDelegate.m */,
 				0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */,
 				0EC4F5C019CFF2C600BEF583 /* Supporting Files */,
 				0EC4F5E819CFF9FD00BEF583 /* EKNLoginViewController.h */,
 				0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */,
-				0EC4F5EB19CFFD0200BEF583 /* EKNDeskTopViewController.h */,
-				0EC4F5EC19CFFD0200BEF583 /* EKNDeskTopViewController.m */,
 				0E18390D19D2A7FA0049C71E /* EKNEKNGlobalInfo.h */,
 				0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */,
 			);
@@ -217,10 +240,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0EC4F5ED19CFFD0200BEF583 /* EKNDeskTopViewController.m in Sources */,
+				0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */,
 				0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */,
+				0E68CEAF19DB7A5A00E29C4A /* EKNPropertyData.m in Sources */,
+				0E68CEB119DB7A5A00E29C4A /* EKNRoomData.m in Sources */,
 				0EC4F5C619CFF2C600BEF583 /* main.m in Sources */,
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
+				0E68CEAE19DB7A5A00E29C4A /* EKNInSpectionData.m in Sources */,
 				0EC4F5CA19CFF2C600BEF583 /* EKNAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

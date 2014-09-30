@@ -84,7 +84,8 @@ NSString *resourceId;
     
     [self performLogin:NO];
     
-    //[self.navigationController popToRootViewControllerAnimated:YES];
+    // EKNPropertyDetailsViewController *propertydeatilsctrl = [[EKNPropertyDetailsViewController alloc] init];
+    //[self.navigationController pushViewController:propertydeatilsctrl animated:YES];
 }
 
 - (void)viewDidLoad
