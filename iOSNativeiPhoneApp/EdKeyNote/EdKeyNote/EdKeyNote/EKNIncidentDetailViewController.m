@@ -252,7 +252,7 @@ static int imageCounter = 0, navHieght = 0;
     repairCommentLab.layer.borderWidth = 1;
     [self.scrollView addSubview:repairCommentLab];
     
-    UIButton *takePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 570, 120, 40)];
+    UIButton *takePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 570, 100, 40)];
     [takePhotoButton setTitle:@"Take Photo" forState:UIControlStateNormal];
     [takePhotoButton setBackgroundColor:[UIColor blueColor]];
     [self.scrollView addSubview:takePhotoButton];
