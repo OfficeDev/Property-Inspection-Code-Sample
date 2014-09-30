@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EKNIncidentDetailViewController : UIViewController
+@interface EKNIncidentDetailViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@property(assign,nonatomic)int *incidentId;
+@property(assign,nonatomic)int *propertyId;
+@property(assign,nonatomic)int *roomId;
+@property(assign,nonatomic)int *inspectionId;
 
 @property(retain, nonatomic)UIScrollView *scrollView;
 

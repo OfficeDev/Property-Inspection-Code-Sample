@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ListClient.h"
+#import "EKNIncidentDetailViewController.h"
 
 @interface EKNIncidentViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
