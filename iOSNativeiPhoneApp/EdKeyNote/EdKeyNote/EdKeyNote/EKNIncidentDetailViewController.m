@@ -18,7 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"Incident Details";
+    self.title = @"Incident Details Title";
     
     int navigationHeight = self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height;
     int navHieght = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? navigationHeight : 0;
