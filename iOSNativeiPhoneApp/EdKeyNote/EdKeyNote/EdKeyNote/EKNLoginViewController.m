@@ -27,10 +27,7 @@ static int imageCounter = 0, navHieght = 0;
 }
 - (void)loginButtonAction
 {
-    //[self performLogin:NO];
-    
-    EKNIncidentViewController *incident = [[EKNIncidentViewController alloc] init];
-    [self.navigationController pushViewController:incident animated:YES];
+    [self performLogin:NO];
 }
 
 - (void)takePhoto
@@ -251,6 +248,10 @@ static int imageCounter = 0, navHieght = 0;
                                                                  :self.authority];
     
     [client login:clearCache completionHandler:^(NSString *t, NSError *e) {
+        EKNIncidentViewController *incident = [[EKNIncidentViewController alloc] init];
+        [self.navigationController pushViewController:incident animated:YES];
+        
+        /*
         if(e == nil)
         {
             self.token = t;
@@ -261,6 +262,7 @@ static int imageCounter = 0, navHieght = 0;
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
             [alert show];
         }
+         */
     }];
 }
 
