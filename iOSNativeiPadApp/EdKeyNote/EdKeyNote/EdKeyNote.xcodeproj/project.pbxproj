@@ -23,6 +23,7 @@
 		0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */; };
 		0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */; };
 		0EC4F5ED19CFFD0200BEF583 /* EKNDeskTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5EC19CFFD0200BEF583 /* EKNDeskTopViewController.m */; };
+		3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3006E1F119DA131B00557CE2 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNLoginViewController.m; sourceTree = "<group>"; };
 		0EC4F5EB19CFFD0200BEF583 /* EKNDeskTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNDeskTopViewController.h; sourceTree = "<group>"; };
 		0EC4F5EC19CFFD0200BEF583 /* EKNDeskTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNDeskTopViewController.m; sourceTree = "<group>"; };
+		3006E1F119DA131B00557CE2 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = EdKeyNote/Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 		0EC4F5AD19CFF2C600BEF583 = {
 			isa = PBXGroup;
 			children = (
+				3006E1F119DA131B00557CE2 /* Settings.bundle */,
 				0EA2D9F219D8094400465DA2 /* ADALiOSBundle */,
 				0EC4F5BF19CFF2C600BEF583 /* EdKeyNote */,
 				0EC4F5B819CFF2C600BEF583 /* Frameworks */,
@@ -203,6 +206,7 @@
 				0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */,
 				0EC4F5C419CFF2C600BEF583 /* InfoPlist.strings in Resources */,
 				0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */,
+				3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
