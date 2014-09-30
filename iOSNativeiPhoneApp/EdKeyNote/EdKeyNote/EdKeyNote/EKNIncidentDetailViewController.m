@@ -126,150 +126,150 @@ static int imageCounter = 0, navHieght = 0;
     
     NSLog(@"Navigation height is %d",navHieght);
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - navHieght - 10)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
-    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 20, 140, 30)];
+    UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, 0 + (tempRowCounter * 30) + 10, 140, 30)];
     [nameLab setText:@"Property Name:"];
     [nameLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:nameLab];
-    UILabel *nameValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 20, 120, 30)];
+    UILabel *nameValueLab = [[UILabel alloc] initWithFrame:CGRectMake(150, (tempRowCounter * 30) + 10, 120, 30)];
     [nameValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:nameValueLab];
     tempRowCounter++;
     
-    UILabel *ownerLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 20, 120, 30)];
+    UILabel *ownerLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 10, 140, 30)];
     [ownerLab setText:@"Property Owner:"];
     [ownerLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:ownerLab];
-    UILabel *ownerValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 20, 160, 30)];
+    UILabel *ownerValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, (tempRowCounter * 30) + 10, 160, 30)];
     [ownerValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:ownerValueLab];
     tempRowCounter++;
     
-    UILabel *addressLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 20, 120, 30)];
+    UILabel *addressLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 10, 160, 30)];
     [addressLab setText:@"Property Address:"];
     [addressLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:addressLab];
-    UILabel *addressValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 20, 160, 30)];
+    UILabel *addressValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, (tempRowCounter * 30) + 10, 160, 30)];
     [addressValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:addressValueLab];
     tempRowCounter++;
     
-    UILabel *inameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 40, 120, 30)];
+    UILabel *inameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 20, 140, 30)];
     [inameLab setText:@"Inspector Name:"];
     [inameLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:inameLab];
-    UILabel *inameValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 40, 160, 30)];
+    UILabel *inameValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, (tempRowCounter * 30) + 20, 160, 30)];
     [inameValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:inameValueLab];
     tempRowCounter++;
     
-    UILabel *iemailLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 40, 120, 30)];
+    UILabel *iemailLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 20, 140, 30)];
     [iemailLab setText:@"Inspector Email:"];
     [iemailLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:iemailLab];
-    UILabel *iemailValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 40, 160, 30)];
+    UILabel *iemailValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, (tempRowCounter * 30) + 20, 160, 30)];
     [iemailValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:iemailValueLab];
     tempRowCounter++;
     
-    UILabel *idateLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 40, 120, 30)];
+    UILabel *idateLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 20, 140, 30)];
     [idateLab setText:@"Inspector Date:"];
     [idateLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:idateLab];
-    UILabel *idateValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 40, 160, 30)];
+    UILabel *idateValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, (tempRowCounter * 30) + 20, 160, 30)];
     [idateValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:idateValueLab];
     tempRowCounter++;
     
-    UILabel *typeLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 60, 120, 30)];
+    UILabel *typeLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 30, 120, 30)];
     [typeLab setText:@"Incident Type:"];
     [typeLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:typeLab];
-    UILabel *typeValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 60, 160, 30)];
+    UILabel *typeValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, (tempRowCounter * 30) + 30, 160, 30)];
     [typeValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:typeValueLab];
     tempRowCounter++;
     
-    UILabel *roomNameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 60, 120, 30)];
+    UILabel *roomNameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 30, 120, 30)];
     [roomNameLab setText:@"Room Name:"];
     [roomNameLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:roomNameLab];
-    UILabel *roomNameValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, navHieght + (tempRowCounter * 30) + 60, 160, 30)];
+    UILabel *roomNameValueLab = [[UILabel alloc] initWithFrame:CGRectMake(140, (tempRowCounter * 30) + 30, 160, 30)];
     [roomNameValueLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:roomNameValueLab];
     tempRowCounter++;
     
-    UILabel *commentLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 80, 280, 80)];
+    UILabel *commentLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 40, 280, 80)];
     [commentLab setTextColor:[UIColor blueColor]];
     commentLab.layer.borderColor = [UIColor lightGrayColor].CGColor;
     commentLab.layer.borderWidth = 1;
     [self.scrollView addSubview:commentLab];
     
-    UILabel *dispatcherCommentLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 180, 280, 80)];
+    UILabel *dispatcherCommentLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 130, 280, 80)];
     [dispatcherCommentLab setTextColor:[UIColor blueColor]];
     dispatcherCommentLab.layer.borderColor = [UIColor lightGrayColor].CGColor;
     dispatcherCommentLab.layer.borderWidth = 1;
     [self.scrollView addSubview:dispatcherCommentLab];
     
-    UILabel *exitPhotoLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 280, 120, 30)];
+    UILabel *exitPhotoLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 220, 220, 30)];
     [exitPhotoLab setText:@"Inspection Photos"];
     [exitPhotoLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:exitPhotoLab];
     
-    UIImageView *imgView1 = [[UIImageView alloc] initWithFrame:CGRectMake(120, navHieght + (tempRowCounter * 30) + 330, 80, 80)];
+    UIImageView *imgView1 = [[UIImageView alloc] initWithFrame:CGRectMake(120, (tempRowCounter * 30) + 230, 80, 80)];
     imgView1.image = [UIImage imageNamed:@"logo.png"];
     [self.scrollView addSubview:imgView1];
     
-    UIImageView *imgView2 = [[UIImageView alloc] initWithFrame:CGRectMake(120, navHieght + (tempRowCounter * 30) + 430, 80, 80)];
+    UIImageView *imgView2 = [[UIImageView alloc] initWithFrame:CGRectMake(120, (tempRowCounter * 30) + 330, 80, 80)];
     imgView2.image = [UIImage imageNamed:@"logo.png"];
     [self.scrollView addSubview:imgView2];
     
-    UIImageView *imgView3 = [[UIImageView alloc] initWithFrame:CGRectMake(120, navHieght + (tempRowCounter * 30) + 530, 80, 80)];
+    UIImageView *imgView3 = [[UIImageView alloc] initWithFrame:CGRectMake(120, (tempRowCounter * 30) + 430, 80, 80)];
     imgView3.image = [UIImage imageNamed:@"logo.png"];
     [self.scrollView addSubview:imgView3];
 
-    UILabel *repairPhotoLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 630, 200, 30)];
+    UILabel *repairPhotoLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 530, 200, 30)];
     [repairPhotoLab setText:@"Repair Photos"];
     [repairPhotoLab setTextColor:[UIColor blueColor]];
     [self.scrollView addSubview:repairPhotoLab];
     
-    UIImageView *imgView21 = [[UIImageView alloc] initWithFrame:CGRectMake(120, navHieght + (tempRowCounter * 30) + 680, 80, 80)];
+    UIImageView *imgView21 = [[UIImageView alloc] initWithFrame:CGRectMake(120, (tempRowCounter * 30) + 570, 80, 80)];
     imgView21.image = [UIImage imageNamed:@"logo.png"];
     [self.scrollView addSubview:imgView21];
     
-    UIImageView *imgView22 = [[UIImageView alloc] initWithFrame:CGRectMake(120, navHieght + (tempRowCounter * 30) + 780, 80, 80)];
+    UIImageView *imgView22 = [[UIImageView alloc] initWithFrame:CGRectMake(120, (tempRowCounter * 30) + 670, 80, 80)];
     imgView22.image = [UIImage imageNamed:@"logo.png"];
     [self.scrollView addSubview:imgView22];
     
-    UIImageView *imgView23 = [[UIImageView alloc] initWithFrame:CGRectMake(120, navHieght + (tempRowCounter * 30) + 880, 80, 80)];
+    UIImageView *imgView23 = [[UIImageView alloc] initWithFrame:CGRectMake(120, (tempRowCounter * 30) + 770, 80, 80)];
     imgView23.image = [UIImage imageNamed:@"logo.png"];
     [self.scrollView addSubview:imgView23];
     
-    UILabel *repairCommentLab = [[UILabel alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 980, 280, 80)];
+    UILabel *repairCommentLab = [[UILabel alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 870, 280, 80)];
     [repairCommentLab setTextColor:[UIColor blueColor]];
     repairCommentLab.layer.borderColor = [UIColor lightGrayColor].CGColor;
     repairCommentLab.layer.borderWidth = 1;
     [self.scrollView addSubview:repairCommentLab];
     
-    UIButton *takePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(20, navHieght + (tempRowCounter * 30) + 680, 60, 40)];
+    UIButton *takePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 570, 120, 40)];
     [takePhotoButton setTitle:@"Take Photo" forState:UIControlStateNormal];
     [takePhotoButton setBackgroundColor:[UIColor blueColor]];
     [self.scrollView addSubview:takePhotoButton];
 
-    UIButton *savePhoto = [[UIButton alloc] initWithFrame:CGRectMake(90, navHieght + (tempRowCounter * 30) + 1100, 60, 40)];
+    UIButton *savePhoto = [[UIButton alloc] initWithFrame:CGRectMake(20, (tempRowCounter * 30) + 970, 100, 40)];
     [savePhoto setTitle:@"Save" forState:UIControlStateNormal];
     [savePhoto setBackgroundColor:[UIColor blueColor]];
     [self.scrollView addSubview:savePhoto];
     
-    UIButton *repairCompletePhoto = [[UIButton alloc] initWithFrame:CGRectMake(170, navHieght + (tempRowCounter * 30) + 1100, 60, 40)];
+    UIButton *repairCompletePhoto = [[UIButton alloc] initWithFrame:CGRectMake(140, (tempRowCounter * 30) + 970, 160, 40)];
     [repairCompletePhoto setTitle:@"Repair Complete" forState:UIControlStateNormal];
     [repairCompletePhoto setBackgroundColor:[UIColor blueColor]];
     [self.scrollView addSubview:repairCompletePhoto];
     
     [takePhotoButton addTarget:self action:@selector(takePhoto) forControlEvents:UIControlEventTouchUpInside];
     
-    self.scrollView.contentSize =CGSizeMake(self.view.frame.size.width, 1200);
+    self.scrollView.contentSize =CGSizeMake(self.view.frame.size.width, 1300);
     [self.view addSubview:self.scrollView];
     
 }
