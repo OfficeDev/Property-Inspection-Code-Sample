@@ -16,5 +16,5 @@
 
 -(void)initParameter:(NSNumber* )roomid
                Title:(NSString *)title
-               RoomImages:(NSMutableArray *)romimagesarray;
+               RoomImages:(NSMutableArray *)roomimagesarray;
 @end

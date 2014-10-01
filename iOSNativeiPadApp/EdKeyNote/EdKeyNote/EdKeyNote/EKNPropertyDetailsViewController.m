@@ -1,5 +1,5 @@
 //
-//  EKNDeskTopViewController.m
+//  EKNPropertyDetailsViewController.m
 //  EdKeyNote
 //
 //  Created by canviz on 9/22/14.
@@ -42,10 +42,10 @@
     lbl1.textColor = [UIColor colorWithRed:132.00f/255.00f green:132.00f/255.00f blue:137.00f/255.00f alpha:1];
     [self.view addSubview:lbl1];
     
-    //self.propertyDeatilsTableView = [[UITableView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2) style:UITableViewStylePlain];
-    //self.propertyDeatilsTableView.delegate = self;
-    //self.propertyDeatilsTableView.dataSource = self;
-    //[self.view addSubview:self.propertyDeatilsTableView];
+    self.propertyDetailsTableView = [[UITableView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2) style:UITableViewStylePlain];
+    self.propertyDetailsTableView.delegate = self;
+    self.propertyDetailsTableView.dataSource = self;
+    [self.view addSubview:self.propertyDetailsTableView];
     
     
     
@@ -74,14 +74,13 @@
     self.inspectionHistory = historyarray;
 }
 
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
         
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-   if(tableView == self.propertyDeatilsTableView)
+   if(tableView == self.propertyDetailsTableView)
    {
        return 3;
    }
@@ -89,7 +88,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(tableView == self.propertyDeatilsTableView)
+    if(tableView == self.propertyDetailsTableView)
     {
         if(indexPath.row == 3)
         {
@@ -105,10 +104,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(tableView == self.propertyDeatilsTableView)
+    if(tableView == self.propertyDetailsTableView)
     {
         UITableViewCell *cell = nil;
-        NSString *identifier = @"ProPertyCellID";
+        NSString *identifier = @"PropertyCellID";
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
@@ -119,7 +118,7 @@
             {
                 
             }
-            cell.textLabel.text = ((EKNInSpectionData *)self.inspectionHistory[self.currentSelectIndex]).inspectionProperty.propertyTitle;
+            cell.textLabel.text = ((EKNInspectionData *)self.inspectionHistory[self.currentSelectIndex]).inspectionProperty.propertyTitle;
             
             cell.textLabel.numberOfLines = 1;
             cell.textLabel.font = [UIFont systemFontOfSize:15];

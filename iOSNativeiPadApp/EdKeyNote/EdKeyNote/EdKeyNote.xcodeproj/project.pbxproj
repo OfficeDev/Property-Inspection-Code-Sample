@@ -10,7 +10,7 @@
 		0E18378919D2692D0049C71E /* liboffice365-base-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18378619D2692D0049C71E /* liboffice365-base-sdk.a */; };
 		0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */; };
 		0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */; };
-		0E68CEAE19DB7A5A00E29C4A /* EKNInSpectionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEA719DB7A5A00E29C4A /* EKNInSpectionData.m */; };
+		0E68CEAE19DB7A5A00E29C4A /* EKNInspectionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEA719DB7A5A00E29C4A /* EKNInspectionData.m */; };
 		0E68CEAF19DB7A5A00E29C4A /* EKNPropertyData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEA919DB7A5A00E29C4A /* EKNPropertyData.m */; };
 		0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */; };
 		0E68CEB119DB7A5A00E29C4A /* EKNRoomData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEAD19DB7A5A00E29C4A /* EKNRoomData.m */; };
@@ -34,8 +34,8 @@
 		0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboffice365-exchange-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos/liboffice365-exchange-sdk.a"; sourceTree = "<group>"; };
 		0E18390D19D2A7FA0049C71E /* EKNEKNGlobalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNEKNGlobalInfo.h; sourceTree = "<group>"; };
 		0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNEKNGlobalInfo.m; sourceTree = "<group>"; };
-		0E68CEA619DB7A5A00E29C4A /* EKNInSpectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNInSpectionData.h; sourceTree = "<group>"; };
-		0E68CEA719DB7A5A00E29C4A /* EKNInSpectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNInSpectionData.m; sourceTree = "<group>"; };
+		0E68CEA619DB7A5A00E29C4A /* EKNInspectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNInspectionData.h; sourceTree = "<group>"; };
+		0E68CEA719DB7A5A00E29C4A /* EKNInspectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNInspectionData.m; sourceTree = "<group>"; };
 		0E68CEA819DB7A5A00E29C4A /* EKNPropertyData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNPropertyData.h; sourceTree = "<group>"; };
 		0E68CEA919DB7A5A00E29C4A /* EKNPropertyData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNPropertyData.m; sourceTree = "<group>"; };
 		0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNPropertyDetailsViewController.h; sourceTree = "<group>"; };
@@ -82,8 +82,8 @@
 		0E68CEB219DB7A6600E29C4A /* Property Detail page */ = {
 			isa = PBXGroup;
 			children = (
-				0E68CEA619DB7A5A00E29C4A /* EKNInSpectionData.h */,
-				0E68CEA719DB7A5A00E29C4A /* EKNInSpectionData.m */,
+				0E68CEA619DB7A5A00E29C4A /* EKNInspectionData.h */,
+				0E68CEA719DB7A5A00E29C4A /* EKNInspectionData.m */,
 				0E68CEA819DB7A5A00E29C4A /* EKNPropertyData.h */,
 				0E68CEA919DB7A5A00E29C4A /* EKNPropertyData.m */,
 				0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */,
@@ -246,7 +246,7 @@
 				0E68CEB119DB7A5A00E29C4A /* EKNRoomData.m in Sources */,
 				0EC4F5C619CFF2C600BEF583 /* main.m in Sources */,
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
-				0E68CEAE19DB7A5A00E29C4A /* EKNInSpectionData.m in Sources */,
+				0E68CEAE19DB7A5A00E29C4A /* EKNInspectionData.m in Sources */,
 				0EC4F5CA19CFF2C600BEF583 /* EKNAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

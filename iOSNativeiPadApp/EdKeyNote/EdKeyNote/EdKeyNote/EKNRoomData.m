@@ -11,10 +11,10 @@
 @implementation EKNRoomData
 -(void)initParameter:(NSNumber* )roomid
                Title:(NSString *)title
-          RoomImages:(NSMutableArray *)romimagesarray
+          RoomImages:(NSMutableArray *)roomimagesarray
 {
     self.roomId = roomid;
     self.roomTitle = title;
-    self.roomImages = romimagesarray;
+    self.roomImages = roomimagesarray;
 }
 @end

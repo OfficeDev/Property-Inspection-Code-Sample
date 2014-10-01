@@ -1,5 +1,5 @@
 //
-//  EKNDeskTopViewController.h
+//  EKNPropertyDetailsViewController.h
 //  EdKeyNote
 //
 //  Created by canviz on 9/22/14.
@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EKNInSpectionData.h"
+#import "EKNInspectionData.h"
 @interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 
 @property(nonatomic) UILabel *inspectionTitle;
 @property(nonatomic) UILabel *inspectorInfor;
 
-@property(nonatomic) UITableView * propertyDeatilsTableView;//here will be relaced by Normal UIview
+@property(nonatomic) UITableView * propertyDetailsTableView;//here will be relaced by Normal UIview
 @property(nonatomic) UITableView * inspectionTableView;
 @property(nonatomic) UITableView * roomsTableView;
 

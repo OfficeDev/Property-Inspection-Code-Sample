@@ -1,5 +1,5 @@
 //
-//  EKNInSpectionData.h
+//  EKNInspectionData.h
 //  EdKeyNote
 //
 //  Created by canviz on 9/30/14.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "EKNRoomData.h"
 #import "EKNPropertyData.h"
-@interface EKNInSpectionData : NSObject
+@interface EKNInspectionData : NSObject
 
 @property(nonatomic) NSNumber *inspectionId;
 @property(nonatomic) NSString *inspectionTitle;
@@ -25,6 +25,6 @@
                InspectionTitle:(NSString *)title
                InspectionDateTime:(NSString *)datetime
                InspectorName:(NSString *)name
-               InspectorProperty:(EKNPropertyData *)property
-               InspectorRooms:(EKNRoomData *)rooms;
+               InspectionProperty:(EKNPropertyData *)property
+               InspectionRooms:(EKNRoomData *)rooms;
 @end
