@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EKNDeskTopViewController.h"
 #import "EKNLoginViewController.h"
 
 @interface EKNAppDelegate : UIResponder <UIApplicationDelegate>
