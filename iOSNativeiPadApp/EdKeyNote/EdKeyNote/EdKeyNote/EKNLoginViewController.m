@@ -7,6 +7,8 @@
 //
 
 #import "EKNLoginViewController.h"
+#import "EKNPropertyDetailsViewController.h"
+
 @interface EKNLoginViewController ()
 
 @end
@@ -26,6 +28,13 @@ NSString *resourceId;
     }
     return self;
 }
+
+- (void)propertyDetailsButtonAction
+{
+    EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
+    [self.navigationController pushViewController:propertydetailsctrl animated:YES];
+}
+
 - (void)loginButtonAction
 {
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
@@ -84,7 +93,7 @@ NSString *resourceId;
     
     [self performLogin:NO];
     
-    // EKNPropertyDetailsViewController *propertydeatilsctrl = [[EKNPropertyDetailsViewController alloc] init];
+     //EKNPropertyDetailsViewController *propertydeatilsctrl = [[EKNPropertyDetailsViewController alloc] init];
     //[self.navigationController pushViewController:propertydeatilsctrl animated:YES];
 }
 
@@ -99,6 +108,12 @@ NSString *resourceId;
     [login_bt setBackgroundColor:[UIColor redColor]];
     [login_bt addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:login_bt];
+    
+    UIButton *property_details_bt = [[UIButton alloc] initWithFrame:CGRectMake(200, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 150, 40)];
+    [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];
+    [property_details_bt setBackgroundColor:[UIColor redColor]];
+    [property_details_bt addTarget:self action:@selector(propertyDetailsButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:property_details_bt];
     
     // Do any additional setup after loading the view.
 }
