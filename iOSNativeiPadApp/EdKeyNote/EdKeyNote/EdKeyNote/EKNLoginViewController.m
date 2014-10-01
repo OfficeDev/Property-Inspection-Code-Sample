@@ -48,7 +48,7 @@ NSString *resourceId;
         NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"clientID not set. Please update settings for the application."];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
         [alert show];
-        [standardUserDefaults setValue:@"41492250-4c4f-4cf2-9c59-baac51ba67ca" forKey:@"clientId"];
+        [standardUserDefaults setValue:@"e632f423-b906-4d5c-b32d-a6e635f1e685" forKey:@"clientId"];
         [standardUserDefaults synchronize];
     }
     
@@ -74,7 +74,7 @@ NSString *resourceId;
         NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"resourceId not set. Please update settings for the application."];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
         [alert show];
-        [standardUserDefaults setValue:@"https://techedairlift04-admin.spoppe.com" forKey:@"resourceId"];
+        [standardUserDefaults setValue:@"https://techedairlift04.spoppe.com" forKey:@"resourceId"];
         [standardUserDefaults synchronize];
     }
     
@@ -87,14 +87,14 @@ NSString *resourceId;
         NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"redirectUriString not set. Please update settings for the application."];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
         [alert show];
-        [standardUserDefaults setValue:@"/8220c7c1-fa64-452f-87e5-7550c4825312.axd" forKey:@"redirectUriString"];
+        [standardUserDefaults setValue:@"http://iOSiPadApp" forKey:@"redirectUriString"];
         [standardUserDefaults synchronize];
     }
     
     [self performLogin:NO];
     
-     //EKNPropertyDetailsViewController *propertydeatilsctrl = [[EKNPropertyDetailsViewController alloc] init];
-    //[self.navigationController pushViewController:propertydeatilsctrl animated:YES];
+    EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
+    [self.navigationController pushViewController:propertydetailsctrl animated:YES];
 }
 
 - (void)viewDidLoad
@@ -109,11 +109,11 @@ NSString *resourceId;
     [login_bt addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:login_bt];
     
-    UIButton *property_details_bt = [[UIButton alloc] initWithFrame:CGRectMake(200, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 150, 40)];
-    [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];
-    [property_details_bt setBackgroundColor:[UIColor redColor]];
-    [property_details_bt addTarget:self action:@selector(propertyDetailsButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:property_details_bt];
+//    UIButton *property_details_bt = [[UIButton alloc] initWithFrame:CGRectMake(200, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 150, 40)];
+//    [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];
+//    [property_details_bt setBackgroundColor:[UIColor redColor]];
+//    [property_details_bt addTarget:self action:@selector(propertyDetailsButtonAction) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:property_details_bt];
     
     // Do any additional setup after loading the view.
 }
@@ -140,12 +140,6 @@ NSString *resourceId;
     self.resourceId = resourceId;
     self.clientId = clientId;
     self.redirectUriString = redirectUriString;
-    
-    //self.authority = @"https://login.windows-ppe.net/common";
-    //self.resourceId = @"https://techedairlift04-admin.spoppe.com";
-    //self.clientId = @"41492250-4c4f-4cf2-9c59-baac51ba67ca";
-    //self.redirectUriString = @"/8220c7c1-fa64-452f-87e5-7550c4825312.axd";
-    //@"https://lagash.com/oauth";
     
     LoginClient *client = [[LoginClient alloc] initWithParameters:self.clientId
                                                                  :self.redirectUriString
