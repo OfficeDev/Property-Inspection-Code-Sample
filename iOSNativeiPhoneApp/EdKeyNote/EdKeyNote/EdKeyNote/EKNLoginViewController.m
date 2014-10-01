@@ -126,12 +126,10 @@ static int navHieght = 0;
 */
 - (void) performLogin: (BOOL) clearCache{
     
-    self.authority = @"https://login.windows.net/common";
-    self.resourceId = @"https://lagashsystems365.sharepoint.com";//@"https://lagashsystems365-my.sharepoint.com/";
-    self.clientId = @"778a099e-ed6e-49a2-9f15-92c01366ad7d";//@"a31be332-2598-42e6-97f1-d8ac87370367";
-    self.redirectUriString = @"https://lagash.com/oauth";
-    
-
+    self.authority = @"https://login.windows-ppe.net/common";
+    self.resourceId = @"https://techedairlift04.spoppe.com";
+    self.clientId = @"c011a830-f608-4d16-a1bb-57d409de5ecd";
+    self.redirectUriString = @"http://iOSiPhoneApp";
     
     LoginClient *client = [[LoginClient alloc] initWithParameters:self.clientId
                                                                  :self.redirectUriString
