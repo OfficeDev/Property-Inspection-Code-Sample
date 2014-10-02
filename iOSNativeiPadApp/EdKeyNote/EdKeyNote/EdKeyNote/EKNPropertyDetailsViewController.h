@@ -10,6 +10,8 @@
 #import "EKNInspectionData.h"
 @interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
+@property NSMutableArray* SharepointList;
+@property NSString* token;
 
 @property(nonatomic) UILabel *inspectionTitle;
 @property(nonatomic) UILabel *inspectorInfor;
