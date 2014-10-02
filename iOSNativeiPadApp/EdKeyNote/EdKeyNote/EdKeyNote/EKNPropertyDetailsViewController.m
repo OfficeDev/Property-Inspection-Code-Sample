@@ -8,6 +8,10 @@
 
 #import "EKNPropertyDetailsViewController.h"
 
+#import <office365-base-sdk/Credentials.h>
+#import <office365-lists-sdk/ListClient.h>
+#import <office365-base-sdk/OAuthentication.h>
+
 @interface EKNPropertyDetailsViewController ()
 
 @end
@@ -47,9 +51,41 @@
     self.propertyDetailsTableView.dataSource = self;
     [self.view addSubview:self.propertyDetailsTableView];
     
-    
+    [self loadData];
     
     // Do any additional setup after loading the view.
+}
+
+-(void)loadData{
+    
+    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
+    spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:spinner];
+    spinner.hidesWhenStopped = YES;
+    
+    [spinner startAnimating];
+    
+    ListClient* client = [self getClient];
+    
+    NSURLSessionTask* task = [client getLists:^(NSMutableArray *lists, NSError *error) {
+        
+        self.SharepointList  = lists;
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.tableView reloadData];
+//            [spinner stopAnimating];
+//        });
+    }];
+    
+    [task resume];
+}
+
+-(ListClient*)getClient{
+    OAuthentication* authentication = [OAuthentication alloc];
+    [authentication setToken:self.token];
+    
+    return [[ListClient alloc] initWithUrl:@"https://techedairlift04.spoppe.com"
+                               credentials: authentication];
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,7 +118,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    if(tableView == self.propertyDetailsTableView)
    {
-       return 3;
+       //return 3;
+       return [self.SharepointList count];
    }
     return 0;
 }
