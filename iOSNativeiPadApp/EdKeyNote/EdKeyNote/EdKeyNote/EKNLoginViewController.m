@@ -94,6 +94,7 @@ NSString *resourceId;
     [self performLogin:NO];
     
     EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
+    propertydetailsctrl.token = self.token;
     [self.navigationController pushViewController:propertydetailsctrl animated:YES];
 }
 
