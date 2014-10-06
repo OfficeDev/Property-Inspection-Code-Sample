@@ -8,10 +8,6 @@
 
 #import "EKNPropertyDetailsViewController.h"
 
-#import <office365-base-sdk/Credentials.h>
-#import <office365-lists-sdk/ListClient.h>
-#import <office365-base-sdk/OAuthentication.h>
-
 @interface EKNPropertyDetailsViewController ()
 
 @end
@@ -31,8 +27,7 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
-    self.view.backgroundColor = [UIColor colorWithRed:239.00f/255.00f green:239.00f/255.00f blue:244.00f/255.00f alpha:1];
-    
+    self.view.backgroundColor = [UIColor colorWithRed:239.00f/255.00f green:239.00f/255.00f blue:244.00f/255.00f alpha:1];    
     
     UIFont *boldfont = [UIFont fontWithName:@"Helvetica-Bold" size:18];
     NSString *lbl1str = @"PROPERTY DETAILS";
@@ -65,27 +60,19 @@
     
     [spinner startAnimating];
     
-    ListClient* client = [self getClient];
     
-    NSURLSessionTask* task = [client getLists:^(NSMutableArray *lists, NSError *error) {
+    
+    //NSURLSessionTask* task = [client getLists:^(NSMutableArray *lists, NSError *error) {
         
-        self.SharepointList  = lists;
+        //self.SharepointList  = lists;
         
 //        dispatch_async(dispatch_get_main_queue(), ^{
 //            [self.tableView reloadData];
 //            [spinner stopAnimating];
 //        });
-    }];
+    //}];
     
-    [task resume];
-}
-
--(ListClient*)getClient{
-    OAuthentication* authentication = [OAuthentication alloc];
-    [authentication setToken:self.token];
-    
-    return [[ListClient alloc] initWithUrl:@"https://techedairlift04.spoppe.com"
-                               credentials: authentication];
+    //[task resume];
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,8 +105,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    if(tableView == self.propertyDetailsTableView)
    {
-       //return 3;
-       return [self.SharepointList count];
+       return 3;
+       //return [self.SharepointList count];
    }
     return 0;
 }
