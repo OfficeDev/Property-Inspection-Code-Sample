@@ -53,26 +53,54 @@
 
 -(void)loadData{
     
+    //Turn on Spinner
     UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
     spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     [self.view addSubview:spinner];
     spinner.hidesWhenStopped = YES;
-    
     [spinner startAnimating];
     
+    //Replace this URL with SP REST API URL
+    NSString *requestUrl = @"http://api.openweathermap.org/data/2.5/weather?q=london,uk";
     
+    //Add the access token to the Authorization header
+    NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
     
-    //NSURLSessionTask* task = [client getLists:^(NSMutableArray *lists, NSError *error) {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request setValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
+    
+    //Create NSURLSession
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    //Turn on network indicator
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    //Create NSURLSessionDataTask and call REST API
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                      NSURLResponse *response,
+                                                                                      NSError *error) {
+     
+        //Turn off network indicator
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
+        //Turn off spinner
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [spinner stopAnimating];
+        });
+
+        //Handle error
+        if (error != nil) {
+            NSString *errorMessage = [@"Error accessing O365 SharePoint REST APIs. Reason: " stringByAppendingString: error.description];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+            [alert show];
+        }
+                
+        //Process the data and bind to the user interface
+        NSLog(@"%@", data);
         //self.SharepointList  = lists;
-        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.tableView reloadData];
-//            [spinner stopAnimating];
-//        });
-    //}];
+    }];
     
-    //[task resume];
+    [task resume];
 }
 
 - (void)didReceiveMemoryWarning
