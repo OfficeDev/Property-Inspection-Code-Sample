@@ -110,11 +110,11 @@ NSString *resourceId;
     [login_bt addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:login_bt];
     
-//    UIButton *property_details_bt = [[UIButton alloc] initWithFrame:CGRectMake(200, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 150, 40)];
-//    [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];
-//    [property_details_bt setBackgroundColor:[UIColor redColor]];
-//    [property_details_bt addTarget:self action:@selector(propertyDetailsButtonAction) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:property_details_bt];
+    UIButton *property_details_bt = [[UIButton alloc] initWithFrame:CGRectMake(200, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 150, 40)];
+    [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];
+    [property_details_bt setBackgroundColor:[UIColor redColor]];
+    [property_details_bt addTarget:self action:@selector(propertyDetailsButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:property_details_bt];
     
     // Do any additional setup after loading the view.
 }

@@ -27,7 +27,6 @@
 		0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */; };
 		0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */; };
 		3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3006E1F119DA131B00557CE2 /* Settings.bundle */; };
-		30A6876419DDD1D4000D46B7 /* libADALiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30A6876319DDD1D4000D46B7 /* libADALiOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,7 +69,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30A6876419DDD1D4000D46B7 /* libADALiOS.a in Frameworks */,
 				0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */,
 				0E18378919D2692D0049C71E /* liboffice365-base-sdk.a in Frameworks */,
 				0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */,
