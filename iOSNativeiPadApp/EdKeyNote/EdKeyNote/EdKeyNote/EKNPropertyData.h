@@ -17,6 +17,8 @@
 @property(nonatomic) NSString *propertyCity;
 @property(nonatomic) NSString *propertyState;
 @property(nonatomic) NSString *propertyPostalCode;
+@property(nonatomic) NSString *propertyLatitude;
+@property(nonatomic) NSString *propertyLongitude;
 
 -(void)initParameter:(NSNumber* )propertyid
                     Title:(NSString *)title
@@ -25,5 +27,8 @@
                     Adress2:(NSString *)adress2
                     City:(NSString *)city
                     State:(NSString *)state
-                    PostalCode:(NSString *)postalcode;
+                    PostalCode:(NSString *)postalcode
+                    Latitude:(NSString *)latitude
+           Longitude:(NSString *)longitude;
+
 @end

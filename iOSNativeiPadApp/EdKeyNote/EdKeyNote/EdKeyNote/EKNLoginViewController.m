@@ -95,6 +95,9 @@
     
     self.title = @"Login";
     self.navigationController.navigationBar.hidden = YES;
+    UIView *statusbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 20)];
+    statusbar.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
+    [self.view addSubview:statusbar];
     
     UIImageView *header_img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 1024, 71)];
     header_img.image = [UIImage imageNamed:@"navigation_background"];
@@ -142,7 +145,6 @@
     
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

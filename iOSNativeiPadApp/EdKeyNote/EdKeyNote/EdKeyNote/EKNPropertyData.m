@@ -18,6 +18,8 @@
                 City:(NSString *)city
                State:(NSString *)state
           PostalCode:(NSString *)postalcode
+            Latitude:(NSString *)latitude
+           Longitude:(NSString *)longitude
 {
     self.propertyId = propertyid;
     self.propertyTitle = title;
@@ -27,5 +29,7 @@
     self.propertyCity = city;
     self.propertyState = state;
     self.propertyPostalCode = postalcode;
+    self.propertyLatitude = latitude;
+    self.propertyLongitude = longitude;
 }
 @end

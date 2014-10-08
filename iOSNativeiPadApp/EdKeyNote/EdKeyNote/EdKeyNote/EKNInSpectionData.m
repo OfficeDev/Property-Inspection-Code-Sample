@@ -14,14 +14,11 @@
      InspectionTitle:(NSString *)title
   InspectionDateTime:(NSString *)datetime
        InspectorName:(NSString *)name
-   InspectionProperty:(EKNPropertyData *)property
-      InspectionRooms:(EKNRoomData *)rooms
+
 {
     self.inspectionId = inspectionid;
     self.inspectionTitle = title;
     self.inspectionDateTime = datetime;
     self.inspectorName = name;
-    self.inspectionProperty = property;
-    self.inspectionRooms = rooms;
 }
 @end

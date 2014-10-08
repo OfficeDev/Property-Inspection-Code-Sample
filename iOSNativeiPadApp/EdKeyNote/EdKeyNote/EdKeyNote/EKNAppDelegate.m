@@ -28,8 +28,8 @@
     
     
     [self.window makeKeyAndVisible];
-    return YES;
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url

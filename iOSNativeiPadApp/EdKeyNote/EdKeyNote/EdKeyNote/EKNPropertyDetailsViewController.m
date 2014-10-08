@@ -7,12 +7,15 @@
 //
 
 #import "EKNPropertyDetailsViewController.h"
-
+#import "ListClient.h"
+#import <office365-base-sdk/OAuthentication.h>
+#import <BingMaps/BingMaps.h>
 @interface EKNPropertyDetailsViewController ()
 
 @end
 
 @implementation EKNPropertyDetailsViewController
+//@synthesize mapView ;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,18 +30,28 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
-    self.view.backgroundColor = [UIColor colorWithRed:239.00f/255.00f green:239.00f/255.00f blue:244.00f/255.00f alpha:1];    
+    /*self.view.backgroundColor = [UIColor colorWithRed:239.00f/255.00f green:239.00f/255.00f blue:244.00f/255.00f alpha:1];*/
+    self.view.backgroundColor=[UIColor whiteColor];
     
-    UIFont *boldfont = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+    UIView *statusbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 20)];
+    statusbar.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
+    [self.view addSubview:statusbar];
+    
+    UIImageView *header_img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 1024, 71)];
+    header_img.image = [UIImage imageNamed:@"navigation_background"];
+    [self.view addSubview:header_img];
+    
+    
+    UIFont *boldfont = [UIFont fontWithName:@"Helvetica-Bold" size:12];
     NSString *lbl1str = @"PROPERTY DETAILS";
     NSDictionary *attributes = @{NSFontAttributeName:boldfont};
     CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(160/2, 320/2, lbsize.width, lbsize.height)];
+    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(25, 110, lbsize.width, lbsize.height)];
     //lbl1.backgroundColor = [UIColor clearColor];
     lbl1.text = lbl1str;
     lbl1.textAlignment = NSTextAlignmentLeft;
     lbl1.font = boldfont;
-    lbl1.textColor = [UIColor colorWithRed:132.00f/255.00f green:132.00f/255.00f blue:137.00f/255.00f alpha:1];
+    lbl1.textColor = [UIColor colorWithRed:165.00f/255.00f green:165.00f/255.00f blue:165.00f/255.00f alpha:1];
     [self.view addSubview:lbl1];
     
     self.propertyDetailsTableView = [[UITableView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2) style:UITableViewStylePlain];
@@ -46,13 +59,49 @@
     self.propertyDetailsTableView.dataSource = self;
     [self.view addSubview:self.propertyDetailsTableView];
     
+    
+    //cloris comment, because bingmap library does not support arm64
+    /*self.mapView = [[BMMapView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2)];
+    self.mapView.delegate = self;
+    [self.mapView setShowsUserLocation:YES];*/
     [self loadData];
     
     // Do any additional setup after loading the view.
 }
-
 -(void)loadData{
     
+    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
+    spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:spinner];
+    spinner.hidesWhenStopped = YES;
+    
+    [spinner startAnimating];
+    
+    ListClient* client = [self getClient];
+    
+
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Properties" filter:@"$select=ID,Title,sl_owner,sl_address1,sl_address2,sl_city,sl_state,sl_postalCode,sl_latitude,sl_longitude" callback:^(NSMutableArray *listItems, NSError *error) {
+        
+        //self.SharepointList  = lists;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+           // [self.tableView reloadData];
+            [spinner stopAnimating];
+        });
+    }];
+    
+    [task resume];
+}
+
+-(ListClient*)getClient{
+    OAuthentication* authentication = [OAuthentication alloc];
+    [authentication setToken:self.token];
+    
+    return [[ListClient alloc] initWithUrl:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo"
+                               credentials: authentication];
+}
+/*-(void)loadData{
+ 
     //Turn on Spinner
     UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
     spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
@@ -101,7 +150,7 @@
     }];
     
     [task resume];
-}
+}*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -166,7 +215,7 @@
             cell.textLabel.opaque = NO;
             cell.textLabel.textColor = [UIColor blackColor];
             
-            if(indexPath.row == 1)
+            /*if(indexPath.row == 1)
             {
                 
             }
@@ -177,7 +226,7 @@
             [cell.textLabel setNumberOfLines:5];
             
             [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;*/
         }
         return cell;
     }

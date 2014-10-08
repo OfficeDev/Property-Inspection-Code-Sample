@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "EKNRoomData.h"
-#import "EKNPropertyData.h"
+
 @interface EKNInspectionData : NSObject
 
 @property(nonatomic) NSNumber *inspectionId;
@@ -17,14 +16,11 @@
 
 @property(nonatomic) NSString *inspectorName;
 
-@property(nonatomic) EKNPropertyData *inspectionProperty;
-@property(nonatomic) EKNRoomData *inspectionRooms;
+//@property(nonatomic) EKNRoomData *inspectionRooms;
 
 
 -(void)initParameter:(NSNumber* )inspectionid
                InspectionTitle:(NSString *)title
                InspectionDateTime:(NSString *)datetime
-               InspectorName:(NSString *)name
-               InspectionProperty:(EKNPropertyData *)property
-               InspectionRooms:(EKNRoomData *)rooms;
+       InspectorName:(NSString *)name;
 @end
