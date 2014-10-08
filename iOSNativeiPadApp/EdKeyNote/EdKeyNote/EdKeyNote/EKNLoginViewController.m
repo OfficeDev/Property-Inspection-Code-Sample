@@ -94,10 +94,32 @@
     [super viewDidLoad];
     
     self.title = @"Login";
+    self.navigationController.navigationBar.hidden = YES;
     
-    UIButton *login_bt = [[UIButton alloc] initWithFrame:CGRectMake(30, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 100, 40)];
-    [login_bt setTitle:@"Login" forState:UIControlStateNormal];
-    [login_bt setBackgroundColor:[UIColor redColor]];
+    UIImageView *header_img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 1024, 71)];
+    header_img.image = [UIImage imageNamed:@"navigation_background"];
+    [self.view addSubview:header_img];
+    
+    UIImageView *setting_img = [[UIImageView alloc] initWithFrame:CGRectMake(978, 40, 31, 31)];
+    setting_img.image = [UIImage imageNamed:@"setting"];
+    [self.view addSubview:setting_img];
+    
+    UILabel *sign_lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 241, 1024, 40)];
+    sign_lbl.text = @"Sign in to access inspection and property information";
+    sign_lbl.textColor = [UIColor blackColor];
+    sign_lbl.textAlignment = NSTextAlignmentCenter;
+    sign_lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:30];
+    [self.view addSubview:sign_lbl];
+    
+    UIButton *login_bt = [[UIButton alloc] initWithFrame:CGRectMake(247, 441, 530, 110)];
+    login_bt.layer.masksToBounds = YES;
+    login_bt.layer.cornerRadius = 8;
+    login_bt.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:36];
+    login_bt.titleLabel.textAlignment = NSTextAlignmentCenter;
+    login_bt.titleLabel.textColor = [UIColor whiteColor];
+    login_bt.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
+    [login_bt setTitle:@"Sign In" forState:UIControlStateNormal];
+    
     [login_bt addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:login_bt];
     
@@ -105,7 +127,11 @@
     [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];
     [property_details_bt setBackgroundColor:[UIColor redColor]];
     [property_details_bt addTarget:self action:@selector(propertyDetailsButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:property_details_bt];
+    
+    UILabel *footer_lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 732, 1024, 36)];
+    footer_lbl.backgroundColor = [UIColor colorWithRed:(81.00/255.00f) green:(81.00/255.00f) blue:(81.00/255.00f) alpha:1.0];
+    [self.view addSubview:footer_lbl];
+    //[self.view addSubview:property_details_bt];
     
     // Do any additional setup after loading the view.
 }

@@ -27,6 +27,10 @@
 		0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */; };
 		0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */; };
 		3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3006E1F119DA131B00557CE2 /* Settings.bundle */; };
+		F3647BD219E524AE0048AE24 /* navigation_background@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3647BCE19E524AE0048AE24 /* navigation_background@2x~ipad.png */; };
+		F3647BD319E524AE0048AE24 /* navigation_background~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3647BCF19E524AE0048AE24 /* navigation_background~ipad.png */; };
+		F3647BD419E524AE0048AE24 /* setting@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3647BD019E524AE0048AE24 /* setting@2x~ipad.png */; };
+		F3647BD519E524AE0048AE24 /* setting~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3647BD119E524AE0048AE24 /* setting~ipad.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +66,10 @@
 		0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNLoginViewController.m; sourceTree = "<group>"; };
 		3006E1F119DA131B00557CE2 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = EdKeyNote/Settings.bundle; sourceTree = "<group>"; };
 		30A6876319DDD1D4000D46B7 /* libADALiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libADALiOS.a; path = "../ADALiOS/build/Debug-iphoneos/libADALiOS.a"; sourceTree = "<group>"; };
+		F3647BCE19E524AE0048AE24 /* navigation_background@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_background@2x~ipad.png"; sourceTree = "<group>"; };
+		F3647BCF19E524AE0048AE24 /* navigation_background~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_background~ipad.png"; sourceTree = "<group>"; };
+		F3647BD019E524AE0048AE24 /* setting@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@2x~ipad.png"; sourceTree = "<group>"; };
+		F3647BD119E524AE0048AE24 /* setting~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting~ipad.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,12 +167,24 @@
 		0EC4F5C019CFF2C600BEF583 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F3647BCD19E524700048AE24 /* Images */,
 				0EC4F5C119CFF2C600BEF583 /* EdKeyNote-Info.plist */,
 				0EC4F5C219CFF2C600BEF583 /* InfoPlist.strings */,
 				0EC4F5C519CFF2C600BEF583 /* main.m */,
 				0EC4F5C719CFF2C600BEF583 /* EdKeyNote-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F3647BCD19E524700048AE24 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F3647BCE19E524AE0048AE24 /* navigation_background@2x~ipad.png */,
+				F3647BCF19E524AE0048AE24 /* navigation_background~ipad.png */,
+				F3647BD019E524AE0048AE24 /* setting@2x~ipad.png */,
+				F3647BD119E524AE0048AE24 /* setting~ipad.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,8 +246,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EA2D9FA19D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
+				F3647BD519E524AE0048AE24 /* setting~ipad.png in Resources */,
 				0EA2D9FC19D8094400465DA2 /* InfoPlist.strings in Resources */,
 				0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */,
+				F3647BD319E524AE0048AE24 /* navigation_background~ipad.png in Resources */,
+				F3647BD419E524AE0048AE24 /* setting@2x~ipad.png in Resources */,
+				F3647BD219E524AE0048AE24 /* navigation_background@2x~ipad.png in Resources */,
 				0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */,
 				0EC4F5C419CFF2C600BEF583 /* InfoPlist.strings in Resources */,
 				0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */,
