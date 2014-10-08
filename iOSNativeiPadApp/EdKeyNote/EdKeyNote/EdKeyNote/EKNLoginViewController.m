@@ -15,11 +15,6 @@
 
 @implementation EKNLoginViewController
 
-NSString *clientId;
-NSString *redirectUriString;
-NSString *authority;
-NSString *resourceId;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,7 +37,7 @@ NSString *resourceId;
     //Check to see if the clientId setting exists
     if (nil != [standardUserDefaults objectForKey:@"clientId"])
     {
-        clientId = [standardUserDefaults objectForKey:@"clientId"];    }
+        self.clientId = [standardUserDefaults objectForKey:@"clientId"];    }
     else
     {
         NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"clientID not set. Please update settings for the application."];
@@ -55,7 +50,7 @@ NSString *resourceId;
     //Check to see if the authority setting exists
     if (nil != [standardUserDefaults objectForKey:@"authority"])
     {
-        authority = [standardUserDefaults objectForKey:@"authority"];    }
+        self.authority = [standardUserDefaults objectForKey:@"authority"];    }
     else
     {
         NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"authority not set. Please update settings for the application."];
@@ -68,7 +63,7 @@ NSString *resourceId;
     //Check to see if the resourceId setting exists
     if (nil != [standardUserDefaults objectForKey:@"resourceId"])
     {
-        resourceId = [standardUserDefaults objectForKey:@"resourceId"];    }
+        self.resourceId = [standardUserDefaults objectForKey:@"resourceId"];    }
     else
     {
         NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"resourceId not set. Please update settings for the application."];
@@ -81,7 +76,7 @@ NSString *resourceId;
     //Check to see if the redirectUriString setting exists
     if (nil != [standardUserDefaults objectForKey:@"redirectUriString"])
     {
-        redirectUriString = [standardUserDefaults objectForKey:@"redirectUriString"];    }
+        self.redirectUriString = [standardUserDefaults objectForKey:@"redirectUriString"];    }
     else
     {
         NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"redirectUriString not set. Please update settings for the application."];
@@ -92,10 +87,6 @@ NSString *resourceId;
     }
     
     [self performLogin:NO];
-    
-    EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
-    propertydetailsctrl.token = self.token;
-    [self.navigationController pushViewController:propertydetailsctrl animated:YES];
 }
 
 - (void)viewDidLoad
@@ -137,10 +128,6 @@ NSString *resourceId;
 }
 */
 - (void) performLogin: (BOOL) clearCache{
-    self.authority = authority;
-    self.resourceId = resourceId;
-    self.clientId = clientId;
-    self.redirectUriString = redirectUriString;
     
     LoginClient *client = [[LoginClient alloc] initWithParameters:self.clientId
                                                                  :self.redirectUriString
@@ -151,6 +138,9 @@ NSString *resourceId;
         if(e == nil)
         {
             self.token = t;
+            EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
+            propertydetailsctrl.token = self.token;
+            [self.navigationController pushViewController:propertydetailsctrl animated:YES];
         }
         else
         {
