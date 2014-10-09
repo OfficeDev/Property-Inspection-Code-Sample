@@ -9,7 +9,6 @@
 #import "EKNPropertyDetailsViewController.h"
 #import "ListClient.h"
 #import <office365-base-sdk/OAuthentication.h>
-#import <BingMaps/BingMaps.h>
 @interface EKNPropertyDetailsViewController ()
 
 @end

@@ -10,17 +10,14 @@
 #import "EKNInspectionData.h"
 #import "EKNPropertyData.h"
 
-#import <BingMaps/BingMaps.h>
 
-@interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,BMMapViewDelegate>
+@interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 //@property NSMutableArray* SharepointList;
 @property NSString* token;
 
 @property(nonatomic) EKNPropertyData *inspectionProperty;
 
-
-@property(nonatomic) BMMapView *mapView;
 
 @property(nonatomic) UILabel *inspectionTitle;
 @property(nonatomic) UILabel *inspectorInfor;

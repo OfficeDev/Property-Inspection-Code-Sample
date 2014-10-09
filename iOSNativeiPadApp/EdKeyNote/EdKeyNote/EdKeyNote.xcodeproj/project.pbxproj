@@ -16,8 +16,6 @@
 		0E68CEB119DB7A5A00E29C4A /* EKNRoomData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEAD19DB7A5A00E29C4A /* EKNRoomData.m */; };
 		0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA20B1919E549DB007EBF6A /* ListClient.m */; };
 		0EA20B1D19E549DB007EBF6A /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA20B1B19E549DB007EBF6A /* ListItem.m */; };
-		0EA20B2C19E54F4F007EBF6A /* BingMaps.Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0EA20B2A19E54F4F007EBF6A /* BingMaps.Resources.bundle */; };
-		0EA20B2D19E54F4F007EBF6A /* libBingMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EA20B2B19E54F4F007EBF6A /* libBingMaps.a */; };
 		0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA2D9F319D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard */; };
 		0EA2D9FA19D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA2D9F419D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard */; };
 		0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EA2D9F519D8094400465DA2 /* ADALiOSBundle-Info.plist */; };
@@ -54,18 +52,6 @@
 		0EA20B1919E549DB007EBF6A /* ListClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListClient.m; sourceTree = "<group>"; };
 		0EA20B1A19E549DB007EBF6A /* ListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItem.h; sourceTree = "<group>"; };
 		0EA20B1B19E549DB007EBF6A /* ListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListItem.m; sourceTree = "<group>"; };
-		0EA20B2019E54F4F007EBF6A /* BingMaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BingMaps.h; sourceTree = "<group>"; };
-		0EA20B2119E54F4F007EBF6A /* BMEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMEntity.h; sourceTree = "<group>"; };
-		0EA20B2219E54F4F007EBF6A /* BMGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMGeometry.h; sourceTree = "<group>"; };
-		0EA20B2319E54F4F007EBF6A /* BMMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMMapView.h; sourceTree = "<group>"; };
-		0EA20B2419E54F4F007EBF6A /* BMMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMMarker.h; sourceTree = "<group>"; };
-		0EA20B2519E54F4F007EBF6A /* BMMarkerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMMarkerView.h; sourceTree = "<group>"; };
-		0EA20B2619E54F4F007EBF6A /* BMPushpinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPushpinView.h; sourceTree = "<group>"; };
-		0EA20B2719E54F4F007EBF6A /* BMReverseGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMReverseGeocoder.h; sourceTree = "<group>"; };
-		0EA20B2819E54F4F007EBF6A /* BMTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMTypes.h; sourceTree = "<group>"; };
-		0EA20B2919E54F4F007EBF6A /* BMUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMUserLocation.h; sourceTree = "<group>"; };
-		0EA20B2A19E54F4F007EBF6A /* BingMaps.Resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BingMaps.Resources.bundle; sourceTree = "<group>"; };
-		0EA20B2B19E54F4F007EBF6A /* libBingMaps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBingMaps.a; sourceTree = "<group>"; };
 		0EA2D9F319D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ADAL_iPad_Storyboard.storyboard; sourceTree = "<group>"; };
 		0EA2D9F419D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ADAL_iPhone_Storyboard.storyboard; sourceTree = "<group>"; };
 		0EA2D9F519D8094400465DA2 /* ADALiOSBundle-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ADALiOSBundle-Info.plist"; sourceTree = "<group>"; };
@@ -97,7 +83,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0EA20B2D19E54F4F007EBF6A /* libBingMaps.a in Frameworks */,
 				0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */,
 				0E18378919D2692D0049C71E /* liboffice365-base-sdk.a in Frameworks */,
 				0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */,
@@ -135,33 +120,6 @@
 			name = Lists;
 			sourceTree = "<group>";
 		};
-		0EA20B1E19E54F4F007EBF6A /* MapControl */ = {
-			isa = PBXGroup;
-			children = (
-				0EA20B1F19E54F4F007EBF6A /* BingMaps */,
-				0EA20B2A19E54F4F007EBF6A /* BingMaps.Resources.bundle */,
-				0EA20B2B19E54F4F007EBF6A /* libBingMaps.a */,
-			);
-			path = MapControl;
-			sourceTree = "<group>";
-		};
-		0EA20B1F19E54F4F007EBF6A /* BingMaps */ = {
-			isa = PBXGroup;
-			children = (
-				0EA20B2019E54F4F007EBF6A /* BingMaps.h */,
-				0EA20B2119E54F4F007EBF6A /* BMEntity.h */,
-				0EA20B2219E54F4F007EBF6A /* BMGeometry.h */,
-				0EA20B2319E54F4F007EBF6A /* BMMapView.h */,
-				0EA20B2419E54F4F007EBF6A /* BMMarker.h */,
-				0EA20B2519E54F4F007EBF6A /* BMMarkerView.h */,
-				0EA20B2619E54F4F007EBF6A /* BMPushpinView.h */,
-				0EA20B2719E54F4F007EBF6A /* BMReverseGeocoder.h */,
-				0EA20B2819E54F4F007EBF6A /* BMTypes.h */,
-				0EA20B2919E54F4F007EBF6A /* BMUserLocation.h */,
-			);
-			path = BingMaps;
-			sourceTree = "<group>";
-		};
 		0EA2D9F219D8094400465DA2 /* ADALiOSBundle */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,7 +136,6 @@
 		0EC4F5AD19CFF2C600BEF583 = {
 			isa = PBXGroup;
 			children = (
-				0EA20B1E19E54F4F007EBF6A /* MapControl */,
 				3006E1F119DA131B00557CE2 /* Settings.bundle */,
 				0EA2D9F219D8094400465DA2 /* ADALiOSBundle */,
 				0EC4F5BF19CFF2C600BEF583 /* EdKeyNote */,
@@ -309,7 +266,6 @@
 				0EA2D9FA19D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
 				F3647BD519E524AE0048AE24 /* setting~ipad.png in Resources */,
 				0EA2D9FC19D8094400465DA2 /* InfoPlist.strings in Resources */,
-				0EA20B2C19E54F4F007EBF6A /* BingMaps.Resources.bundle in Resources */,
 				0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */,
 				F3647BD319E524AE0048AE24 /* navigation_background~ipad.png in Resources */,
 				F3647BD419E524AE0048AE24 /* setting@2x~ipad.png in Resources */,
@@ -446,7 +402,6 @@
 				GCC_PREFIX_HEADER = "EdKeyNote/EdKeyNote-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					MapControl,
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "EdKeyNote/EdKeyNote-Info.plist";
@@ -476,7 +431,6 @@
 				GCC_PREFIX_HEADER = "EdKeyNote/EdKeyNote-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					MapControl,
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "EdKeyNote/EdKeyNote-Info.plist";
