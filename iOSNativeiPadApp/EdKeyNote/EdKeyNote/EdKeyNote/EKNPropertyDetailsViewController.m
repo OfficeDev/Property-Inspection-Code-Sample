@@ -7,8 +7,9 @@
 //
 
 #import "EKNPropertyDetailsViewController.h"
-#import "ListClient.h"
 #import <office365-base-sdk/OAuthentication.h>
+#import "EKNEKNGlobalInfo.h"
+
 @interface EKNPropertyDetailsViewController ()
 
 @end
@@ -53,45 +54,158 @@
     lbl1.textColor = [UIColor colorWithRed:165.00f/255.00f green:165.00f/255.00f blue:165.00f/255.00f alpha:1];
     [self.view addSubview:lbl1];
     
-    self.propertyDetailsTableView = [[UITableView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2) style:UITableViewStylePlain];
+    /*self.propertyDetailsTableView = [[UITableView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2) style:UITableViewStylePlain];
     self.propertyDetailsTableView.delegate = self;
     self.propertyDetailsTableView.dataSource = self;
-    [self.view addSubview:self.propertyDetailsTableView];
+    [self.view addSubview:self.propertyDetailsTableView];*/
     
-    
-    //cloris comment, because bingmap library does not support arm64
-    /*self.mapView = [[BMMapView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2)];
-    self.mapView.delegate = self;
-    [self.mapView setShowsUserLocation:YES];*/
     [self loadData];
     
     // Do any additional setup after loading the view.
 }
 -(void)loadData{
     
-    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
-    spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [self.view addSubview:spinner];
-    spinner.hidesWhenStopped = YES;
+    self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
+    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:self.spinner];
+    self.spinner.hidesWhenStopped = YES;
     
-    [spinner startAnimating];
+    [self.spinner startAnimating];
     
     ListClient* client = [self getClient];
     
-
-    NSURLSessionTask* task = [client getListItemsByFilter:@"Properties" filter:@"$select=ID,Title,sl_owner,sl_address1,sl_address2,sl_city,sl_state,sl_postalCode,sl_latitude,sl_longitude" callback:^(NSMutableArray *listItems, NSError *error) {
-        
-        //self.SharepointList  = lists;
-        
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Inspections" filter:@"$select=ID,Title,sl_datetime,sl_inspectorID/ID,sl_inspectorID/Title,sl_inspectorID/sl_accountname,sl_inspectorID/sl_emailaddress,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode&$expand=sl_inspectorID,sl_propertyID" callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-           // [self.tableView reloadData];
-            [spinner stopAnimating];
+            
+            
+            self.inspectionsListArray = [[NSMutableArray alloc] init];
+            NSMutableArray *upcomingList = [[NSMutableArray alloc] init];
+            ListItem* currentInspectionData = [[ListItem alloc] init];
+            BOOL bfound=false;
+            self.inspectionsListArray =listItems;
+            for(ListItem* tempitem in listItems)
+            {
+                /*NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
+                EKNPropertyData* pdata = nil;
+                EKNInspectorData *indata = nil;
+                if(pdic!=nil)
+                {
+                    pdata = [[EKNPropertyData alloc] init];
+                    [pdata initParameter:(NSString *)[pdic objectForKey:@"ID"]
+                                   Title:(NSString *)[pdic objectForKey:@"Title"]
+                                   Owner:(NSString *)[pdic objectForKey:@"sl_owner"]
+                                 Adress1:(NSString *)[pdic objectForKey:@"sl_address1"]
+                                 Adress2:(NSString *)[pdic objectForKey:@"sl_address2"]
+                                    City:(NSString *)[pdic objectForKey:@"sl_city"]
+                                   State:(NSString *)[pdic objectForKey:@"sl_state"]
+                              PostalCode:(NSString *)[pdic objectForKey:@"sl_postalCode"]];
+                }
+                NSDictionary * indic = (NSDictionary *)[tempitem getData:@"sl_inspectorID"];
+                if(indic!=nil)
+                {
+                    indata = [[EKNInspectorData alloc] init];
+                    [indata initParameter:(NSString *)[indic objectForKey:@"ID"]
+                           InspectorTitle:(NSString *)[indic objectForKey:@"Title"]
+                     InspectorAccountName:(NSString *)[indic objectForKey:@"sl_accountname"]
+                     InspectorEmailAdress:(NSString *)[indic objectForKey:@"sl_emailaddress"]];
+                }
+                EKNInspectionData * inspectionItem = [[EKNInspectionData alloc] init];
+                [inspectionItem initParameter:(NSString *)[tempitem getData:@"ID"]
+                              InspectionTitle:(NSString *)[tempitem getData:@"Title"]
+                           InspectionDateTime:(NSString *)[tempitem getData:@"sl_datetime"]
+                                InspectorData:indata
+                                 PropertyData:pdata];*/
+                
+                NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
+                if(pdic!=nil)
+                {
+                  if([[pdic objectForKey:@"ID"] intValue] == self.canlendarPrppertyId)
+                  {
+                      bfound = true;
+                      currentInspectionData =tempitem;
+                  }
+                }
+                if(!bfound)
+                {
+                    NSString *tempdatetime =(NSString *)[tempitem getData:@"sl_datetime"];
+                    if(tempdatetime!=nil)
+                    {
+                        NSDate *inspectiondatetime = [EKNEKNGlobalInfo converDateFromString:tempdatetime];
+                        if([inspectiondatetime laterDate:[NSDate date]])
+                        {
+                            [upcomingList addObject:tempitem];
+                        }
+                    }
+                }
+            }
+            //get the right pannel data
+            self.rightPannelListDic = [[NSMutableDictionary alloc] init];
+            [self.rightPannelListDic setObject:currentInspectionData forKey:@"top"];
+            [self.rightPannelListDic setObject:upcomingList forKey:@"bottom"];
+            
+            
+            //get property resource list:
+            [self getPropertyResourceListArray:client];
+
         });
     }];
     
     [task resume];
 }
 
+-(void)getPropertyResourceListArray:(ListClient*)client
+{
+    NSURLSessionTask* getpropertyResourcetask = [client getListItemsByFilter:@"Property%20Photos" filter:@"$select=sl_propertyIDId,Id" callback:^(NSMutableArray *        listItems, NSError *error)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         self.propertyResourceListArray =listItems;
+                                                         
+                                                             [self getPropertyResourceFile:client PropertyResourceItems:listItems];
+                                                     });
+                                                 }];
+    [getpropertyResourcetask resume];
+}
+-(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems
+{
+    NSMutableString* loopindex = [[NSMutableString alloc] initWithString:@"0"];
+    NSMutableArray *loopitems =listItems;
+    
+    for (ListItem* tempitem in loopitems)
+    {
+        NSString *propertyId =(NSString *)[tempitem getData:@"sl_propertyIDId"];
+    
+        NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Property%20Photos"
+                                                                         FileId:(NSString *)[tempitem getData:@"ID"]
+                                                                         filter:@"$select=ServerRelativeUrl"
+                                                                       callback:^(NSMutableArray *listItems, NSError *error)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                        int preindex = [loopindex intValue];
+                                                         preindex++;
+                                                         
+                                                         if([listItems count]>0)
+                                                         {
+                                                             [self.propertyPhotoDic setObject:[listItems[0] getData:@"ServerRelativeUrl"] forKey:propertyId];
+                                                         }
+                                                        NSLog(@"propertyId %@",propertyId);
+                                                         if(preindex == [loopitems count])
+                                                         {
+                                                             //get left pannel data
+                                                             self.leftPannelDict =[[NSMutableDictionary alloc] init];
+                                                             [self.spinner stopAnimating];
+                                                             
+                                                             
+                                                         }
+                                                         [loopindex setString:[NSString stringWithFormat:@"%d",preindex]];
+                                                         NSLog(@"loopindex %@",loopindex);
+                                                        
+ 
+                                                     });
+                                                     
+                                                 }];
+        [getFileResourcetask resume];
+    }
+}
 -(ListClient*)getClient{
     OAuthentication* authentication = [OAuthentication alloc];
     [authentication setToken:self.token];
@@ -109,7 +223,7 @@
     [spinner startAnimating];
     
     //Replace this URL with SP REST API URL
-    NSString *requestUrl = @"http://api.openweathermap.org/data/2.5/weather?q=london,uk";
+    NSString *requestUrl = @"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo/_api/lists/GetByTitle('Inspections')/Items$select=ID,Title";
     
     //Add the access token to the Authorization header
     NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
@@ -149,8 +263,8 @@
     }];
     
     [task resume];
-}*/
-
+}
+*/
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

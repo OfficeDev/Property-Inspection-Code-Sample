@@ -11,4 +11,5 @@
 @interface EKNEKNGlobalInfo : UIViewController
 + (void)saveData:(NSString *)key content:(NSDictionary *)value;
 + (NSDictionary *)loadData:(NSString *)key;
++(NSDate *)converDateFromString:(NSString *)stringdate;
 @end

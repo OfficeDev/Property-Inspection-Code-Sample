@@ -7,17 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EKNInspectionData.h"
-#import "EKNPropertyData.h"
+#import "ListClient.h"
+#import "ListItem.h"
 
 
-@interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface EKNPropertyDetailsViewController : UIViewController/*<UITableViewDelegate, UITableViewDataSource>*/
 
 //@property NSMutableArray* SharepointList;
-@property NSString* token;
+@property int canlendarPrppertyId;
+@property(nonatomic) NSString* token;
 
-@property(nonatomic) EKNPropertyData *inspectionProperty;
+//all inspections list
+@property(nonatomic) NSMutableArray *inspectionsListArray;
+//current and upcoming inspections dict
+@property(nonatomic) NSMutableDictionary *rightPannelListDic;
+//left dict,property id is key
+@property(nonatomic) NSMutableDictionary *leftPannelDict;
+//property Resources list
+@property(nonatomic) NSMutableArray *propertyResourceListArray;
 
+//key is propery Id
+@property(nonatomic) NSMutableDictionary *propertyPhotoDic;
+
+@property(nonatomic) UIActivityIndicatorView* spinner;
 
 @property(nonatomic) UILabel *inspectionTitle;
 @property(nonatomic) UILabel *inspectorInfor;
@@ -29,4 +41,6 @@
 @property(nonatomic) NSInteger currentSelectIndex;
 @property(nonatomic) NSMutableArray *inspectionHistory;
 -(void)initParameter:(NSMutableArray *)historyarray;
+-(void)getPropertyResourceListArray:(ListClient*)client;
+-(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems;
 @end

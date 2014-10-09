@@ -7,19 +7,20 @@
 //
 
 #import "EKNAppDelegate.h"
-
+#import "EKNPropertyDetailsViewController.h"
 
 @implementation EKNAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"EKNAppDelegate %d",(int)[[UIApplication sharedApplication] statusBarOrientation]);
+   
     
     self.window = [[UIWindow alloc] initWithFrame:
                    [[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    self.viewController = [[EKNLoginViewController alloc] init];
+    self.viewController =[[EKNLoginViewController alloc] init];
+    /*self.viewController = [[EKNPropertyDetailsViewController alloc] init];*/
     self.naviController = [[UINavigationController alloc]
                            initWithRootViewController:self.viewController];
     

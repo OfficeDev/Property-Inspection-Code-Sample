@@ -1,4 +1,4 @@
- //
+  //
 //  ListClient.m
 //  office365-lists-sdk
 //
@@ -43,16 +43,29 @@ const NSString *apiUrl = @"/_api/lists";
     
     return [connection execute:method callback:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSMutableArray *array = [NSMutableArray array];
-        NSLog(@"getListItemsByFilter %@",data);
         NSMutableArray *listsItemsArray =[self parseDataArray: data];
         for (NSDictionary* value in listsItemsArray) {
             [array addObject: [[ListItem alloc] initWithDictionary:value]];
         }
-        
         callback(array ,error);
     }];
 }
-
+- (NSURLSessionDataTask *)getListItemFileByFilter:(NSString *)name FileId:(NSString *)fileId filter:(NSString *)filter callback:(void (^)(NSMutableArray *listItems, NSError *))callback{
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items(%@)/File?%@", self.Url , apiUrl, [name urlencode],fileId,filter];
+    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential url:url];
+    
+    NSString *method = (NSString*)[[Constants alloc] init].Method_Get;
+    
+    return [connection execute:method callback:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSMutableArray *array = [NSMutableArray array];
+        NSMutableArray *listsItemsArray =[self parseDataArray: data];
+        for (NSDictionary* value in listsItemsArray) {
+            [array addObject: [[ListItem alloc] initWithDictionary:value]];
+        }
+        callback(array ,error);
+    }];
+}
 
 /*
  NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
@@ -131,7 +144,7 @@ const NSString *apiUrl = @"/_api/lists";
 
 - (NSData*) sanitizeJson : (NSData*) data{
     NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-    
+    NSLog(@"dataString:%@",dataString);
     NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
     
     NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];

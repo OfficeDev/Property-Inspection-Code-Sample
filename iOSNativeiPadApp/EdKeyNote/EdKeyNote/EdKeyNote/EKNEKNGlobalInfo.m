@@ -24,4 +24,11 @@
     NSDictionary *dir = [SaveDefaults objectForKey:key];
     return dir;
 }
++(NSDate *)converDateFromString:(NSString *)stringdate
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    NSDate *ret =[formatter dateFromString:stringdate];
+    return ret;
+}
 @end
