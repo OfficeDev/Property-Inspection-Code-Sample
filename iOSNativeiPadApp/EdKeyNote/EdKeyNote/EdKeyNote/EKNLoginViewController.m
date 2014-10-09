@@ -8,6 +8,7 @@
 
 #import "EKNLoginViewController.h"
 #import "EKNPropertyDetailsViewController.h"
+#import "EKNRoomDetailsViewController.h"
 
 @interface EKNLoginViewController ()
 
@@ -28,6 +29,12 @@
 {
     EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
     [self.navigationController pushViewController:propertydetailsctrl animated:YES];
+}
+
+- (void)roomDetailsButtonAction
+{
+    EKNRoomDetailsViewController *roomDetail = [[EKNRoomDetailsViewController alloc] init];
+    [self.navigationController pushViewController:roomDetail animated:NO];
 }
 
 - (void)loginButtonAction
@@ -125,6 +132,13 @@
     
     [login_bt addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:login_bt];
+    
+    UIButton *roomDetail = [[UIButton alloc] initWithFrame:CGRectMake(247, 571, 150, 40)];
+    [roomDetail setTitle:@"Room Detail" forState:UIControlStateNormal];
+    [roomDetail setBackgroundColor:[UIColor blackColor]];
+    [roomDetail addTarget:self action:@selector(roomDetailsButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:roomDetail];
+    
     
     UIButton *property_details_bt = [[UIButton alloc] initWithFrame:CGRectMake(200, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 150, 40)];
     [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];

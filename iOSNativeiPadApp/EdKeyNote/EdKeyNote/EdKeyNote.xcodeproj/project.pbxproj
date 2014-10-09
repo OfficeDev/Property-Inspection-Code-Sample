@@ -33,6 +33,13 @@
 		F3647BD319E524AE0048AE24 /* navigation_background~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3647BCF19E524AE0048AE24 /* navigation_background~ipad.png */; };
 		F3647BD419E524AE0048AE24 /* setting@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3647BD019E524AE0048AE24 /* setting@2x~ipad.png */; };
 		F3647BD519E524AE0048AE24 /* setting~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3647BD119E524AE0048AE24 /* setting~ipad.png */; };
+		F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */; };
+		F3D2B22319E66DB000069182 /* dropdown_arrow~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3D2B21D19E66DB000069182 /* dropdown_arrow~ipad.png */; };
+		F3D2B22419E66DB000069182 /* dropdown_arrow@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3D2B21E19E66DB000069182 /* dropdown_arrow@2x~ipad.png */; };
+		F3D2B22519E66DB000069182 /* demo_room~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3D2B21F19E66DB000069182 /* demo_room~ipad.png */; };
+		F3D2B22619E66DB000069182 /* demo_room@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3D2B22019E66DB000069182 /* demo_room@2x~ipad.png */; };
+		F3D2B22719E66DB000069182 /* camera~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3D2B22119E66DB000069182 /* camera~ipad.png */; };
+		F3D2B22819E66DB000069182 /* camera@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3D2B22219E66DB000069182 /* camera@2x~ipad.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +83,14 @@
 		F3647BCF19E524AE0048AE24 /* navigation_background~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_background~ipad.png"; sourceTree = "<group>"; };
 		F3647BD019E524AE0048AE24 /* setting@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@2x~ipad.png"; sourceTree = "<group>"; };
 		F3647BD119E524AE0048AE24 /* setting~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting~ipad.png"; sourceTree = "<group>"; };
+		F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNRoomDetailsViewController.h; sourceTree = "<group>"; };
+		F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNRoomDetailsViewController.m; sourceTree = "<group>"; };
+		F3D2B21D19E66DB000069182 /* dropdown_arrow~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropdown_arrow~ipad.png"; sourceTree = "<group>"; };
+		F3D2B21E19E66DB000069182 /* dropdown_arrow@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropdown_arrow@2x~ipad.png"; sourceTree = "<group>"; };
+		F3D2B21F19E66DB000069182 /* demo_room~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "demo_room~ipad.png"; sourceTree = "<group>"; };
+		F3D2B22019E66DB000069182 /* demo_room@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "demo_room@2x~ipad.png"; sourceTree = "<group>"; };
+		F3D2B22119E66DB000069182 /* camera~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera~ipad.png"; sourceTree = "<group>"; };
+		F3D2B22219E66DB000069182 /* camera@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x~ipad.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +183,7 @@
 		0EC4F5BF19CFF2C600BEF583 /* EdKeyNote */ = {
 			isa = PBXGroup;
 			children = (
+				F3D2B21919E633D800069182 /* Room Detail page */,
 				0EA20B1719E549BD007EBF6A /* Lists */,
 				0E68CEB219DB7A6600E29C4A /* Property Detail page */,
 				0EC4F5C819CFF2C600BEF583 /* EKNAppDelegate.h */,
@@ -197,12 +213,27 @@
 		F3647BCD19E524700048AE24 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F3D2B21D19E66DB000069182 /* dropdown_arrow~ipad.png */,
+				F3D2B21E19E66DB000069182 /* dropdown_arrow@2x~ipad.png */,
+				F3D2B21F19E66DB000069182 /* demo_room~ipad.png */,
+				F3D2B22019E66DB000069182 /* demo_room@2x~ipad.png */,
+				F3D2B22119E66DB000069182 /* camera~ipad.png */,
+				F3D2B22219E66DB000069182 /* camera@2x~ipad.png */,
 				F3647BCE19E524AE0048AE24 /* navigation_background@2x~ipad.png */,
 				F3647BCF19E524AE0048AE24 /* navigation_background~ipad.png */,
 				F3647BD019E524AE0048AE24 /* setting@2x~ipad.png */,
 				F3647BD119E524AE0048AE24 /* setting~ipad.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		F3D2B21919E633D800069182 /* Room Detail page */ = {
+			isa = PBXGroup;
+			children = (
+				F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */,
+				F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */,
+			);
+			name = "Room Detail page";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,13 +294,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3D2B22519E66DB000069182 /* demo_room~ipad.png in Resources */,
 				0EA2D9FA19D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
+				F3D2B22619E66DB000069182 /* demo_room@2x~ipad.png in Resources */,
+				F3D2B22319E66DB000069182 /* dropdown_arrow~ipad.png in Resources */,
 				F3647BD519E524AE0048AE24 /* setting~ipad.png in Resources */,
 				0EA2D9FC19D8094400465DA2 /* InfoPlist.strings in Resources */,
 				0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */,
+				F3D2B22719E66DB000069182 /* camera~ipad.png in Resources */,
 				F3647BD319E524AE0048AE24 /* navigation_background~ipad.png in Resources */,
 				F3647BD419E524AE0048AE24 /* setting@2x~ipad.png in Resources */,
 				F3647BD219E524AE0048AE24 /* navigation_background@2x~ipad.png in Resources */,
+				F3D2B22819E66DB000069182 /* camera@2x~ipad.png in Resources */,
+				F3D2B22419E66DB000069182 /* dropdown_arrow@2x~ipad.png in Resources */,
 				0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */,
 				0EC4F5C419CFF2C600BEF583 /* InfoPlist.strings in Resources */,
 				0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */,
@@ -288,6 +325,7 @@
 				0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */,
 				0E68CEAF19DB7A5A00E29C4A /* EKNPropertyData.m in Sources */,
 				0E68CEB119DB7A5A00E29C4A /* EKNRoomData.m in Sources */,
+				F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */,
 				0EC4F5C619CFF2C600BEF583 /* main.m in Sources */,
 				0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */,
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
@@ -396,8 +434,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EdKeyNote/EdKeyNote-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -425,8 +463,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EdKeyNote/EdKeyNote-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
