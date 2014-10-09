@@ -158,7 +158,7 @@
     NSURLSessionTask* getpropertyResourcetask = [client getListItemsByFilter:@"Property%20Photos" filter:@"$select=sl_propertyIDId,Id" callback:^(NSMutableArray *        listItems, NSError *error)
                                                  {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         self.propertyResourceListArray =listItems;
+                                                         //self.propertyResourceListArray =listItems;
                                                          
                                                              [self getPropertyResourceFile:client PropertyResourceItems:listItems];
                                                      });
@@ -169,7 +169,7 @@
 {
     NSMutableString* loopindex = [[NSMutableString alloc] initWithString:@"0"];
     NSMutableArray *loopitems =listItems;
-    
+    self.propertyPhotoDic = [[NSMutableDictionary alloc] init];
     for (ListItem* tempitem in loopitems)
     {
         NSString *propertyId =(NSString *)[tempitem getData:@"sl_propertyIDId"];
@@ -185,8 +185,9 @@
                                                          
                                                          if([listItems count]>0)
                                                          {
-                                                             [self.propertyPhotoDic setObject:[listItems[0] getData:@"ServerRelativeUrl"] forKey:propertyId];
+                                                             [self.propertyPhotoDic setObject:[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"] forKey:propertyId];
                                                          }
+                                                         
                                                         NSLog(@"propertyId %@",propertyId);
                                                          if(preindex == [loopitems count])
                                                          {

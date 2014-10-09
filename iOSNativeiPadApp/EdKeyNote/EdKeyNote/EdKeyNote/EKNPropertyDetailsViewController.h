@@ -23,9 +23,6 @@
 @property(nonatomic) NSMutableDictionary *rightPannelListDic;
 //left dict,property id is key
 @property(nonatomic) NSMutableDictionary *leftPannelDict;
-//property Resources list
-@property(nonatomic) NSMutableArray *propertyResourceListArray;
-
 //key is propery Id
 @property(nonatomic) NSMutableDictionary *propertyPhotoDic;
 
