@@ -211,7 +211,9 @@
     OAuthentication* authentication = [OAuthentication alloc];
     [authentication setToken:self.token];
     
-    return [[ListClient alloc] initWithUrl:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo"
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    return [[ListClient alloc] initWithUrl:[standardUserDefaults objectForKey:@"demoSiteCollectionUrl"]
                                credentials: authentication];
 }
 /*-(void)loadData{

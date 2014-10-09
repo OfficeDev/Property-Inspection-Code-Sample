@@ -17,6 +17,7 @@
 @property (strong, nonatomic)NSString* redirectUriString;
 @property (strong, nonatomic)NSString* resourceId;
 @property (strong, nonatomic)NSString* clientId;
+@property (strong, nonatomic)NSString* demoSiteCollectionUrl;
 @property (strong, nonatomic)Credentials* credentials;
 @property (strong, nonatomic)NSString* token;
 @end

@@ -86,6 +86,20 @@
         [standardUserDefaults synchronize];
     }
     
+    //Check to see if the demoSiteCollectionUrl setting exists
+        if (nil != [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"])
+        {
+            self.redirectUriString = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];    }
+        else
+        {
+            NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"demoSiteCollectionUrl not set. Please update settings for the application."];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+            [alert show];
+            [standardUserDefaults setValue:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
+            [standardUserDefaults synchronize];
+        }
+    
+    
     [self performLogin:NO];
 }
 
