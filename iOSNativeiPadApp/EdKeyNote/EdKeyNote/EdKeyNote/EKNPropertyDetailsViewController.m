@@ -59,6 +59,10 @@
     self.propertyDetailsTableView.dataSource = self;
     [self.view addSubview:self.propertyDetailsTableView];*/
     
+    UIView *leftview = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
+    leftview.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:leftview];
+    
     UIImageView *speratorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
     speratorline.image = [UIImage imageNamed:@"sepratorline"];
     [self.view addSubview:speratorline];

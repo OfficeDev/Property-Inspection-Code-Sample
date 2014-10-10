@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "EKN+UIImagePickerController.h"
 @interface EKNRoomDetailsViewController : UIViewController<UIActionSheetDelegate, UIImagePickerControllerDelegate>
 
 @property(retain,nonatomic) UIView *incidentCommentPopupView;

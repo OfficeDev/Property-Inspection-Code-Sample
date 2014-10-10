@@ -29,6 +29,7 @@
 		0EADF93F19E79F9200E1DE77 /* setting~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF93519E79F9200E1DE77 /* setting~ipad.png */; };
 		0EADF94419E7A3AF00E1DE77 /* sepratorline@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF94219E7A3AF00E1DE77 /* sepratorline@2x~ipad.png */; };
 		0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF94319E7A3AF00E1DE77 /* sepratorline~ipad.png */; };
+		0EADF94819E7AD2A00E1DE77 /* EKN+UIImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */; };
 		0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
 		0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
 		0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
@@ -69,6 +70,8 @@
 		0EADF93519E79F9200E1DE77 /* setting~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting~ipad.png"; sourceTree = "<group>"; };
 		0EADF94219E7A3AF00E1DE77 /* sepratorline@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sepratorline@2x~ipad.png"; sourceTree = "<group>"; };
 		0EADF94319E7A3AF00E1DE77 /* sepratorline~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sepratorline~ipad.png"; sourceTree = "<group>"; };
+		0EADF94619E7AD2A00E1DE77 /* EKN+UIImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EKN+UIImagePickerController.h"; sourceTree = "<group>"; };
+		0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EKN+UIImagePickerController.m"; sourceTree = "<group>"; };
 		0EC4F5B619CFF2C600BEF583 /* EdKeyNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EdKeyNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -223,6 +226,8 @@
 			children = (
 				F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */,
 				F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */,
+				0EADF94619E7AD2A00E1DE77 /* EKN+UIImagePickerController.h */,
+				0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */,
 			);
 			name = "Room Detail page";
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EADF94819E7AD2A00E1DE77 /* EKN+UIImagePickerController.m in Sources */,
 				0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */,
 				0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */,
 				F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */,

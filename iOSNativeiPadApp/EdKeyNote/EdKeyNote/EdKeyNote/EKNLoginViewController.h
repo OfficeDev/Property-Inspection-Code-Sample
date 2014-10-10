@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import <office365-base-sdk/Credentials.h>
 #import <office365-base-sdk/LoginClient.h>
 
