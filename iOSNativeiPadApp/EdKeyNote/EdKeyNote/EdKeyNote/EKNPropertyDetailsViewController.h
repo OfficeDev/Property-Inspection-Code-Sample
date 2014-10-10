@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ListClient.h"
 #import "ListItem.h"
-
+#import "EKN+UIViewController.h"
 
 @interface EKNPropertyDetailsViewController : UIViewController/*<UITableViewDelegate, UITableViewDataSource>*/
 

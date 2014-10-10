@@ -30,6 +30,8 @@
 		0EADF94419E7A3AF00E1DE77 /* sepratorline@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF94219E7A3AF00E1DE77 /* sepratorline@2x~ipad.png */; };
 		0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF94319E7A3AF00E1DE77 /* sepratorline~ipad.png */; };
 		0EADF94819E7AD2A00E1DE77 /* EKN+UIImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */; };
+		0EADF95119E7C2B900E1DE77 /* EKN+NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF95019E7C2B900E1DE77 /* EKN+NavigationController.m */; };
+		0EADF95419E7C36E00E1DE77 /* EKN+UIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF95319E7C36E00E1DE77 /* EKN+UIViewController.m */; };
 		0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
 		0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
 		0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
@@ -72,6 +74,10 @@
 		0EADF94319E7A3AF00E1DE77 /* sepratorline~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sepratorline~ipad.png"; sourceTree = "<group>"; };
 		0EADF94619E7AD2A00E1DE77 /* EKN+UIImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EKN+UIImagePickerController.h"; sourceTree = "<group>"; };
 		0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EKN+UIImagePickerController.m"; sourceTree = "<group>"; };
+		0EADF94F19E7C2B900E1DE77 /* EKN+NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EKN+NavigationController.h"; sourceTree = "<group>"; };
+		0EADF95019E7C2B900E1DE77 /* EKN+NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EKN+NavigationController.m"; sourceTree = "<group>"; };
+		0EADF95219E7C36E00E1DE77 /* EKN+UIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EKN+UIViewController.h"; sourceTree = "<group>"; };
+		0EADF95319E7C36E00E1DE77 /* EKN+UIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EKN+UIViewController.m"; sourceTree = "<group>"; };
 		0EC4F5B619CFF2C600BEF583 /* EdKeyNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EdKeyNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -159,6 +165,19 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		0EADF95519E7C48600E1DE77 /* UIViewControllerEX */ = {
+			isa = PBXGroup;
+			children = (
+				0EADF95219E7C36E00E1DE77 /* EKN+UIViewController.h */,
+				0EADF95319E7C36E00E1DE77 /* EKN+UIViewController.m */,
+				0EADF94F19E7C2B900E1DE77 /* EKN+NavigationController.h */,
+				0EADF95019E7C2B900E1DE77 /* EKN+NavigationController.m */,
+				0EADF94619E7AD2A00E1DE77 /* EKN+UIImagePickerController.h */,
+				0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */,
+			);
+			name = UIViewControllerEX;
+			sourceTree = "<group>";
+		};
 		0EC4F5AD19CFF2C600BEF583 = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +213,7 @@
 		0EC4F5BF19CFF2C600BEF583 /* EdKeyNote */ = {
 			isa = PBXGroup;
 			children = (
+				0EADF95519E7C48600E1DE77 /* UIViewControllerEX */,
 				F3D2B21919E633D800069182 /* Room Detail page */,
 				0EA20B1719E549BD007EBF6A /* Lists */,
 				0E68CEB219DB7A6600E29C4A /* Property Detail page */,
@@ -226,8 +246,6 @@
 			children = (
 				F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */,
 				F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */,
-				0EADF94619E7AD2A00E1DE77 /* EKN+UIImagePickerController.h */,
-				0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */,
 			);
 			name = "Room Detail page";
 			sourceTree = "<group>";
@@ -321,8 +339,10 @@
 			files = (
 				0EADF94819E7AD2A00E1DE77 /* EKN+UIImagePickerController.m in Sources */,
 				0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */,
+				0EADF95119E7C2B900E1DE77 /* EKN+NavigationController.m in Sources */,
 				0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */,
 				F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */,
+				0EADF95419E7C36E00E1DE77 /* EKN+UIViewController.m in Sources */,
 				0EC4F5C619CFF2C600BEF583 /* main.m in Sources */,
 				0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */,
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,

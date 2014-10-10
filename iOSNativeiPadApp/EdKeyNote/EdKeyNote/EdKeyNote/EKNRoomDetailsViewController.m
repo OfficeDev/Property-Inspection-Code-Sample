@@ -104,10 +104,16 @@
 {
     if(buttonIndex == 0 && self.cameraIsAvailable)//take new photo
     {
-        [self openCamera];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self openCamera];
+        }];
     }else if(buttonIndex == 1)//select photo library
     {
-        [self selectPicture];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self selectPicture];
+        }];
+        
     }
 }
 

@@ -19,15 +19,11 @@
                    [[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    self.viewController =[[EKNLoginViewController alloc] init];
-    /*self.viewController = [[EKNPropertyDetailsViewController alloc] init];*/
     self.naviController = [[UINavigationController alloc]
-                           initWithRootViewController:self.viewController];
+                           initWithRootViewController:[[EKNLoginViewController alloc] init]];
     
     self.window.rootViewController = self.naviController;
 
-    
-    
     [self.window makeKeyAndVisible];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -64,7 +60,7 @@
 
 -(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskAll;//important for uiimagepickercontroller
 }
 
 

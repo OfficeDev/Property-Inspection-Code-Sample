@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "EKNLoginViewController.h"
-
+#import "EKN+NavigationController.h"
 @interface EKNAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) EKNLoginViewController *viewController;
 @property (strong, nonatomic) UINavigationController *naviController;
 
 @end

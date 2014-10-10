@@ -54,11 +54,6 @@
     lbl1.textColor = [UIColor colorWithRed:165.00f/255.00f green:165.00f/255.00f blue:165.00f/255.00f alpha:1];
     [self.view addSubview:lbl1];
     
-    /*self.propertyDetailsTableView = [[UITableView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2) style:UITableViewStylePlain];
-    self.propertyDetailsTableView.delegate = self;
-    self.propertyDetailsTableView.dataSource = self;
-    [self.view addSubview:self.propertyDetailsTableView];*/
-    
     UIView *leftview = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
     leftview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:leftview];
@@ -66,6 +61,12 @@
     UIImageView *speratorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
     speratorline.image = [UIImage imageNamed:@"sepratorline"];
     [self.view addSubview:speratorline];
+    
+    
+    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2) style:UITableViewStylePlain];
+     self.propertyDetailsTableView.delegate = self;
+     self.propertyDetailsTableView.dataSource = self;
+     [self.view addSubview:self.propertyDetailsTableView];
     
     
     //[self loadData];

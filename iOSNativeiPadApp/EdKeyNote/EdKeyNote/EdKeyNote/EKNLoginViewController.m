@@ -108,7 +108,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    NSLog(@"%f,%f",self.view.frame.size.width,self.view.frame.size.height);
     self.title = @"Login";
     self.navigationController.navigationBar.hidden = YES;
     UIView *statusbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 20)];
