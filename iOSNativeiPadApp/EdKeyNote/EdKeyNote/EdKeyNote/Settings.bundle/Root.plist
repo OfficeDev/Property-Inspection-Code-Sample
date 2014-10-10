@@ -16,7 +16,7 @@
 			<key>AutocorrectionType</key>
 			<string>No</string>
 			<key>DefaultValue</key>
-			<string>enter your clientId</string>
+			<string></string>
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>
@@ -34,7 +34,7 @@
 			<key>AutocorrectionType</key>
 			<string>No</string>
 			<key>DefaultValue</key>
-			<string>https://</string>
+			<string></string>
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>
@@ -52,7 +52,7 @@
 			<key>AutocorrectionType</key>
 			<string>No</string>
 			<key>DefaultValue</key>
-			<string>https://</string>
+			<string></string>
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>
@@ -70,7 +70,7 @@
 			<key>AutocorrectionType</key>
 			<string>No</string>
 			<key>DefaultValue</key>
-			<string>https://</string>
+			<string></string>
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>
@@ -79,6 +79,24 @@
 			<string>URL</string>
 			<key>Title</key>
 			<string>redirectUriString</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>IsSecure</key>
+			<false/>
+			<key>Key</key>
+			<string>demoSiteCollectionUrl</string>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>Title</key>
+			<string>demoSiteCollectionUrl</string>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 		</dict>
