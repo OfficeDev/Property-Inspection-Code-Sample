@@ -15,18 +15,22 @@
 
 //@property NSMutableArray* SharepointList;
 @property int canlendarPrppertyId;
+@property(nonatomic) NSString* loginName;
 @property(nonatomic) NSString* token;
 
 //all inspections list
 @property(nonatomic) NSMutableArray *inspectionsListArray;
 //current and upcoming inspections dict
 @property(nonatomic) NSMutableDictionary *rightPannelListDic;
-//left dict,property id is key
-@property(nonatomic) NSMutableDictionary *leftPannelDict;
-//key is propery Id
-@property(nonatomic) NSMutableDictionary *propertyPhotoDic;
+//key is propery Id, use to story property Resource and incidents
+@property(nonatomic) NSMutableDictionary *propertyDic;
+
 
 @property(nonatomic) UIActivityIndicatorView* spinner;
+@property(nonatomic) UITableView * rightTableView;
+@property(nonatomic) NSIndexPath * rightIndexPath;
+
+
 
 @property(nonatomic) UILabel *inspectionTitle;
 @property(nonatomic) UILabel *inspectorInfor;
@@ -35,9 +39,11 @@
 @property(nonatomic) UITableView * inspectionTableView;
 @property(nonatomic) UITableView * roomsTableView;
 
-@property(nonatomic) NSInteger currentSelectIndex;
-@property(nonatomic) NSMutableArray *inspectionHistory;
--(void)initParameter:(NSMutableArray *)historyarray;
+
+
+
+
 -(void)getPropertyResourceListArray:(ListClient*)client;
 -(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems;
+-(void)getIncidentsListArray:(ListClient*)client;
 @end

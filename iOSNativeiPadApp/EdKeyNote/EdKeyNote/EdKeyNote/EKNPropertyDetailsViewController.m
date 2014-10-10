@@ -65,6 +65,8 @@
 }
 -(void)loadData{
     
+    self.canlendarPrppertyId = 1;//for test
+    
     self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
     self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     [self.view addSubview:self.spinner];
@@ -169,10 +171,11 @@
 {
     NSMutableString* loopindex = [[NSMutableString alloc] initWithString:@"0"];
     NSMutableArray *loopitems =listItems;
-    self.propertyPhotoDic = [[NSMutableDictionary alloc] init];
+    self.propertyDic = [[NSMutableDictionary alloc] init];
+    
     for (ListItem* tempitem in loopitems)
     {
-        NSString *propertyId =(NSString *)[tempitem getData:@"sl_propertyIDId"];
+        NSString *propertyId =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_propertyIDId"]];
     
         NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Property%20Photos"
                                                                          FileId:(NSString *)[tempitem getData:@"ID"]
@@ -185,16 +188,17 @@
                                                          
                                                          if([listItems count]>0)
                                                          {
-                                                             [self.propertyPhotoDic setObject:[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"] forKey:propertyId];
+                                                             NSMutableDictionary *propertyData =[[NSMutableDictionary alloc] init];
+                                                             [propertyData setObject:[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"] forKey:@"ServerRelativeUrl"];
+                                                             
+                                                             [self.propertyDic setObject:propertyData forKey:propertyId];
                                                          }
                                                          
                                                         NSLog(@"propertyId %@",propertyId);
                                                          if(preindex == [loopitems count])
                                                          {
-                                                             //get left pannel data
-                                                             self.leftPannelDict =[[NSMutableDictionary alloc] init];
-                                                             [self.spinner stopAnimating];
-                                                             
+                                                             //get Incidents list
+                                                             [self getIncidentsListArray:client];
                                                              
                                                          }
                                                          [loopindex setString:[NSString stringWithFormat:@"%d",preindex]];
@@ -206,6 +210,72 @@
                                                  }];
         [getFileResourcetask resume];
     }
+}
+-(void)getIncidentsListArray:(ListClient*)client
+{
+    NSURLSessionTask* getincidentstask = [client getListItemsByFilter:@"Incidents" filter:@"$select=sl_propertyIDId,Id"  callback:^(NSMutableArray *        listItems, NSError *error)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         
+                                                         for (ListItem* tempitem in listItems) {
+                                                             NSString * propertyId = [NSString stringWithFormat:@"%@",[tempitem getData:@"sl_propertyIDId"]];
+                                                             
+                                                             NSMutableDictionary *propertyTempDic = [[NSMutableDictionary alloc] init];
+                                                             
+                                                             if ([self.propertyDic objectForKey:propertyId] == nil) {
+                                                                 [propertyTempDic setObject:@"green icon" forKey:@"incidents"];
+                                                                 [self.propertyDic setObject:propertyTempDic forKey:propertyId];
+                                                             }
+                                                             else
+                                                             {
+                                                                 if([[self.propertyDic objectForKey:propertyId] objectForKey:@"incidents"] == nil)
+                                                                 {
+                                                                     [[self.propertyDic objectForKey:propertyId] setObject:@"green icon" forKey:@"incidents"];
+                                                                 }
+                                                             }
+                                                         }
+                                                         
+                                                         //get current property inspection list
+                                                         NSString *pid = [NSString stringWithFormat:@"%d",self.canlendarPrppertyId];
+                                                         [self GetInspectionListAccordingPropertyId:pid];
+                                                         [self.spinner stopAnimating];
+                                                         
+                                                     });
+                                                 }];
+    [getincidentstask resume];
+}
+
+-(void)GetInspectionListAccordingPropertyId:(NSString*)pid
+{
+    if([self.propertyDic objectForKey:pid] ==nil)
+    {
+        NSMutableDictionary *propertyTempDic = [[NSMutableDictionary alloc] init];
+        [self.propertyDic setObject:propertyTempDic forKey:pid];
+    }
+    
+    NSMutableArray *inspectionslistTemp = [[NSMutableArray alloc] init];
+    
+    for (ListItem* tempitem in self.inspectionsListArray) {
+        NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
+        NSDictionary *insdic =(NSDictionary *)[tempitem getData:@"sl_inspectorID"];
+        if(pdic!=nil)
+        {
+            if([[pdic objectForKey:@"ID"] intValue] == self.canlendarPrppertyId)
+            {
+                
+                NSMutableDictionary * inspectionItem= [[NSMutableDictionary alloc] init];
+                
+                [inspectionItem setObject:[insdic objectForKey:@"Title"] forKey:@"sl_accountname"];
+                if ([insdic objectForKey:@"Title"] == self.loginName) {
+                    [inspectionItem setObject:@"YES" forKey:@"bowner"];
+                }
+                [inspectionItem setObject:[tempitem getData:@"sl_datetime"] forKey:@"sl_datetime"];
+                
+                [inspectionslistTemp addObject:inspectionItem];
+            }
+        }
+    }
+    [[self.propertyDic objectForKey:pid] setObject:inspectionslistTemp forKey:@"inspectionslist"];
 }
 -(ListClient*)getClient{
     OAuthentication* authentication = [OAuthentication alloc];
@@ -224,19 +294,19 @@
     [self.view addSubview:spinner];
     spinner.hidesWhenStopped = YES;
     [spinner startAnimating];
-    
+ 
     //Replace this URL with SP REST API URL
     NSString *requestUrl = @"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo/_api/lists/GetByTitle('Inspections')/Items$select=ID,Title";
-    
+ 
     //Add the access token to the Authorization header
     NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
-    
+ 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     [request setValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
-    
+ 
     //Create NSURLSession
     NSURLSession *session = [NSURLSession sharedSession];
-    
+ 
     //Turn on network indicator
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
