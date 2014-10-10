@@ -59,7 +59,12 @@
     self.propertyDetailsTableView.dataSource = self;
     [self.view addSubview:self.propertyDetailsTableView];*/
     
-    [self loadData];
+    UIImageView *speratorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
+    speratorline.image = [UIImage imageNamed:@"sepratorline"];
+    [self.view addSubview:speratorline];
+    
+    
+    //[self loadData];
     
     // Do any additional setup after loading the view.
 }
@@ -354,11 +359,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-
--(void)initParameter:(NSMutableArray *)historyarray
-{
-    self.inspectionHistory = historyarray;
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;

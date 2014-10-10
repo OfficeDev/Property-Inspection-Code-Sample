@@ -27,6 +27,8 @@
 		0EADF93D19E79F9200E1DE77 /* navigation_background~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF93319E79F9200E1DE77 /* navigation_background~ipad.png */; };
 		0EADF93E19E79F9200E1DE77 /* setting@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF93419E79F9200E1DE77 /* setting@2x~ipad.png */; };
 		0EADF93F19E79F9200E1DE77 /* setting~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF93519E79F9200E1DE77 /* setting~ipad.png */; };
+		0EADF94419E7A3AF00E1DE77 /* sepratorline@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF94219E7A3AF00E1DE77 /* sepratorline@2x~ipad.png */; };
+		0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF94319E7A3AF00E1DE77 /* sepratorline~ipad.png */; };
 		0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
 		0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
 		0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
@@ -65,6 +67,8 @@
 		0EADF93319E79F9200E1DE77 /* navigation_background~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_background~ipad.png"; sourceTree = "<group>"; };
 		0EADF93419E79F9200E1DE77 /* setting@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@2x~ipad.png"; sourceTree = "<group>"; };
 		0EADF93519E79F9200E1DE77 /* setting~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting~ipad.png"; sourceTree = "<group>"; };
+		0EADF94219E7A3AF00E1DE77 /* sepratorline@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sepratorline@2x~ipad.png"; sourceTree = "<group>"; };
+		0EADF94319E7A3AF00E1DE77 /* sepratorline~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sepratorline~ipad.png"; sourceTree = "<group>"; };
 		0EC4F5B619CFF2C600BEF583 /* EdKeyNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EdKeyNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -136,6 +140,8 @@
 		0EADF92B19E79F9200E1DE77 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0EADF94219E7A3AF00E1DE77 /* sepratorline@2x~ipad.png */,
+				0EADF94319E7A3AF00E1DE77 /* sepratorline~ipad.png */,
 				0EADF92C19E79F9200E1DE77 /* camera@2x~ipad.png */,
 				0EADF92D19E79F9200E1DE77 /* camera~ipad.png */,
 				0EADF92E19E79F9200E1DE77 /* demo_room@2x~ipad.png */,
@@ -284,6 +290,7 @@
 				0EADF93919E79F9200E1DE77 /* demo_room~ipad.png in Resources */,
 				0EA2D9FC19D8094400465DA2 /* InfoPlist.strings in Resources */,
 				0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */,
+				0EADF94419E7A3AF00E1DE77 /* sepratorline@2x~ipad.png in Resources */,
 				0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */,
 				0EADF93D19E79F9200E1DE77 /* navigation_background~ipad.png in Resources */,
 				0EADF93619E79F9200E1DE77 /* camera@2x~ipad.png in Resources */,
@@ -295,6 +302,7 @@
 				0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */,
 				0EADF93C19E79F9200E1DE77 /* navigation_background@2x~ipad.png in Resources */,
 				0EADF93A19E79F9200E1DE77 /* dropdown_arrow@2x~ipad.png in Resources */,
+				0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */,
 				3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

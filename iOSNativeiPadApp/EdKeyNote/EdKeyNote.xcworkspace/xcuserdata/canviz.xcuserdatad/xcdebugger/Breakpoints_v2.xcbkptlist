@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EdKeyNote/EdKeyNote/EKNPropertyDetailsViewController.m"
-            timestampString = "434602590.224327"
+            timestampString = "434610745.891449"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
             landmarkName = "-getIncidentsListArray:"
             landmarkType = "5">
          </BreakpointContent>
