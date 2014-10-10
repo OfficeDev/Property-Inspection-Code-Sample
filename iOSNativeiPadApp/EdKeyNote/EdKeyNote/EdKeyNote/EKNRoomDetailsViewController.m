@@ -43,12 +43,14 @@
 
 -(void) showIncidentCommentAction
 {
+    self.incidentCommentViewIsShow = YES;
     self.commentPopupView.hidden = YES;
     self.incidentCommentPopupView.hidden = NO;
 }
 
 -(void) showCommentAction
 {
+    self.incidentCommentViewIsShow = NO;
     self.incidentCommentPopupView.hidden = YES;
     self.commentPopupView.hidden = NO;
 }
@@ -65,14 +67,18 @@
 
 -(void) takeCommentCameraAction
 {
-    self.isIncidentCommentCamera = NO;
-    [self takePhoto];
+    [self.commentImages addObject:[UIImage imageNamed:@"demo_room"]];
+    [self.commentCollection reloadData];
+    NSLog(@"Add photo");
+    //[self takePhoto];
 }
 
 -(void) takeIncidentCommentCameraAction
 {
-    self.isIncidentCommentCamera = YES;
-    [self takePhoto];
+    [self.incidentCommentImages addObject:[UIImage imageNamed:@"demo_room"]];
+    [self.incidentCommentCollection reloadData];
+    NSLog(@"Add Incident photo");
+    //[self takePhoto];
 }
 
 - (void)takePhoto
@@ -177,6 +183,67 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void) setUpCollection
+{
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(140, 79)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    
+    
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(106, 30, 886, 99) collectionViewLayout:flowLayout];
+    collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    collectionView.allowsMultipleSelection = YES;
+    collectionView.allowsSelection = YES;
+    collectionView.showsHorizontalScrollIndicator = NO;
+    collectionView.backgroundColor = [UIColor redColor];
+    
+    [self.view addSubview:collectionView];
+    self.commentCollection = collectionView;
+    
+    [self.commentCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
+    
+    self.commentImages = [NSMutableArray array];
+    self.incidentCommentImages = [NSMutableArray array];
+    
+    [self.commentImages addObject:[UIImage imageNamed:@"demo_room"]];
+    //[self.commentImages addObject:[UIImage imageNamed:@"demo_room"]];
+    //[self.commentImages addObject:[UIImage imageNamed:@"demo_room"]];
+    //[self.commentImages addObject:[UIImage imageNamed:@"demo_room"]];
+    //[self.commentImages addObject:[UIImage imageNamed:@"demo_room"]];
+    
+    self.commentCollection.delegate = self;
+    self.commentCollection.dataSource =self;
+    //self.incidentCommentCollection.delegate = self;
+    //self.incidentCommentCollection.dataSource =self;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.incidentCommentViewIsShow ? self.incidentCommentImages.count : self.commentImages.count;
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *collectionCellID= @"cvCell";
+    EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionCellID forIndexPath:indexPath];
+    if(self.incidentCommentViewIsShow)
+    {
+        cell.imagecell.image = self.incidentCommentImages[indexPath.row];
+    }
+    else
+    {
+        cell.imagecell.image = self.commentImages[indexPath.row];
+    }
+    
+    return cell;
+}
 
 - (void) initIncidentCommentPopupView
 {
@@ -194,6 +261,7 @@
     imgBackgoundView.layer.cornerRadius = 5;
     [self.incidentCommentPopupView addSubview:imgBackgoundView];
     
+    /*
     UIImageView *roomImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(141, 40, 105, 79)];
     roomImageView1.image = [UIImage imageNamed:@"demo_room"];
     [self.incidentCommentPopupView addSubview:roomImageView1];
@@ -215,6 +283,29 @@
     commentBackgoundView.layer.masksToBounds = YES;
     commentBackgoundView.layer.cornerRadius = 5;
     [self.incidentCommentPopupView addSubview:commentBackgoundView];
+    */
+    
+    self.incidentCommentImages = [NSMutableArray array];
+    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(140, 79)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(136, 30, 826, 99) collectionViewLayout:flowLayout];
+    collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    collectionView.allowsMultipleSelection = YES;
+    collectionView.allowsSelection = YES;
+    collectionView.showsHorizontalScrollIndicator = NO;
+    collectionView.backgroundColor = [UIColor whiteColor];
+    
+    [self.incidentCommentPopupView addSubview:collectionView];
+    self.incidentCommentCollection = collectionView;
+    [self.incidentCommentCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
+    self.incidentCommentCollection.delegate = self;
+    self.incidentCommentCollection.dataSource =self;
+
     
     UITextField *incidentCommentTxt = [[UITextField alloc] initWithFrame:CGRectMake(52, 169, 920, 120)];
     [self.incidentCommentPopupView addSubview:incidentCommentTxt];
@@ -265,6 +356,7 @@
     imgBackgoundView.layer.cornerRadius = 5;
     [self.commentPopupView addSubview:imgBackgoundView];
     
+    /*
     UIImageView *roomImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(141, 40, 105, 79)];
     roomImageView1.image = [UIImage imageNamed:@"demo_room"];
     [self.commentPopupView addSubview:roomImageView1];
@@ -286,6 +378,29 @@
     commentBackgoundView.layer.masksToBounds = YES;
     commentBackgoundView.layer.cornerRadius = 5;
     [self.commentPopupView addSubview:commentBackgoundView];
+    */
+    
+    self.commentImages = [NSMutableArray array];
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(140, 79)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(136, 30, 826, 99) collectionViewLayout:flowLayout];
+    collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    collectionView.allowsMultipleSelection = YES;
+    collectionView.allowsSelection = YES;
+    collectionView.showsHorizontalScrollIndicator = NO;
+    collectionView.backgroundColor = [UIColor whiteColor];
+    
+    [self.commentPopupView addSubview:collectionView];
+    self.commentCollection = collectionView;
+    
+    [self.commentCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
+    
+    self.commentCollection.delegate = self;
+    self.commentCollection.dataSource =self;
     
     UITextField *commentTxt = [[UITextField alloc] initWithFrame:CGRectMake(121, 169, 920, 120)];
     [self.commentPopupView addSubview:commentTxt];

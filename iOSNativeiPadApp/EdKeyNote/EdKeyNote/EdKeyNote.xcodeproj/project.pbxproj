@@ -41,6 +41,8 @@
 		0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EC4F5CB19CFF2C600BEF583 /* Images.xcassets */; };
 		0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */; };
 		3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3006E1F119DA131B00557CE2 /* Settings.bundle */; };
+		F360DE2319E7DAA400311CFC /* EKNCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F360DE2119E7DAA400311CFC /* EKNCollectionViewCell.m */; };
+		F360DE2419E7DAA400311CFC /* EKNCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F360DE2219E7DAA400311CFC /* EKNCollectionViewCell.xib */; };
 		F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +95,9 @@
 		0EC4F5E919CFF9FD00BEF583 /* EKNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNLoginViewController.m; sourceTree = "<group>"; };
 		3006E1F119DA131B00557CE2 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = EdKeyNote/Settings.bundle; sourceTree = "<group>"; };
 		30A6876319DDD1D4000D46B7 /* libADALiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libADALiOS.a; path = "../ADALiOS/build/Debug-iphoneos/libADALiOS.a"; sourceTree = "<group>"; };
+		F360DE2019E7DAA400311CFC /* EKNCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNCollectionViewCell.h; sourceTree = "<group>"; };
+		F360DE2119E7DAA400311CFC /* EKNCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNCollectionViewCell.m; sourceTree = "<group>"; };
+		F360DE2219E7DAA400311CFC /* EKNCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EKNCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNRoomDetailsViewController.h; sourceTree = "<group>"; };
 		F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNRoomDetailsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -246,6 +251,9 @@
 			children = (
 				F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */,
 				F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */,
+				F360DE2019E7DAA400311CFC /* EKNCollectionViewCell.h */,
+				F360DE2119E7DAA400311CFC /* EKNCollectionViewCell.m */,
+				F360DE2219E7DAA400311CFC /* EKNCollectionViewCell.xib */,
 			);
 			name = "Room Detail page";
 			sourceTree = "<group>";
@@ -319,6 +327,7 @@
 				0EADF93619E79F9200E1DE77 /* camera@2x~ipad.png in Resources */,
 				0EADF93719E79F9200E1DE77 /* camera~ipad.png in Resources */,
 				0EC4F5C419CFF2C600BEF583 /* InfoPlist.strings in Resources */,
+				F360DE2419E7DAA400311CFC /* EKNCollectionViewCell.xib in Resources */,
 				0EADF93E19E79F9200E1DE77 /* setting@2x~ipad.png in Resources */,
 				0EADF93819E79F9200E1DE77 /* demo_room@2x~ipad.png in Resources */,
 				0EADF93F19E79F9200E1DE77 /* setting~ipad.png in Resources */,
@@ -344,6 +353,7 @@
 				F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */,
 				0EADF95419E7C36E00E1DE77 /* EKN+UIViewController.m in Sources */,
 				0EC4F5C619CFF2C600BEF583 /* main.m in Sources */,
+				F360DE2319E7DAA400311CFC /* EKNCollectionViewCell.m in Sources */,
 				0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */,
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
 				0EA20B1D19E549DB007EBF6A /* ListItem.m in Sources */,
