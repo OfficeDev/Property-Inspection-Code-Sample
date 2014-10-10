@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EKNRoomDetailsViewController : UIViewController
+@interface EKNRoomDetailsViewController : UIViewController<UIActionSheetDelegate, UIImagePickerControllerDelegate>
 
 @property(retain,nonatomic) UIView *incidentCommentPopupView;
 @property(retain,nonatomic) UIView *commentPopupView;
-@property(retain,nonatomic) UIImageView *incidentCommentCamera;
-@property(retain,nonatomic) UIImageView *commentCamera;
+@property(retain,nonatomic) UIButton *incidentCommentCamera;
+@property(retain,nonatomic) UIButton *commentCamera;
+
+@property BOOL cameraIsAvailable;
+@property int commentImageCounter;
+@property int incidentCommentImageCounter;
+@property BOOL isIncidentCommentCamera;
 
 @end

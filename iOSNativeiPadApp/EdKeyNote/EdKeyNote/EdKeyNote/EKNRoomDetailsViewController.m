@@ -17,6 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.cameraIsAvailable = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+    
+    
     UIView *statusbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 20)];
     statusbar.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
     [self.view addSubview:statusbar];
@@ -59,14 +63,123 @@
     self.commentPopupView.hidden = YES;
 }
 
+-(void) takeCommentCameraAction
+{
+    self.isIncidentCommentCamera = NO;
+    [self takePhoto];
+}
+
+-(void) takeIncidentCommentCameraAction
+{
+    self.isIncidentCommentCamera = YES;
+    [self takePhoto];
+}
+
+- (void)takePhoto
+{
+    UIActionSheet *sheet;
+    if(self.cameraIsAvailable)
+    {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"New Photo", @"Select Photo", nil];
+    }
+    else
+    {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"Select Photo", nil];
+    }
+    sheet.actionSheetStyle = UIActionSheetStyleDefault;
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0 && self.cameraIsAvailable)//take new photo
+    {
+        [self openCamera];
+    }else if(buttonIndex == 1)//select photo library
+    {
+        [self selectPicture];
+    }
+}
+
+- (void)openCamera
+{
+    [self pickMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+}
+
+-(void)selectPicture
+{
+    [self pickMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
+}
+
+-(void)pickMediaFromSource:(UIImagePickerControllerSourceType)sourceType
+{
+    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+    if([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediaTypes count] > 0)
+    {
+        //NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        //picker.mediaTypes = mediaTypes;
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:NULL];
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Error accessing media"
+                              message:@"Device doesn't support that media source."
+                              delegate:nil
+                              cancelButtonTitle:@"Drat"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (UIImage *)shrinkImage:(UIImage *)original toSize:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+    [original drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *final = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return final;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    //UIImage *shrunkenImage = [self shrinkImage:chosenImage toSize:chosenImage.size];
+    
+    UIImageView *imgview = [[UIImageView alloc] initWithFrame:CGRectMake(100, 340, 40 , 40)];
+    imgview.image = chosenImage;
+    [self.view addSubview:imgview];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
 
 - (void) initIncidentCommentPopupView
 {
     self.incidentCommentPopupView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 389)];
     self.incidentCommentPopupView.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(0.00/255.00f) blue:(0.00/255.00f) alpha:0.35];;
     
-    self.incidentCommentCamera = [[UIImageView alloc] initWithFrame:CGRectMake(32, 30, 64, 52)];
-    self.incidentCommentCamera.image = [UIImage imageNamed:@"camera"];
+    self.incidentCommentCamera = [[UIButton alloc] initWithFrame:CGRectMake(32, 30, 64, 52)];
+    [self.incidentCommentCamera setBackgroundImage:[UIImage imageNamed:@"camera"] forState:UIControlStateNormal];
+    [self.incidentCommentCamera addTarget:self action:@selector(takeIncidentCommentCameraAction) forControlEvents:UIControlEventTouchUpInside];
     [self.incidentCommentPopupView addSubview:self.incidentCommentCamera];
     
     UIView *imgBackgoundView = [[UIView alloc] initWithFrame:CGRectMake(106, 30, 886, 99)];
@@ -105,7 +218,7 @@
     iincidentTypeBackgoundView.layer.masksToBounds = YES;
     iincidentTypeBackgoundView.layer.cornerRadius = 5;
     [self.incidentCommentPopupView addSubview:iincidentTypeBackgoundView];
-
+    
     UILabel *incidentTypeLbl = [[UILabel alloc] initWithFrame:CGRectMake(47, 329, 361, 32)];
     incidentTypeLbl.textColor = [UIColor blackColor];
     incidentTypeLbl.text = @"Incident Type";
@@ -135,8 +248,9 @@
     self.commentPopupView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 389)];
     self.commentPopupView.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(0.00/255.00f) blue:(0.00/255.00f) alpha:0.35];;
     
-    self.commentCamera = [[UIImageView alloc] initWithFrame:CGRectMake(32, 30, 64, 52)];
-    self.commentCamera.image = [UIImage imageNamed:@"camera"];
+    self.commentCamera = [[UIButton alloc] initWithFrame:CGRectMake(32, 30, 64, 52)];
+    [self.commentCamera setBackgroundImage:[UIImage imageNamed:@"camera"] forState:UIControlStateNormal];
+    [self.commentCamera addTarget:self action:@selector(takeCommentCameraAction) forControlEvents:UIControlEventTouchUpInside];
     [self.commentPopupView addSubview:self.commentCamera];
     
     UIView *imgBackgoundView = [[UIView alloc] initWithFrame:CGRectMake(106, 30, 886, 99)];
@@ -191,13 +305,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
