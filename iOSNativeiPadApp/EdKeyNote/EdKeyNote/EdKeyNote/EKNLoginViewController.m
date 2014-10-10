@@ -32,9 +32,9 @@
 
 - (void)loginButtonAction
 {
-    EKNRoomDetailsViewController *propertydetailsctrl = [[EKNRoomDetailsViewController alloc] init];
-    [self.navigationController pushViewController:propertydetailsctrl animated:YES];
-    return;
+    //EKNRoomDetailsViewController *propertydetailsctrl = [[EKNRoomDetailsViewController alloc] init];
+    //[self.navigationController pushViewController:propertydetailsctrl animated:YES];
+    //return;
     [self checkParameters];
     [self performLogin:NO];
 }

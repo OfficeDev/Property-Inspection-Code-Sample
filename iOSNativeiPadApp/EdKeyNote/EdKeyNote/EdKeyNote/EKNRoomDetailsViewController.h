@@ -16,9 +16,13 @@
 @property(retain,nonatomic) UIView *commentPopupView;
 @property(retain,nonatomic) UIButton *incidentCommentCamera;
 @property(retain,nonatomic) UIButton *commentCamera;
+@property(retain,nonatomic) UIView *photoDetailPopupView;
+@property(retain,nonatomic) UIImageView *largePhotoView;
 
 @property(strong,nonatomic) NSMutableArray *commentImages;
 @property(strong,nonatomic) NSMutableArray *incidentCommentImages;
+@property(strong,nonatomic) NSMutableArray *largeCommentImages;
+@property(strong,nonatomic) NSMutableArray *largeIncidentCommentImages;
 @property(weak,nonatomic) UICollectionView *commentCollection;
 @property(weak,nonatomic) UICollectionView *incidentCommentCollection;
 
