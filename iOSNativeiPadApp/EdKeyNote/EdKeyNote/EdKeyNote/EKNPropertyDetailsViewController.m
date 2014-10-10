@@ -30,8 +30,8 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
-    /*self.view.backgroundColor = [UIColor colorWithRed:239.00f/255.00f green:239.00f/255.00f blue:244.00f/255.00f alpha:1];*/
-    self.view.backgroundColor=[UIColor whiteColor];
+
+    self.view.backgroundColor=[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
     
     UIView *statusbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 20)];
     statusbar.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
@@ -63,15 +63,21 @@
     [self.view addSubview:speratorline];
     
     
-    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(160/2, 380/2, 610/2, 360/2) style:UITableViewStylePlain];
-     self.propertyDetailsTableView.delegate = self;
-     self.propertyDetailsTableView.dataSource = self;
-     [self.view addSubview:self.propertyDetailsTableView];
-    
-    
-    //[self loadData];
+    [self loadData];
     
     // Do any additional setup after loading the view.
+}
+
+-(void)addRightTable{
+    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(380, 100, 620, 635) style:UITableViewStyleGrouped];
+    
+    self.rightTableView.backgroundColor = [UIColor clearColor];
+    [self.rightTableView setSeparatorColor:[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1]];
+    self.rightTableView.delegate = self;
+    self.rightTableView.dataSource = self;
+    [self.rightTableView.layer setCornerRadius:10.0];
+    [self.rightTableView.layer setMasksToBounds:YES];
+    [self.view addSubview:self.rightTableView];
 }
 -(void)loadData{
     
@@ -86,6 +92,9 @@
     
     ListClient* client = [self getClient];
     
+    
+    
+    
     NSURLSessionTask* task = [client getListItemsByFilter:@"Inspections" filter:@"$select=ID,Title,sl_datetime,sl_inspectorID/ID,sl_inspectorID/Title,sl_inspectorID/sl_accountname,sl_inspectorID/sl_emailaddress,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode&$expand=sl_inspectorID,sl_propertyID" callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -97,6 +106,7 @@
             self.inspectionsListArray =listItems;
             for(ListItem* tempitem in listItems)
             {
+                
                 /*NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
                 EKNPropertyData* pdata = nil;
                 EKNInspectorData *indata = nil;
@@ -127,10 +137,11 @@
                            InspectionDateTime:(NSString *)[tempitem getData:@"sl_datetime"]
                                 InspectorData:indata
                                  PropertyData:pdata];*/
-                
+                bfound = false;
                 NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
                 if(pdic!=nil)
                 {
+                    NSLog(@"[pdic objectForKey:ID] intValue] %d",[[pdic objectForKey:@"ID"] intValue]);
                   if([[pdic objectForKey:@"ID"] intValue] == self.canlendarPrppertyId)
                   {
                       bfound = true;
@@ -143,7 +154,9 @@
                     if(tempdatetime!=nil)
                     {
                         NSDate *inspectiondatetime = [EKNEKNGlobalInfo converDateFromString:tempdatetime];
-                        if([inspectiondatetime laterDate:[NSDate date]])
+                        NSLog(@"inspectiondatetime %@",inspectiondatetime);
+                        NSLog(@"[NSDate date] %@",[NSDate date]);
+                        if([inspectiondatetime compare:[NSDate date]] == NSOrderedDescending)
                         {
                             [upcomingList addObject:tempitem];
                         }
@@ -248,6 +261,7 @@
                                                          //get current property inspection list
                                                          NSString *pid = [NSString stringWithFormat:@"%d",self.canlendarPrppertyId];
                                                          [self GetInspectionListAccordingPropertyId:pid];
+                                                         [self addRightTable];
                                                          [self.spinner stopAnimating];
                                                          
                                                      });
@@ -296,58 +310,11 @@
     return [[ListClient alloc] initWithUrl:[standardUserDefaults objectForKey:@"demoSiteCollectionUrl"]
                                credentials: authentication];
 }
-/*-(void)loadData{
- 
-    //Turn on Spinner
-    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
-    spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [self.view addSubview:spinner];
-    spinner.hidesWhenStopped = YES;
-    [spinner startAnimating];
- 
-    //Replace this URL with SP REST API URL
-    NSString *requestUrl = @"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo/_api/lists/GetByTitle('Inspections')/Items$select=ID,Title";
- 
-    //Add the access token to the Authorization header
-    NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
- 
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-    [request setValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
- 
-    //Create NSURLSession
-    NSURLSession *session = [NSURLSession sharedSession];
- 
-    //Turn on network indicator
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    //Create NSURLSessionDataTask and call REST API
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
-                                                                                      NSURLResponse *response,
-                                                                                      NSError *error) {
-     
-        //Turn off network indicator
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        
-        //Turn off spinner
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [spinner stopAnimating];
-        });
 
-        //Handle error
-        if (error != nil) {
-            NSString *errorMessage = [@"Error accessing O365 SharePoint REST APIs. Reason: " stringByAppendingString: error.description];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-            [alert show];
-        }
-                
-        //Process the data and bind to the user interface
-        NSLog(@"%@", data);
-        //self.SharepointList  = lists;
-    }];
-    
-    [task resume];
-}
-*/
+
+
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -366,66 +333,170 @@
 */
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    if(tableView == self.rightTableView)
+    {
+        return 2;
+    }
+    else
+    {
+        return 1;
+    }
+
         
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-   if(tableView == self.propertyDetailsTableView)
-   {
-       return 3;
-       //return [self.SharepointList count];
-   }
-    return 0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(tableView == self.propertyDetailsTableView)
+    if(tableView == self.rightTableView)
     {
-        if(indexPath.row == 3)
+        if(section == 0)
         {
-            return 70;
+            return 1;
         }
         else
         {
-            return 40;
+            
+            NSMutableArray *bottomarray =[self.rightPannelListDic objectForKey:@"bottom"];
+            if(bottomarray!=nil)
+            {
+                return [bottomarray count];
+            }
+            else
+            {
+                return 0;
+            }
         }
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(tableView == self.rightTableView)
+    {
+        return 109;
 
     }
     return 40;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(tableView == self.propertyDetailsTableView)
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(tableView == self.rightTableView)
     {
-        UITableViewCell *cell = nil;
-        NSString *identifier = @"PropertyCellID";
-        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-            cell.textLabel.opaque = NO;
-            cell.textLabel.textColor = [UIColor blackColor];
-            
-            /*if(indexPath.row == 1)
-            {
-                
-            }
-            cell.textLabel.text = ((EKNInspectionData *)self.inspectionHistory[self.currentSelectIndex]).inspectionProperty.propertyTitle;
-            
-            cell.textLabel.numberOfLines = 1;
-            cell.textLabel.font = [UIFont systemFontOfSize:15];
-            [cell.textLabel setNumberOfLines:5];
-            
-            [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;*/
+        if(section ==0)
+        {
+            return 30;
         }
+        else
+        {
+            return 50;
+        }
+        
+        
+    }
+    return 40;
+}
+
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(tableView == self.rightTableView)
+    {
+        if (section == 0)
+        {
+            UIView *tview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 620, 30)];
+            tview.backgroundColor = [UIColor clearColor];
+            
+            UIFont *font = [UIFont fontWithName:@"Helvetica" size:12];
+            NSString *lbl1str = @"CURRENT INSPECTION";
+            NSDictionary *attributes = @{NSFontAttributeName:font};
+            CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
+            UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, lbsize.width, lbsize.height)];
+            lbl1.text = lbl1str;
+            lbl1.textAlignment = NSTextAlignmentLeft;
+            lbl1.font = font;
+            lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+            
+            [tview addSubview:lbl1];
+            
+            return tview;
+        }
+        else
+        {
+            UIView *tview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 620, 50)];
+            tview.backgroundColor = [UIColor clearColor];
+            
+            UIFont *font = [UIFont fontWithName:@"Helvetica" size:12];
+            NSString *lbl1str = @"UPCOMING INSPECTION";
+            NSDictionary *attributes = @{NSFontAttributeName:font};
+            CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
+            UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, lbsize.width, lbsize.height)];
+            lbl1.text = lbl1str;
+            lbl1.textAlignment = NSTextAlignmentLeft;
+            lbl1.font = font;
+            lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+            
+            [tview addSubview:lbl1];
+            
+            return tview;
+        }
+        
+    }
+    else
+    {
+        return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    }
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(tableView == self.rightTableView)
+    {
+        NSString *identifier = @"PropertyListCell";
+        PropertyListCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            [tableView registerNib:[UINib nibWithNibName:@"PropertyListCell" bundle:nil] forCellReuseIdentifier:identifier];
+            cell = [tableView dequeueReusableCellWithIdentifier:identifier]; 
+        }
+        [self setRightTableCell:cell cellForRowAtIndexPath:indexPath];
         return cell;
+        
     }
     else
     {
         return nil;
     }
-    
 }
 
+-(void)setRightTableCell:(PropertyListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ListItem *inspectionitem = nil;
+    if(indexPath.section == 0)
+    {
+        inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
+    }
+    else
+    {
+        NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
+        inspectionitem = [bottomarray objectAtIndex:indexPath.row];
+    }
+
+    
+    NSDictionary *pro = (NSDictionary *)[inspectionitem getData:@"sl_propertyID"];
+    if(pro!=nil)
+    {
+        NSString *address = [pro objectForKey:@"sl_address1"];
+        NSString *propertyId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
+        if(propertyId!=nil)
+        {
+            NSMutableDictionary *prodict = [self.propertyDic objectForKey:propertyId];
+            NSString *path =[prodict objectForKey:@"ServerRelativeUrl"];
+            cell.token = self.token;
+            [cell setCellValue:nil path:path address:address];
+        }
+        
+    }
+}
 @end

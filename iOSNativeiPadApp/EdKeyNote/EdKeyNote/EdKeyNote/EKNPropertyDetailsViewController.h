@@ -10,8 +10,8 @@
 #import "ListClient.h"
 #import "ListItem.h"
 #import "EKN+UIViewController.h"
-
-@interface EKNPropertyDetailsViewController : UIViewController/*<UITableViewDelegate, UITableViewDataSource>*/
+#import "PropertyListCell.h"
+@interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 //@property NSMutableArray* SharepointList;
 @property int canlendarPrppertyId;
@@ -28,22 +28,19 @@
 
 @property(nonatomic) UIActivityIndicatorView* spinner;
 @property(nonatomic) UITableView * rightTableView;
-@property(nonatomic) NSIndexPath * rightIndexPath;
+@property(nonatomic) NSIndexPath * currentRightIndexPath;
 
 
 
 @property(nonatomic) UILabel *inspectionTitle;
 @property(nonatomic) UILabel *inspectorInfor;
 
-@property(nonatomic) UITableView * propertyDetailsTableView;//here will be relaced by Normal UIview
-@property(nonatomic) UITableView * inspectionTableView;
-@property(nonatomic) UITableView * roomsTableView;
 
 
-
-
+/**/
 
 -(void)getPropertyResourceListArray:(ListClient*)client;
 -(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems;
 -(void)getIncidentsListArray:(ListClient*)client;
+-(void)setRightTableCell:(PropertyListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end

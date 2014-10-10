@@ -32,6 +32,8 @@
 		0EADF94819E7AD2A00E1DE77 /* EKN+UIImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */; };
 		0EADF95119E7C2B900E1DE77 /* EKN+NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF95019E7C2B900E1DE77 /* EKN+NavigationController.m */; };
 		0EADF95419E7C36E00E1DE77 /* EKN+UIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF95319E7C36E00E1DE77 /* EKN+UIViewController.m */; };
+		0EADF96C19E8377000E1DE77 /* PropertyListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF96A19E8377000E1DE77 /* PropertyListCell.m */; };
+		0EADF96D19E8377000E1DE77 /* PropertyListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF96B19E8377000E1DE77 /* PropertyListCell.xib */; };
 		0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
 		0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
 		0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
@@ -80,6 +82,9 @@
 		0EADF95019E7C2B900E1DE77 /* EKN+NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EKN+NavigationController.m"; sourceTree = "<group>"; };
 		0EADF95219E7C36E00E1DE77 /* EKN+UIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EKN+UIViewController.h"; sourceTree = "<group>"; };
 		0EADF95319E7C36E00E1DE77 /* EKN+UIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EKN+UIViewController.m"; sourceTree = "<group>"; };
+		0EADF96919E8377000E1DE77 /* PropertyListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyListCell.h; sourceTree = "<group>"; };
+		0EADF96A19E8377000E1DE77 /* PropertyListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyListCell.m; sourceTree = "<group>"; };
+		0EADF96B19E8377000E1DE77 /* PropertyListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PropertyListCell.xib; sourceTree = "<group>"; };
 		0EC4F5B619CFF2C600BEF583 /* EdKeyNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EdKeyNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -121,6 +126,7 @@
 		0E68CEB219DB7A6600E29C4A /* Property Detail page */ = {
 			isa = PBXGroup;
 			children = (
+				0EADF96819E8371300E1DE77 /* PropertyCell */,
 				0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */,
 				0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */,
 			);
@@ -181,6 +187,16 @@
 				0EADF94719E7AD2A00E1DE77 /* EKN+UIImagePickerController.m */,
 			);
 			name = UIViewControllerEX;
+			sourceTree = "<group>";
+		};
+		0EADF96819E8371300E1DE77 /* PropertyCell */ = {
+			isa = PBXGroup;
+			children = (
+				0EADF96919E8377000E1DE77 /* PropertyListCell.h */,
+				0EADF96A19E8377000E1DE77 /* PropertyListCell.m */,
+				0EADF96B19E8377000E1DE77 /* PropertyListCell.xib */,
+			);
+			name = PropertyCell;
 			sourceTree = "<group>";
 		};
 		0EC4F5AD19CFF2C600BEF583 = {
@@ -335,6 +351,7 @@
 				0EADF93C19E79F9200E1DE77 /* navigation_background@2x~ipad.png in Resources */,
 				0EADF93A19E79F9200E1DE77 /* dropdown_arrow@2x~ipad.png in Resources */,
 				0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */,
+				0EADF96D19E8377000E1DE77 /* PropertyListCell.xib in Resources */,
 				3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,6 +375,7 @@
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
 				0EA20B1D19E549DB007EBF6A /* ListItem.m in Sources */,
 				0EC4F5CA19CFF2C600BEF583 /* EKNAppDelegate.m in Sources */,
+				0EADF96C19E8377000E1DE77 /* PropertyListCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
