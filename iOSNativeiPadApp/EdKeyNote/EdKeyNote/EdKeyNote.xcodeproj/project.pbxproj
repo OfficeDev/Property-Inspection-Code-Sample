@@ -19,8 +19,23 @@
 		0E9D42CD19E8FEFD00329A81 /* home~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42C919E8FEFD00329A81 /* home~ipad.png */; };
 		0E9D42CE19E8FEFD00329A81 /* man@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42CA19E8FEFD00329A81 /* man@2x~ipad.png */; };
 		0E9D42CF19E8FEFD00329A81 /* man~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42CB19E8FEFD00329A81 /* man~ipad.png */; };
-		0E9D42D319E9374C00329A81 /* PropertyDetailSeg.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42D219E9374C00329A81 /* PropertyDetailSeg.xib */; };
 		0E9D42D519E939AF00329A81 /* PropertyDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42D419E939AF00329A81 /* PropertyDetailsCell.xib */; };
+		0E9D42FE19E98D5600329A81 /* ContactOwnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D42F919E98D5600329A81 /* ContactOwnerCell.m */; };
+		0E9D42FF19E98D5600329A81 /* ContactOwnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42FA19E98D5600329A81 /* ContactOwnerCell.xib */; };
+		0E9D430019E98D5600329A81 /* InspectionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D42FC19E98D5600329A81 /* InspectionListCell.m */; };
+		0E9D430119E98D5600329A81 /* InspectionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42FD19E98D5600329A81 /* InspectionListCell.xib */; };
+		0E9D430E19E98DDB00329A81 /* black@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430219E98DDB00329A81 /* black@2x~ipad.png */; };
+		0E9D430F19E98DDB00329A81 /* black~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430319E98DDB00329A81 /* black~ipad.png */; };
+		0E9D431019E98DDB00329A81 /* email@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430419E98DDB00329A81 /* email@2x~ipad.png */; };
+		0E9D431119E98DDB00329A81 /* email~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430519E98DDB00329A81 /* email~ipad.png */; };
+		0E9D431219E98DDB00329A81 /* green@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430619E98DDB00329A81 /* green@2x~ipad.png */; };
+		0E9D431319E98DDB00329A81 /* green~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430719E98DDB00329A81 /* green~ipad.png */; };
+		0E9D431419E98DDB00329A81 /* plus@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430819E98DDB00329A81 /* plus@2x~ipad.png */; };
+		0E9D431519E98DDB00329A81 /* plus~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430919E98DDB00329A81 /* plus~ipad.png */; };
+		0E9D431619E98DDB00329A81 /* red@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430A19E98DDB00329A81 /* red@2x~ipad.png */; };
+		0E9D431719E98DDB00329A81 /* red~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430B19E98DDB00329A81 /* red~ipad.png */; };
+		0E9D431819E98DDB00329A81 /* seg@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430C19E98DDB00329A81 /* seg@2x~ipad.png */; };
+		0E9D431919E98DDB00329A81 /* seg~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430D19E98DDB00329A81 /* seg~ipad.png */; };
 		0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA20B1919E549DB007EBF6A /* ListClient.m */; };
 		0EA20B1D19E549DB007EBF6A /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA20B1B19E549DB007EBF6A /* ListItem.m */; };
 		0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA2D9F319D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard */; };
@@ -86,8 +101,25 @@
 		0E9D42C919E8FEFD00329A81 /* home~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home~ipad.png"; sourceTree = "<group>"; };
 		0E9D42CA19E8FEFD00329A81 /* man@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "man@2x~ipad.png"; sourceTree = "<group>"; };
 		0E9D42CB19E8FEFD00329A81 /* man~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "man~ipad.png"; sourceTree = "<group>"; };
-		0E9D42D219E9374C00329A81 /* PropertyDetailSeg.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PropertyDetailSeg.xib; sourceTree = "<group>"; };
 		0E9D42D419E939AF00329A81 /* PropertyDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PropertyDetailsCell.xib; sourceTree = "<group>"; };
+		0E9D42F819E98D5600329A81 /* ContactOwnerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactOwnerCell.h; sourceTree = "<group>"; };
+		0E9D42F919E98D5600329A81 /* ContactOwnerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactOwnerCell.m; sourceTree = "<group>"; };
+		0E9D42FA19E98D5600329A81 /* ContactOwnerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactOwnerCell.xib; sourceTree = "<group>"; };
+		0E9D42FB19E98D5600329A81 /* InspectionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectionListCell.h; sourceTree = "<group>"; };
+		0E9D42FC19E98D5600329A81 /* InspectionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectionListCell.m; sourceTree = "<group>"; };
+		0E9D42FD19E98D5600329A81 /* InspectionListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionListCell.xib; sourceTree = "<group>"; };
+		0E9D430219E98DDB00329A81 /* black@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black@2x~ipad.png"; sourceTree = "<group>"; };
+		0E9D430319E98DDB00329A81 /* black~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black~ipad.png"; sourceTree = "<group>"; };
+		0E9D430419E98DDB00329A81 /* email@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "email@2x~ipad.png"; sourceTree = "<group>"; };
+		0E9D430519E98DDB00329A81 /* email~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "email~ipad.png"; sourceTree = "<group>"; };
+		0E9D430619E98DDB00329A81 /* green@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green@2x~ipad.png"; sourceTree = "<group>"; };
+		0E9D430719E98DDB00329A81 /* green~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green~ipad.png"; sourceTree = "<group>"; };
+		0E9D430819E98DDB00329A81 /* plus@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x~ipad.png"; sourceTree = "<group>"; };
+		0E9D430919E98DDB00329A81 /* plus~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus~ipad.png"; sourceTree = "<group>"; };
+		0E9D430A19E98DDB00329A81 /* red@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red@2x~ipad.png"; sourceTree = "<group>"; };
+		0E9D430B19E98DDB00329A81 /* red~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red~ipad.png"; sourceTree = "<group>"; };
+		0E9D430C19E98DDB00329A81 /* seg@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seg@2x~ipad.png"; sourceTree = "<group>"; };
+		0E9D430D19E98DDB00329A81 /* seg~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seg~ipad.png"; sourceTree = "<group>"; };
 		0EA20B1819E549DB007EBF6A /* ListClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListClient.h; sourceTree = "<group>"; };
 		0EA20B1919E549DB007EBF6A /* ListClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListClient.m; sourceTree = "<group>"; };
 		0EA20B1A19E549DB007EBF6A /* ListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItem.h; sourceTree = "<group>"; };
@@ -204,6 +236,18 @@
 		0EADF92B19E79F9200E1DE77 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0E9D430219E98DDB00329A81 /* black@2x~ipad.png */,
+				0E9D430319E98DDB00329A81 /* black~ipad.png */,
+				0E9D430419E98DDB00329A81 /* email@2x~ipad.png */,
+				0E9D430519E98DDB00329A81 /* email~ipad.png */,
+				0E9D430619E98DDB00329A81 /* green@2x~ipad.png */,
+				0E9D430719E98DDB00329A81 /* green~ipad.png */,
+				0E9D430819E98DDB00329A81 /* plus@2x~ipad.png */,
+				0E9D430919E98DDB00329A81 /* plus~ipad.png */,
+				0E9D430A19E98DDB00329A81 /* red@2x~ipad.png */,
+				0E9D430B19E98DDB00329A81 /* red~ipad.png */,
+				0E9D430C19E98DDB00329A81 /* seg@2x~ipad.png */,
+				0E9D430D19E98DDB00329A81 /* seg~ipad.png */,
 				F3F94C6019E93D13001EB785 /* demo_rightroom6~ipad.png */,
 				F3F94C6119E93D13001EB785 /* demo_rightroom5~ipad.png */,
 				F3F94C6219E93D13001EB785 /* demo_rightroom4~ipad.png */,
@@ -252,6 +296,12 @@
 		0EADF96819E8371300E1DE77 /* PropertyCell */ = {
 			isa = PBXGroup;
 			children = (
+				0E9D42F819E98D5600329A81 /* ContactOwnerCell.h */,
+				0E9D42F919E98D5600329A81 /* ContactOwnerCell.m */,
+				0E9D42FA19E98D5600329A81 /* ContactOwnerCell.xib */,
+				0E9D42FB19E98D5600329A81 /* InspectionListCell.h */,
+				0E9D42FC19E98D5600329A81 /* InspectionListCell.m */,
+				0E9D42FD19E98D5600329A81 /* InspectionListCell.xib */,
 				0E9D42D419E939AF00329A81 /* PropertyDetailsCell.xib */,
 				0EADF96919E8377000E1DE77 /* PropertyListCell.h */,
 				0EADF96A19E8377000E1DE77 /* PropertyListCell.m */,
@@ -261,7 +311,6 @@
 				0E9D42C519E8F22200329A81 /* PropertyDetailsImage.h */,
 				0E9D42C619E8F22200329A81 /* PropertyDetailsImage.m */,
 				0E9D42C319E8D72700329A81 /* PropertyDetailsImage.xib */,
-				0E9D42D219E9374C00329A81 /* PropertyDetailSeg.xib */,
 			);
 			name = PropertyCell;
 			sourceTree = "<group>";
@@ -399,25 +448,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E9D431519E98DDB00329A81 /* plus~ipad.png in Resources */,
 				0EA2D9FA19D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
 				0E9D42BF19E8C6BF00329A81 /* detailsepartorline.png in Resources */,
 				F3F94C7019E93D13001EB785 /* selected~ipad.png in Resources */,
 				0E9D42CE19E8FEFD00329A81 /* man@2x~ipad.png in Resources */,
 				0EADF93B19E79F9200E1DE77 /* dropdown_arrow~ipad.png in Resources */,
+				0E9D431219E98DDB00329A81 /* green@2x~ipad.png in Resources */,
 				0EADF93919E79F9200E1DE77 /* demo_room~ipad.png in Resources */,
 				F3F94C6C19E93D13001EB785 /* demo_rightroom5~ipad.png in Resources */,
 				0EA2D9FC19D8094400465DA2 /* InfoPlist.strings in Resources */,
 				0E9D42CD19E8FEFD00329A81 /* home~ipad.png in Resources */,
-				0E9D42D319E9374C00329A81 /* PropertyDetailSeg.xib in Resources */,
 				0E9D42D519E939AF00329A81 /* PropertyDetailsCell.xib in Resources */,
 				0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */,
 				0EADF94419E7A3AF00E1DE77 /* sepratorline@2x~ipad.png in Resources */,
+				0E9D431419E98DDB00329A81 /* plus@2x~ipad.png in Resources */,
+				0E9D431819E98DDB00329A81 /* seg@2x~ipad.png in Resources */,
+				0E9D431919E98DDB00329A81 /* seg~ipad.png in Resources */,
 				0E9D42C419E8D72700329A81 /* PropertyDetailsImage.xib in Resources */,
 				0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */,
+				0E9D431619E98DDB00329A81 /* red@2x~ipad.png in Resources */,
 				0E9D42CF19E8FEFD00329A81 /* man~ipad.png in Resources */,
 				0EADF93D19E79F9200E1DE77 /* navigation_background~ipad.png in Resources */,
 				0EADF93619E79F9200E1DE77 /* camera@2x~ipad.png in Resources */,
 				F3F94C7419E93D13001EB785 /* demo_room1~ipad.png in Resources */,
+				0E9D42FF19E98D5600329A81 /* ContactOwnerCell.xib in Resources */,
 				0EADF93719E79F9200E1DE77 /* camera~ipad.png in Resources */,
 				0EC4F5C419CFF2C600BEF583 /* InfoPlist.strings in Resources */,
 				F3F94C7319E93D13001EB785 /* demo_room2@2x~ipad.png in Resources */,
@@ -425,6 +480,9 @@
 				0EADF93E19E79F9200E1DE77 /* setting@2x~ipad.png in Resources */,
 				F3F94C7119E93D13001EB785 /* selected@2x~ipad.png in Resources */,
 				F3F94C6F19E93D13001EB785 /* demo_rightroom1~ipad.png in Resources */,
+				0E9D431019E98DDB00329A81 /* email@2x~ipad.png in Resources */,
+				0E9D430F19E98DDB00329A81 /* black~ipad.png in Resources */,
+				0E9D431319E98DDB00329A81 /* green~ipad.png in Resources */,
 				F3F94C6E19E93D13001EB785 /* demo_rightroom3~ipad.png in Resources */,
 				0EADF93819E79F9200E1DE77 /* demo_room@2x~ipad.png in Resources */,
 				0EADF93F19E79F9200E1DE77 /* setting~ipad.png in Resources */,
@@ -432,9 +490,13 @@
 				0EADF93C19E79F9200E1DE77 /* navigation_background@2x~ipad.png in Resources */,
 				0EADF93A19E79F9200E1DE77 /* dropdown_arrow@2x~ipad.png in Resources */,
 				F3F94C6D19E93D13001EB785 /* demo_rightroom4~ipad.png in Resources */,
+				0E9D430E19E98DDB00329A81 /* black@2x~ipad.png in Resources */,
 				F3F94C7519E93D13001EB785 /* demo_room1@2x~ipad.png in Resources */,
 				0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */,
+				0E9D431119E98DDB00329A81 /* email~ipad.png in Resources */,
 				0EADF96D19E8377000E1DE77 /* PropertyListCell.xib in Resources */,
+				0E9D430119E98D5600329A81 /* InspectionListCell.xib in Resources */,
+				0E9D431719E98DDB00329A81 /* red~ipad.png in Resources */,
 				3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */,
 				F3F94C6B19E93D13001EB785 /* demo_rightroom6~ipad.png in Resources */,
 				F3F94C7219E93D13001EB785 /* demo_room2~ipad.png in Resources */,
@@ -453,12 +515,14 @@
 				0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */,
 				0E9D42C219E8CB7500329A81 /* PropertyDetailsCell.m in Sources */,
 				0EADF95119E7C2B900E1DE77 /* EKN+NavigationController.m in Sources */,
+				0E9D42FE19E98D5600329A81 /* ContactOwnerCell.m in Sources */,
 				0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */,
 				F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */,
 				0EADF95419E7C36E00E1DE77 /* EKN+UIViewController.m in Sources */,
 				0EC4F5C619CFF2C600BEF583 /* main.m in Sources */,
 				F360DE2319E7DAA400311CFC /* EKNCollectionViewCell.m in Sources */,
 				0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */,
+				0E9D430019E98D5600329A81 /* InspectionListCell.m in Sources */,
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
 				0EA20B1D19E549DB007EBF6A /* ListItem.m in Sources */,
 				0E9D42C719E8F22200329A81 /* PropertyDetailsImage.m in Sources */,
