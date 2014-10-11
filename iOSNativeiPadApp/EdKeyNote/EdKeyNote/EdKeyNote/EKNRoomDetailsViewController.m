@@ -19,27 +19,55 @@
     // Do any additional setup after loading the view.
     
     self.cameraIsAvailable = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+    self.isShowingComment = NO;
+    self.isShowingIncident = NO;
+    self.selectedImageIndex = 0;
     
     UIView *statusbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 20)];
     statusbar.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
     [self.view addSubview:statusbar];
     
+    self.view.backgroundColor=[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
+    
     UIImageView *header_img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 1024, 71)];
     header_img.image = [UIImage imageNamed:@"navigation_background"];
     [self.view addSubview:header_img];
     
-    UIButton *showIncidentCommentPopupBtn = [[UIButton alloc] initWithFrame:CGRectMake(250, 250, 250, 40)];
+    UIFont *boldfont = [UIFont fontWithName:@"Helvetica-Bold" size:24];
+    NSString *lbl1str = @"Room Details";
+    NSDictionary *attributes = @{NSFontAttributeName:boldfont};
+    CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
+    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake((1024 - lbsize.width) / 2, 20 + ((71 - lbsize.height) / 2), lbsize.width, lbsize.height)];
+    lbl1.text = lbl1str;
+    lbl1.textAlignment = NSTextAlignmentLeft;
+    lbl1.font = boldfont;
+    lbl1.textColor = [UIColor colorWithRed:255.00f/255.00f green:255.00f/255.00f blue:255.00f/255.00f alpha:1];
+    [self.view addSubview:lbl1];
+    
+    self.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
+    self.leftView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.leftView];
+    
+    UIImageView *speratorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
+    speratorline.image = [UIImage imageNamed:@"sepratorline"];
+    [self.view addSubview:speratorline];
+    
+    self.rightView = [[UIView alloc] initWithFrame:CGRectMake(358, 91, 646, 677)];
+    [self.view addSubview:self.rightView];
+    
+    UIButton *showIncidentCommentPopupBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 180, 250, 40)];
     [showIncidentCommentPopupBtn setTitle:@"Show Incident Comment" forState:UIControlStateNormal];
     [showIncidentCommentPopupBtn setBackgroundColor:[UIColor redColor]];
     [showIncidentCommentPopupBtn addTarget:self action:@selector(showIncidentCommentAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:showIncidentCommentPopupBtn];
     
-    UIButton *showCommentPopupBtn = [[UIButton alloc] initWithFrame:CGRectMake(524, 250, 250, 40)];
+    UIButton *showCommentPopupBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 250, 250, 40)];
     [showCommentPopupBtn setTitle:@"Show Comment" forState:UIControlStateNormal];
     [showCommentPopupBtn setBackgroundColor:[UIColor redColor]];
     [showCommentPopupBtn addTarget:self action:@selector(showCommentAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:showCommentPopupBtn];
     
+    [self initRightView];
     [self initIncidentCommentPopupView];
     [self initCommentPopupView];
     [self initPhotoDetailPopupView];
@@ -47,25 +75,29 @@
 
 -(void) showIncidentCommentAction
 {
-    self.incidentCommentViewIsShow = YES;
+    self.isShowingComment = NO;
+    self.isShowingIncident = YES;
     self.commentPopupView.hidden = YES;
     self.incidentCommentPopupView.hidden = NO;
 }
 
 -(void) showCommentAction
 {
-    self.incidentCommentViewIsShow = NO;
+    self.isShowingComment = YES;
+    self.isShowingIncident = NO;
     self.incidentCommentPopupView.hidden = YES;
     self.commentPopupView.hidden = NO;
 }
 
 -(void) hideIncidentCommentAction
 {
+    self.isShowingIncident = NO;
     self.incidentCommentPopupView.hidden = YES;
 }
 
 -(void) hideCommentAction
 {
+    self.isShowingComment = NO;
     self.commentPopupView.hidden = YES;
 }
 
@@ -181,13 +213,13 @@
     UIImage *smallImage = [self shrinkImage:chosenImage toSize:CGSizeMake(105, 79)];
     UIImage *largeImage = [self shrinkImage:chosenImage toSize:CGSizeMake(210, 158)];
     
-    if(self.incidentCommentViewIsShow)
+    if(self.isShowingIncident)
     {
         [self.incidentCommentImages addObject:smallImage];
         [self.largeIncidentCommentImages addObject:largeImage];
         [self.incidentCommentCollection reloadData];
     }
-    else
+    else if(self.isShowingComment)
     {
         [self.commentImages addObject:smallImage];
         [self.largeCommentImages addObject:largeImage];
@@ -204,7 +236,18 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.incidentCommentViewIsShow ? self.incidentCommentImages.count : self.commentImages.count;
+    if(collectionView.tag == 1)//right image collection view
+    {
+        return self.rightViewImages.count;
+    }
+    else if(collectionView.tag == 2)//comment image collection view
+    {
+        return self.commentImages.count;
+    }
+    else //incident image collection view
+    {
+        return self.incidentCommentImages.count;
+    }
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -214,31 +257,184 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(self.incidentCommentViewIsShow)
+    if(collectionView.tag == 1)
+    {
+        EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        [self.selectedImageButton removeFromSuperview];
+        //UIImageView *imageView = (UIImageView *)[cell viewWithTag:9999];
+        UIImage *image = self.rightViewImages[indexPath.row];
+        if(image != nil)
+        {
+            self.selectedImageButton = [[UIButton alloc] initWithFrame:CGRectMake((image.size.width - 33) / 2, 0, 33, 15)];
+            [self.selectedImageButton setBackgroundImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+            [cell addSubview:self.selectedImageButton];
+            NSLog(@"Selected image width:%f",image.size.width);
+            //show the large photo
+            self.selectedImageIndex = indexPath.row;
+            self.rightLargePhotoView.image = self.largerRightViewImages[indexPath.row];
+        }
+    }
+    else if(collectionView.tag == 2)
+    {
+        self.largePhotoView.image = self.largeCommentImages[indexPath.row];
+        self.photoDetailPopupView.hidden = NO;
+    }
+    else if(collectionView.tag == 3)
     {
         self.largePhotoView.image = self.largeIncidentCommentImages[indexPath.row];
+        self.photoDetailPopupView.hidden = NO;
     }
-    else{
-        self.largePhotoView.image = self.largeCommentImages[indexPath.row];
-    }
-    self.photoDetailPopupView.hidden = NO;
-    NSLog(@"selected image");
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *collectionCellID= @"cvCell";
     EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionCellID forIndexPath:indexPath];
-    if(self.incidentCommentViewIsShow)
+    self.testCount ++;
+    //NSLog(@"collection view items:%i",self.testCount);
+    
+    if(collectionView.tag == 1)
     {
-        cell.imagecell.image = self.incidentCommentImages[indexPath.row];
+        if(self.rightViewImages.count > 0)
+        {
+            UIImage *image = self.rightViewImages[indexPath.row];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+            imageView.image = image;
+            imageView.tag = 9999;
+            [cell addSubview:imageView];
+            
+            if(indexPath.row == self.selectedImageIndex)
+            {
+                self.selectedImageButton = [[UIButton alloc] initWithFrame:CGRectMake((image.size.width - 33) / 2, 0, 33, 15)];
+                [self.selectedImageButton setBackgroundImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+                [cell addSubview:self.selectedImageButton];
+            }
+            NSLog(@"image width:%f",image.size.width);
+            //cell.imagecell.image = image;
+        }
     }
-    else
+    else if(collectionView.tag == 2)
     {
-        cell.imagecell.image = self.commentImages[indexPath.row];
+        if(self.commentImages.count > 0)
+        {
+            cell.imagecell.image = self.commentImages[indexPath.row];
+        }
+    }
+    else if(collectionView.tag == 3)
+    {
+        if(self.incidentCommentImages.count > 0)
+        {
+            cell.imagecell.image = self.incidentCommentImages[indexPath.row];
+        }
     }
     
     return cell;
+}
+
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIImage *image;
+    if(collectionView.tag == 1)
+    {
+        image = self.rightViewImages[indexPath.row];
+    }
+    else if(collectionView.tag == 2)
+    {
+        image = self.commentImages[indexPath.row];
+    }
+    else
+    {
+        image = self.incidentCommentImages[indexPath.row];
+    }
+    //NSLog(@"image width:%f heigth:%f",image.size.width,image.size.height);
+    CGFloat width = image.size.width;
+    CGFloat heigth = image.size.height;
+    if(heigth > 116)
+    {
+        width = width / (heigth / 116);
+        heigth = 116;
+    }
+    return CGSizeMake(width, heigth);
+}
+
+
+- (void) initRightView
+{
+    self.rightViewImages = [NSMutableArray array];
+    self.largerRightViewImages = [NSMutableArray array];
+    self.rightTopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 646, 46)];
+    self.rightTopView.backgroundColor = [UIColor colorWithRed:(123.00/255.00f) green:(123.00/255.00f) blue:(123.00/255.00f) alpha:1.00];
+    [self.rightView addSubview:self.rightTopView];
+    
+    UIFont *labelFont = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+    self.rightDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 78, 46)];
+    self.rightDateLabel.text = @"01/05/11";
+    self.rightDateLabel.textAlignment = NSTextAlignmentRight;
+    self.rightDateLabel.font = labelFont;
+    self.rightDateLabel.textColor = [UIColor whiteColor];
+    [self.rightTopView addSubview:self.rightDateLabel];
+    
+    UILabel *specLabel = [[UILabel alloc] initWithFrame:CGRectMake(79, 0, 36, 46)];
+    specLabel.text = @"|";
+    specLabel.textAlignment = NSTextAlignmentCenter;
+    specLabel.font = labelFont;
+    specLabel.textColor = [UIColor whiteColor];
+    [self.rightTopView addSubview:specLabel];
+    
+    self.rightAuthorLabel = [[UILabel alloc] initWithFrame:CGRectMake(116, 0, 320, 46)];
+    self.rightAuthorLabel.text = @"Carl Spackler";
+    self.rightAuthorLabel.textAlignment = NSTextAlignmentLeft;
+    self.rightAuthorLabel.font = labelFont;
+    self.rightAuthorLabel.textColor = [UIColor whiteColor];
+    [self.rightTopView addSubview:self.rightAuthorLabel];
+    
+    self.rightLargePhotoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 46, 646, 465)];
+    self.rightLargePhotoView.image = [UIImage imageNamed:@"demo_rightroom6"];
+    [self.rightView addSubview:self.rightLargePhotoView];
+    
+    UIView *collectionBg = [[UIView alloc] initWithFrame:CGRectMake(0, 526, 646, 136)];
+    collectionBg.backgroundColor = [UIColor colorWithRed:(225.00/255.00f) green:(225.00/255.00f) blue:(225.00/255.00f) alpha:1.00];
+    [self.rightView addSubview:collectionBg];
+    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    //[flowLayout setItemSize:CGSizeMake(140, 79)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    
+    UICollectionView *rightCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 536, 636, 116) collectionViewLayout:flowLayout];
+    rightCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    rightCollectionView.delegate = self;
+    rightCollectionView.dataSource = self;
+    rightCollectionView.allowsMultipleSelection = YES;
+    rightCollectionView.allowsSelection = YES;
+    rightCollectionView.showsHorizontalScrollIndicator = NO;
+    rightCollectionView.backgroundColor = [UIColor colorWithRed:(225.00/255.00f) green:(225.00/255.00f) blue:(225.00/255.00f) alpha:0.00];
+    rightCollectionView.tag = 1;
+    
+    [self.rightView addSubview:rightCollectionView];
+    self.rightImageCollection = rightCollectionView;
+    [self.rightImageCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
+    self.rightImageCollection.delegate = self;
+    self.rightImageCollection.dataSource =self;
+    
+    [self.rightViewImages addObject:[UIImage imageNamed:@"demo_rightroom1"]];
+    [self.rightViewImages addObject:[UIImage imageNamed:@"demo_room2"]];
+    [self.rightViewImages addObject:[UIImage imageNamed:@"demo_rightroom3"]];
+    [self.rightViewImages addObject:[UIImage imageNamed:@"demo_rightroom4"]];
+    [self.rightViewImages addObject:[UIImage imageNamed:@"demo_rightroom5"]];
+    [self.rightViewImages addObject:[UIImage imageNamed:@"demo_rightroom1"]];
+    [self.rightViewImages addObject:[UIImage imageNamed:@"demo_room2"]];
+    
+    [self.largerRightViewImages addObject:[UIImage imageNamed:@"demo_rightroom6"]];
+    [self.largerRightViewImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.largerRightViewImages addObject:[UIImage imageNamed:@"demo_rightroom6"]];
+    [self.largerRightViewImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.largerRightViewImages addObject:[UIImage imageNamed:@"demo_rightroom6"]];
+    [self.largerRightViewImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.largerRightViewImages addObject:[UIImage imageNamed:@"demo_rightroom6"]];
+    
+    [self.rightImageCollection reloadData];
+    
 }
 
 - (void) initPhotoDetailPopupView
@@ -279,44 +475,26 @@
     imgBackgoundView.layer.cornerRadius = 5;
     [self.incidentCommentPopupView addSubview:imgBackgoundView];
     
-    /*
-    UIImageView *roomImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(141, 40, 105, 79)];
-    roomImageView1.image = [UIImage imageNamed:@"demo_room"];
-    [self.incidentCommentPopupView addSubview:roomImageView1];
-    
-    UIImageView *roomImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(281, 40, 105, 79)];
-    roomImageView2.image = [UIImage imageNamed:@"demo_room"];
-    [self.incidentCommentPopupView addSubview:roomImageView2];
-    
-    UIImageView *roomImageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(421, 40, 105, 79)];
-    roomImageView3.image = [UIImage imageNamed:@"demo_room"];
-    [self.incidentCommentPopupView addSubview:roomImageView3];
-    
-    UIImageView *roomImageView4 = [[UIImageView alloc] initWithFrame:CGRectMake(561, 40, 105, 79)];
-    roomImageView4.image = [UIImage imageNamed:@"demo_room"];
-    [self.incidentCommentPopupView addSubview:roomImageView4];
-    
-    */
-    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(140, 79)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
-    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(136, 30, 826, 99) collectionViewLayout:flowLayout];
-    collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    collectionView.delegate = self;
-    collectionView.dataSource = self;
-    collectionView.allowsMultipleSelection = YES;
-    collectionView.allowsSelection = YES;
-    collectionView.showsHorizontalScrollIndicator = NO;
-    collectionView.backgroundColor = [UIColor whiteColor];
+    UICollectionView *incidentCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(136, 30, 826, 99) collectionViewLayout:flowLayout];
+    incidentCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    incidentCollectionView.delegate = self;
+    incidentCollectionView.dataSource = self;
+    incidentCollectionView.allowsMultipleSelection = YES;
+    incidentCollectionView.allowsSelection = YES;
+    incidentCollectionView.showsHorizontalScrollIndicator = NO;
+    incidentCollectionView.backgroundColor = [UIColor whiteColor];
+    incidentCollectionView.tag = 3;
     
-    [self.incidentCommentPopupView addSubview:collectionView];
-    self.incidentCommentCollection = collectionView;
+    [self.incidentCommentPopupView addSubview:incidentCollectionView];
+    self.incidentCommentCollection = incidentCollectionView;
     [self.incidentCommentCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
     self.incidentCommentCollection.delegate = self;
     self.incidentCommentCollection.dataSource =self;
-
+    
     UIView *commentBackgoundView = [[UIView alloc] initWithFrame:CGRectMake(32, 149, 960, 160)];
     commentBackgoundView.backgroundColor = [UIColor whiteColor];
     commentBackgoundView.layer.masksToBounds = YES;
@@ -385,40 +563,22 @@
     imgBackgoundView.layer.cornerRadius = 5;
     [self.commentPopupView addSubview:imgBackgoundView];
     
-    /*
-    UIImageView *roomImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(141, 40, 105, 79)];
-    roomImageView1.image = [UIImage imageNamed:@"demo_room"];
-    [self.commentPopupView addSubview:roomImageView1];
-    
-    UIImageView *roomImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(281, 40, 105, 79)];
-    roomImageView2.image = [UIImage imageNamed:@"demo_room"];
-    [self.commentPopupView addSubview:roomImageView2];
-    
-    UIImageView *roomImageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(421, 40, 105, 79)];
-    roomImageView3.image = [UIImage imageNamed:@"demo_room"];
-    [self.commentPopupView addSubview:roomImageView3];
-    
-    UIImageView *roomImageView4 = [[UIImageView alloc] initWithFrame:CGRectMake(561, 40, 105, 79)];
-    roomImageView4.image = [UIImage imageNamed:@"demo_room"];
-    [self.commentPopupView addSubview:roomImageView4];
-
-    */
-    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(140, 79)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
-    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(136, 30, 826, 99) collectionViewLayout:flowLayout];
-    collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    collectionView.delegate = self;
-    collectionView.dataSource = self;
-    collectionView.allowsMultipleSelection = YES;
-    collectionView.allowsSelection = YES;
-    collectionView.showsHorizontalScrollIndicator = NO;
-    collectionView.backgroundColor = [UIColor whiteColor];
+    UICollectionView *commentCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(136, 30, 826, 99) collectionViewLayout:flowLayout];
+    commentCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    commentCollectionView.delegate = self;
+    commentCollectionView.dataSource = self;
+    commentCollectionView.allowsMultipleSelection = YES;
+    commentCollectionView.allowsSelection = YES;
+    commentCollectionView.showsHorizontalScrollIndicator = NO;
+    commentCollectionView.backgroundColor = [UIColor whiteColor];
+    commentCollectionView.tag = 2;
     
-    [self.commentPopupView addSubview:collectionView];
-    self.commentCollection = collectionView;
+    [self.commentPopupView addSubview:commentCollectionView];
+    self.commentCollection = commentCollectionView;
     
     [self.commentCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
     
@@ -475,3 +635,4 @@
  */
 
 @end
+
