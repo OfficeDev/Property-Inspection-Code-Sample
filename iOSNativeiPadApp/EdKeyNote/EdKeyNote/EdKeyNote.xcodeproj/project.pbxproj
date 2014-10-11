@@ -11,6 +11,15 @@
 		0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */; };
 		0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */; };
 		0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */; };
+		0E9D42BF19E8C6BF00329A81 /* detailsepartorline.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42BE19E8C6BF00329A81 /* detailsepartorline.png */; };
+		0E9D42C219E8CB7500329A81 /* PropertyDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D42C119E8CB7500329A81 /* PropertyDetailsCell.m */; };
+		0E9D42C419E8D72700329A81 /* PropertyDetailsImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42C319E8D72700329A81 /* PropertyDetailsImage.xib */; };
+		0E9D42C719E8F22200329A81 /* PropertyDetailsImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D42C619E8F22200329A81 /* PropertyDetailsImage.m */; };
+		0E9D42CC19E8FEFD00329A81 /* home@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42C819E8FEFD00329A81 /* home@2x~ipad.png */; };
+		0E9D42CD19E8FEFD00329A81 /* home~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42C919E8FEFD00329A81 /* home~ipad.png */; };
+		0E9D42CE19E8FEFD00329A81 /* man@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42CA19E8FEFD00329A81 /* man@2x~ipad.png */; };
+		0E9D42CF19E8FEFD00329A81 /* man~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42CB19E8FEFD00329A81 /* man~ipad.png */; };
+		0E9D42D119E901F200329A81 /* PropertyDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42D019E901F200329A81 /* PropertyDetailsCell.xib */; };
 		0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA20B1919E549DB007EBF6A /* ListClient.m */; };
 		0EA20B1D19E549DB007EBF6A /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA20B1B19E549DB007EBF6A /* ListItem.m */; };
 		0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA2D9F319D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard */; };
@@ -55,6 +64,17 @@
 		0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNEKNGlobalInfo.m; sourceTree = "<group>"; };
 		0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNPropertyDetailsViewController.h; sourceTree = "<group>"; };
 		0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNPropertyDetailsViewController.m; sourceTree = "<group>"; };
+		0E9D42BE19E8C6BF00329A81 /* detailsepartorline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detailsepartorline.png; sourceTree = "<group>"; };
+		0E9D42C019E8CB7500329A81 /* PropertyDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyDetailsCell.h; sourceTree = "<group>"; };
+		0E9D42C119E8CB7500329A81 /* PropertyDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyDetailsCell.m; sourceTree = "<group>"; };
+		0E9D42C319E8D72700329A81 /* PropertyDetailsImage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PropertyDetailsImage.xib; sourceTree = "<group>"; };
+		0E9D42C519E8F22200329A81 /* PropertyDetailsImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyDetailsImage.h; sourceTree = "<group>"; };
+		0E9D42C619E8F22200329A81 /* PropertyDetailsImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyDetailsImage.m; sourceTree = "<group>"; };
+		0E9D42C819E8FEFD00329A81 /* home@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home@2x~ipad.png"; sourceTree = "<group>"; };
+		0E9D42C919E8FEFD00329A81 /* home~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home~ipad.png"; sourceTree = "<group>"; };
+		0E9D42CA19E8FEFD00329A81 /* man@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "man@2x~ipad.png"; sourceTree = "<group>"; };
+		0E9D42CB19E8FEFD00329A81 /* man~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "man~ipad.png"; sourceTree = "<group>"; };
+		0E9D42D019E901F200329A81 /* PropertyDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PropertyDetailsCell.xib; sourceTree = "<group>"; };
 		0EA20B1819E549DB007EBF6A /* ListClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListClient.h; sourceTree = "<group>"; };
 		0EA20B1919E549DB007EBF6A /* ListClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListClient.m; sourceTree = "<group>"; };
 		0EA20B1A19E549DB007EBF6A /* ListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListItem.h; sourceTree = "<group>"; };
@@ -160,6 +180,11 @@
 		0EADF92B19E79F9200E1DE77 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0E9D42C819E8FEFD00329A81 /* home@2x~ipad.png */,
+				0E9D42C919E8FEFD00329A81 /* home~ipad.png */,
+				0E9D42CA19E8FEFD00329A81 /* man@2x~ipad.png */,
+				0E9D42CB19E8FEFD00329A81 /* man~ipad.png */,
+				0E9D42BE19E8C6BF00329A81 /* detailsepartorline.png */,
 				0EADF94219E7A3AF00E1DE77 /* sepratorline@2x~ipad.png */,
 				0EADF94319E7A3AF00E1DE77 /* sepratorline~ipad.png */,
 				0EADF92C19E79F9200E1DE77 /* camera@2x~ipad.png */,
@@ -195,6 +220,12 @@
 				0EADF96919E8377000E1DE77 /* PropertyListCell.h */,
 				0EADF96A19E8377000E1DE77 /* PropertyListCell.m */,
 				0EADF96B19E8377000E1DE77 /* PropertyListCell.xib */,
+				0E9D42C019E8CB7500329A81 /* PropertyDetailsCell.h */,
+				0E9D42C119E8CB7500329A81 /* PropertyDetailsCell.m */,
+				0E9D42D019E901F200329A81 /* PropertyDetailsCell.xib */,
+				0E9D42C519E8F22200329A81 /* PropertyDetailsImage.h */,
+				0E9D42C619E8F22200329A81 /* PropertyDetailsImage.m */,
+				0E9D42C319E8D72700329A81 /* PropertyDetailsImage.xib */,
 			);
 			name = PropertyCell;
 			sourceTree = "<group>";
@@ -333,12 +364,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EA2D9FA19D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
+				0E9D42BF19E8C6BF00329A81 /* detailsepartorline.png in Resources */,
+				0E9D42CE19E8FEFD00329A81 /* man@2x~ipad.png in Resources */,
 				0EADF93B19E79F9200E1DE77 /* dropdown_arrow~ipad.png in Resources */,
 				0EADF93919E79F9200E1DE77 /* demo_room~ipad.png in Resources */,
 				0EA2D9FC19D8094400465DA2 /* InfoPlist.strings in Resources */,
+				0E9D42CD19E8FEFD00329A81 /* home~ipad.png in Resources */,
 				0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */,
 				0EADF94419E7A3AF00E1DE77 /* sepratorline@2x~ipad.png in Resources */,
+				0E9D42C419E8D72700329A81 /* PropertyDetailsImage.xib in Resources */,
 				0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */,
+				0E9D42D119E901F200329A81 /* PropertyDetailsCell.xib in Resources */,
+				0E9D42CF19E8FEFD00329A81 /* man~ipad.png in Resources */,
 				0EADF93D19E79F9200E1DE77 /* navigation_background~ipad.png in Resources */,
 				0EADF93619E79F9200E1DE77 /* camera@2x~ipad.png in Resources */,
 				0EADF93719E79F9200E1DE77 /* camera~ipad.png in Resources */,
@@ -353,6 +390,7 @@
 				0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */,
 				0EADF96D19E8377000E1DE77 /* PropertyListCell.xib in Resources */,
 				3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */,
+				0E9D42CC19E8FEFD00329A81 /* home@2x~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +403,7 @@
 			files = (
 				0EADF94819E7AD2A00E1DE77 /* EKN+UIImagePickerController.m in Sources */,
 				0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */,
+				0E9D42C219E8CB7500329A81 /* PropertyDetailsCell.m in Sources */,
 				0EADF95119E7C2B900E1DE77 /* EKN+NavigationController.m in Sources */,
 				0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */,
 				F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */,
@@ -374,6 +413,7 @@
 				0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */,
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
 				0EA20B1D19E549DB007EBF6A /* ListItem.m in Sources */,
+				0E9D42C719E8F22200329A81 /* PropertyDetailsImage.m in Sources */,
 				0EC4F5CA19CFF2C600BEF583 /* EKNAppDelegate.m in Sources */,
 				0EADF96C19E8377000E1DE77 /* PropertyListCell.m in Sources */,
 			);

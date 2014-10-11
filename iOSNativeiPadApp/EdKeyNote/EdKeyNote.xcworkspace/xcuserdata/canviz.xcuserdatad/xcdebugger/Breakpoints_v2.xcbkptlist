@@ -20,19 +20,13 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EdKeyNote/EdKeyNote/EKNPropertyDetailsViewController.m"
-            timestampString = "434615394.346478"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
-            landmarkName = "-getIncidentsListArray:"
-            landmarkType = "5">
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -41,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EdKeyNote/EdKeyNote/EKNLoginViewController.m"
-            timestampString = "434682395.369582"
+            filePath = "EdKeyNote/EdKeyNote/EKNPropertyDetailsViewController.m"
+            timestampString = "434712894.354028"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "-checkParameters"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
+            landmarkName = "-getFile:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

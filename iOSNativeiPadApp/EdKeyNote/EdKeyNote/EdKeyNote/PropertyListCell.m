@@ -36,23 +36,20 @@
     // Configure the view for the selected state
 }
 */
--(void)setCellValue:(UIImage *)image path:(NSString *)path address:(NSString *)address
+-(void)setCellValue:(UIImage *)image address:(NSString *)address
 {
     self.hotelAdress.text = address;
-    if (image == nil) {
-        if(path!=nil)
-        {
-            [self getFiles:self.hotelImage path:path];
-        }
+    if(image!=nil)
+    {
+        [self.hotelImage setImage:image];
     }
 }
 
--(void)getFiles:(UIImageView *)imageview path:(NSString *)path
+/*-(void)getFiles:(UIImageView *)imageview path:(NSString *)path
 {
      NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",siteUrl,path,@"')/$value"];
-    /*NSString *requestUrl = [ ]@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo/_api/web/GetFileByServerRelativeUrl('///sites/SuiteLevelAppDemo/PropertyPhotos/20141007172806.jpg')/$value";*/
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
@@ -77,5 +74,5 @@
     }];
     [task resume];
     
-}
+}*/
 @end

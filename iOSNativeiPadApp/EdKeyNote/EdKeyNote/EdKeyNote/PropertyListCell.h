@@ -10,9 +10,9 @@
 #import "ListItem.h"
 @interface PropertyListCell : UITableViewCell {
 }
-@property(nonatomic) NSString* token;
+//@property(nonatomic) NSString* token;
 @property (strong, nonatomic) IBOutlet UIImageView *hotelImage;
 @property (strong, nonatomic) IBOutlet UILabel *hotelAdress;
--(void)setCellValue:(UIImage *)image path:(NSString *)path address:(NSString *)address;
--(void)getFiles:(UIImageView *)imageview path:(NSString *)path;
+-(void)setCellValue:(UIImage *)image address:(NSString *)address;
+//-(void)getFiles:(UIImageView *)imageview path:(NSString *)path;
 @end

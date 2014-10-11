@@ -11,6 +11,8 @@
 #import "ListItem.h"
 #import "EKN+UIViewController.h"
 #import "PropertyListCell.h"
+#import "PropertyDetailsImage.h"
+#import "PropertyDetailsCell.h"
 @interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 //@property NSMutableArray* SharepointList;
@@ -27,15 +29,16 @@
 
 
 @property(nonatomic) UIActivityIndicatorView* spinner;
+
 @property(nonatomic) UITableView * rightTableView;
 @property(nonatomic) NSIndexPath * currentRightIndexPath;
+
+@property(nonatomic) UITableView * propertyDetailTableView;
 
 
 
 @property(nonatomic) UILabel *inspectionTitle;
 @property(nonatomic) UILabel *inspectorInfor;
-
-
 
 /**/
 
@@ -43,4 +46,5 @@
 -(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems;
 -(void)getIncidentsListArray:(ListClient*)client;
 -(void)setRightTableCell:(PropertyListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+-(void)didUpdateRightTableCell:(NSIndexPath *)indexpath image:(UIImage*)image;
 @end
