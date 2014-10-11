@@ -48,9 +48,9 @@
         self.clientId = [standardUserDefaults objectForKey:@"clientId"];    }
     else
     {
-        /*     NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"clientID not set. Please update settings for the application."];
+             NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"clientID not set. Please update settings for the application."];
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-         [alert show];*/
+         [alert show];
         self.clientId = @"e632f423-b906-4d5c-b32d-a6e635f1e685";
         [standardUserDefaults setValue:self.clientId  forKey:@"clientId"];
         [standardUserDefaults synchronize];
@@ -62,9 +62,9 @@
         self.authority = [standardUserDefaults objectForKey:@"authority"];    }
     else
     {
-        /*NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"authority not set. Please update settings for the application."];
+        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"authority not set. Please update settings for the application."];
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-         [alert show];*/
+         [alert show];
         self.authority =@"https://login.windows-ppe.net/common";
         [standardUserDefaults setValue:self.authority forKey:@"authority"];
         [standardUserDefaults synchronize];
@@ -76,9 +76,9 @@
         self.resourceId = [standardUserDefaults objectForKey:@"resourceId"];    }
     else
     {
-        /*NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"resourceId not set. Please update settings for the application."];
+        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"resourceId not set. Please update settings for the application."];
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-         [alert show];*/
+         [alert show];
         self.resourceId = @"https://techedairlift04.spoppe.com";
         [standardUserDefaults setValue:self.resourceId forKey:@"resourceId"];
         [standardUserDefaults synchronize];
@@ -90,16 +90,16 @@
         self.redirectUriString = [standardUserDefaults objectForKey:@"redirectUriString"];    }
     else
     {
-        /*NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"redirectUriString not set. Please update settings for the application."];
+        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"redirectUriString not set. Please update settings for the application."];
          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-         [alert show];*/
+         [alert show];
         self.redirectUriString = @"http://iOSiPadApp" ;
         [standardUserDefaults setValue:self.redirectUriString forKey:@"redirectUriString"];
         [standardUserDefaults synchronize];
     }
     
     //Check to see if the demoSiteCollectionUrl setting exists
-    if (nil != [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"])
+    if (nil == [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"])
     {
         [standardUserDefaults setValue:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
         [standardUserDefaults synchronize];
