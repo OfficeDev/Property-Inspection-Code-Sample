@@ -21,7 +21,7 @@ UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic) NSString* token;
 @property(nonatomic) NSString* propertyId;
-@property(nonatomic) NSString* selectInspetionId;
+@property(nonatomic) NSInteger selectInspetionIndex;
 //key inspectionslist,inspectionslist is array
 //key contactowner
 //key contactemail
@@ -69,6 +69,6 @@ UITableViewDelegate, UITableViewDataSource>
 @property int testCount;
 @property int selectedImageIndex;
 
--(void)initRoomsValue:(NSDictionary *)insDic propertyId:(NSString *)pid inspetionId:(NSString *)insId token:(NSString *)tkn;
+-(void)initRoomsValue:(NSDictionary *)insDic propertyId:(NSString *)pid inspetionId:(NSInteger)insId token:(NSString *)tkn;
 
 @end

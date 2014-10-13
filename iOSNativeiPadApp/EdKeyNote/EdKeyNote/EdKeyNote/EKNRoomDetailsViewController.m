@@ -14,11 +14,11 @@
 
 @implementation EKNRoomDetailsViewController
 
--(void)initRoomsValue:(NSDictionary *)insDic propertyId:(NSString *)pid inspetionId:(NSString *)insId token:(NSString *)tkn
+-(void)initRoomsValue:(NSDictionary *)insDic propertyId:(NSString *)pid inspetionId:(NSInteger)insId token:(NSString *)tkn
 {
     self.inspectionsDic = insDic;
     self.propertyId = pid;
-    self.selectInspetionId =insId;
+    self.selectInspetionIndex =insId;
     self.token = tkn;
 }
 
@@ -90,7 +90,7 @@
 {
     [super viewWillAppear:animated];
     
-    NSIndexPath *temp = [NSIndexPath indexPathForRow:[self.selectInspetionId integerValue] inSection:0];
+    NSIndexPath *temp = [NSIndexPath indexPathForRow:self.selectInspetionIndex inSection:0];
     [self.inspectionLeftTableView selectRowAtIndexPath:temp animated:NO scrollPosition:UITableViewScrollPositionTop];
 }
 -(void)loadData{

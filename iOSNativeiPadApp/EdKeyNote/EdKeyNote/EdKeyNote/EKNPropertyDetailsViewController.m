@@ -979,10 +979,9 @@
         EKNRoomDetailsViewController *room = [[EKNRoomDetailsViewController alloc] init];
         
         NSDictionary *tempdic = [self.propertyDic objectForKey:self.selectPrppertyId];
-        NSArray *tempArray = [tempdic objectForKey:@"inspectionslist"];
         [room initRoomsValue:tempdic
                              propertyId:self.selectPrppertyId
-                 inspetionId:[[tempArray objectAtIndex:indexPath.row] objectForKey:@"ID"]
+                 inspetionId:indexPath.row
                  token:self.token];
         
         [self.navigationController pushViewController:room animated:YES];
