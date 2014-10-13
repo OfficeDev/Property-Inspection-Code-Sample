@@ -846,7 +846,9 @@
         {
             if(tableView == self.inspectionMidTableView )
             {
-                [cell setCellValue: @"lisaa@tenancy.com"];
+                NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+                
+                [cell setCellValue: [standardUserDefaults objectForKey:@"dispatcherEmail"]];
             }
             else
             {
