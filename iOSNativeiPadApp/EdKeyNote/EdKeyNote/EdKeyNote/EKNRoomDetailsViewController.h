@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <office365-base-sdk/OAuthentication.h>
 #import "EKN+UIImagePickerController.h"
 #import "EKN+UIViewController.h"
 #import "EKNCollectionViewCell.h"
 #import "ContactOwnerCell.h"
 #import "InspectionListCell.h"
+#import "ListClient.h"
+#import "ListItem.h"
+
 @interface EKNRoomDetailsViewController : UIViewController<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,
 UITableViewDelegate, UITableViewDataSource>
 
@@ -26,6 +30,8 @@ UITableViewDelegate, UITableViewDataSource>
 //one inspection maybe have many rooms
 //one room maybe have many pictures
 @property(nonatomic) NSMutableDictionary *roomsOfInspectionDic;
+
+@property(nonatomic) UIActivityIndicatorView* spinner;
 
 @property(nonatomic) UITableView * inspectionLeftTableView;
 @property(nonatomic) UITableView * inspectionMidTableView;

@@ -93,6 +93,34 @@
     NSIndexPath *temp = [NSIndexPath indexPathForRow:[self.selectInspetionId integerValue] inSection:0];
     [self.inspectionLeftTableView selectRowAtIndexPath:temp animated:NO scrollPosition:UITableViewScrollPositionTop];
 }
+-(void)loadData{
+    
+    self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
+    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:self.spinner];
+    self.spinner.hidesWhenStopped = YES;
+    
+    [self.spinner startAnimating];
+    
+    
+    OAuthentication* authentication = [OAuthentication alloc];
+    [authentication setToken:self.token];
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    ListClient* client = [[ListClient alloc] initWithUrl:[standardUserDefaults objectForKey:@"demoSiteCollectionUrl"]
+                                             credentials: authentication];
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:@"$select=ID,ServerRelativeUrl,sl_inspectionIDId,sl_roomIDId" callback:^(NSMutableArray *listItems, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.spinner stopAnimating];
+        });
+        
+    }];
+    
+    
+    [task resume];
+    
+    
+}
 -(void)initLeftView{
 
     [self addSegementControl];

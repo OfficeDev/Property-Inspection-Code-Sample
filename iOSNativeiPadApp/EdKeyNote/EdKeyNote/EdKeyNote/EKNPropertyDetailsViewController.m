@@ -985,8 +985,6 @@
                  inspetionId:[[tempArray objectAtIndex:indexPath.row] objectForKey:@"ID"]
                  token:self.token];
         
-        NSLog(@"property tempdic %@",tempdic);
-        NSLog(@"property self.selectPrppertyId %@",self.selectPrppertyId);
         [self.navigationController pushViewController:room animated:YES];
     }
 }
