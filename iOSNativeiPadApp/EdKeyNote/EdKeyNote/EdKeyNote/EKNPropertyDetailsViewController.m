@@ -136,7 +136,16 @@
     self.inspectionLeftTableView.backgroundColor = [UIColor whiteColor];
     self.inspectionLeftTableView.delegate = self;
     self.inspectionLeftTableView.dataSource = self;
-   // [self.inspectionLeftTableView setScrollEnabled:NO];
+    [self.inspectionLeftTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    
+    UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+    NSString *lbl1str = @"INSPECTIONS";
+    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    lbl1.text = lbl1str;
+    lbl1.textAlignment = NSTextAlignmentLeft;
+    lbl1.font = font;
+    lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.inspectionLeftTableView.tableHeaderView = lbl1;
     [self.view addSubview:self.inspectionLeftTableView];
     
     self.inspectionMidTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 480, 320, 235) style:UITableViewStyleGrouped];
@@ -144,6 +153,14 @@
     self.inspectionMidTableView.delegate = self;
     self.inspectionMidTableView.dataSource = self;
     [self.inspectionMidTableView setScrollEnabled:NO];
+    
+    NSString *lbl2str = @"CONTACT OFFICE";
+    UILabel *lbl2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    lbl2.text = lbl2str;
+    lbl2.textAlignment = NSTextAlignmentLeft;
+    lbl2.font = font;
+    lbl2.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.inspectionMidTableView.tableHeaderView = lbl2;
     [self.view addSubview:self.inspectionMidTableView];
     self.inspectionMidTableView.hidden = YES;
     
@@ -152,6 +169,14 @@
     self.inspectionRightTableView.delegate = self;
     self.inspectionRightTableView.dataSource = self;
     [self.inspectionRightTableView setScrollEnabled:NO];
+    NSString *lbl3str = @"CONTACT OWNER";
+    UILabel *lbl3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    lbl3.text = lbl3str;
+    lbl3.textAlignment = NSTextAlignmentLeft;
+    lbl3.font = font;
+    lbl3.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.inspectionMidTableView.tableHeaderView = lbl3;
+    
     [self.view addSubview:self.inspectionRightTableView];
     self.inspectionRightTableView.hidden = YES;
     
@@ -167,6 +192,14 @@
     //[self.propertyDetailTableView.layer setCornerRadius:10.0];
     //[self.propertyDetailTableView.layer setMasksToBounds:YES];
     [self.propertyDetailTableView setScrollEnabled:NO];
+    UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+    NSString *lbl1str = @"PROPERTY DETAILS";
+    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 25)];
+    lbl1.text = lbl1str;
+    lbl1.textAlignment = NSTextAlignmentLeft;
+    lbl1.font = font;
+    lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.propertyDetailTableView.tableHeaderView = lbl1;
     [self.view addSubview:self.propertyDetailTableView];
 }
 -(void)addRightTable{
@@ -232,8 +265,6 @@
 }
 -(void)loadData{
     
-
-    
     self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
     self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     [self.view addSubview:self.spinner];
@@ -250,11 +281,26 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             
             
-            self.inspectionsListArray = [[NSMutableArray alloc] init];
+            //self.inspectionsListArray = [[NSMutableArray alloc] init];
             NSMutableArray *upcomingList = [[NSMutableArray alloc] init];
             ListItem* currentInspectionData = [[ListItem alloc] init];
             BOOL bfound=false;
-            self.inspectionsListArray =listItems;
+            self.inspectionsListArray =[[NSMutableArray alloc] initWithArray:[listItems sortedArrayUsingComparator:^(ListItem *obj1, ListItem *obj2)
+                                                                              {
+                                                                                  NSDate *datetime1 = [EKNEKNGlobalInfo converDateFromString:(NSString *)[obj1 getData:@"sl_datetime"]];
+                                                                                  NSDate *datetime2 = [EKNEKNGlobalInfo converDateFromString:(NSString *)[obj2 getData:@"sl_datetime"]];
+                                                                                  
+                                                                                  if([datetime1 compare:datetime2] == NSOrderedDescending)
+                                                                                  {
+                                                                                      return (NSComparisonResult)NSOrderedAscending;
+                                                                                  }
+                                                                                  if([datetime1 compare:datetime2] == NSOrderedAscending)
+                                                                                  {
+                                                                                      return (NSComparisonResult)NSOrderedDescending;
+                                                                                  }
+                                                                                  return (NSComparisonResult)NSOrderedSame;
+                                                                                  
+                                                                              }]];
             for(ListItem* tempitem in listItems)
             {
                 
@@ -768,18 +814,10 @@
 {
     if(tableView == self.rightTableView)
     {
-        if(section ==0)
-        {
-            return 30;
-        }
-        else
-        {
-            return 50;
-        }
-        
+        return 30;
         
     }
-    return 25;
+    return 0;
 }
 
 
@@ -789,123 +827,37 @@
     {
         if (section == 0)
         {
-            UIView *tview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 620, 30)];
-            tview.backgroundColor = [UIColor clearColor];
-            
             UIFont *font = [UIFont fontWithName:@"Helvetica" size:12];
             NSString *lbl1str = @"CURRENT INSPECTION";
-            NSDictionary *attributes = @{NSFontAttributeName:font};
-            CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-            UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, lbsize.width, lbsize.height)];
+           // NSDictionary *attributes = @{NSFontAttributeName:font};
+            //CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
+            UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 620, 30)];
             lbl1.text = lbl1str;
             lbl1.textAlignment = NSTextAlignmentLeft;
             lbl1.font = font;
             lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-            
-            [tview addSubview:lbl1];
-            
-            return tview;
+            return lbl1;
         }
         else
         {
-            UIView *tview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 620, 50)];
-            tview.backgroundColor = [UIColor clearColor];
-            
             UIFont *font = [UIFont fontWithName:@"Helvetica" size:12];
             NSString *lbl1str = @"UPCOMING INSPECTION";
-            NSDictionary *attributes = @{NSFontAttributeName:font};
-            CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-            UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, lbsize.width, lbsize.height)];
+            //NSDictionary *attributes = @{NSFontAttributeName:font};
+            //CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
+            UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 620, 30)];
             lbl1.text = lbl1str;
             lbl1.textAlignment = NSTextAlignmentLeft;
             lbl1.font = font;
             lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
             
-            [tview addSubview:lbl1];
-            
-            return tview;
+            return lbl1;
         }
         
     }
-    else if(tableView == self.propertyDetailTableView)
-    {
-        UIView *tview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 315, 25)];
-        tview.backgroundColor = [UIColor clearColor];
-        
-        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-        NSString *lbl1str = @"PROPERTY DETAILS";
-        NSDictionary *attributes = @{NSFontAttributeName:font};
-        CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-        UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, lbsize.width, lbsize.height)];
-        lbl1.text = lbl1str;
-        lbl1.textAlignment = NSTextAlignmentLeft;
-        lbl1.font = font;
-        lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-        
-        [tview addSubview:lbl1];
-        
-        return tview;
-    }
-    else if(tableView == self.inspectionLeftTableView)
-    {
-        UIView *tview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-        tview.backgroundColor = [UIColor clearColor];
-        
-        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-        NSString *lbl1str = @"INSPECTIONS";
-        NSDictionary *attributes = @{NSFontAttributeName:font};
-        CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-        UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, lbsize.width, lbsize.height)];
-        lbl1.text = lbl1str;
-        lbl1.textAlignment = NSTextAlignmentLeft;
-        lbl1.font = font;
-        lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-        
-        [tview addSubview:lbl1];
-        
-        return tview;
-    }
-    else if(tableView == self.inspectionMidTableView)
-    {
-        UIView *tview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-        tview.backgroundColor = [UIColor clearColor];
-        
-        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-        NSString *lbl1str = @"CONTACT OFFICE";
-        NSDictionary *attributes = @{NSFontAttributeName:font};
-        CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-        UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, lbsize.width, lbsize.height)];
-        lbl1.text = lbl1str;
-        lbl1.textAlignment = NSTextAlignmentLeft;
-        lbl1.font = font;
-        lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-        
-        [tview addSubview:lbl1];
-        
-        return tview;
-    }
-    else if(tableView == self.inspectionRightTableView)
-    {
-        UIView *tview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-        tview.backgroundColor = [UIColor clearColor];
-        
-        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-        NSString *lbl1str = @"CONTACT OWNER";
-        NSDictionary *attributes = @{NSFontAttributeName:font};
-        CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-        UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, lbsize.width, lbsize.height)];
-        lbl1.text = lbl1str;
-        lbl1.textAlignment = NSTextAlignmentLeft;
-        lbl1.font = font;
-        lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-        
-        [tview addSubview:lbl1];
-        
-        return tview;
-    }
+   
     else
     {
-        return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        return nil;
     }
     
 }

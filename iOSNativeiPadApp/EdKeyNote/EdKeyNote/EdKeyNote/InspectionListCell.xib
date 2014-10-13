@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sepratorline.png" translatesAutoresizingMaskIntoConstraints="NO" id="ul8-w6-lgr">
-                        <rect key="frame" x="190" y="6" width="1" height="23"/>
+                        <rect key="frame" x="195" y="6" width="1" height="23"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJE-IK-obh" userLabel="Lable-DateTime">
                         <rect key="frame" x="225" y="0.0" width="95" height="29"/>
@@ -23,13 +23,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvg-CE-fFu" userLabel="Label-Owner">
-                        <rect key="frame" x="35" y="0.0" width="154" height="29"/>
+                        <rect key="frame" x="45" y="0.0" width="154" height="29"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKm-sN-FwU" userLabel="IncidentImage">
-                        <rect key="frame" x="5" y="7" width="15" height="15"/>
+                        <rect key="frame" x="15" y="7" width="15" height="15"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gec-nS-h65" userLabel="PlusImage">
                         <rect key="frame" x="160" y="7" width="15" height="15"/>

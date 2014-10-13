@@ -23,14 +23,19 @@
 @interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 //@property NSMutableArray* SharepointList;
-@property(nonatomic) NSString* selectPrppertyId;
+
+//need get data from extend
 @property(nonatomic) NSString* loginName;
 @property(nonatomic) NSString* token;
+@property(nonatomic) NSString* selectPrppertyId;
+//end
 
-//all inspections list
+
+//all inspections list. store all inspections list, Listitem
 @property(nonatomic) NSMutableArray *inspectionsListArray;
 //current and upcoming inspections dict
 @property(nonatomic) NSMutableDictionary *rightPannelListDic;
+
 //key is propery Id, use to story property Resource and incidents
 //inspectionslist
 //contactowner
