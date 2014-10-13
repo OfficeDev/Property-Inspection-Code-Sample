@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <office365-base-sdk/OAuthentication.h>
+#import <office365-base-sdk/NSString+NSStringExtensions.h>
 #import "EKN+UIImagePickerController.h"
 #import "EKN+UIViewController.h"
 #import "EKNCollectionViewCell.h"

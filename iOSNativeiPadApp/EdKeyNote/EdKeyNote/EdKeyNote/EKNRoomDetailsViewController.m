@@ -69,6 +69,8 @@
     [self initLeftView];
     
     [self initRightView];
+    
+    [self loadData];
     /*UIButton *showIncidentCommentPopupBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 180, 250, 40)];
     [showIncidentCommentPopupBtn setTitle:@"Show Incident Comment" forState:UIControlStateNormal];
     [showIncidentCommentPopupBtn setBackgroundColor:[UIColor redColor]];
@@ -103,14 +105,19 @@
     [self.spinner startAnimating];
     
     
+    NSInteger inspectionId = [[[[self.inspectionsDic objectForKey:@"inspectionslist"]
+                                objectAtIndex:self.selectInspetionIndex]
+                               objectForKey:@"ID"] integerValue];
+    
     OAuthentication* authentication = [OAuthentication alloc];
     [authentication setToken:self.token];
+    
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     ListClient* client = [[ListClient alloc] initWithUrl:[standardUserDefaults objectForKey:@"demoSiteCollectionUrl"]
                                              credentials: authentication];
-    NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:@"$select=ID,ServerRelativeUrl,sl_inspectionIDId,sl_roomIDId" callback:^(NSMutableArray *listItems, NSError *error) {
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:[NSString stringWithFormat:@"$select=Id,sl_inspectionIDId,sl_roomIDId&$filter=sl_inspectionIDId%@",[[NSString stringWithFormat:@" eq '%d'",(int)inspectionId] urlencode]] callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+            NSLog(@"listItems %ld",[listItems count]);
             [self.spinner stopAnimating];
         });
         

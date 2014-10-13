@@ -264,30 +264,14 @@
     
     
     
-    NSURLSessionTask* task = [client getListItemsByFilter:@"Inspections" filter:@"$select=ID,sl_datetime,sl_inspector/ID,sl_inspector/Title,sl_inspector/sl_accountname,sl_inspector/sl_emailaddress,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode&$expand=sl_inspector,sl_propertyID" callback:^(NSMutableArray *listItems, NSError *error) {
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Inspections" filter:@"$select=ID,sl_datetime,sl_inspector/ID,sl_inspector/Title,sl_inspector/sl_accountname,sl_inspector/sl_emailaddress,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode&$expand=sl_inspector,sl_propertyID&$orderby=sl_datetime%20desc" callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
             
-            //self.inspectionsListArray = [[NSMutableArray alloc] init];
             NSMutableArray *upcomingList = [[NSMutableArray alloc] init];
             ListItem* currentInspectionData = [[ListItem alloc] init];
             BOOL bfound=false;
-            self.inspectionsListArray =[[NSMutableArray alloc] initWithArray:[listItems sortedArrayUsingComparator:^(ListItem *obj1, ListItem *obj2)
-                                                                              {
-                                                                                  NSDate *datetime1 = [EKNEKNGlobalInfo converDateFromString:(NSString *)[obj1 getData:@"sl_datetime"]];
-                                                                                  NSDate *datetime2 = [EKNEKNGlobalInfo converDateFromString:(NSString *)[obj2 getData:@"sl_datetime"]];
-                                                                                  
-                                                                                  if([datetime1 compare:datetime2] == NSOrderedDescending)
-                                                                                  {
-                                                                                      return (NSComparisonResult)NSOrderedAscending;
-                                                                                  }
-                                                                                  if([datetime1 compare:datetime2] == NSOrderedAscending)
-                                                                                  {
-                                                                                      return (NSComparisonResult)NSOrderedDescending;
-                                                                                  }
-                                                                                  return (NSComparisonResult)NSOrderedSame;
-                                                                                  
-                                                                              }]];
+            self.inspectionsListArray =listItems;
             for(ListItem* tempitem in listItems)
             {
                 

@@ -39,6 +39,8 @@ const NSString *apiUrl = @"/_api/lists";
     NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items?%@", self.Url , apiUrl, [name urlencode],filter];
     HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential url:url];
     
+    NSLog(@"URL %@",url);
+    
     NSString *method = (NSString*)[[Constants alloc] init].Method_Get;
     
     return [connection execute:method callback:^(NSData *data, NSURLResponse *response, NSError *error) {
