@@ -83,6 +83,12 @@
 			<string>PSTextFieldSpecifier</string>
 		</dict>
 		<dict>
+			<key>Title</key>
+			<string>Site Collection</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
 			<key>AutocapitalizationType</key>
 			<string>None</string>
 			<key>AutocorrectionType</key>
@@ -97,6 +103,30 @@
 			<string>URL</string>
 			<key>Title</key>
 			<string>demoSiteCollectionUrl</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Dispatcher</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>IsSecure</key>
+			<false/>
+			<key>Key</key>
+			<string>dispatcherEmail</string>
+			<key>KeyboardType</key>
+			<string>EmailAddress</string>
+			<key>Title</key>
+			<string>dispatcherEmail</string>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 		</dict>
