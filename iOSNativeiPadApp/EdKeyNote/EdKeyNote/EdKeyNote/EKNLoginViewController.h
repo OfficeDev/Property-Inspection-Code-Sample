@@ -18,6 +18,11 @@
 @property (strong, nonatomic)NSString* resourceId;
 @property (strong, nonatomic)NSString* clientId;
 @property (strong, nonatomic)NSString* demoSiteCollectionUrl;
+@property (strong, nonatomic)NSString* dispatcherEmail;
 @property (strong, nonatomic)Credentials* credentials;
 @property (strong, nonatomic)NSString* token;
+
+@property (retain) UIButton *login_bt;
+@property (retain) UILabel *settings_lbl;
+
 @end
