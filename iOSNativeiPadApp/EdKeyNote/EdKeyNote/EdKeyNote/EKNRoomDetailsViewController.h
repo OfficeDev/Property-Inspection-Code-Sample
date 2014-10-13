@@ -10,37 +10,59 @@
 #import "EKN+UIImagePickerController.h"
 #import "EKN+UIViewController.h"
 #import "EKNCollectionViewCell.h"
-@interface EKNRoomDetailsViewController : UIViewController<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+#import "ContactOwnerCell.h"
+#import "InspectionListCell.h"
+@interface EKNRoomDetailsViewController : UIViewController<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,
+UITableViewDelegate, UITableViewDataSource>
 
-@property(retain,nonatomic) UIView *leftView;
-@property(retain,nonatomic) UIView *rightView;
-@property(retain,nonatomic) UIView *incidentCommentPopupView;
-@property(retain,nonatomic) UIView *commentPopupView;
-@property(retain,nonatomic) UIButton *incidentCommentCamera;
-@property(retain,nonatomic) UIButton *commentCamera;
-@property(retain,nonatomic) UIView *photoDetailPopupView;
-@property(retain,nonatomic) UIImageView *largePhotoView;
-@property(retain,nonatomic) UIImageView *rightLargePhotoView;
-@property(retain,nonatomic) UIView *rightTopView;
-@property(retain,nonatomic) UILabel *rightDateLabel;
-@property(retain,nonatomic) UILabel *rightAuthorLabel;
-@property(retain,nonatomic) UIButton *selectedImageButton;
+@property(nonatomic) NSString* token;
+@property(nonatomic) NSString* propertyId;
+@property(nonatomic) NSString* selectInspetionId;
+//key inspectionslist,inspectionslist is array
+//key contactowner
+//key contactemail
+@property(nonatomic) NSDictionary *inspectionsDic;
+//key is inspection Id, use to store rooms
+//one inspection maybe have many rooms
+//one room maybe have many pictures
+@property(nonatomic) NSMutableDictionary *roomsOfInspectionDic;
 
-@property(strong,nonatomic) NSMutableArray *commentImages;
-@property(strong,nonatomic) NSMutableArray *incidentCommentImages;
-@property(strong,nonatomic) NSMutableArray *rightViewImages;
-@property(strong,nonatomic) NSMutableArray *largeCommentImages;
-@property(strong,nonatomic) NSMutableArray *largeIncidentCommentImages;
-@property(strong,nonatomic) NSMutableArray *largerRightViewImages;
+@property(nonatomic) UITableView * inspectionLeftTableView;
+@property(nonatomic) UITableView * inspectionMidTableView;
+@property(nonatomic) UITableView * inspectionRightTableView;
 
-@property(weak,nonatomic) UICollectionView *commentCollection;
-@property(weak,nonatomic) UICollectionView *incidentCommentCollection;
-@property(weak,nonatomic) UICollectionView *rightImageCollection;
+
+
+@property(nonatomic) UIView *incidentCommentPopupView;
+@property(nonatomic) UIView *commentPopupView;
+@property(nonatomic) UIButton *incidentCommentCamera;
+@property(nonatomic) UIButton *commentCamera;
+@property(nonatomic) UIView *photoDetailPopupView;
+@property(nonatomic) UIImageView *largePhotoView;
+
+@property(nonatomic) UIImageView *rightLargePhotoView;
+@property(nonatomic) UIView *rightTopView;
+@property(nonatomic) UILabel *rightDateLabel;
+@property(nonatomic) UILabel *rightAuthorLabel;
+@property(nonatomic) UIButton *selectedImageButton;
+
+@property(nonatomic) NSMutableArray *commentImages;
+@property(nonatomic) NSMutableArray *incidentCommentImages;
+@property(nonatomic) NSMutableArray *rightViewImages;
+@property(nonatomic) NSMutableArray *largeCommentImages;
+@property(nonatomic) NSMutableArray *largeIncidentCommentImages;
+@property(nonatomic) NSMutableArray *largerRightViewImages;
+
+@property(nonatomic) UICollectionView *commentCollection;
+@property(nonatomic) UICollectionView *incidentCommentCollection;
+@property(nonatomic) UICollectionView *rightImageCollection;
 
 @property BOOL cameraIsAvailable;
 @property BOOL isShowingComment;
 @property BOOL isShowingIncident;
 @property int testCount;
 @property int selectedImageIndex;
+
+-(void)initRoomsValue:(NSDictionary *)insDic propertyId:(NSString *)pid inspetionId:(NSString *)insId token:(NSString *)tkn;
 
 @end

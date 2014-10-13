@@ -14,6 +14,14 @@
 
 @implementation EKNRoomDetailsViewController
 
+-(void)initRoomsValue:(NSDictionary *)insDic propertyId:(NSString *)pid inspetionId:(NSString *)insId token:(NSString *)tkn
+{
+    self.inspectionsDic = insDic;
+    self.propertyId = pid;
+    self.selectInspetionId =insId;
+    self.token = tkn;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -44,18 +52,24 @@
     lbl1.textColor = [UIColor colorWithRed:255.00f/255.00f green:255.00f/255.00f blue:255.00f/255.00f alpha:1];
     [self.view addSubview:lbl1];
     
-    self.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
-    self.leftView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.leftView];
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
+    leftView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:leftView];
     
     UIImageView *speratorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
     speratorline.image = [UIImage imageNamed:@"sepratorline"];
     [self.view addSubview:speratorline];
     
-    self.rightView = [[UIView alloc] initWithFrame:CGRectMake(358, 91, 646, 677)];
-    [self.view addSubview:self.rightView];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(0, 350, 15, 71)];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"before"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backBtn];
     
-    UIButton *showIncidentCommentPopupBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 180, 250, 40)];
+    [self initLeftView];
+    
+    [self initRightView];
+    /*UIButton *showIncidentCommentPopupBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 180, 250, 40)];
     [showIncidentCommentPopupBtn setTitle:@"Show Incident Comment" forState:UIControlStateNormal];
     [showIncidentCommentPopupBtn setBackgroundColor:[UIColor redColor]];
     [showIncidentCommentPopupBtn addTarget:self action:@selector(showIncidentCommentAction) forControlEvents:UIControlEventTouchUpInside];
@@ -70,9 +84,156 @@
     [self initRightView];
     [self initIncidentCommentPopupView];
     [self initCommentPopupView];
-    [self initPhotoDetailPopupView];
+    [self initPhotoDetailPopupView];*/
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSIndexPath *temp = [NSIndexPath indexPathForRow:[self.selectInspetionId integerValue] inSection:0];
+    [self.inspectionLeftTableView selectRowAtIndexPath:temp animated:NO scrollPosition:UITableViewScrollPositionTop];
+}
+-(void)initLeftView{
 
+    [self addSegementControl];
+    [self addInspectionsTable];
+}
+-(void)addSegementControl
+{
+    UIImageView * bkimg =[[UIImageView alloc] initWithFrame:CGRectMake(24, 96, 316, 54)];
+    [bkimg setImage:[UIImage imageNamed:@"seg"]];
+    [self.view addSubview:bkimg];
+    
+    UIButton *left = [UIButton buttonWithType:UIButtonTypeCustom];
+    [left setFrame:CGRectMake(24, 96, 105, 54)];
+    [left addTarget:self action:@selector(leftButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:left];
+    
+    UIButton *mid = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mid setFrame:CGRectMake(129, 96, 105, 54)];
+    [mid addTarget:self action:@selector(midButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:mid];
+    
+    UIButton *right = [UIButton buttonWithType:UIButtonTypeCustom];
+    [right setFrame:CGRectMake(234, 96, 106, 54)];
+    [right addTarget:self action:@selector(rightButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:right];
+    
+    
+    UIImageView * bkimg1 =[[UIImageView alloc] initWithFrame:CGRectMake(24, 405, 316, 54)];
+    [bkimg1 setImage:[UIImage imageNamed:@"seg2"]];
+    [self.view addSubview:bkimg1];
+    
+    UIButton *left1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [left1 setFrame:CGRectMake(24, 405, 105, 54)];
+    [left1 addTarget:self action:@selector(roomLeftButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:left1];
+    
+    UIButton *mid1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mid1 setFrame:CGRectMake(129, 405, 105, 54)];
+    [mid1 addTarget:self action:@selector(roomMidButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:mid1];
+    
+    UIButton *right1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [right1 setFrame:CGRectMake(234, 405, 106, 54)];
+    [right1 addTarget:self action:@selector(roomRightButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:right1];
+    
+}
+-(void)addInspectionsTable
+{
+    self.inspectionLeftTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 150, 320, 235) style:UITableViewStyleGrouped];
+    self.inspectionLeftTableView.backgroundColor = [UIColor whiteColor];
+    self.inspectionLeftTableView.delegate = self;
+    self.inspectionLeftTableView.dataSource = self;
+    
+    UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+    NSString *lbl1str = @"INSPECTIONS";
+    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    lbl1.text = lbl1str;
+    lbl1.textAlignment = NSTextAlignmentLeft;
+    lbl1.font = font;
+    lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.inspectionLeftTableView.tableHeaderView = lbl1;
+
+    [self.view addSubview:self.inspectionLeftTableView];
+    
+    self.inspectionMidTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 150, 320, 235) style:UITableViewStyleGrouped];
+    self.inspectionMidTableView.backgroundColor = [UIColor whiteColor];
+    self.inspectionMidTableView.delegate = self;
+    self.inspectionMidTableView.dataSource = self;
+    [self.inspectionMidTableView setScrollEnabled:NO];
+    
+    NSString *lbl2str = @"CONTACT OFFICE";
+    UILabel *lbl2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    lbl2.text = lbl2str;
+    lbl2.textAlignment = NSTextAlignmentLeft;
+    lbl2.font = font;
+    lbl2.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.inspectionMidTableView.tableHeaderView = lbl2;
+    [self.view addSubview:self.inspectionMidTableView];
+    self.inspectionMidTableView.hidden = YES;
+    
+    self.inspectionRightTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 150, 320, 235) style:UITableViewStyleGrouped];
+    self.inspectionRightTableView.backgroundColor = [UIColor whiteColor];
+    self.inspectionRightTableView.delegate = self;
+    self.inspectionRightTableView.dataSource = self;
+    [self.inspectionRightTableView setScrollEnabled:NO];
+    NSString *lbl3str = @"CONTACT OWNER";
+    UILabel *lbl3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    lbl3.text = lbl3str;
+    lbl3.textAlignment = NSTextAlignmentLeft;
+    lbl3.font = font;
+    lbl3.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.inspectionMidTableView.tableHeaderView = lbl3;
+    
+    [self.view addSubview:self.inspectionRightTableView];
+    self.inspectionRightTableView.hidden = YES;
+    
+}
+-(void)leftButtonClicked
+{
+    if(self.inspectionLeftTableView.hidden == YES)
+    {
+        self.inspectionLeftTableView.hidden =NO;
+        self.inspectionMidTableView.hidden = YES;
+        self.inspectionRightTableView.hidden = YES;
+    }
+}
+-(void)midButtonClicked
+{
+    if(self.inspectionMidTableView.hidden == YES)
+    {
+        self.inspectionLeftTableView.hidden =YES;
+        self.inspectionMidTableView.hidden = NO;
+        self.inspectionRightTableView.hidden = YES;
+    }
+}
+-(void)rightButtonClicked
+{
+    if(self.inspectionRightTableView.hidden == YES)
+    {
+        self.inspectionLeftTableView.hidden =YES;
+        self.inspectionMidTableView.hidden = YES;
+        self.inspectionRightTableView.hidden = NO;
+    }
+}
+-(void)roomLeftButtonClicked
+{
+    
+}
+-(void)roomMidButtonClicked
+{
+    
+}
+-(void)roomRightButtonClicked
+{
+    
+}
+-(void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 -(void) showIncidentCommentAction
 {
     self.isShowingComment = NO;
@@ -363,9 +524,10 @@
 {
     self.rightViewImages = [NSMutableArray array];
     self.largerRightViewImages = [NSMutableArray array];
-    self.rightTopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 646, 46)];
+    
+    self.rightTopView = [[UIView alloc] initWithFrame:CGRectMake(358, 91, 646, 46)];
     self.rightTopView.backgroundColor = [UIColor colorWithRed:(123.00/255.00f) green:(123.00/255.00f) blue:(123.00/255.00f) alpha:1.00];
-    [self.rightView addSubview:self.rightTopView];
+    [self.view addSubview:self.rightTopView];
     
     UIFont *labelFont = [UIFont fontWithName:@"Helvetica-Bold" size:16];
     self.rightDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 78, 46)];
@@ -389,19 +551,21 @@
     self.rightAuthorLabel.textColor = [UIColor whiteColor];
     [self.rightTopView addSubview:self.rightAuthorLabel];
     
-    self.rightLargePhotoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 46, 646, 465)];
-    self.rightLargePhotoView.image = [UIImage imageNamed:@"demo_rightroom6"];
-    [self.rightView addSubview:self.rightLargePhotoView];
     
-    UIView *collectionBg = [[UIView alloc] initWithFrame:CGRectMake(0, 526, 646, 136)];
+    self.rightLargePhotoView = [[UIImageView alloc] initWithFrame:CGRectMake(358, 91+46, 646, 465)];
+    self.rightLargePhotoView.image = [UIImage imageNamed:@"demo_rightroom6"];
+    [self.view addSubview:self.rightLargePhotoView];
+
+    
+    UIView *collectionBg = [[UIView alloc] initWithFrame:CGRectMake(358, 526+91, 646, 136)];
     collectionBg.backgroundColor = [UIColor colorWithRed:(225.00/255.00f) green:(225.00/255.00f) blue:(225.00/255.00f) alpha:1.00];
-    [self.rightView addSubview:collectionBg];
+    [self.view addSubview:collectionBg];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     //[flowLayout setItemSize:CGSizeMake(140, 79)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
-    UICollectionView *rightCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 536, 636, 116) collectionViewLayout:flowLayout];
+    UICollectionView *rightCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(358+5, 91+536, 636, 116) collectionViewLayout:flowLayout];
     rightCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     rightCollectionView.delegate = self;
     rightCollectionView.dataSource = self;
@@ -411,7 +575,7 @@
     rightCollectionView.backgroundColor = [UIColor colorWithRed:(225.00/255.00f) green:(225.00/255.00f) blue:(225.00/255.00f) alpha:0.00];
     rightCollectionView.tag = 1;
     
-    [self.rightView addSubview:rightCollectionView];
+    [self.view addSubview:rightCollectionView];
     self.rightImageCollection = rightCollectionView;
     [self.rightImageCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
     self.rightImageCollection.delegate = self;
@@ -619,6 +783,83 @@
 }
 
 
+/*-------------------------------------------------table view delegete--------------------------------------*/
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+        return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(tableView == self.inspectionLeftTableView)
+    {
+        return [[self.inspectionsDic objectForKey:@"inspectionslist"] count];
+    }
+    else if(tableView == self.inspectionMidTableView ||
+            tableView == self.inspectionRightTableView )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(tableView == self.inspectionLeftTableView)
+    {
+        return 30;
+    }
+    else if(tableView == self.inspectionMidTableView ||
+            tableView == self.inspectionRightTableView )
+    {
+        return 50;
+    }
+    return 40;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(tableView == self.inspectionMidTableView ||
+            tableView == self.inspectionRightTableView )
+    {
+        NSString *identifier = @"ContactOwnerCell";
+        ContactOwnerCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            [tableView registerNib:[UINib nibWithNibName:@"ContactOwnerCell" bundle:nil] forCellReuseIdentifier:identifier];
+            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        }
+        if(tableView == self.inspectionMidTableView )
+        {
+            [cell setCellValue:[self.inspectionsDic objectForKey:@"contactemail"]];
+        }
+        else
+        {
+            [cell setCellValue:[self.inspectionsDic objectForKey:@"contactowner"]];
+        }
+        return cell;
+    }
+    else if(tableView == self.inspectionLeftTableView)
+    {
+        NSString *identifier = @"InspectionListCell";
+        InspectionListCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            [tableView registerNib:[UINib nibWithNibName:@"InspectionListCell" bundle:nil] forCellReuseIdentifier:identifier];
+            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        }
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+        
+        NSMutableArray *inspectionList = [self.inspectionsDic objectForKey:@"inspectionslist"];
+        NSDictionary *inspecdic =[inspectionList objectAtIndex:indexPath.row];
+        if(inspecdic!=nil)
+        {
+            [cell setCellValue:[inspecdic objectForKey:@"sl_datetime"]
+                         owner:[inspecdic objectForKey:@"sl_accountname"]
+                      incident:[inspecdic objectForKey:@"icon"]
+                          plus:[[inspecdic objectForKey:@"bowner"] isEqualToString:@"YES"]];
+        }
+        
+        return cell;
+    }
+    return nil;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface EKNEKNGlobalInfo : UIViewController
-+ (void)saveData:(NSString *)key content:(NSDictionary *)value;
-+ (NSDictionary *)loadData:(NSString *)key;
 +(NSDate *)converDateFromString:(NSString *)stringdate;
 +(NSString *)converStringFromDate:(NSDate *)date;
 @end

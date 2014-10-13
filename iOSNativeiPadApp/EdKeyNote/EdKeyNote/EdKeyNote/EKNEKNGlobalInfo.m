@@ -14,16 +14,6 @@
 
 @implementation EKNEKNGlobalInfo
 
-+ (void)saveData:(NSString *)key content:(NSDictionary *)value {
-    NSUserDefaults *SaveDefaults = [NSUserDefaults standardUserDefaults];
-    [SaveDefaults setObject:value forKey:key];
-}
-
-+ (NSDictionary *)loadData:(NSString *)key {
-    NSUserDefaults *SaveDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *dir = [SaveDefaults objectForKey:key];
-    return dir;
-}
 +(NSDate *)converDateFromString:(NSString *)stringdate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

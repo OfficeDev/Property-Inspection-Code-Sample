@@ -19,6 +19,7 @@
 #import "EKNEKNGlobalInfo.h"
 #import "ContactOwnerCell.h"
 
+#import "EKNRoomDetailsViewController.h"
 
 @interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
@@ -32,12 +33,19 @@
 
 
 //all inspections list. store all inspections list, Listitem
+//ID,sl_datetime,
+//sl_inspector/ID,sl_inspector/Title,sl_inspector/sl_accountname,sl_inspector/sl_emailaddress
+//sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode
 @property(nonatomic) NSMutableArray *inspectionsListArray;
+
 //current and upcoming inspections dict
+//top: current listitem
+//bottom: bottom listitem
 @property(nonatomic) NSMutableDictionary *rightPannelListDic;
 
-//key is propery Id, use to story property Resource and incidents
+//key is propery Id, use to store property Resource and incidents
 //inspectionslist
+//----ID,sl_accountname, bowner, icon, sl_datetime
 //contactowner
 //contactemail
 //ServerRelativeUrl
@@ -45,8 +53,13 @@
 //trytimes
 @property(nonatomic) NSMutableDictionary *propertyDic;
 
-//key is inspection Id, use to story inspection andincidents
+//key is inspection Id, use to store inspection andincidents
 @property(nonatomic) NSMutableDictionary *incidentOfInspectionDic;
+
+//key is inspection Id, use to store rooms
+//one inspection maybe have many rooms
+//one room maybe have many pictures
+@property(nonatomic) NSMutableDictionary *roomsOfInspectionDic;
 
 
 @property(nonatomic) UIActivityIndicatorView* spinner;

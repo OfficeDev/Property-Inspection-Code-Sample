@@ -59,6 +59,10 @@
 		0EADF95419E7C36E00E1DE77 /* EKN+UIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF95319E7C36E00E1DE77 /* EKN+UIViewController.m */; };
 		0EADF96C19E8377000E1DE77 /* PropertyListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF96A19E8377000E1DE77 /* PropertyListCell.m */; };
 		0EADF96D19E8377000E1DE77 /* PropertyListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF96B19E8377000E1DE77 /* PropertyListCell.xib */; };
+		0EB26CDC19EB9EB0007172F5 /* before@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EB26CDA19EB9EAF007172F5 /* before@2x~ipad.png */; };
+		0EB26CDD19EB9EB0007172F5 /* before~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EB26CDB19EB9EB0007172F5 /* before~ipad.png */; };
+		0EB26CE019EBC0DA007172F5 /* seg2@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EB26CDE19EBC0DA007172F5 /* seg2@2x~ipad.png */; };
+		0EB26CE119EBC0DA007172F5 /* seg2~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EB26CDF19EBC0DA007172F5 /* seg2~ipad.png */; };
 		0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
 		0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
 		0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
@@ -150,6 +154,10 @@
 		0EADF96919E8377000E1DE77 /* PropertyListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyListCell.h; sourceTree = "<group>"; };
 		0EADF96A19E8377000E1DE77 /* PropertyListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyListCell.m; sourceTree = "<group>"; };
 		0EADF96B19E8377000E1DE77 /* PropertyListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PropertyListCell.xib; sourceTree = "<group>"; };
+		0EB26CDA19EB9EAF007172F5 /* before@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before@2x~ipad.png"; sourceTree = "<group>"; };
+		0EB26CDB19EB9EB0007172F5 /* before~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before~ipad.png"; sourceTree = "<group>"; };
+		0EB26CDE19EBC0DA007172F5 /* seg2@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seg2@2x~ipad.png"; sourceTree = "<group>"; };
+		0EB26CDF19EBC0DA007172F5 /* seg2~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seg2~ipad.png"; sourceTree = "<group>"; };
 		0EC4F5B619CFF2C600BEF583 /* EdKeyNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EdKeyNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -236,6 +244,10 @@
 		0EADF92B19E79F9200E1DE77 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0EB26CDE19EBC0DA007172F5 /* seg2@2x~ipad.png */,
+				0EB26CDF19EBC0DA007172F5 /* seg2~ipad.png */,
+				0EB26CDA19EB9EAF007172F5 /* before@2x~ipad.png */,
+				0EB26CDB19EB9EB0007172F5 /* before~ipad.png */,
 				0E9D430219E98DDB00329A81 /* black@2x~ipad.png */,
 				0E9D430319E98DDB00329A81 /* black~ipad.png */,
 				0E9D430419E98DDB00329A81 /* email@2x~ipad.png */,
@@ -448,6 +460,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EB26CDC19EB9EB0007172F5 /* before@2x~ipad.png in Resources */,
 				0E9D431519E98DDB00329A81 /* plus~ipad.png in Resources */,
 				0EA2D9FA19D8094400465DA2 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
 				0E9D42BF19E8C6BF00329A81 /* detailsepartorline.png in Resources */,
@@ -473,6 +486,7 @@
 				0EADF93619E79F9200E1DE77 /* camera@2x~ipad.png in Resources */,
 				F3F94C7419E93D13001EB785 /* demo_room1~ipad.png in Resources */,
 				0E9D42FF19E98D5600329A81 /* ContactOwnerCell.xib in Resources */,
+				0EB26CE019EBC0DA007172F5 /* seg2@2x~ipad.png in Resources */,
 				0EADF93719E79F9200E1DE77 /* camera~ipad.png in Resources */,
 				0EC4F5C419CFF2C600BEF583 /* InfoPlist.strings in Resources */,
 				F3F94C7319E93D13001EB785 /* demo_room2@2x~ipad.png in Resources */,
@@ -481,6 +495,7 @@
 				F3F94C7119E93D13001EB785 /* selected@2x~ipad.png in Resources */,
 				F3F94C6F19E93D13001EB785 /* demo_rightroom1~ipad.png in Resources */,
 				0E9D431019E98DDB00329A81 /* email@2x~ipad.png in Resources */,
+				0EB26CE119EBC0DA007172F5 /* seg2~ipad.png in Resources */,
 				0E9D430F19E98DDB00329A81 /* black~ipad.png in Resources */,
 				0E9D431319E98DDB00329A81 /* green~ipad.png in Resources */,
 				F3F94C6E19E93D13001EB785 /* demo_rightroom3~ipad.png in Resources */,
@@ -494,6 +509,7 @@
 				F3F94C7519E93D13001EB785 /* demo_room1@2x~ipad.png in Resources */,
 				0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */,
 				0E9D431119E98DDB00329A81 /* email~ipad.png in Resources */,
+				0EB26CDD19EB9EB0007172F5 /* before~ipad.png in Resources */,
 				0EADF96D19E8377000E1DE77 /* PropertyListCell.xib in Resources */,
 				0E9D430119E98D5600329A81 /* InspectionListCell.xib in Resources */,
 				0E9D431719E98DDB00329A81 /* red~ipad.png in Resources */,

@@ -43,19 +43,6 @@
     header_img.image = [UIImage imageNamed:@"navigation_background"];
     [self.view addSubview:header_img];
     
-    
-    UIFont *boldfont = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-    NSString *lbl1str = @"PROPERTY DETAILS";
-    NSDictionary *attributes = @{NSFontAttributeName:boldfont};
-    CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(25, 110, lbsize.width, lbsize.height)];
-    //lbl1.backgroundColor = [UIColor clearColor];
-    lbl1.text = lbl1str;
-    lbl1.textAlignment = NSTextAlignmentLeft;
-    lbl1.font = boldfont;
-    lbl1.textColor = [UIColor colorWithRed:165.00f/255.00f green:165.00f/255.00f blue:165.00f/255.00f alpha:1];
-    [self.view addSubview:lbl1];
-    
     UIView *leftview = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
     leftview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:leftview];
@@ -244,7 +231,7 @@
             {
                 propertydic = [[NSMutableDictionary alloc] init];
             }
-            
+            NSLog(@"self.selectPrppertyId %@",self.selectPrppertyId);
             [propertydic setObject:[insdic objectForKey:@"sl_accountname"] forKey:@"contactowner"];
             [propertydic setObject:[insdic objectForKey:@"sl_emailaddress"] forKey:@"contactemail"];
         }
@@ -491,6 +478,7 @@
                     
                     NSMutableDictionary * inspectionItem= [[NSMutableDictionary alloc] init];
                     
+                    [inspectionItem setObject:inspectionId forKey:@"ID"];
                     [inspectionItem setObject:[insdic objectForKey:@"Title"] forKey:@"sl_accountname"];
                     
                     if ([[insdic objectForKey:@"Title"] isEqualToString:self.loginName ]) {
@@ -872,6 +860,7 @@
             [tableView registerNib:[UINib nibWithNibName:@"PropertyListCell" bundle:nil] forCellReuseIdentifier:identifier];
             cell = [tableView dequeueReusableCellWithIdentifier:identifier]; 
         }
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
         [self setRightTableCell:cell cellForRowAtIndexPath:indexPath];
         return cell;
     }
@@ -908,7 +897,7 @@
             [tableView registerNib:[UINib nibWithNibName:@"InspectionListCell" bundle:nil] forCellReuseIdentifier:identifier];
             cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         }
-        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
         [self setLeftInspectionTableCell:cell cellForRowAtIndexPath:indexPath];
         return cell;
     }
@@ -984,6 +973,21 @@
     if(tableView == self.rightTableView)
     {
         [self setRightTableSeclectIndex:indexPath];
+    }
+    else if(tableView == self.inspectionLeftTableView)
+    {
+        EKNRoomDetailsViewController *room = [[EKNRoomDetailsViewController alloc] init];
+        
+        NSDictionary *tempdic = [self.propertyDic objectForKey:self.selectPrppertyId];
+        NSArray *tempArray = [tempdic objectForKey:@"inspectionslist"];
+        [room initRoomsValue:tempdic
+                             propertyId:self.selectPrppertyId
+                 inspetionId:[[tempArray objectAtIndex:indexPath.row] objectForKey:@"ID"]
+                 token:self.token];
+        
+        NSLog(@"property tempdic %@",tempdic);
+        NSLog(@"property self.selectPrppertyId %@",self.selectPrppertyId);
+        [self.navigationController pushViewController:room animated:YES];
     }
 }
 -(void)setLeftInspectionTableCell:(InspectionListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
