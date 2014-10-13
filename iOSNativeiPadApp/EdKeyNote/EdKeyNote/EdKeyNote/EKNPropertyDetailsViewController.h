@@ -28,7 +28,7 @@
 //need get data from extend
 @property(nonatomic) NSString* loginName;
 @property(nonatomic) NSString* token;
-@property(nonatomic) NSString* selectPrppertyId;
+@property(nonatomic) NSString* selectPropertyId;
 //end
 
 
