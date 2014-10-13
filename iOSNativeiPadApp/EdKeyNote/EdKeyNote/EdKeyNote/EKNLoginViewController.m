@@ -35,22 +35,30 @@
     //EKNRoomDetailsViewController *propertydetailsctrl = [[EKNRoomDetailsViewController alloc] init];
     //[self.navigationController pushViewController:propertydetailsctrl animated:YES];
     //return;
-    [self checkParameters];
     [self performLogin:NO];
 }
+
+-(void)ShowAlert:(NSString *)title :(NSString *)text
+{
+    NSString *errorMessage = text;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+    [alert show];
+}
+
 -(void)checkParameters
 {
+    NSInteger settingsMissing = 0;
+    
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     
     //Check to see if the clientId setting exists
     if (nil != [standardUserDefaults objectForKey:@"clientId"])
     {
-        self.clientId = [standardUserDefaults objectForKey:@"clientId"];    }
+        self.clientId = [standardUserDefaults objectForKey:@"clientId"];
+    }
     else
     {
-             NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"clientID not set. Please update settings for the application."];
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-         [alert show];
+        settingsMissing = 1;
         self.clientId = @"e632f423-b906-4d5c-b32d-a6e635f1e685";
         [standardUserDefaults setValue:self.clientId  forKey:@"clientId"];
         [standardUserDefaults synchronize];
@@ -59,12 +67,11 @@
     //Check to see if the authority setting exists
     if (nil != [standardUserDefaults objectForKey:@"authority"])
     {
-        self.authority = [standardUserDefaults objectForKey:@"authority"];    }
+        self.authority = [standardUserDefaults objectForKey:@"authority"];
+    }
     else
     {
-        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"authority not set. Please update settings for the application."];
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-         [alert show];
+        settingsMissing = 1;
         self.authority =@"https://login.windows-ppe.net/common";
         [standardUserDefaults setValue:self.authority forKey:@"authority"];
         [standardUserDefaults synchronize];
@@ -73,12 +80,11 @@
     //Check to see if the resourceId setting exists
     if (nil != [standardUserDefaults objectForKey:@"resourceId"])
     {
-        self.resourceId = [standardUserDefaults objectForKey:@"resourceId"];    }
+        self.resourceId = [standardUserDefaults objectForKey:@"resourceId"];
+    }
     else
     {
-        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"resourceId not set. Please update settings for the application."];
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-         [alert show];
+        settingsMissing = 1;
         self.resourceId = @"https://techedairlift04.spoppe.com";
         [standardUserDefaults setValue:self.resourceId forKey:@"resourceId"];
         [standardUserDefaults synchronize];
@@ -87,12 +93,11 @@
     //Check to see if the redirectUriString setting exists
     if (nil != [standardUserDefaults objectForKey:@"redirectUriString"])
     {
-        self.redirectUriString = [standardUserDefaults objectForKey:@"redirectUriString"];    }
+        self.redirectUriString = [standardUserDefaults objectForKey:@"redirectUriString"];
+    }
     else
     {
-        NSString *errorMessage = [@"App initialization failed. Reason: " stringByAppendingString: @"redirectUriString not set. Please update settings for the application."];
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-         [alert show];
+        settingsMissing = 1;
         self.redirectUriString = @"http://iOSiPadApp" ;
         [standardUserDefaults setValue:self.redirectUriString forKey:@"redirectUriString"];
         [standardUserDefaults synchronize];
@@ -101,10 +106,33 @@
     //Check to see if the demoSiteCollectionUrl setting exists
     if (nil == [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"])
     {
+        settingsMissing = 1;
         [standardUserDefaults setValue:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
         [standardUserDefaults synchronize];
     }
+    
+    //Check to see if the dispatcherEmail setting exists
+    if (nil == [standardUserDefaults objectForKey:@"dispatcherEmail"])
+    {
+        settingsMissing = 1;
+        [standardUserDefaults setValue:@"lisaa@techedairlift04.ccsctp.net" forKey:@"dispatcherEmail"];
+        [standardUserDefaults synchronize];
+    }
+    
+    if (settingsMissing == 0)
+    {
+        [_login_bt setTitle:@"Sign In" forState:UIControlStateNormal];
+        [_login_bt setEnabled:YES];
+        [_settings_lbl setText:@""];        
+    }
+    else
+    {
+        [_login_bt setTitle:@"Sign In Disabled" forState:UIControlStateNormal];
+        [_login_bt setEnabled:NO];
+        [_settings_lbl setText:@"Configure application settings then restart the App to enable Sign In."];
+    }
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -130,17 +158,24 @@
     sign_lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:30];
     [self.view addSubview:sign_lbl];
     
-    UIButton *login_bt = [[UIButton alloc] initWithFrame:CGRectMake(247, 441, 530, 110)];
-    login_bt.layer.masksToBounds = YES;
-    login_bt.layer.cornerRadius = 8;
-    login_bt.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:36];
-    login_bt.titleLabel.textAlignment = NSTextAlignmentCenter;
-    login_bt.titleLabel.textColor = [UIColor whiteColor];
-    login_bt.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
-    [login_bt setTitle:@"Sign In" forState:UIControlStateNormal];
+    _login_bt = [[UIButton alloc] initWithFrame:CGRectMake(247, 441, 530, 110)];
+    _login_bt.layer.masksToBounds = YES;
+    _login_bt.layer.cornerRadius = 8;
+    _login_bt.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:36];
+    _login_bt.titleLabel.textAlignment = NSTextAlignmentCenter;
+    _login_bt.titleLabel.textColor = [UIColor whiteColor];
+    _login_bt.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
+    [_login_bt setTitle:@"Sign In" forState:UIControlStateNormal];
     
-    [login_bt addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:login_bt];
+    [_login_bt addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_login_bt];
+    
+    _settings_lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 600, 1024, 40)];
+    _settings_lbl.text = @"Configure application settings to enable Sign In.";
+    _settings_lbl.textColor = [UIColor redColor];
+    _settings_lbl.textAlignment = NSTextAlignmentCenter;
+    _settings_lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
+    [self.view addSubview:_settings_lbl];
     
     UIButton *property_details_bt = [[UIButton alloc] initWithFrame:CGRectMake(200, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 150, 40)];
     [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];
@@ -153,14 +188,15 @@
     //[self.view addSubview:property_details_bt];
     
     // Do any additional setup after loading the view.
+    [self checkParameters];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    
     // Dispose of any resources that can be recreated.
 }
+
 /*
 #pragma mark - Navigation
 
@@ -205,6 +241,5 @@
         }
     }];
 }
-
 
 @end
