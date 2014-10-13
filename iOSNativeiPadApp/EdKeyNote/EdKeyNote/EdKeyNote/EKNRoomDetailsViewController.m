@@ -56,9 +56,9 @@
     leftView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:leftView];
     
-    UIImageView *speratorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
-    speratorline.image = [UIImage imageNamed:@"sepratorline"];
-    [self.view addSubview:speratorline];
+    UIImageView *seperatorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
+    seperatorline.image = [UIImage imageNamed:@"sepratorline"];
+    [self.view addSubview:seperatorline];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0, 350, 15, 71)];
@@ -113,8 +113,7 @@
     [authentication setToken:self.token];
     
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    ListClient* client = [[ListClient alloc] initWithUrl:[standardUserDefaults objectForKey:@"demoSiteCollectionUrl"]
-                                             credentials: authentication];
+    ListClient* client = [[ListClient alloc] initWithUrl:[standardUserDefaults objectForKey:@"demoSiteCollectionUrl"] credentials: authentication];
     NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:[NSString stringWithFormat:@"$select=Id,sl_inspectionIDId,sl_roomIDId&$filter=sl_inspectionIDId%@",[[NSString stringWithFormat:@" eq '%d'",(int)inspectionId] urlencode]] callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"listItems %ld",[listItems count]);
@@ -123,16 +122,16 @@
         
     }];
     
-    
     [task resume];
     
-    
 }
+
 -(void)initLeftView{
 
     [self addSegementControl];
     [self addInspectionsTable];
 }
+
 -(void)addSegementControl
 {
     UIImageView * bkimg =[[UIImageView alloc] initWithFrame:CGRectMake(24, 96, 316, 54)];
@@ -226,49 +225,57 @@
     self.inspectionRightTableView.hidden = YES;
     
 }
+
 -(void)leftButtonClicked
 {
     if(self.inspectionLeftTableView.hidden == YES)
     {
-        self.inspectionLeftTableView.hidden =NO;
+        self.inspectionLeftTableView.hidden = NO;
         self.inspectionMidTableView.hidden = YES;
         self.inspectionRightTableView.hidden = YES;
     }
 }
+
 -(void)midButtonClicked
 {
     if(self.inspectionMidTableView.hidden == YES)
     {
-        self.inspectionLeftTableView.hidden =YES;
+        self.inspectionLeftTableView.hidden = YES;
         self.inspectionMidTableView.hidden = NO;
         self.inspectionRightTableView.hidden = YES;
     }
 }
+
 -(void)rightButtonClicked
 {
     if(self.inspectionRightTableView.hidden == YES)
     {
-        self.inspectionLeftTableView.hidden =YES;
+        self.inspectionLeftTableView.hidden = YES;
         self.inspectionMidTableView.hidden = YES;
         self.inspectionRightTableView.hidden = NO;
     }
 }
+
 -(void)roomLeftButtonClicked
 {
     
 }
+
 -(void)roomMidButtonClicked
 {
     
 }
+
 -(void)roomRightButtonClicked
 {
     
 }
+
 -(void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 -(void) showIncidentCommentAction
 {
     self.isShowingComment = NO;
@@ -347,16 +354,15 @@
 {
     if(buttonIndex == 0 && self.cameraIsAvailable)//take new photo
     {
-        
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self openCamera];
         }];
-    }else if(buttonIndex == 1)//select photo library
+    }
+    else if(buttonIndex == 1)//select photo library
     {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self selectPicture];
         }];
-        
     }
 }
 
@@ -388,7 +394,7 @@
                               initWithTitle:@"Error accessing media"
                               message:@"Device doesn't support that media source."
                               delegate:nil
-                              cancelButtonTitle:@"Drat"
+                              cancelButtonTitle:@"Error"
                               otherButtonTitles:nil];
         [alert show];
     }
@@ -527,7 +533,6 @@
     return cell;
 }
 
-
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *image;
@@ -553,7 +558,6 @@
     }
     return CGSizeMake(width, heigth);
 }
-
 
 - (void) initRightView
 {
@@ -586,11 +590,9 @@
     self.rightAuthorLabel.textColor = [UIColor whiteColor];
     [self.rightTopView addSubview:self.rightAuthorLabel];
     
-    
     self.rightLargePhotoView = [[UIImageView alloc] initWithFrame:CGRectMake(358, 91+46, 646, 465)];
     self.rightLargePhotoView.image = [UIImage imageNamed:@"demo_rightroom6"];
     [self.view addSubview:self.rightLargePhotoView];
-
     
     UIView *collectionBg = [[UIView alloc] initWithFrame:CGRectMake(358, 526+91, 646, 136)];
     collectionBg.backgroundColor = [UIColor colorWithRed:(225.00/255.00f) green:(225.00/255.00f) blue:(225.00/255.00f) alpha:1.00];
@@ -633,7 +635,6 @@
     [self.largerRightViewImages addObject:[UIImage imageNamed:@"demo_rightroom6"]];
     
     [self.rightImageCollection reloadData];
-    
 }
 
 - (void) initPhotoDetailPopupView
@@ -817,8 +818,7 @@
     [self.view addSubview:self.commentPopupView];
 }
 
-
-/*-------------------------------------------------table view delegete--------------------------------------*/
+/* table view delegete */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
         return 1;
 }
@@ -851,6 +851,7 @@
     }
     return 40;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(tableView == self.inspectionMidTableView ||
             tableView == self.inspectionRightTableView )
