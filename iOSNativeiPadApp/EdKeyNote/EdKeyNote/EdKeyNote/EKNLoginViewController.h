@@ -22,7 +22,7 @@
 @property (strong, nonatomic)Credentials* credentials;
 @property (strong, nonatomic)NSString* token;
 
-@property (retain) UIButton *login_bt;
-@property (retain) UILabel *settings_lbl;
+@property (nonatomic) UIButton *login_bt;
+@property (nonatomic) UILabel *settings_lbl;
 
 @end

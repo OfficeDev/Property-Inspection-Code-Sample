@@ -13,7 +13,18 @@
 @end
 
 @implementation EKNPropertyDetailsViewController
-//@synthesize mapView ;
+
+-(void)initData
+{
+    //init extern data
+    self.selectPropertyId = @"1";//for test
+    self.loginName = @"Rob Barker";//for test
+    //cloris will modify
+    
+    self.selectLetInspectionIndexPath = nil;
+    self.selectRightPropertyTableIndexPath = nil;
+    
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -23,7 +34,6 @@
     }
     return self;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,91 +52,103 @@
     header_img.image = [UIImage imageNamed:@"navigation_background"];
     [self.view addSubview:header_img];
     
-    UIView *leftview = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
-    leftview.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:leftview];
-    
+    [self addLetView];
     UIImageView *seperatorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
     seperatorline.image = [UIImage imageNamed:@"sepratorline"];
     [self.view addSubview:seperatorline];
     
-    [self addSegmentControl];
-    [self addRightTable];
+    [self addRightView];
+    
+    [self loadPropertyData];
+}
+#pragma mark - add Left view
+-(void)addLetView
+{
+    UIView *leftview = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 677)];
+    leftview.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:leftview];
     [self addPropertyDetailTable];
-    [self addInspectionsTable];
     
-    [self loadData];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.tag=LeftBackButtonViewTag;
+    [backBtn setFrame:CGRectMake(0, 350, 15, 71)];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"before"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    backBtn.hidden = YES;
+    [self.view addSubview:backBtn];
+    [self addLeftSlideView];
 }
-
--(void)initData
+-(void)addLeftSlideView
 {
-    //init extern data
-    self.selectPropertyId = @"1";//for test
-    self.loginName = @"Rob Barker";//for test
-    //cloris will modify
+    UIView *slideView = [[UIView alloc] initWithFrame:CGRectMake(24, 405, 320, 657)];
+    slideView.tag = LefSliderViewTag;
+    slideView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:slideView];
     
-    self.currentRightIndexPath = nil;
+    [self addSegementControl:slideView];
+    [self addInspectionsTable:slideView];
 }
-
--(void)addSegmentControl
+-(void)addSegementControl:(UIView *)slideView
 {
-    UIImageView * bkimg =[[UIImageView alloc] initWithFrame:CGRectMake(24, 405, 316, 54)];
+    //1st sge
+    UIImageView * bkimg =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 316, 54)];
     [bkimg setImage:[UIImage imageNamed:@"seg"]];
-    [self.view addSubview:bkimg];
+    [slideView addSubview:bkimg];
     
     UIButton *left = [UIButton buttonWithType:UIButtonTypeCustom];
-    [left setFrame:CGRectMake(24, 405, 105, 54)];
-    [left addTarget:self action:@selector(leftButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:left];
+    left.tag = LefPropertySegLeftBtnTag;
+    [left setFrame:CGRectMake(24, 0, 105, 54)];
+    [left addTarget:self action:@selector(leftSegButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [slideView addSubview:left];
     
     UIButton *mid = [UIButton buttonWithType:UIButtonTypeCustom];
-    [mid setFrame:CGRectMake(129, 405, 105, 54)];
-    [mid addTarget:self action:@selector(midButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:mid];
+    mid.tag = LefPropertySegMidBtnTag;
+    [mid setFrame:CGRectMake(129, 0, 105, 54)];
+    [mid addTarget:self action:@selector(midSegButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [slideView addSubview:mid];
     
     UIButton *right = [UIButton buttonWithType:UIButtonTypeCustom];
-    [right setFrame:CGRectMake(234, 405, 106, 54)];
-    [right addTarget:self action:@selector(rightButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:right];
+    right.tag = LefPropertySegRightBtnTag;
+    [right setFrame:CGRectMake(234, 0, 106, 54)];
+    [right addTarget:self action:@selector(rightSegButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [slideView addSubview:right];
+    
+    //2nd seg
+    UIView *seg2View = [[UIView alloc] initWithFrame:CGRectMake(0, 310, 316, 54)];
+    seg2View.tag = LeftRoomSegViewTag;
+    
+    UIImageView * bkimg1 =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 316, 54)];
+    [bkimg1 setImage:[UIImage imageNamed:@"seg2"]];
+    [seg2View addSubview:bkimg1];
+    
+    UIButton *left1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    left1.tag = LefRoomSegLeftBtnTag;
+    [left1 setFrame:CGRectMake(0, 0, 105, 54)];
+    [left1 addTarget:self action:@selector(leftSegButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [seg2View addSubview:left1];
+    
+    UIButton *mid1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    mid1.tag = LefRoomSegMidBtnTag;
+    [mid1 setFrame:CGRectMake(0,0, 105, 54)];
+    [mid1 addTarget:self action:@selector(midSegButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [seg2View addSubview:mid1];
+    
+    UIButton *right1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    right1.tag = LefRoomSegRightBtnTag;
+    [right1 setFrame:CGRectMake(0, 0, 106, 54)];
+    [right1 addTarget:self action:@selector(rightSegButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [seg2View addSubview:right1];
+    seg2View.hidden= YES;
+    [slideView addSubview:seg2View];
 }
-
--(void)leftButtonClicked
+-(void)addInspectionsTable:(UIView *)slideView
 {
-    if(self.inspectionLeftTableView.hidden == YES)
-    {
-        self.inspectionLeftTableView.hidden =NO;
-        self.inspectionMidTableView.hidden = YES;
-        self.inspectionRightTableView.hidden = YES;
-    }
-}
-
--(void)midButtonClicked
-{
-    if(self.inspectionMidTableView.hidden == YES)
-    {
-        self.inspectionLeftTableView.hidden =YES;
-        self.inspectionMidTableView.hidden = NO;
-        self.inspectionRightTableView.hidden = YES;
-    }
-}
-
--(void)rightButtonClicked
-{
-    if(self.inspectionRightTableView.hidden == YES)
-    {
-        self.inspectionLeftTableView.hidden =YES;
-        self.inspectionMidTableView.hidden = YES;
-        self.inspectionRightTableView.hidden = NO;
-    }
-}
-
--(void)addInspectionsTable
-{
-    self.inspectionLeftTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 480, 320, 235) style:UITableViewStyleGrouped];
-    self.inspectionLeftTableView.backgroundColor = [UIColor whiteColor];
-    self.inspectionLeftTableView.delegate = self;
-    self.inspectionLeftTableView.dataSource = self;
-    [self.inspectionLeftTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    UITableView *inspectionLeftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 55, 320, 235) style:UITableViewStyleGrouped];
+    inspectionLeftTableView.tag = LeftInspectionLeftTableViewTag;
+    inspectionLeftTableView.backgroundColor = [UIColor whiteColor];
+    inspectionLeftTableView.delegate = self;
+    inspectionLeftTableView.dataSource = self;
+    [inspectionLeftTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
     UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
     NSString *lbl1str = @"INSPECTIONS";
@@ -135,14 +157,15 @@
     lbl1.textAlignment = NSTextAlignmentLeft;
     lbl1.font = font;
     lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    self.inspectionLeftTableView.tableHeaderView = lbl1;
-    [self.view addSubview:self.inspectionLeftTableView];
+    inspectionLeftTableView.tableHeaderView = lbl1;
+    [slideView addSubview:inspectionLeftTableView];
     
-    self.inspectionMidTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 480, 320, 235) style:UITableViewStyleGrouped];
-    self.inspectionMidTableView.backgroundColor = [UIColor whiteColor];
-    self.inspectionMidTableView.delegate = self;
-    self.inspectionMidTableView.dataSource = self;
-    [self.inspectionMidTableView setScrollEnabled:NO];
+    UITableView *inspectionMidTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 55, 320, 235) style:UITableViewStyleGrouped];
+    inspectionMidTableView.tag = LeftInspectionMidTableViewTag;
+    inspectionMidTableView.backgroundColor = [UIColor whiteColor];
+    inspectionMidTableView.delegate = self;
+    inspectionMidTableView.dataSource = self;
+    [inspectionMidTableView setScrollEnabled:NO];
     
     NSString *lbl2str = @"CONTACT OFFICE";
     UILabel *lbl2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
@@ -150,15 +173,16 @@
     lbl2.textAlignment = NSTextAlignmentLeft;
     lbl2.font = font;
     lbl2.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    self.inspectionMidTableView.tableHeaderView = lbl2;
-    [self.view addSubview:self.inspectionMidTableView];
-    self.inspectionMidTableView.hidden = YES;
+    inspectionMidTableView.tableHeaderView = lbl2;
+    [slideView addSubview:inspectionMidTableView];
+    inspectionMidTableView.hidden = YES;
     
-    self.inspectionRightTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 480, 320, 235) style:UITableViewStyleGrouped];
-    self.inspectionRightTableView.backgroundColor = [UIColor whiteColor];
-    self.inspectionRightTableView.delegate = self;
-    self.inspectionRightTableView.dataSource = self;
-    [self.inspectionRightTableView setScrollEnabled:NO];
+    UITableView *inspectionRightTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 55, 320, 235) style:UITableViewStyleGrouped];
+    inspectionRightTableView.tag = LeftInspectionRightTableViewTag;
+    inspectionRightTableView.backgroundColor = [UIColor whiteColor];
+    inspectionRightTableView.delegate = self;
+    inspectionRightTableView.dataSource = self;
+    [inspectionRightTableView setScrollEnabled:NO];
     
     NSString *lbl3str = @"CONTACT OWNER";
     UILabel *lbl3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
@@ -166,22 +190,20 @@
     lbl3.textAlignment = NSTextAlignmentLeft;
     lbl3.font = font;
     lbl3.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    self.inspectionRightTableView.tableHeaderView = lbl3;
-    [self.view addSubview:self.inspectionRightTableView];
-    self.inspectionRightTableView.hidden = YES;
+    inspectionRightTableView.tableHeaderView = lbl3;
+    [slideView addSubview:inspectionRightTableView];
+    inspectionRightTableView.hidden = YES;
 }
 
 -(void)addPropertyDetailTable{
     
-    self.propertyDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(25, 100, 315, 300) style:UITableViewStyleGrouped];
+    UITableView *propertyDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(25, 100, 315, 300) style:UITableViewStyleGrouped];
+    propertyDetailTableView.tag = LeftPropertyDetailTableViewTag;
     
-    self.propertyDetailTableView.backgroundColor = [UIColor whiteColor];
-    //self.propertyDetailTableView.separatorColor = [UIColor clearColor];
-    self.propertyDetailTableView.delegate = self;
-    self.propertyDetailTableView.dataSource = self;
-    //[self.propertyDetailTableView.layer setCornerRadius:10.0];
-    //[self.propertyDetailTableView.layer setMasksToBounds:YES];
-    [self.propertyDetailTableView setScrollEnabled:NO];
+    propertyDetailTableView.backgroundColor = [UIColor whiteColor];
+    propertyDetailTableView.delegate = self;
+    propertyDetailTableView.dataSource = self;
+    [propertyDetailTableView setScrollEnabled:NO];
     UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
     NSString *lbl1str = @"PROPERTY DETAILS";
     UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 25)];
@@ -189,40 +211,176 @@
     lbl1.textAlignment = NSTextAlignmentLeft;
     lbl1.font = font;
     lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    self.propertyDetailTableView.tableHeaderView = lbl1;
-    [self.view addSubview:self.propertyDetailTableView];
+    propertyDetailTableView.tableHeaderView = lbl1;
+    [self.view addSubview:propertyDetailTableView];
 }
 
--(void)addRightTable{
-    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(380, 100, 620, 635) style:UITableViewStyleGrouped];
-    
-    self.rightTableView.backgroundColor = [UIColor clearColor];
-    [self.rightTableView setSeparatorColor:[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1]];
-    self.rightTableView.delegate = self;
-    self.rightTableView.dataSource = self;
-    [self.rightTableView.layer setCornerRadius:10.0];
-    [self.rightTableView.layer setMasksToBounds:YES];
-    [self.view addSubview:self.rightTableView];
-}
-
--(void)setRightTableSelectIndex:(NSIndexPath*)indexpath
+#pragma mark - add Right View
+-(void)addRightView
 {
-    if(self.currentRightIndexPath != indexpath)
+    [self addRightPropertyTable];
+    [self addRightSlideView];
+}
+-(void)addRightPropertyTable{
+    UITableView *rightPropertyTableView = [[UITableView alloc] initWithFrame:CGRectMake(380, 100, 620, 635) style:UITableViewStyleGrouped];
+    rightPropertyTableView.tag = RightPropertyDetailTableViewTag;
+    
+    rightPropertyTableView.backgroundColor = [UIColor clearColor];
+    [rightPropertyTableView setSeparatorColor:[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1]];
+    rightPropertyTableView.delegate = self;
+    rightPropertyTableView.dataSource = self;
+    [rightPropertyTableView.layer setCornerRadius:10.0];
+    [rightPropertyTableView.layer setMasksToBounds:YES];
+    [self.view addSubview:rightPropertyTableView];
+}
+-(void)addRightSlideView
+{
+    
+    UIView *rightSlideView = [[UIView alloc] initWithFrame:CGRectMake(1024, 91, 669, 677)];
+    rightSlideView.backgroundColor = [UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
+    rightSlideView.tag = RightSliderViewTag;
+    [self.view addSubview:rightSlideView];
+    
+    UIFont *labelFont = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+    UILabel *rightRoomDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 646, 46)];
+    [rightRoomDateLabel setBackgroundColor:[UIColor colorWithRed:(123.00/255.00f) green:(123.00/255.00f) blue:(123.00/255.00f) alpha:1.00]];
+    rightRoomDateLabel.tag = RightRoomImageDateLblTag;
+    rightRoomDateLabel.textAlignment = NSTextAlignmentLeft;
+    rightRoomDateLabel.font = labelFont;
+    rightRoomDateLabel.textColor = [UIColor whiteColor];
+    [rightSlideView addSubview:rightRoomDateLabel];
+    
+    
+    UIImageView *rightLargePhotoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 46, 646, 465)];
+    rightLargePhotoView.image = [UIImage imageNamed:@"demo_rightroom6"];
+    rightLargePhotoView.tag = RightRoomImageLargeImageTag;
+    [rightSlideView addSubview:rightLargePhotoView];
+    
+    
+    UIView *collectionBg = [[UIView alloc] initWithFrame:CGRectMake(0, 526, 646, 136)];
+    collectionBg.backgroundColor = [UIColor colorWithRed:(225.00/255.00f) green:(225.00/255.00f) blue:(225.00/255.00f) alpha:1.00];
+    [rightSlideView addSubview:collectionBg];
+    
+    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    
+    UICollectionView *rightCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 536, 636, 116) collectionViewLayout:flowLayout];
+    rightCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    rightCollectionView.delegate = self;
+    rightCollectionView.dataSource = self;
+    rightCollectionView.allowsMultipleSelection = YES;
+    rightCollectionView.allowsSelection = YES;
+    rightCollectionView.showsHorizontalScrollIndicator = NO;
+    rightCollectionView.backgroundColor = [UIColor colorWithRed:(225.00/255.00f) green:(225.00/255.00f) blue:(225.00/255.00f) alpha:0.00];
+    rightCollectionView.tag = RightRoomCollectionViewTag;
+    [rightCollectionView registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
+    rightCollectionView.delegate = self;
+    rightCollectionView.dataSource =self;
+    
+    [rightSlideView addSubview:rightCollectionView];
+}
+
+#pragma mark - button action
+-(void)backAction
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view viewWithTag:LefSliderViewTag].frame = CGRectMake(24, 405,  320, 657);
+        [self.view viewWithTag:LeftRoomSegViewTag].hidden = YES;
+        [self.view viewWithTag:LeftBackButtonViewTag].hidden = YES;
+    }
+                     completion:^(BOOL finished){
+                         if(finished)
+                         {
+                             [UIView animateWithDuration:0.3 animations:
+                              ^{
+                                  [self.view viewWithTag:RightSliderViewTag].frame=CGRectMake(1024, 91, 669, 677);
+                              }
+                                              completion:^(BOOL finished){
+                                              }];
+                         }
+                     }];
+    
+}
+-(void)leftSegButtonClicked:(id)sender
+{
+    if(((UIButton *)sender).tag == LefPropertySegLeftBtnTag)
     {
-        self.currentRightIndexPath = indexpath;
+        UITableView * inspectionLeftTableView = (UITableView *)[self.view viewWithTag:LeftInspectionLeftTableViewTag];
+        UITableView * inspectionMidTableView = (UITableView *)[self.view viewWithTag:LeftInspectionMidTableViewTag];
+        UITableView * inspectionRightTableView = (UITableView *)[self.view viewWithTag:LeftInspectionRightTableViewTag];
+        if(inspectionLeftTableView.hidden == YES)
+        {
+            inspectionLeftTableView.hidden =NO;
+            inspectionMidTableView.hidden = YES;
+            inspectionRightTableView.hidden = YES;
+        }
+    }
+    else
+    {
+        //room
+    }
+
+}
+
+-(void)midSegButtonClicked:(id)sender
+{
+    if(((UIButton *)sender).tag == LefPropertySegMidBtnTag)
+    {
+        UITableView * inspectionLeftTableView = (UITableView *)[self.view viewWithTag:LeftInspectionLeftTableViewTag];
+        UITableView * inspectionMidTableView = (UITableView *)[self.view viewWithTag:LeftInspectionMidTableViewTag];
+        UITableView * inspectionRightTableView = (UITableView *)[self.view viewWithTag:LeftInspectionRightTableViewTag];
+        if(inspectionMidTableView.hidden == YES)
+        {
+            inspectionLeftTableView.hidden =YES;
+            inspectionMidTableView.hidden = NO;
+            inspectionRightTableView.hidden = YES;
+        }
+    }
+    else
+    {
+        //room
+    }
+
+}
+
+-(void)rightSegButtonClicked:(id)sender
+{
+    if(((UIButton *)sender).tag == LefPropertySegRightBtnTag)
+    {
+        UITableView * inspectionLeftTableView = (UITableView *)[self.view viewWithTag:LeftInspectionLeftTableViewTag];
+        UITableView * inspectionMidTableView = (UITableView *)[self.view viewWithTag:LeftInspectionMidTableViewTag];
+        UITableView * inspectionRightTableView = (UITableView *)[self.view viewWithTag:LeftInspectionRightTableViewTag];
+        if(inspectionRightTableView.hidden == YES)
+        {
+            inspectionLeftTableView.hidden =YES;
+            inspectionMidTableView.hidden = YES;
+            inspectionRightTableView.hidden = NO;
+        }
+    }
+    else
+    {
+        //room
+    }
+}
+-(void)rightPropertyTableSelectIndexChange:(NSIndexPath*)indexpath
+{
+    if(self.selectRightPropertyTableIndexPath != indexpath)
+    {
+        self.selectRightPropertyTableIndexPath = indexpath;
         
         //set currentsetId
         ListItem *inspectionitem = nil;
-        if(self.currentRightIndexPath.section == 0)
+        if(self.selectRightPropertyTableIndexPath.section == 0)
         {
-            inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
+            inspectionitem = [self.rightPropertyListDic objectForKey:@"top"];
         }
         else
         {
-            NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
+            NSMutableArray *bottomarray = [self.rightPropertyListDic objectForKey:@"bottom"];
             if(bottomarray!=nil)
             {
-                inspectionitem = [bottomarray objectAtIndex:self.currentRightIndexPath.row];
+                inspectionitem = [bottomarray objectAtIndex:self.selectRightPropertyTableIndexPath.row];
             }
         }
         if(inspectionitem!=nil)
@@ -241,17 +399,18 @@
             [propertydic setObject:[insdic objectForKey:@"sl_emailaddress"] forKey:@"contactemail"];
         }
         
-        //reload left table;
-        [self.propertyDetailTableView reloadData];
+        //reload left property detail table;
+        [(UITableView *)[self.view viewWithTag:LeftPropertyDetailTableViewTag] reloadData];
         
         [self GetInspectionListAccordingPropertyId:self.selectPropertyId];
-        [self.inspectionLeftTableView reloadData];
-        [self.inspectionMidTableView reloadData];
-        [self.inspectionRightTableView reloadData];
+        //reload left property insection left table;
+        [(UITableView *)[self.view viewWithTag:LeftInspectionLeftTableViewTag] reloadData];
+        [(UITableView *)[self.view viewWithTag:LeftInspectionMidTableViewTag] reloadData];
+        [(UITableView *)[self.view viewWithTag:LeftInspectionRightTableViewTag] reloadData];
     }
 }
-
--(void)loadData{
+#pragma mark - load property data using REST
+-(void)loadPropertyData{
     
     self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
     self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
@@ -305,7 +464,6 @@
                 NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
                 if(pdic!=nil)
                 {
-                    NSLog(@"[pdic objectForKey:ID] intValue] %d",[[pdic objectForKey:@"ID"] intValue]);
                     if([[pdic objectForKey:@"ID"] intValue] == [self.selectPropertyId intValue])
                     {
                         bfound = true;
@@ -318,8 +476,6 @@
                     if(tempdatetime!=nil)
                     {
                         NSDate *inspectiondatetime = [EKNEKNGlobalInfo converDateFromString:tempdatetime];
-                        NSLog(@"inspectiondatetime %@",inspectiondatetime);
-                        NSLog(@"[NSDate date] %@",[NSDate date]);
                         if([inspectiondatetime compare:[NSDate date]] == NSOrderedDescending)
                         {
                             [upcomingList addObject:tempitem];
@@ -328,9 +484,9 @@
                 }
             }
             //get the right pannel data
-            self.rightPannelListDic = [[NSMutableDictionary alloc] init];
-            [self.rightPannelListDic setObject:currentInspectionData forKey:@"top"];
-            [self.rightPannelListDic setObject:upcomingList forKey:@"bottom"];
+            self.rightPropertyListDic = [[NSMutableDictionary alloc] init];
+            [self.rightPropertyListDic setObject:currentInspectionData forKey:@"top"];
+            [self.rightPropertyListDic setObject:upcomingList forKey:@"bottom"];
             
             //get property resource list:
             [self getPropertyResourceListArray:client];
@@ -400,36 +556,41 @@
 -(void)getIncidentsListArray:(ListClient*)client
 {
     self.incidentOfInspectionDic = [[NSMutableDictionary alloc] init];
-    
-    NSURLSessionTask* getincidentstask = [client getListItemsByFilter:@"Incidents" filter:@"$select=sl_inspectionIDId,Id"  callback:^(NSMutableArray *        listItems, NSError *error)
+    self.incidentOfRoomsDic = [[NSMutableDictionary alloc] init];
+    NSURLSessionTask* getincidentstask = [client getListItemsByFilter:@"Incidents" filter:@"$select=sl_inspectionIDId,sl_roomIDId,sl_status,Id"  callback:^(NSMutableArray *        listItems, NSError *error)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                                                  
+                
+                
                 for (ListItem* tempitem in listItems) {
                     NSString *key =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_inspectionIDId"]];
                         
                     if(![self.incidentOfInspectionDic objectForKey:key])
                     {
-                        [self.incidentOfInspectionDic setObject:@"red" forKey:key];
+                        NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"red",@"icon",[tempitem getData:@"sl_status"],@"sl_status", nil];
+                        [self.incidentOfInspectionDic setObject:temp forKey:key];
+
                     }
-            }
-                                                  
-            //get current property inspection list
-            [self GetInspectionListAccordingPropertyId:self.selectPropertyId];
-            //right table need reload data
-            [self.rightTableView reloadData];
-            NSIndexPath *temp = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.rightTableView selectRowAtIndexPath:temp animated:NO scrollPosition:UITableViewScrollPositionNone];
-            [self setRightTableSelectIndex:temp];
-                                                  
-            //get images
-            [self getAllImageFiles:client];
-            //
-            [self.spinner stopAnimating];
-                                                  
+                    NSString *roomId =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_roomIDId"]];
+                    if (![self.incidentOfRoomsDic objectForKey:roomId]) {
+                        [self.incidentOfRoomsDic setObject:@"1" forKey:roomId];
+                    }
+                }
+                [self GetRoomInspectionPhotosList:client];
             });
         }];
     [getincidentstask resume];
+}
+-(void)InitAllViewDateAfterFirstRest
+{
+    //get current property inspection list
+    [self GetInspectionListAccordingPropertyId:self.selectPropertyId];
+    //right property table view need reload data
+    UITableView *rightPropertyTableView = (UITableView *)[self.view viewWithTag:RightPropertyDetailTableViewTag];
+    [rightPropertyTableView reloadData];
+    NSIndexPath *temp = [NSIndexPath indexPathForRow:0 inSection:0];
+    [rightPropertyTableView selectRowAtIndexPath:temp animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self rightPropertyTableSelectIndexChange:temp];
 }
 
 -(void)GetInspectionListAccordingPropertyId:(NSString*)pid
@@ -460,7 +621,9 @@
                     [inspectionItem setObject:inspectionId forKey:@"ID"];
                     [inspectionItem setObject:[insdic objectForKey:@"Title"] forKey:@"sl_accountname"];
                     
-                    if ([[insdic objectForKey:@"Title"] isEqualToString:self.loginName ]) {
+
+                    if ([[insdic objectForKey:@"Title"] isEqualToString:self.loginName ]
+                        && [[[self.incidentOfInspectionDic objectForKey:inspectionId] objectForKey:@"sl_status"] isEqualToString:@"Repair Approved"]) {
                         [inspectionItem setObject:@"YES" forKey:@"bowner"];
                     }
                     NSDate *inspectiondatetime = [EKNEKNGlobalInfo converDateFromString:(NSString *)[tempitem getData:@"sl_datetime"]];
@@ -473,7 +636,7 @@
                     }
                     else
                     {
-                        if([self.incidentOfInspectionDic objectForKey:inspectionId]!=nil)
+                        if([[self.incidentOfInspectionDic objectForKey:inspectionId] objectForKey:@"icon"]!=nil)
                         {
                              [inspectionItem setObject:@"red" forKey:@"icon"];
                         }
@@ -492,7 +655,7 @@
     }
 }
 
--(void)getAllImageFiles:(ListClient*)client
+-(void)getAllPropertyImageFiles:(ListClient*)client
 {
     NSArray *prokeys = [self.propertyDic allKeys];
     for (NSString *key in prokeys) {
@@ -518,13 +681,13 @@
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"cloris get image %@",error);
+            NSLog(@"cloris get image erro %@",error);
             if (error == nil) {
                 NSLog(@"data length %lu",[data length]);
                 UIImage *image =[[UIImage alloc] initWithData:data];
                 [[self.propertyDic objectForKey:key] setObject:image
                                                         forKey:@"image"];
-                [self updateTableCellImage:key image:image];
+                [self updatePropertyTableCellImage:key image:image];
             }
             else
             {
@@ -554,11 +717,11 @@
     [task resume];
 }
 
--(void)updateTableCellImage:(NSString *)proid image:(UIImage *)image
+-(void)updatePropertyTableCellImage:(NSString *)proid image:(UIImage *)image
 {
     BOOL found =  false;
     ListItem *inspectionitem = nil;
-    inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
+    inspectionitem = [self.rightPropertyListDic objectForKey:@"top"];
     NSIndexPath *updateIndexPath = nil;
     if(inspectionitem!=nil)
     {
@@ -569,14 +732,14 @@
             if([propertyId isEqualToString:proid])
             {
                 updateIndexPath =[NSIndexPath indexPathForRow:0 inSection:0];
-                [self didUpdateRightTableCell:updateIndexPath image:image];
+                [self didUpdateRightPropertyTableCell:updateIndexPath image:image];
                 found = true;
             }
         }
     }
     if(!found)
     {
-        NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
+        NSMutableArray *bottomarray = [self.rightPropertyListDic objectForKey:@"bottom"];
         if(bottomarray!=nil)
         {
             for(NSInteger i = 0; i< [bottomarray count]; i++)
@@ -590,7 +753,7 @@
                     if([propertyId isEqualToString:proid])
                     {
                          updateIndexPath =[NSIndexPath indexPathForRow:i inSection:1];
-                        [self didUpdateRightTableCell:updateIndexPath image:image];
+                        [self didUpdateRightPropertyTableCell:updateIndexPath image:image];
                         found = true;
                         break;
                     }
@@ -598,17 +761,18 @@
             }
         }
     }
-    if(found && self.currentRightIndexPath == updateIndexPath)
+    if(found && self.selectRightPropertyTableIndexPath == updateIndexPath)
     {
-        [self.propertyDetailTableView beginUpdates];
+        UITableView * propertyDetailTableView =(UITableView *)[self.view viewWithTag:LeftPropertyDetailTableViewTag];
+        [propertyDetailTableView beginUpdates];
         NSIndexPath *upi = [NSIndexPath indexPathForRow:2 inSection:0];
         
-        [self.propertyDetailTableView reloadRowsAtIndexPaths:@[upi] withRowAnimation:UITableViewRowAnimationNone];
-        if(self.currentRightIndexPath == updateIndexPath)
+        [propertyDetailTableView reloadRowsAtIndexPaths:@[upi] withRowAnimation:UITableViewRowAnimationNone];
+        if(self.selectRightPropertyTableIndexPath == updateIndexPath)
         {
-             [self.rightTableView selectRowAtIndexPath:updateIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+             [(UITableView *)[self.view viewWithTag:RightPropertyDetailTableViewTag] selectRowAtIndexPath:updateIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         }
-        [self.propertyDetailTableView endUpdates];
+        [propertyDetailTableView endUpdates];
         
         
         //PropertyDetailsImage *up = (PropertyDetailsImage *)[self.propertyDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
@@ -616,16 +780,99 @@
     }
 }
 
--(void)didUpdateRightTableCell:(NSIndexPath *)indexpath image:(UIImage*)image
+-(void)didUpdateRightPropertyTableCell:(NSIndexPath *)indexpath image:(UIImage*)image
 {
-    [self.rightTableView beginUpdates];
-    [self.rightTableView reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
-    [self.rightTableView endUpdates];
+    UITableView *rightPropertyTableView = (UITableView *)[self.view viewWithTag:RightPropertyDetailTableViewTag];
+    [rightPropertyTableView beginUpdates];
+    [rightPropertyTableView reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+    [rightPropertyTableView endUpdates];
     
    // PropertyListCell *up = (PropertyListCell *)[self.rightTableView cellForRowAtIndexPath:indexpath];
     //[up.imageView setImage:image];
 }
 
+#pragma mark - load Room data using REST
+-(void)GetRoomInspectionPhotosList:(ListClient *)client{
+    self.roomsOfInspectionDic = [[NSMutableDictionary alloc] init];
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:@"$select=Id,Title,sl_inspectionIDId,sl_roomIDId"
+                                                     callback:^(NSMutableArray *listItems, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                for (ListItem *temp in listItems) {
+                    NSString *fileId = [NSString stringWithFormat:@"%@",[temp getData:@"Id"]];
+                    NSString *insId =[NSString stringWithFormat:@"%@",[temp getData:@"sl_inspectionIDId"]];
+                    NSString *roomId =[NSString stringWithFormat:@"%@",[temp getData:@"sl_roomIDId"]];
+                    
+                    NSMutableArray *roomsArray= [self.roomsOfInspectionDic objectForKey:insId];
+                    if(roomsArray ==nil)
+                    {
+                        roomsArray = [[NSMutableArray alloc] init];
+                        [self.roomsOfInspectionDic setObject:roomsArray forKey:insId];
+                    }
+                    
+                    //check roomid whehter exist
+                    NSMutableDictionary *roomDic=nil;
+                    for (NSMutableDictionary *tempDic in roomsArray) {
+                        if ([[tempDic objectForKey:@"roomId"] isEqualToString:roomId]) {
+                            roomDic = tempDic;
+                            break;
+                        }
+                    }
+                    if(roomDic == nil)
+                    {
+                        roomDic = [[NSMutableDictionary alloc] init];
+                        [roomDic setObject:roomId forKey:@"roomId"];
+                        [roomDic setObject:[temp getData:@"Title"] forKey:@"Title"];
+                        [roomsArray addObject:roomDic];
+
+                    }
+                    
+                    NSMutableArray *imagesArray = [roomDic objectForKeyedSubscript:@"ImagesArray"];
+                    if(imagesArray ==nil)
+                    {
+                        imagesArray = [[NSMutableArray alloc] init];
+                        [roomDic setObject:imagesArray forKey:@"ImagesArray"];
+                    }
+                
+                    
+                    NSMutableDictionary *imagesDic = [[NSMutableDictionary alloc] init];
+                    [imagesDic setObject:fileId forKey:@"Id"];
+                    [imagesArray addObject:imagesDic];
+                }
+                
+                [self InitAllViewDateAfterFirstRest];
+                //get All property images
+                [self getAllPropertyImageFiles:client];
+                [self.spinner stopAnimating];
+            });
+            
+        }];
+        
+        [task resume];
+}
+-(void)getRoomPhotosFileInfo:(ListClient*)client fileId:(NSString*)fId imagesDic:(NSMutableDictionary *)imagesDic
+{
+    
+    NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Property%20Photos"
+                                                                     FileId:fId
+                                                                     filter:@"$select=ServerRelativeUrl"
+                                                                   callback:^(NSMutableArray *listItems, NSError *error)
+                                             {
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     
+                                                     if([listItems count]>0)
+                                                     {
+                                                         NSString *path =(NSString *)[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"];
+                                                         [imagesDic setObject:path forKey:@"ServerRelativeUrl"];
+                                                     }
+                                                 });
+                                             }];
+    
+    [getFileResourcetask resume];
+    
+}
+
+#pragma mark - other
 -(ListClient*)getClient{
     OAuthentication* authentication = [OAuthentication alloc];
     [authentication setToken:self.token];
@@ -652,13 +899,13 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark - TableView delegte
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if(tableView == self.rightTableView)
+    if(tableView.tag == RightPropertyDetailTableViewTag)
     {
         return 2;
     }
-    else if(tableView == self.propertyDetailTableView)
+    else if(tableView.tag == LeftPropertyDetailTableViewTag)
     {
         return 1;
     }
@@ -669,11 +916,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(tableView == self.rightTableView)
+    if(tableView.tag == RightPropertyDetailTableViewTag)
     {
         if(section == 0)
         {
-            NSMutableArray *toparray =[self.rightPannelListDic objectForKey:@"top"];
+            NSMutableArray *toparray =[self.rightPropertyListDic objectForKey:@"top"];
             if(toparray!=nil)
             {
                 return 1;
@@ -686,7 +933,7 @@
         else
         {
             
-            NSMutableArray *bottomarray =[self.rightPannelListDic objectForKey:@"bottom"];
+            NSMutableArray *bottomarray =[self.rightPropertyListDic objectForKey:@"bottom"];
             if(bottomarray!=nil)
             {
                 return [bottomarray count];
@@ -697,9 +944,9 @@
             }
         }
     }
-    else if(tableView == self.propertyDetailTableView)
+    else if(tableView.tag == LeftPropertyDetailTableViewTag)
     {
-        if(self.currentRightIndexPath!=nil)
+        if(self.selectRightPropertyTableIndexPath!=nil)
         {
             return 3;
         }
@@ -709,9 +956,9 @@
         }
         
     }
-    else if(tableView == self.inspectionLeftTableView)
+    else if(tableView.tag == LeftInspectionLeftTableViewTag)
     {
-        if(self.currentRightIndexPath!=nil)
+        if(self.selectRightPropertyTableIndexPath!=nil)
         {
             NSDictionary *tempdic  = [self.propertyDic objectForKey:self.selectPropertyId];
             if(tempdic!=nil)
@@ -725,10 +972,10 @@
         }
         return 0;
     }
-    else if(tableView == self.inspectionMidTableView ||
-            tableView == self.inspectionRightTableView )
+    else if(tableView.tag == LeftInspectionMidTableViewTag||
+            tableView.tag == LeftInspectionRightTableViewTag)
     {
-        if(self.currentRightIndexPath!=nil)
+        if(self.selectRightPropertyTableIndexPath!=nil)
         {
             return 1;
         }
@@ -744,11 +991,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(tableView == self.rightTableView)
+    if(tableView.tag == RightPropertyDetailTableViewTag)
     {
         return 109;
     }
-    else if(tableView == self.propertyDetailTableView)
+    else if(tableView.tag == LeftPropertyDetailTableViewTag)
     {
         if(indexPath.row == 2)
         {
@@ -759,12 +1006,12 @@
             return 25;
         }
     }
-    else if(tableView == self.inspectionLeftTableView)
+    else if(tableView.tag == LeftInspectionLeftTableViewTag)
     {
         return 30;
     }
-    else if(tableView == self.inspectionMidTableView ||
-            tableView == self.inspectionRightTableView )
+    else if(tableView.tag == LeftInspectionMidTableViewTag||
+            tableView.tag == LeftInspectionRightTableViewTag)
     {
         return 50;
     }
@@ -773,7 +1020,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(tableView == self.rightTableView)
+    if(tableView.tag == RightPropertyDetailTableViewTag)
     {
         return 30;
         
@@ -783,7 +1030,7 @@
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if(tableView == self.rightTableView)
+    if(tableView.tag == RightPropertyDetailTableViewTag)
     {
         if (section == 0)
         {
@@ -820,7 +1067,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(tableView == self.rightTableView)
+    if(tableView.tag == RightPropertyDetailTableViewTag)
     {
         NSString *identifier = @"PropertyListCell";
         PropertyListCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -832,8 +1079,8 @@
         [self setRightTableCell:cell cellForRowAtIndexPath:indexPath];
         return cell;
     }
-    else if(tableView == self.inspectionMidTableView ||
-            tableView == self.inspectionRightTableView )
+    else if(tableView.tag == LeftInspectionMidTableViewTag ||
+            tableView.tag == LeftInspectionRightTableViewTag )
     {
         NSString *identifier = @"ContactOwnerCell";
         ContactOwnerCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -844,7 +1091,7 @@
         NSDictionary * tempdic = [self.propertyDic objectForKey:self.selectPropertyId];
         if(tempdic!=nil)
         {
-            if(tableView == self.inspectionMidTableView )
+            if(tableView.tag == LeftInspectionMidTableViewTag)
             {
                 NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
                 
@@ -858,7 +1105,7 @@
         
         return cell;
     }
-    else if(tableView == self.inspectionLeftTableView)
+    else if(tableView.tag == LeftInspectionLeftTableViewTag)
     {
         NSString *identifier = @"InspectionListCell";
         InspectionListCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -870,21 +1117,21 @@
         [self setLeftInspectionTableCell:cell cellForRowAtIndexPath:indexPath];
         return cell;
     }
-    else if(tableView == self.propertyDetailTableView)
+    else if(tableView.tag == LeftPropertyDetailTableViewTag)
     {
-        if(self.currentRightIndexPath!=nil && self.rightPannelListDic!=nil)
+        if(self.selectRightPropertyTableIndexPath!=nil && self.rightPropertyListDic!=nil)
         {
             ListItem *inspectionitem = nil;
-            if(self.currentRightIndexPath.section == 0)
+            if(self.selectRightPropertyTableIndexPath.section == 0)
             {
-                inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
+                inspectionitem = [self.rightPropertyListDic objectForKey:@"top"];
             }
             else
             {
-                NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
+                NSMutableArray *bottomarray = [self.rightPropertyListDic objectForKey:@"bottom"];
                 if(bottomarray!=nil)
                 {
-                    inspectionitem = [bottomarray objectAtIndex:self.currentRightIndexPath.row];
+                    inspectionitem = [bottomarray objectAtIndex:self.selectRightPropertyTableIndexPath.row];
                 }
             }
             if(inspectionitem!=nil)
@@ -940,26 +1187,44 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(tableView == self.rightTableView)
+    if(tableView.tag == RightPropertyDetailTableViewTag)
     {
-        [self setRightTableSelectIndex:indexPath];
+        [self rightPropertyTableSelectIndexChange:indexPath];
     }
-    else if(tableView == self.inspectionLeftTableView)
+    else if(tableView.tag == LeftInspectionLeftTableViewTag)
     {
-        EKNRoomDetailsViewController *room = [[EKNRoomDetailsViewController alloc] init];
+        self.selectLetInspectionIndexPath = indexPath;
+        
+        [UIView animateWithDuration:0.3 animations:
+         ^{
+            [self.view viewWithTag:LefSliderViewTag].frame = CGRectMake(24, 100,  320, 657);
+            [self.view viewWithTag:LeftRoomSegViewTag].hidden = NO;
+           }
+                         completion:^(BOOL finished){
+                             if (finished) {
+                                 [UIView animateWithDuration:0.3 animations:
+                                  ^{
+                                      [self.view viewWithTag:RightSliderViewTag].frame=CGRectMake(355, 91, 669, 677);
+                                      [self.view viewWithTag:LeftBackButtonViewTag].hidden = NO;
+                                   }
+                                  completion:^(BOOL finished){
+                                  }];
+                             }
+                         }];
+        return;
+        
+      /*  EKNRoomDetailsViewController *room = [[EKNRoomDetailsViewController alloc] init];
         
         NSDictionary *tempdic = [self.propertyDic objectForKey:self.selectPropertyId];
         [room initRoomsValue:tempdic
                              propertyId:self.selectPropertyId
                  inspetionId:indexPath.row
-                 token:self.token];
+                 token:self.token];*/
         
-        // [self presentViewController:room room:YES completion:nil];
-        [self presentViewController:room animated:YES completion:nil];
-        //[self.navigationController pushViewController:room animated:YES];
+
     }
 }
-
+#pragma mark - Property Table cell init value
 -(void)setLeftInspectionTableCell:(InspectionListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSDictionary *prodic = [self.propertyDic objectForKey:self.selectPropertyId];
@@ -982,11 +1247,11 @@
     ListItem *inspectionitem = nil;
     if(indexPath.section == 0)
     {
-        inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
+        inspectionitem = [self.rightPropertyListDic objectForKey:@"top"];
     }
     else
     {
-        NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
+        NSMutableArray *bottomarray = [self.rightPropertyListDic objectForKey:@"bottom"];
         inspectionitem = [bottomarray objectAtIndex:indexPath.row];
     }
     
@@ -1003,4 +1268,35 @@
         }
     }
 }
+
+#pragma mark - Room Detail Right Collection view
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    if(collectionView.tag == RightRoomCollectionViewTag)//right image collection view
+    {
+        return 0;
+    }
+    return 0;
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(116, 116);
+}
+
 @end

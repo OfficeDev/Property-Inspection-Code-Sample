@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <office365-base-sdk/OAuthentication.h>
+#import <office365-base-sdk/NSString+NSStringExtensions.h>
 #import "ListClient.h"
 #import "ListItem.h"
 #import "EKN+UIViewController.h"
@@ -18,10 +19,32 @@
 #import "InspectionListCell.h"
 #import "EKNEKNGlobalInfo.h"
 #import "ContactOwnerCell.h"
+#import "EKNCollectionViewCell.h"
 
-#import "EKNRoomDetailsViewController.h"
+typedef NS_ENUM(NSInteger, PropertySubViewsTag) {
+    LeftPropertyDetailTableViewTag=390,
+    LeftBackButtonViewTag,
+    LefSliderViewTag=500,
+    LefPropertySegLeftBtnTag,
+    LefPropertySegMidBtnTag,
+    LefPropertySegRightBtnTag,
+    LeftInspectionLeftTableViewTag,
+    LeftInspectionMidTableViewTag,
+    LeftInspectionRightTableViewTag,
+    LeftRoomSegViewTag,
+    LefRoomSegLeftBtnTag,
+    LefRoomSegMidBtnTag,
+    LefRoomSegRightBtnTag,
+    
+    RightPropertyDetailTableViewTag=600,
+    RightSliderViewTag,
+    RightRoomImageDateLblTag,
+    RightRoomImageLargeImageTag,
+    RightRoomCollectionViewTag,
+};
 
-@interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,
+UICollectionViewDataSource,UICollectionViewDelegate>
 
 //@property NSMutableArray* SharepointList;
 
@@ -30,6 +53,9 @@
 @property(nonatomic) NSString* token;
 @property(nonatomic) NSString* selectPropertyId;
 //end
+
+@property(nonatomic) NSIndexPath * selectLetInspectionIndexPath;
+@property(nonatomic) NSIndexPath * selectRightPropertyTableIndexPath;
 
 
 //all inspections list. store all inspections list, Listitem
@@ -41,7 +67,7 @@
 //current and upcoming inspections dict
 //top: current listitem
 //bottom: bottom listitem
-@property(nonatomic) NSMutableDictionary *rightPannelListDic;
+@property(nonatomic) NSMutableDictionary *rightPropertyListDic;
 
 //key is propery Id, use to store property Resource and incidents
 //inspectionslist
@@ -53,25 +79,31 @@
 //trytimes
 @property(nonatomic) NSMutableDictionary *propertyDic;
 
+
 //key is inspection Id, use to store inspection andincidents
+//---icon: red
+//----sl_status
 @property(nonatomic) NSMutableDictionary *incidentOfInspectionDic;
+
+//key is room Id, use to store room andincidents
+@property(nonatomic)NSMutableDictionary *incidentOfRoomsDic;
 
 //key is inspection Id, use to store rooms
 //one inspection maybe have many rooms
 //one room maybe have many pictures
+//key insId
+//value rooms array
+//----key roomId value roomId
+//----key Title  value roomTitle
+//----key ImagesArray value Array to store the images
+//--------------------------key Id value File item Id
 @property(nonatomic) NSMutableDictionary *roomsOfInspectionDic;
 
 
 @property(nonatomic) UIActivityIndicatorView* spinner;
 
-@property(nonatomic) UITableView * rightTableView;
-@property(nonatomic) NSIndexPath * currentRightIndexPath;
 
-@property(nonatomic) UITableView * propertyDetailTableView;
 
-@property(nonatomic) UITableView * inspectionLeftTableView;
-@property(nonatomic) UITableView * inspectionMidTableView;
-@property(nonatomic) UITableView * inspectionRightTableView;
 
 
 /**/
@@ -79,7 +111,6 @@
 -(void)getPropertyResourceListArray:(ListClient*)client;
 -(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems;
 -(void)getIncidentsListArray:(ListClient*)client;
--(void)setRightTableCell:(PropertyListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
--(void)didUpdateRightTableCell:(NSIndexPath *)indexpath image:(UIImage*)image;
+-(void)didUpdateRightPropertyTableCell:(NSIndexPath *)indexpath image:(UIImage*)image;
 -(void)setLeftInspectionTableCell:(InspectionListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end
