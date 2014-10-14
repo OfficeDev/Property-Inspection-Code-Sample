@@ -41,17 +41,6 @@
     header_img.image = [UIImage imageNamed:@"navigation_background"];
     [self.view addSubview:header_img];
     
-    UIFont *boldfont = [UIFont fontWithName:@"Helvetica-Bold" size:24];
-    NSString *lbl1str = @"Room Details";
-    NSDictionary *attributes = @{NSFontAttributeName:boldfont};
-    CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
-    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake((1024 - lbsize.width) / 2, 20 + ((71 - lbsize.height) / 2), lbsize.width, lbsize.height)];
-    lbl1.text = lbl1str;
-    lbl1.textAlignment = NSTextAlignmentLeft;
-    lbl1.font = boldfont;
-    lbl1.textColor = [UIColor colorWithRed:255.00f/255.00f green:255.00f/255.00f blue:255.00f/255.00f alpha:1];
-    [self.view addSubview:lbl1];
-    
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
     leftView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:leftView];
