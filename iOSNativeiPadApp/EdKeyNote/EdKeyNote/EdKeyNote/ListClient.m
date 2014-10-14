@@ -69,6 +69,138 @@ const NSString *apiUrl = @"/_api/lists";
     }];
 }
 
+- (BOOL)uploadImageToDocumentLibrary:(NSString *)token libraryName:(NSString *)libraryName image:(UIImage *)image
+{
+    BOOL success = NO;
+    NSString *imageName = [self createFileName:@".jpg"];
+    NSString *listName = [libraryName urlencode];
+    if([self uploadImage:token image:image libraryName:listName imageName:imageName])
+    {
+        int itemID = [self getItemID:token libraryName:listName imageName:imageName];
+        if(itemID > 0)
+        {
+            //update sl_inspectionID, sl_incidentID,sl_roomID
+            
+        }
+        else
+        {
+            NSLog(@"Get Item ID failed.");
+        }
+    }
+    else
+    {
+        NSLog(@"upload image failed.");
+    }
+    
+    return success;
+}
+
+- (BOOL)uploadImage:(NSString *)token image:(UIImage *)image libraryName:(NSString *)libraryName imageName:(NSString *)imageName
+{
+    static BOOL uploadSuccess = NO;
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files/add(url='%@',overwrite=true)",siteUrl,libraryName,imageName];
+    NSData *postData = UIImageJPEGRepresentation(image, 1);
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"data:%@, response:%@",dataString,response);
+            uploadSuccess = true;
+        });
+    }];
+    [task resume];
+    
+    return uploadSuccess;
+}
+
+- (NSInteger)getItemID:(NSString *)token libraryName:(NSString *)libraryName imageName:(NSString *)imageName
+{
+    static NSInteger id = 0;
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files('%@')/ListItemAllFields",siteUrl,libraryName,imageName];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"get image property data %@ ",dataString);
+            NSMutableArray *array = [NSMutableArray array];
+            NSMutableArray *listsItemsArray =[self parseDataArray: data];
+            
+        });
+    }];
+    [task resume];
+    
+    
+    return id;
+}
+
+- (void)updateItemPropertiesByID:(NSString *)token listName:(NSString *)listName itemID:(NSInteger)itemID
+{
+    NSInteger inspectionID = 1, incidentID = 1, roomID = 1;
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
+    listName = [@"Room Inspection Photos" urlencode];
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(83)",siteUrl,listName];
+    NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.RoomInspectionPhotosItem' },'sl_inspectionIDId':%i,'sl_incidentIDId':%i,'sl_roomIDId':%i}",inspectionID,incidentID,roomID];
+    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
+    [request addValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
+    [request addValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"upload image property error %@,response %@,data %@",error,response,data);
+            
+        });
+    }];
+    [task resume];
+}
+
+
+- (NSString *)createFileName:(NSString *)fileExtension
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    [dateFormatter setDateFormat:@"yyMMddHHmmssSSSSSS"];
+    
+    NSString *datestr = [dateFormatter stringFromDate:[NSDate date]];
+    NSMutableString *randstr = [[NSMutableString alloc]init];
+    for(int i = 0 ; i < 5 ; i++)
+    {
+        int val= arc4random()%10;
+        [randstr appendString:[NSString stringWithFormat:@"%d",val]];
+    }
+    NSString *string = [NSString stringWithFormat:@"%@%@%@",datestr,randstr,fileExtension];
+    return string;
+}
+
 /*
  NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
  [metadata setValue:@"SP.List" forKey:@"type"];
