@@ -954,7 +954,9 @@
                  inspetionId:indexPath.row
                  token:self.token];
         
-        [self.navigationController pushViewController:room animated:YES];
+        // [self presentViewController:room room:YES completion:nil];
+        [self presentViewController:room animated:YES completion:nil];
+        //[self.navigationController pushViewController:room animated:YES];
     }
 }
 
