@@ -1,0 +1,792 @@
+//
+//  EKNIncidentViewController.m
+//  EdKeyNote
+//
+//  Created by Max on 10/14/14.
+//  Copyright (c) 2014 canviz. All rights reserved.
+//
+
+#import "EKNIncidentViewController.h"
+
+@interface EKNIncidentViewController ()
+
+@end
+
+@implementation EKNIncidentViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self initData];
+    
+    self.navigationController.navigationBar.hidden = YES;
+    
+    self.view.backgroundColor=[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
+    
+    UIView *statusbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 20)];
+    statusbar.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(130.00/255.00f) blue:(114.00/255.00f) alpha:1.0];
+    [self.view addSubview:statusbar];
+    
+    UIImageView *header_img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, 1024, 71)];
+    header_img.image = [UIImage imageNamed:@"navigation_background"];
+    [self.view addSubview:header_img];
+    
+    UIView *leftview = [[UIView alloc] initWithFrame:CGRectMake(0, 91, 344, 768)];
+    leftview.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:leftview];
+    
+    UIImageView *seperatorline = [[UIImageView alloc] initWithFrame:CGRectMake(344, 91, 5, 677)];
+    seperatorline.image = [UIImage imageNamed:@"sepratorline"];
+    [self.view addSubview:seperatorline];
+    
+    [self addRightTable];
+    //[self addPropertyDetailTable];
+    //[self addInspectionsTable];
+    
+    [self loadData];
+}
+
+-(void)initData
+{
+    self.selectPropertyId = @"1";//for test
+    self.loginName = @"Rob Barker";//for test
+    
+    self.currentRightIndexPath = nil;
+}
+
+-(void)addInspectionsTable
+{
+    self.inspectionMidTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 480, 320, 235) style:UITableViewStyleGrouped];
+    self.inspectionMidTableView.backgroundColor = [UIColor whiteColor];
+    self.inspectionMidTableView.delegate = self;
+    self.inspectionMidTableView.dataSource = self;
+    [self.inspectionMidTableView setScrollEnabled:NO];
+    
+    UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+    NSString *lbl2str = @"CONTACT OFFICE";
+    UILabel *lbl2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    lbl2.text = lbl2str;
+    lbl2.textAlignment = NSTextAlignmentLeft;
+    lbl2.font = font;
+    lbl2.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.inspectionMidTableView.tableHeaderView = lbl2;
+    [self.view addSubview:self.inspectionMidTableView];
+    
+    self.inspectionRightTableView = [[UITableView alloc] initWithFrame:CGRectMake(24, 560, 320, 235) style:UITableViewStyleGrouped];
+    self.inspectionRightTableView.backgroundColor = [UIColor whiteColor];
+    self.inspectionRightTableView.delegate = self;
+    self.inspectionRightTableView.dataSource = self;
+    [self.inspectionRightTableView setScrollEnabled:NO];
+    
+    NSString *lbl3str = @"CONTACT OWNER";
+    UILabel *lbl3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    lbl3.text = lbl3str;
+    lbl3.textAlignment = NSTextAlignmentLeft;
+    lbl3.font = font;
+    lbl3.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.inspectionRightTableView.tableHeaderView = lbl3;
+    [self.view addSubview:self.inspectionRightTableView];
+}
+
+-(void)addPropertyDetailTable{
+    
+    self.propertyDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(25, 100, 315, 300) style:UITableViewStyleGrouped];
+    
+    self.propertyDetailTableView.backgroundColor = [UIColor whiteColor];
+    //self.propertyDetailTableView.separatorColor = [UIColor clearColor];
+    self.propertyDetailTableView.delegate = self;
+    self.propertyDetailTableView.dataSource = self;
+    //[self.propertyDetailTableView.layer setCornerRadius:10.0];
+    //[self.propertyDetailTableView.layer setMasksToBounds:YES];
+    [self.propertyDetailTableView setScrollEnabled:NO];
+    UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+    NSString *lbl1str = @"PROPERTY DETAILS";
+    UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 25)];
+    lbl1.text = lbl1str;
+    lbl1.textAlignment = NSTextAlignmentLeft;
+    lbl1.font = font;
+    lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.propertyDetailTableView.tableHeaderView = lbl1;
+    [self.view addSubview:self.propertyDetailTableView];
+}
+
+-(void)addRightTable{
+    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(380, 100, 620, 635) style:UITableViewStyleGrouped];
+    
+    self.rightTableView.backgroundColor = [UIColor clearColor];
+    [self.rightTableView setSeparatorColor:[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1]];
+    self.rightTableView.delegate = self;
+    self.rightTableView.dataSource = self;
+    [self.rightTableView.layer setCornerRadius:10.0];
+    [self.rightTableView.layer setMasksToBounds:YES];
+    [self.view addSubview:self.rightTableView];
+}
+
+-(void)setRightTableSelectIndex:(NSIndexPath*)indexpath
+{
+    if(self.currentRightIndexPath != indexpath)
+    {
+        self.currentRightIndexPath = indexpath;
+        
+        //set currentsetId
+        ListItem *inspectionitem = nil;
+        if(self.currentRightIndexPath.section == 0)
+        {
+            inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
+        }
+        else
+        {
+            NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
+            if(bottomarray!=nil)
+            {
+                inspectionitem = [bottomarray objectAtIndex:self.currentRightIndexPath.row];
+            }
+        }
+        if(inspectionitem!=nil)
+        {
+            NSDictionary *pro = (NSDictionary *)[inspectionitem getData:@"sl_propertyID"];
+            self.selectPropertyId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
+            
+            NSDictionary *insdic = (NSDictionary *)[inspectionitem getData:@"sl_inspector"];
+            NSMutableDictionary *propertydic=[self.propertyDic objectForKey:self.selectPropertyId];
+            if([self.propertyDic objectForKey:self.selectPropertyId] == nil)
+            {
+                propertydic = [[NSMutableDictionary alloc] init];
+            }
+            NSLog(@"self.selectPropertyId %@",self.selectPropertyId);
+            [propertydic setObject:[insdic objectForKey:@"sl_accountname"] forKey:@"contactowner"];
+            [propertydic setObject:[insdic objectForKey:@"sl_emailaddress"] forKey:@"contactemail"];
+        }
+        
+        //reload left table;
+        [self.propertyDetailTableView reloadData];
+        
+        //[self GetInspectionListAccordingPropertyId:self.selectPropertyId];
+        
+        [self.inspectionMidTableView reloadData];
+        [self.inspectionRightTableView reloadData];
+    }
+}
+
+-(void)loadData{
+    
+    self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
+    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:self.spinner];
+    self.spinner.hidesWhenStopped = YES;
+    
+    [self.spinner startAnimating];
+    
+    ListClient* client = [self getClient];
+    
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Incidents" filter:@"$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode&$expand=sl_inspectionID,sl_propertyID&$orderby=sl_date%20desc" callback:^(NSMutableArray *listItems, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            //NSMutableArray *list = [[NSMutableArray alloc] init];
+            //ListItem* currentInspectionData = [[ListItem alloc] init];
+            
+            self.inspectionsListArray =listItems;
+            //get the right pannel data
+            //self.rightPannelListDic = [[NSMutableDictionary alloc] init];
+            //[self.rightPannelListDic setObject:listItems forKey:@"rightList"];
+            
+            //get property resource list:
+            [self getPropertyResourceListArray:client];
+        });
+    }];
+    
+    [task resume];
+}
+
+-(void)getPropertyResourceListArray:(ListClient*)client
+{
+    NSURLSessionTask* getpropertyResourcetask = [client getListItemsByFilter:@"Property%20Photos" filter:@"$select=sl_propertyIDId,Id" callback:^(NSMutableArray * listItems, NSError *error)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         //self.propertyResourceListArray =listItems;
+                                                         [self getPropertyResourceFile:client PropertyResourceItems:listItems];
+                                                     });
+                                                 }];
+    
+    [getpropertyResourcetask resume];
+}
+
+-(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems
+{
+    NSMutableString* loopindex = [[NSMutableString alloc] initWithString:@"0"];
+    NSMutableArray *loopitems =listItems;
+    self.propertyDic = [[NSMutableDictionary alloc] init];
+    
+    for (ListItem* tempitem in loopitems)
+    {
+        NSString *propertyId =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_propertyIDId"]];
+        
+        NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Property%20Photos"
+                                                                         FileId:(NSString *)[tempitem getData:@"ID"]
+                                                                         filter:@"$select=ServerRelativeUrl"
+                                                                       callback:^(NSMutableArray *listItems, NSError *error)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         int preindex = [loopindex intValue];
+                                                         preindex++;
+                                                         
+                                                         if([listItems count]>0)
+                                                         {
+                                                             NSMutableDictionary *propertyData =[[NSMutableDictionary alloc] init];
+                                                             [propertyData setObject:[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"] forKey:@"ServerRelativeUrl"];
+                                                             
+                                                             [self.propertyDic setObject:propertyData forKey:propertyId];
+                                                         }
+                                                         
+                                                         NSLog(@"propertyId %@",propertyId);
+                                                         if(preindex == [loopitems count])
+                                                         {
+                                                             //get Incidents list
+                                                             [self getIncidentsListArray:client];
+                                                             
+                                                         }
+                                                         [loopindex setString:[NSString stringWithFormat:@"%d",preindex]];
+                                                         NSLog(@"loopindex %@",loopindex);
+                                                     });
+                                                     
+                                                 }];
+        
+        [getFileResourcetask resume];
+    }
+}
+
+-(void)getIncidentsListArray:(ListClient*)client
+{
+    self.incidentOfInspectionDic = [[NSMutableDictionary alloc] init];
+    
+    NSURLSessionTask* getincidentstask = [client getListItemsByFilter:@"Incidents" filter:@"$select=sl_inspectionIDId,Id"  callback:^(NSMutableArray *        listItems, NSError *error)
+                                          {
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  
+                                                  for (ListItem* tempitem in listItems) {
+                                                      NSString *key =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_inspectionIDId"]];
+                                                      
+                                                      if(![self.incidentOfInspectionDic objectForKey:key])
+                                                      {
+                                                          [self.incidentOfInspectionDic setObject:@"red" forKey:key];
+                                                      }
+                                                  }
+                                                  
+                                                  //get current property inspection list
+                                                  //[self GetInspectionListAccordingPropertyId:self.selectPropertyId];
+                                                  //right table need reload data
+                                                  [self.rightTableView reloadData];
+                                                  NSIndexPath *temp = [NSIndexPath indexPathForRow:0 inSection:0];
+                                                  [self.rightTableView selectRowAtIndexPath:temp animated:NO scrollPosition:UITableViewScrollPositionNone];
+                                                  [self setRightTableSelectIndex:temp];
+                                                  
+                                                  //get images
+                                                  [self getAllImageFiles:client];
+                                                  //
+                                                  [self.spinner stopAnimating];
+                                                  
+                                              });
+                                          }];
+    [getincidentstask resume];
+}
+
+-(void)GetInspectionListAccordingPropertyId:(NSString*)pid
+{
+    if([self.propertyDic objectForKey:pid] ==nil)
+    {
+        NSMutableDictionary *propertyTempDic = [[NSMutableDictionary alloc] init];
+        [self.propertyDic setObject:propertyTempDic forKey:pid];
+    }
+    
+    if(![[self.propertyDic objectForKey:pid] objectForKey:@"inspectionslist"])
+    {
+        NSMutableArray *inspectionslistTemp = [[NSMutableArray alloc] init];
+        
+        for (ListItem* tempitem in self.inspectionsListArray) {
+            NSString *inspectionId = [NSString stringWithFormat:@"%@",[tempitem getData:@"ID"]];
+            
+            NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
+            NSDictionary *insdic =(NSDictionary *)[tempitem getData:@"sl_inspector"];
+            
+            if(pdic!=nil)
+            {
+                if([[pdic objectForKey:@"ID"] intValue] == [pid intValue])
+                {
+                    
+                    NSMutableDictionary * inspectionItem= [[NSMutableDictionary alloc] init];
+                    
+                    [inspectionItem setObject:inspectionId forKey:@"ID"];
+                    [inspectionItem setObject:[insdic objectForKey:@"Title"] forKey:@"sl_accountname"];
+                    
+                    if ([[insdic objectForKey:@"Title"] isEqualToString:self.loginName ]) {
+                        [inspectionItem setObject:@"YES" forKey:@"bowner"];
+                    }
+                    NSDate *inspectiondatetime = [EKNEKNGlobalInfo converDateFromString:(NSString *)[tempitem getData:@"sl_datetime"]];
+                    [inspectionItem setObject:[EKNEKNGlobalInfo converStringFromDate:inspectiondatetime] forKey:@"sl_datetime"];
+                    
+                    if([inspectiondatetime compare:[NSDate date]] == NSOrderedDescending)
+                    {
+                        //upcoming
+                        [inspectionItem setObject:@"black" forKey:@"icon"];
+                    }
+                    else
+                    {
+                        if([self.incidentOfInspectionDic objectForKey:inspectionId]!=nil)
+                        {
+                            [inspectionItem setObject:@"red" forKey:@"icon"];
+                        }
+                        else
+                        {
+                            [inspectionItem setObject:@"green" forKey:@"icon"];
+                        }
+                        
+                    }
+                    
+                    [inspectionslistTemp addObject:inspectionItem];
+                }
+            }
+        }
+        [[self.propertyDic objectForKey:pid] setObject:inspectionslistTemp forKey:@"inspectionslist"];
+    }
+}
+
+-(void)getAllImageFiles:(ListClient*)client
+{
+    NSArray *prokeys = [self.propertyDic allKeys];
+    for (NSString *key in prokeys) {
+        [self getFile:key];
+    }
+}
+
+-(void)getFile:(NSString *)key
+{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
+    
+    NSMutableDictionary *prodict = [self.propertyDic objectForKey:key];
+    NSString *path =[prodict objectForKey:@"ServerRelativeUrl"];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",siteUrl,path,@"')/$value"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
+    [request addValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"cloris get image %@",error);
+            if (error == nil) {
+                NSLog(@"data length %lu",[data length]);
+                UIImage *image =[[UIImage alloc] initWithData:data];
+                [[self.propertyDic objectForKey:key] setObject:image
+                                                        forKey:@"image"];
+                [self updateTableCellImage:key image:image];
+            }
+            else
+            {
+                //retry one
+                if([[self.propertyDic objectForKey:key] objectForKey:@"trytimes"]!=nil)
+                {
+                    NSInteger times =[[[self.propertyDic objectForKey:key] objectForKey:@"trytimes"] integerValue];
+                    if(times>=3)
+                    {
+                        
+                    }
+                    else
+                    {
+                        times=times+1;
+                        [[self.propertyDic objectForKey:key] setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
+                        [self getFile:key];
+                    }
+                }
+                else
+                {
+                    [[self.propertyDic objectForKey:key] setObject:@"1" forKey:@"trytimes"];
+                    [self getFile:key];
+                }
+            }
+        });
+    }];
+    [task resume];
+}
+
+-(void)updateTableCellImage:(NSString *)proid image:(UIImage *)image
+{
+    BOOL found =  false;
+    ListItem *inspectionitem = nil;
+    inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
+    NSIndexPath *updateIndexPath = nil;
+    if(inspectionitem!=nil)
+    {
+        NSDictionary *pro = (NSDictionary *)[inspectionitem getData:@"sl_propertyID"];
+        if(pro!=nil)
+        {
+            NSString *propertyId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
+            if([propertyId isEqualToString:proid])
+            {
+                updateIndexPath =[NSIndexPath indexPathForRow:0 inSection:0];
+                [self didUpdateRightTableCell:updateIndexPath image:image];
+                found = true;
+            }
+        }
+    }
+    if(!found)
+    {
+        NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
+        if(bottomarray!=nil)
+        {
+            for(NSInteger i = 0; i< [bottomarray count]; i++)
+            {
+                ListItem *tp = [bottomarray objectAtIndex:i];
+                
+                NSDictionary *pro = (NSDictionary *)[tp getData:@"sl_propertyID"];
+                if(pro!=nil)
+                {
+                    NSString *propertyId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
+                    if([propertyId isEqualToString:proid])
+                    {
+                        updateIndexPath =[NSIndexPath indexPathForRow:i inSection:1];
+                        [self didUpdateRightTableCell:updateIndexPath image:image];
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if(found && self.currentRightIndexPath == updateIndexPath)
+    {
+        [self.propertyDetailTableView beginUpdates];
+        NSIndexPath *upi = [NSIndexPath indexPathForRow:2 inSection:0];
+        
+        [self.propertyDetailTableView reloadRowsAtIndexPaths:@[upi] withRowAnimation:UITableViewRowAnimationNone];
+        if(self.currentRightIndexPath == updateIndexPath)
+        {
+            [self.rightTableView selectRowAtIndexPath:updateIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        }
+        [self.propertyDetailTableView endUpdates];
+        
+        
+        //PropertyDetailsImage *up = (PropertyDetailsImage *)[self.propertyDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+        // [up.imageView setImage:image];
+    }
+}
+
+-(void)didUpdateRightTableCell:(NSIndexPath *)indexpath image:(UIImage*)image
+{
+    [self.rightTableView beginUpdates];
+    [self.rightTableView reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.rightTableView endUpdates];
+}
+
+-(ListClient*)getClient{
+    OAuthentication* authentication = [OAuthentication alloc];
+    [authentication setToken:self.token];
+    
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    return [[ListClient alloc] initWithUrl:[standardUserDefaults objectForKey:@"demoSiteCollectionUrl"]
+                               credentials: authentication];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if(tableView == self.rightTableView)
+    {
+        return 1;
+    }
+    else if(tableView == self.propertyDetailTableView)
+    {
+        return 1;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(tableView == self.rightTableView)
+    {
+        if(self.inspectionsListArray!=nil)
+        {
+            return [self.inspectionsListArray count];
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else if(tableView == self.propertyDetailTableView)
+    {
+        if(self.currentRightIndexPath!=nil)
+        {
+            return 3;
+        }
+        else
+        {
+            return 0;
+        }
+        
+    }
+    else if(tableView == self.inspectionMidTableView ||
+            tableView == self.inspectionRightTableView )
+    {
+        if(self.currentRightIndexPath!=nil)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(tableView == self.rightTableView)
+    {
+        return 180;
+    }
+    else if(tableView == self.propertyDetailTableView)
+    {
+        if(indexPath.row == 2)
+        {
+            return 225;
+        }
+        else
+        {
+            return 25;
+        }
+    }
+    else if(tableView == self.inspectionMidTableView ||
+            tableView == self.inspectionRightTableView )
+    {
+        return 50;
+    }
+    return 40;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(tableView == self.rightTableView)
+    {
+        return 70;
+        
+    }
+    return 0;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(tableView == self.rightTableView)
+    {
+        UIFont *font = [UIFont fontWithName:@"Helvetica" size:24];
+        NSString *lbl1str = @"INCIDENTS";
+        //NSDictionary *attributes = @{NSFontAttributeName:font};
+        //CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
+        UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 620, 60)];
+        lbl1.text = lbl1str;
+        lbl1.textAlignment = NSTextAlignmentLeft;
+        lbl1.font = font;
+        lbl1.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+        
+        return lbl1;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *identifier = @"IncidentListItemCell";
+    NSLog(@"index path:%i",indexPath.row);
+    IncidentListItemCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if(tableView == self.rightTableView)
+    {
+        if (cell == nil) {
+            [tableView registerNib:[UINib nibWithNibName:@"IncidentListItemCell" bundle:nil] forCellReuseIdentifier:identifier];
+            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        }
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+        [self setRightTableCell:cell cellForRowAtIndexPath:indexPath];
+        return cell;
+    }
+    /*
+    else if(tableView == self.inspectionMidTableView ||
+            tableView == self.inspectionRightTableView )
+    {
+        NSString *identifier = @"ContactOwnerCell";
+        ContactOwnerCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            [tableView registerNib:[UINib nibWithNibName:@"ContactOwnerCell" bundle:nil] forCellReuseIdentifier:identifier];
+            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        }
+        NSDictionary * tempdic = [self.propertyDic objectForKey:self.selectPropertyId];
+        if(tempdic!=nil)
+        {
+            if(tableView == self.inspectionMidTableView )
+            {
+                NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+                
+                [cell setCellValue: [standardUserDefaults objectForKey:@"dispatcherEmail"]];
+                NSLog(@"contact office:%@)",[standardUserDefaults objectForKey:@"dispatcherEmail"]);
+            }
+            else
+            {
+                [cell setCellValue:[tempdic objectForKey:@"contactemail"]];
+            }
+        }
+        
+        return cell;
+    }
+    else if(tableView == self.propertyDetailTableView)
+    {
+        if(self.currentRightIndexPath!=nil && self.rightPannelListDic!=nil)
+        {
+            ListItem *inspectionitem = nil;
+            if(self.currentRightIndexPath.section == 0)
+            {
+                inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
+            }
+            else
+            {
+                NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
+                if(bottomarray!=nil)
+                {
+                    inspectionitem = [bottomarray objectAtIndex:self.currentRightIndexPath.row];
+                }
+            }
+            if(inspectionitem!=nil)
+            {
+                NSDictionary *pro = (NSDictionary *)[inspectionitem getData:@"sl_propertyID"];
+                if(pro!=nil)
+                {
+                    if(indexPath.row==2)
+                    {
+                        NSString *identifier = @"PropertyDetailsImage";
+                        PropertyDetailsImage *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+                        if (cell == nil) {
+                            [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsImage" bundle:nil] forCellReuseIdentifier:identifier];
+                            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                        }
+                        
+                        NSString *address = [pro objectForKey:@"sl_address1"];
+                        //NSString *propertyId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
+                        NSMutableDictionary *prodict = [self.propertyDic objectForKey:self.selectPropertyId];
+                        UIImage *image =(UIImage *)[prodict objectForKey:@"image"];
+                        [cell setCellValue:image title:address];
+                        
+                        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                        return cell;
+                    }
+                    else
+                    {
+                        NSString *identifier = @"PropertyDetailsCell";
+                        PropertyDetailsCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+                        if (cell == nil) {
+                            [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsCell" bundle:nil] forCellReuseIdentifier:identifier];
+                            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                        }
+                        if (indexPath.row == 0) {
+                            NSString *title = [pro objectForKey:@"Title"];
+                            [cell setCellValue:[UIImage imageNamed:@"home"] title:title];
+                        }
+                        else
+                        {
+                            NSString *title = [pro objectForKey:@"sl_owner"];
+                            [cell setCellValue:[UIImage imageNamed:@"man"] title:title];
+                        }
+                        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                        return cell;
+                    }
+                    
+                }
+            }
+        }
+    }
+     */
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(tableView == self.rightTableView)
+    {
+        [self setRightTableSelectIndex:indexPath];
+    }
+}
+
+-(void)setLeftInspectionTableCell:(InspectionListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSDictionary *prodic = [self.propertyDic objectForKey:self.selectPropertyId];
+    
+    if(prodic!=nil)
+    {
+        NSMutableArray *inspectionList = [prodic objectForKey:@"inspectionslist"];
+        NSDictionary *inspecdic =[inspectionList objectAtIndex:indexPath.row];
+        if(inspecdic!=nil)
+        {
+            [cell setCellValue:[inspecdic objectForKey:@"sl_datetime"]
+                         owner:[inspecdic objectForKey:@"sl_accountname"]
+                      incident:[inspecdic objectForKey:@"icon"]
+                          plus:[[inspecdic objectForKey:@"bowner"] isEqualToString:@"YES"]];
+        }
+    }
+}
+
+-(void)setRightTableCell:(IncidentListItemCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ListItem *inspectionitem = nil;
+    inspectionitem = [self.inspectionsListArray objectAtIndex:indexPath.row];
+
+    NSDictionary *propertyData = (NSDictionary *)[inspectionitem getData:@"sl_propertyID"];
+    NSDictionary *inspectionData = (NSDictionary *)[inspectionitem getData:@"sl_inspectionID"];
+    if(propertyData!=nil)
+    {
+        //NSString *address = [pro objectForKey:@"sl_address1"];
+        NSString *propertyId =[NSString stringWithFormat:@"%@",[propertyData objectForKey:@"ID"]];
+        if(propertyId!=nil)
+        {
+            NSString *incident = [inspectionitem getData:@"Title"];
+            NSString *inspectionDate = [inspectionData objectForKey:@"sl_datetime"];
+            NSString *approved = [inspectionitem getData:@"sl_status"];
+            //NSMutableDictionary *prodict = [self.propertyDic objectForKey:propertyId];
+            //UIImage *image =(UIImage *)[prodict objectForKey:@"image"];
+            [cell setCellValue:nil room:@"Room" incident:incident inspectionDate:inspectionDate repairDate:@"2014/10/24 12:08" approved:approved];
+        }
+    }
+}
+@end
