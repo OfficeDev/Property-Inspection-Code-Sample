@@ -36,7 +36,7 @@
     // Configure the view for the selected state
 }
 */
--(void)setCellValue:(UIImage *)image address:(NSString *)address
+-(void)setCellValue:(UIImage *)image address:(NSString *)address;
 {
     self.hotelAdress.text = address;
     if(image!=nil)

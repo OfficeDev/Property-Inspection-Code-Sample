@@ -10,5 +10,6 @@
 
 @interface EKNCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imagecell;
+@property (strong, nonatomic) IBOutlet UIImageView *selectImageViw;
 
 @end

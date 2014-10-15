@@ -21,6 +21,7 @@
 }
 -(void)setCellValue:(NSString *)dateTime owner:(NSString *)owner incident:(NSString *)incident plus:(BOOL)bplus
 {
+    
     self.dateTime.text = dateTime;
     self.owner.text = owner;
     if(incident!=nil)
