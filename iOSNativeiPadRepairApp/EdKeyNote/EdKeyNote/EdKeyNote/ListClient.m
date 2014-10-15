@@ -69,6 +69,40 @@ const NSString *apiUrl = @"/_api/lists";
     }];
 }
 
+- (NSURLSessionDataTask *)getPropertyPhotoListByPropertyID:(NSString *)propertyID token:(NSString *)token callback:(void (^)(NSMutableArray *listItems, NSError *))callback
+{
+    NSString *listName = [@"Property Photos" urlencode];
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/GetItems",self.Url,listName];
+    //NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.CamlQuery' },'ViewXml':'<View><Query><Where><Contains><FieldRef Name='ID'/><Value>2</Value></Contains></Where></Query></View>'}"];
+    NSString *postString = @"{ 'query' : {'__metadata': { 'type': 'SP.CamlQuery' }, 'ViewXml': '<View><Query><Where><Contains><FieldRef Name='ID'/><Value Type='Int'>0</Value></Contains></Where></Query></View>' } }";
+    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
+    //[request addValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
+    //[request addValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    NSURLSession *session = [NSURLSession sharedSession];
+    return [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSMutableArray *array = [NSMutableArray array];
+            NSMutableArray *listsItemsArray =[self parseDataArray: data];
+            for (NSDictionary* value in listsItemsArray) {
+                [array addObject: [[ListItem alloc] initWithDictionary:value]];
+            }
+            callback(array ,error);
+            NSLog(@"get property photos by ID %@,response %@",error,response);
+            
+        });
+    }];
+    //[task resume];
+}
+
 - (BOOL)uploadImageToDocumentLibrary:(NSString *)token libraryName:(NSString *)libraryName image:(UIImage *)image
 {
     BOOL success = NO;

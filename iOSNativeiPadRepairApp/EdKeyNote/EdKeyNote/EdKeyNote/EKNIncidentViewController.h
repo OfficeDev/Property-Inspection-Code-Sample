@@ -26,6 +26,7 @@
 //need get data from extend
 @property(nonatomic) NSString* loginName;
 @property(nonatomic) NSString* token;
+@property(nonatomic) NSString* siteUrl;
 @property(nonatomic) NSString* selectPropertyId;
 //end
 
@@ -34,7 +35,8 @@
 //ID,sl_datetime,
 //sl_inspector/ID,sl_inspector/Title,sl_inspector/sl_accountname,sl_inspector/sl_emailaddress
 //sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode
-@property(nonatomic) NSMutableArray *inspectionsListArray;
+@property(nonatomic) NSMutableArray *incidentListArray;
+@property(nonatomic) NSMutableDictionary *incidentPhotoListDic;
 
 //current and upcoming inspections dict
 //top: current listitem
@@ -51,6 +53,8 @@
 //trytimes
 @property(nonatomic) NSMutableDictionary *propertyDic;
 
+@property(nonatomic) NSDictionary *propertyDetailDic;
+
 //key is inspection Id, use to store inspection andincidents
 @property(nonatomic) NSMutableDictionary *incidentOfInspectionDic;
 
@@ -65,10 +69,10 @@
 @property(nonatomic) UITableView * rightTableView;
 @property(nonatomic) NSIndexPath * currentRightIndexPath;
 
+//left table views
 @property(nonatomic) UITableView * propertyDetailTableView;
-
-@property(nonatomic) UITableView * inspectionMidTableView;
-@property(nonatomic) UITableView * inspectionRightTableView;
+@property(nonatomic) UITableView * contactOwnerTableView;
+@property(nonatomic) UITableView * contactOfficeTableView;
 
 
 /**/

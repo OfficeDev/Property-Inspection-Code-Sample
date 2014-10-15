@@ -311,18 +311,9 @@
 		0EADF96819E8371300E1DE77 /* PropertyCell */ = {
 			isa = PBXGroup;
 			children = (
-				0E9D42F819E98D5600329A81 /* ContactOwnerCell.h */,
-				0E9D42F919E98D5600329A81 /* ContactOwnerCell.m */,
-				0E9D42FA19E98D5600329A81 /* ContactOwnerCell.xib */,
 				0E9D42FB19E98D5600329A81 /* InspectionListCell.h */,
 				0E9D42FC19E98D5600329A81 /* InspectionListCell.m */,
 				0E9D42FD19E98D5600329A81 /* InspectionListCell.xib */,
-				0E9D42D419E939AF00329A81 /* PropertyDetailsCell.xib */,
-				0E9D42C019E8CB7500329A81 /* PropertyDetailsCell.h */,
-				0E9D42C119E8CB7500329A81 /* PropertyDetailsCell.m */,
-				0E9D42C519E8F22200329A81 /* PropertyDetailsImage.h */,
-				0E9D42C619E8F22200329A81 /* PropertyDetailsImage.m */,
-				0E9D42C319E8D72700329A81 /* PropertyDetailsImage.xib */,
 			);
 			name = PropertyCell;
 			sourceTree = "<group>";
@@ -412,6 +403,15 @@
 		F3673A6F19ED2ED400C02B44 /* IncidentCell */ = {
 			isa = PBXGroup;
 			children = (
+				0E9D42C519E8F22200329A81 /* PropertyDetailsImage.h */,
+				0E9D42C619E8F22200329A81 /* PropertyDetailsImage.m */,
+				0E9D42C319E8D72700329A81 /* PropertyDetailsImage.xib */,
+				0E9D42D419E939AF00329A81 /* PropertyDetailsCell.xib */,
+				0E9D42C019E8CB7500329A81 /* PropertyDetailsCell.h */,
+				0E9D42C119E8CB7500329A81 /* PropertyDetailsCell.m */,
+				0E9D42F819E98D5600329A81 /* ContactOwnerCell.h */,
+				0E9D42F919E98D5600329A81 /* ContactOwnerCell.m */,
+				0E9D42FA19E98D5600329A81 /* ContactOwnerCell.xib */,
 				F3673A7019ED2F2400C02B44 /* IncidentListItemCell.h */,
 				F3673A7119ED2F2400C02B44 /* IncidentListItemCell.m */,
 				F3673A7219ED2F2400C02B44 /* IncidentListItemCell.xib */,
