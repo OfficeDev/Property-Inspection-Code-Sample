@@ -189,6 +189,7 @@
     
     // Do any additional setup after loading the view.
     [self checkParameters];
+    [self loginButtonAction];
 }
 
 - (void)didReceiveMemoryWarning
@@ -229,6 +230,7 @@
             self.token = t;
             EKNIncidentViewController *incident = [[EKNIncidentViewController alloc] init];
             incident.token = self.token;
+            incident.selectPropertyId = @"1";
             [self.navigationController pushViewController:incident animated:YES];
         }
         else

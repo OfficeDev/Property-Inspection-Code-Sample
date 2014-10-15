@@ -13,4 +13,5 @@
 - (NSURLSessionDataTask *)getListItems:(NSString *)name callback:(void (^)(NSMutableArray *listItems, NSError *error))callback;
 - (NSURLSessionDataTask *)getListItemsByFilter:(NSString *)name filter:(NSString *)filter callback:(void (^)(NSMutableArray *listItems, NSError *))callback;
 - (NSURLSessionDataTask *)getListItemFileByFilter:(NSString *)name FileId:(NSString *)fileId filter:(NSString *)filter callback:(void (^)(NSMutableArray *listItems, NSError *))callback;
+- (NSURLSessionDataTask *)getPropertyPhotoListByPropertyID:(NSString *)propertyID token:(NSString *)token callback:(void (^)(NSMutableArray *listItems, NSError *))callback;
 @end

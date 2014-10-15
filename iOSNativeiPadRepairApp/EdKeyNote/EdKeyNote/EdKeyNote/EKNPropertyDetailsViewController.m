@@ -393,7 +393,7 @@
                 UIImage *image =[[UIImage alloc] initWithData:data];
                 [[self.propertyDic objectForKey:key] setObject:image
                                                         forKey:@"image"];
-                [self updateTableCellImage:key image:image];
+                //[self updateTableCellImage:key image:image];
             }
             else
             {
