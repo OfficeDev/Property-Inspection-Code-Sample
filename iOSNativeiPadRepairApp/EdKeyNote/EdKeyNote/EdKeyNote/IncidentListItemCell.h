@@ -18,6 +18,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *approvalTitleLbl;
 @property (strong, nonatomic) IBOutlet UILabel *approvalValueLbl;
 
--(void)setCellValue:(UIImage *)image room:(NSString *)room incident:(NSString *)incident inspectionDate:(NSString *)inspectionDate repairDate:(NSString *)repairDate approved:(NSString *)approved;
+-(void)setCellValue:(UIImage *)image room:(NSString *)room incident:(NSString *)incident inspectionDate:(NSString *)inspectionDate repairDate:(NSString *)repairDate repairHidden:(BOOL)repairHidden approved:(NSString *)approved approvedHidden:(BOOL)approvedHidden;
 
 @end

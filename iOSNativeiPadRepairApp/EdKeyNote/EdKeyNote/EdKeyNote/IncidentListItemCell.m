@@ -20,7 +20,7 @@
     // Configure the view for the selected state
 }
 
--(void)setCellValue:(UIImage *)image room:(NSString *)room incident:(NSString *)incident inspectionDate:(NSString *)inspectionDate repairDate:(NSString *)repairDate approved:(NSString *)approved
+-(void)setCellValue:(UIImage *)image room:(NSString *)room incident:(NSString *)incident inspectionDate:(NSString *)inspectionDate repairDate:(NSString *)repairDate repairHidden:(BOOL)repairHidden approved:(NSString *)approved approvedHidden:(BOOL)approvedHidden
 {
     if(image != nil)
     {
@@ -33,8 +33,16 @@
     self.roomLbl.text = room;
     self.incidentLbl.text = incident;
     self.inspectionLbl.text = inspectionDate;
-    self.repairDateValueLbl.text = repairDate;
-    self.approvalValueLbl.text = approved;
+    self.repairDateTitleLbl.hidden = repairHidden;
+    if(!repairHidden)
+    {
+        self.repairDateValueLbl.text = repairDate;
+    }
+    self.approvalTitleLbl.hidden = approvedHidden;
+    if(!approvedHidden)
+    {
+        self.approvalValueLbl.text = approved;
+    }
 }
 
 

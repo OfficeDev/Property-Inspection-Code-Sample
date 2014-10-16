@@ -117,7 +117,7 @@
 
 
 -(void)addRightTable{
-    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(380, 100, 620, 635) style:UITableViewStyleGrouped];
+    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(380, 100, 620, 657) style:UITableViewStyleGrouped];
     self.rightTableView.backgroundColor = [UIColor clearColor];
     [self.rightTableView setSeparatorColor:[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1]];
     self.rightTableView.delegate = self;
@@ -142,9 +142,14 @@
     
     [self.spinner startAnimating];
     
+    NSString *filter = [NSString stringWithFormat:@"$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_inspectionIDId,sl_roomIDId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$filter=sl_propertyIDId eq %@ and sl_inspectionIDId gt 0 and sl_roomIDId gt 0&$orderby=sl_date desc",self.selectPropertyId];
+    NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSLog(@"filter string:%@",filterStr);
+    
     ListClient* client = [self getClient];
     
-    NSURLSessionTask* task = [client getListItemsByFilter:@"Incidents" filter:@"$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_inspectionIDId,sl_roomIDId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$orderby=sl_date%20desc" callback:^(NSMutableArray *listItems, NSError *error) {
+    
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
             //NSMutableArray *list = [[NSMutableArray alloc] init];
@@ -231,6 +236,7 @@
             if (error == nil) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
                 [self.propertyDetailDic setValue:image forKey:@"photo"];
+                NSLog(@"property table reload");
                 [self.propertyDetailTableView reloadData];
             }
             else
@@ -271,25 +277,25 @@
         NSString *roomID = (NSString *)[item getData:@"sl_roomIDId"];
         
         NSString *filter = [NSString stringWithFormat:@"$select=ID,Title&$filter=sl_inspectionIDId eq %@ and sl_incidentIDId eq %@ and sl_roomIDId eq %@&$orderby=Modified desc&$top=1",inspectionID,incidentID,roomID];
-        NSLog(@"test output:%@",filter);
-        NSString *filterInURL = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        NSLog(@"filter url:%@",filterInURL);
-            NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:filterInURL callback:^(NSMutableArray *listItems, NSError *error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if(listItems != nil && [listItems count] == 1)
-                    {
-                        NSString *photoID = (NSString *)[listItems[0] getData:@"ID"];
-                        NSLog(@"Get incident photo ID success,%@",photoID);
+        
+        NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        NSLog(@"incident photo filter url:%@",filterStr);
+        NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(listItems != nil && [listItems count] == 1)
+                {
+                    NSString *photoID = (NSString *)[listItems[0] getData:@"ID"];
+                    NSLog(@"Get incident photo ID success,%@",photoID);
                         [self getRoomInspectionPhotoServerRelativeUrl:client photoID:photoID incidentID:incidentID index:index];
-                    }
-                });
-            }];
-            [task resume];
+                }
+            });
+        }];
+        [task resume];
         index = index + 1;
     }
 }
 
--(void)getRoomInspectionPhotoServerRelativeUrl:(ListClient *)client photoID:(NSString *)photoID incidentID:(NSString *)incidentID index:(NSInteger *)index
+-(void)getRoomInspectionPhotoServerRelativeUrl:(ListClient *)client photoID:(NSString *)photoID incidentID:(NSString *)incidentID index:(NSInteger)index
 {
     NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Room Inspection Photos"
                                                                      FileId:photoID
@@ -309,7 +315,7 @@
     [getFileResourcetask resume];
 }
 
--(void)getRoomInspectionPhoto:(NSString *)serverRelativeUrl incidentID:(NSString *)incidentID index:(NSInteger *)index
+-(void)getRoomInspectionPhoto:(NSString *)serverRelativeUrl incidentID:(NSString *)incidentID index:(NSInteger)index
 {
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",self.siteUrl,serverRelativeUrl,@"')/$value"];
     
@@ -767,6 +773,7 @@
                         }
                         NSString *address = [self.propertyDetailDic objectForKey:@"sl_address1"];
                         UIImage *image =(UIImage *)[self.propertyDetailDic objectForKey:@"photo"];
+                        //NSLog(@"address:%@",address);
                         [cell setCellValue:image title:address];
             
                         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -809,8 +816,6 @@
 -(void)setRightTableCell:(IncidentListItemCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ListItem *incidentItem = nil;
     incidentItem = [self.incidentListArray objectAtIndex:indexPath.row];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM'/'dd'/'yyyy"];
     
     NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
     NSDictionary *propertyData = (NSDictionary *)[incidentItem getData:@"sl_propertyID"];
@@ -821,18 +826,20 @@
     {
         NSString *room = (NSString *)[roomData objectForKey:@"Title"];
         NSString *incident = (NSString *)[incidentItem getData:@"Title"];
-        NSDate *inspectionDate = [EKNEKNGlobalInfo converDateFromString:(NSString *)[inspectionData objectForKey:@"sl_datetime"]];
-        NSString *inspectionDateStr = [dateFormat stringFromDate:inspectionDate];
-        //NSLog(@"date time:%@,%@,%@",inspectionDate,[inspectionData objectForKey:@"sl_datetime"],inspectionDateStr);
+        NSString *inspectionDate = [EKNEKNGlobalInfo converStringToDateString:(NSString *)[inspectionData objectForKey:@"sl_datetime"]];
+        NSString *repairDate = [EKNEKNGlobalInfo converStringToDateString:(NSString *)[inspectionData objectForKey:@"sl_finalized"]];
+        //NSLog(@"date time:%@,%@",inspectionDate,[inspectionData objectForKey:@"sl_datetime"]);
+        //NSLog(@"date time:%@,%@",repairDate,[inspectionData objectForKey:@"sl_finalized"]);
         NSString *approved = (NSString *)[incidentItem getData:@"sl_status"];
+        BOOL repariDateHidden = [EKNEKNGlobalInfo isBlankString:repairDate];
+        BOOL approvedHidden = [EKNEKNGlobalInfo isBlankString:approved];
         UIImage *image = nil;
         NSMutableDictionary *dic = [self.incidentPhotoListDic objectForKey:incidentID];
         if(dic != nil)
         {
             image =(UIImage *)[dic objectForKey:@"photo"];
-            NSLog(@"image size width:%f heigth:%f",image.size.width,image.size.height);
         }
-        [cell setCellValue:image room:room incident:incident inspectionDate:inspectionDateStr repairDate:@"10/25/2014" approved:approved];
+        [cell setCellValue:image room:room incident:incident inspectionDate:inspectionDate repairDate:repairDate repairHidden:repariDateHidden approved:approved approvedHidden:approvedHidden];
     }
 }
 @end

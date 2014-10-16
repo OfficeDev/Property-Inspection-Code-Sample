@@ -11,4 +11,6 @@
 @interface EKNEKNGlobalInfo : UIViewController
 +(NSDate *)converDateFromString:(NSString *)stringdate;
 +(NSString *)converStringFromDate:(NSDate *)date;
++(NSString *)converStringToDateString:(NSString *)stringDate;
++(BOOL)isBlankString:(NSString *)string;
 @end

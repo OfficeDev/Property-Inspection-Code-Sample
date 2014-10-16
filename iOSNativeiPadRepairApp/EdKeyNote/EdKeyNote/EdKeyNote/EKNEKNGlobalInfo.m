@@ -28,4 +28,32 @@
     NSString *ret =[formatter stringFromDate:date];
     return ret;
 }
++(NSString *)converStringToDateString:(NSString *)stringDate
+{
+    NSString *result = @"";
+    if(![self isBlankString:stringDate])
+    {
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"MM'/'dd'/'yyyy"];
+        NSDate *date = [self converDateFromString:stringDate];
+        result = [dateFormat stringFromDate:date];
+    }
+    
+    return result;
+}
+
++(BOOL)isBlankString:(NSString *)string
+{
+    if (string == nil || string == NULL) {
+        return YES;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        return YES;
+    }
+    return NO;
+}
+
 @end

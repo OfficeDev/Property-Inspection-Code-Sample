@@ -312,7 +312,7 @@ const NSString *apiUrl = @"/_api/lists";
 
 - (NSData*) sanitizeJson : (NSData*) data{
     NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"dataString:%@",dataString);
+    //NSLog(@"dataString:%@",dataString);
     NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
     
     NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];
