@@ -1,4 +1,4 @@
-    //
+//
 //  main.m
 //  EdKeyNote
 //
@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "EKNAppDelegate.h"
 
 int main(int argc, char * argv[])

@@ -56,4 +56,11 @@
     return NO;
 }
 
++(CGSize)getSizeFromStringWithFont:(NSString *)string font:(UIFont *)font
+{
+    NSDictionary *attributes = @{NSFontAttributeName:font};
+    CGSize size = [string sizeWithAttributes:attributes];
+    return size;
+}
+
 @end

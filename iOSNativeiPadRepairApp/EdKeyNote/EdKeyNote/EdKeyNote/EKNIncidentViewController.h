@@ -56,6 +56,7 @@
 
 //key is inspection Id, use to store inspection andincidents
 @property(nonatomic) NSMutableDictionary *incidentOfInspectionDic;
+@property(nonatomic) NSMutableDictionary *inspectionDetailDic;
 
 //key is inspection Id, use to store rooms
 //one inspection maybe have many rooms
@@ -68,11 +69,24 @@
 @property(nonatomic) UITableView * rightTableView;
 @property(nonatomic) NSIndexPath * currentRightIndexPath;
 
+@property(nonatomic) UIView *detailLeftView;
+@property(nonatomic) UIView *detailRightView;
+@property(nonatomic) UIButton *backButton;
+@property(nonatomic) UITableView *detailInspectionDetailTableView;
+
+@property(nonatomic) UIView *detailRightDispatcher;
+@property(nonatomic) UIView *detailRightInspector;
+@property(nonatomic) UIView *detailRightAdd;
+
+
 //left table views
 @property(nonatomic) UITableView * propertyDetailTableView;
 @property(nonatomic) UITableView * contactOwnerTableView;
 @property(nonatomic) UITableView * contactOfficeTableView;
 
+@property(nonatomic) UIButton *finalizeBtn;
+
+@property(nonatomic) BOOL detailViewIsShowing;
 
 /**/
 

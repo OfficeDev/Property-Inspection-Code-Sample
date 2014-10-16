@@ -73,6 +73,12 @@
 		F3673A7319ED2F2400C02B44 /* IncidentListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F3673A7119ED2F2400C02B44 /* IncidentListItemCell.m */; };
 		F3673A7419ED2F2400C02B44 /* IncidentListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3673A7219ED2F2400C02B44 /* IncidentListItemCell.xib */; };
 		F3A1DF2819EF5D5700B9762B /* default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2719EF5D5700B9762B /* default~ipad.png */; };
+		F3A1DF2F19EFC00A00B9762B /* incident_detailtab~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2919EFC00A00B9762B /* incident_detailtab~ipad.png */; };
+		F3A1DF3019EFC00A00B9762B /* incident_detailtab@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2A19EFC00A00B9762B /* incident_detailtab@2x~ipad.png */; };
+		F3A1DF3119EFC00A00B9762B /* calendar~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2B19EFC00A00B9762B /* calendar~ipad.png */; };
+		F3A1DF3219EFC00A00B9762B /* calendar@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2C19EFC00A00B9762B /* calendar@2x~ipad.png */; };
+		F3A1DF3319EFC00A00B9762B /* finalize_repair~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2D19EFC00A00B9762B /* finalize_repair~ipad.png */; };
+		F3A1DF3419EFC00A00B9762B /* finalize_repair@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2E19EFC00A00B9762B /* finalize_repair@2x~ipad.png */; };
 		F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */; };
 		F3F94C6B19E93D13001EB785 /* demo_rightroom6~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F94C6019E93D13001EB785 /* demo_rightroom6~ipad.png */; };
 		F3F94C6C19E93D13001EB785 /* demo_rightroom5~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F94C6119E93D13001EB785 /* demo_rightroom5~ipad.png */; };
@@ -173,6 +179,12 @@
 		F3673A7119ED2F2400C02B44 /* IncidentListItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncidentListItemCell.m; sourceTree = "<group>"; };
 		F3673A7219ED2F2400C02B44 /* IncidentListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncidentListItemCell.xib; sourceTree = "<group>"; };
 		F3A1DF2719EF5D5700B9762B /* default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default~ipad.png"; sourceTree = "<group>"; };
+		F3A1DF2919EFC00A00B9762B /* incident_detailtab~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "incident_detailtab~ipad.png"; sourceTree = "<group>"; };
+		F3A1DF2A19EFC00A00B9762B /* incident_detailtab@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "incident_detailtab@2x~ipad.png"; sourceTree = "<group>"; };
+		F3A1DF2B19EFC00A00B9762B /* calendar~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar~ipad.png"; sourceTree = "<group>"; };
+		F3A1DF2C19EFC00A00B9762B /* calendar@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar@2x~ipad.png"; sourceTree = "<group>"; };
+		F3A1DF2D19EFC00A00B9762B /* finalize_repair~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "finalize_repair~ipad.png"; sourceTree = "<group>"; };
+		F3A1DF2E19EFC00A00B9762B /* finalize_repair@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "finalize_repair@2x~ipad.png"; sourceTree = "<group>"; };
 		F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNRoomDetailsViewController.h; sourceTree = "<group>"; };
 		F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNRoomDetailsViewController.m; sourceTree = "<group>"; };
 		F3F94C6019E93D13001EB785 /* demo_rightroom6~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "demo_rightroom6~ipad.png"; sourceTree = "<group>"; };
@@ -231,6 +243,12 @@
 		0EADF92B19E79F9200E1DE77 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F3A1DF2919EFC00A00B9762B /* incident_detailtab~ipad.png */,
+				F3A1DF2A19EFC00A00B9762B /* incident_detailtab@2x~ipad.png */,
+				F3A1DF2B19EFC00A00B9762B /* calendar~ipad.png */,
+				F3A1DF2C19EFC00A00B9762B /* calendar@2x~ipad.png */,
+				F3A1DF2D19EFC00A00B9762B /* finalize_repair~ipad.png */,
+				F3A1DF2E19EFC00A00B9762B /* finalize_repair@2x~ipad.png */,
 				F3A1DF2719EF5D5700B9762B /* default~ipad.png */,
 				0EB26CDE19EBC0DA007172F5 /* seg2@2x~ipad.png */,
 				0EB26CDF19EBC0DA007172F5 /* seg2~ipad.png */,
@@ -476,14 +494,18 @@
 				0EA2D9FC19D8094400465DA2 /* InfoPlist.strings in Resources */,
 				0E9D42CD19E8FEFD00329A81 /* home~ipad.png in Resources */,
 				0E9D42D519E939AF00329A81 /* PropertyDetailsCell.xib in Resources */,
+				F3A1DF2F19EFC00A00B9762B /* incident_detailtab~ipad.png in Resources */,
 				0EA2D9F919D8094400465DA2 /* ADAL_iPad_Storyboard.storyboard in Resources */,
+				F3A1DF3419EFC00A00B9762B /* finalize_repair@2x~ipad.png in Resources */,
 				0EADF94419E7A3AF00E1DE77 /* sepratorline@2x~ipad.png in Resources */,
+				F3A1DF3019EFC00A00B9762B /* incident_detailtab@2x~ipad.png in Resources */,
 				0E9D431419E98DDB00329A81 /* plus@2x~ipad.png in Resources */,
 				0E9D431819E98DDB00329A81 /* seg@2x~ipad.png in Resources */,
 				0E9D431919E98DDB00329A81 /* seg~ipad.png in Resources */,
 				0E9D42C419E8D72700329A81 /* PropertyDetailsImage.xib in Resources */,
 				0EA2D9FB19D8094400465DA2 /* ADALiOSBundle-Info.plist in Resources */,
 				0E9D431619E98DDB00329A81 /* red@2x~ipad.png in Resources */,
+				F3A1DF3319EFC00A00B9762B /* finalize_repair~ipad.png in Resources */,
 				0E9D42CF19E8FEFD00329A81 /* man~ipad.png in Resources */,
 				0EADF93D19E79F9200E1DE77 /* navigation_background~ipad.png in Resources */,
 				0EADF93619E79F9200E1DE77 /* camera@2x~ipad.png in Resources */,
@@ -502,6 +524,7 @@
 				0E9D430F19E98DDB00329A81 /* black~ipad.png in Resources */,
 				0E9D431319E98DDB00329A81 /* green~ipad.png in Resources */,
 				F3F94C6E19E93D13001EB785 /* demo_rightroom3~ipad.png in Resources */,
+				F3A1DF3219EFC00A00B9762B /* calendar@2x~ipad.png in Resources */,
 				0EADF93819E79F9200E1DE77 /* demo_room@2x~ipad.png in Resources */,
 				0EADF93F19E79F9200E1DE77 /* setting~ipad.png in Resources */,
 				0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */,
@@ -515,6 +538,7 @@
 				0E9D431119E98DDB00329A81 /* email~ipad.png in Resources */,
 				0EB26CDD19EB9EB0007172F5 /* before~ipad.png in Resources */,
 				0E9D431719E98DDB00329A81 /* red~ipad.png in Resources */,
+				F3A1DF3119EFC00A00B9762B /* calendar~ipad.png in Resources */,
 				3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */,
 				F3F94C6B19E93D13001EB785 /* demo_rightroom6~ipad.png in Resources */,
 				F3F94C7219E93D13001EB785 /* demo_room2~ipad.png in Resources */,

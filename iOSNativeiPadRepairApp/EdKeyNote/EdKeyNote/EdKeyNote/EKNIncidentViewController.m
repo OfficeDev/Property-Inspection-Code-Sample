@@ -51,7 +51,7 @@
     
     [self addPropertyDetailTable];
     [self addRightTable];
-    
+    [self addIncidentDetailView];
     [self loadData];
 }
 
@@ -61,9 +61,16 @@
     self.siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
     self.incidentPhotoListDic = [[NSMutableDictionary alloc] init];
     
+    self.detailViewIsShowing = YES;
     self.selectPropertyId = @"1";//for test
     self.loginName = @"Rob Barker";//for test
     self.currentRightIndexPath = nil;
+    
+    self.inspectionDetailDic = [[NSMutableDictionary alloc] init];
+    //test data
+    [self.inspectionDetailDic setObject:@"Carl Spackler" forKey:@"name"];
+    [self.inspectionDetailDic setObject:@"cspackler@cpm.com" forKey:@"email"];
+    [self.inspectionDetailDic setObject:@"09/30/14" forKey:@"date"];
 }
 
 -(void)addPropertyDetailTable{
@@ -127,9 +134,136 @@
     [self.view addSubview:self.rightTableView];
 }
 
+-(void)addIncidentDetailView
+{
+    self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.backButton  setFrame:CGRectMake(0, 350, 15, 71)];
+    [self.backButton  setBackgroundImage:[UIImage imageNamed:@"before"] forState:UIControlStateNormal];
+    [self.backButton  addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    self.backButton.hidden = YES;
+    [self.view addSubview:self.backButton];
+    
+    self.detailLeftView = [[UIView alloc] initWithFrame:CGRectMake(24, 768, 315, 288)];
+    self.detailLeftView.backgroundColor = [UIColor whiteColor];
+    self.detailLeftView.hidden = YES;
+    [self.view addSubview:self.detailLeftView];
+    
+    self.detailInspectionDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 315, 166) style:UITableViewStyleGrouped];
+    self.detailInspectionDetailTableView.backgroundColor = [UIColor whiteColor];
+    self.detailInspectionDetailTableView.delegate = self;
+    self.detailInspectionDetailTableView.dataSource = self;
+    [self.detailInspectionDetailTableView setScrollEnabled:NO];
+    
+    UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
+    NSString *lbl3str = @"INSPECTION DETAILS";
+    UILabel *lbl3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 40)];
+    lbl3.text = lbl3str;
+    lbl3.textAlignment = NSTextAlignmentLeft;
+    lbl3.font = font;
+    lbl3.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.detailInspectionDetailTableView.tableHeaderView = lbl3;
+    [self.detailLeftView addSubview:self.detailInspectionDetailTableView];
+    
+    self.finalizeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 196, 315, 33)];
+    [self.finalizeBtn setBackgroundImage:[UIImage imageNamed:@"finalize_repair"] forState:UIControlStateNormal];
+    [self.detailLeftView addSubview:self.finalizeBtn];
+    
+    self.detailRightView = [[UIView alloc] initWithFrame:CGRectMake(1024, 91, 680, 677)];
+    self.detailRightView.backgroundColor = [UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
+    self.detailRightView.hidden = YES;
+    [self.view addSubview:self.detailRightView];
+    
+    UIView *rightTopView = [[UIView alloc] initWithFrame:CGRectMake(31, 15, 620, 50)];
+    rightTopView.backgroundColor = [UIColor colorWithRed:134.00f/255.00f green:134.00f/255.00f blue:134.00f/255.00f alpha:1];
+    [self.detailRightView addSubview:rightTopView];
+    NSString *lbl4Str = @"Room:Kitchen";
+    CGSize size1 = [EKNEKNGlobalInfo getSizeFromStringWithFont:lbl4Str font:font];
+    UILabel *lbl4 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, size1.width, 50)];
+    lbl4.text = lbl4Str;
+    lbl4.textAlignment = NSTextAlignmentLeft;
+    lbl4.font = font;
+    lbl4.textColor = [UIColor whiteColor];
+    [rightTopView addSubview:lbl4];
+    
+    UILabel *lbl5 = [[UILabel alloc] initWithFrame:CGRectMake(10 + size1.width, 5, 40, 40)];
+    lbl5.text = @"|";
+    lbl5.textAlignment = NSTextAlignmentCenter;
+    lbl5.font = font;
+    lbl5.textColor = [UIColor whiteColor];
+    [rightTopView addSubview:lbl5];
+    
+    NSString *lbl6Str = @"Type:Plumbing";
+    CGSize size2 = [EKNEKNGlobalInfo getSizeFromStringWithFont:lbl6Str font:font];
+    UILabel *lbl6 = [[UILabel alloc] initWithFrame:CGRectMake((10 + size1.width + 40), 0, size2.width, 50)];
+    lbl6.text = lbl6Str;
+    lbl6.textAlignment = NSTextAlignmentLeft;
+    lbl6.font = font;
+    lbl6.textColor = [UIColor whiteColor];
+    [rightTopView addSubview:lbl6];
+    
+    UIImageView *rightTopImageView = [[UIImageView alloc] initWithFrame:CGRectMake(31, 90, 620, 64)];
+    rightTopImageView.image = [UIImage imageNamed:@"incident_detailtab"];
+    [self.detailRightView addSubview:rightTopImageView];
+    
+    UILabel *lbl7 = [[UILabel alloc] initWithFrame:CGRectMake(31, 170, 620, 30)];
+    lbl7.text = @"DISPATCHER COMMENTS";
+    lbl7.textAlignment = NSTextAlignmentLeft;
+    lbl7.font = [UIFont fontWithName:@"Helvetica" size:30];
+    lbl7.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    [self.detailRightView addSubview:lbl7];
+    
+    UIView *rightCommentBgView = [[UIView alloc] initWithFrame:CGRectMake(31, 220, 620, 400)];
+    rightCommentBgView.backgroundColor = [UIColor whiteColor];
+    rightCommentBgView.layer.masksToBounds = YES;
+    rightCommentBgView.layer.cornerRadius = 10;
+    [self.detailRightView addSubview:rightCommentBgView];
+    
+    UILabel *lbl8 = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 600, 380)];
+    lbl8.text = @"Duis fringilla rutrum urna. Integer vel justo ut sem egestas ullamcorper. Nullam feugiat lacus eu lectus lacinia, id gravida enim vulputate. Pellentesque posuere nunc quis pharetra pulvinar. Morbi vehicula sed libero eget bibendum. Ut convallis pellentesque purus, in mollis justo suscipit id. Maecenas fringilla, odio nec euismod consectetur, sem tortor rutrum nisl, in efficitur lorem dui sed dui. Aenean urna lectus, pulvinar sed dapibus quis, consectetur a justo. Vivamus eu ante lectus. Phasellus consequat orci lorem, sed sollicitudin augue facilisis eget. Nulla fringilla nibh ullamcorper tellus pellentesque, nec aliquet tellus vehicula. Nullam commodo fermentum tempor";
+    lbl8.textAlignment = NSTextAlignmentLeft;
+    lbl8.font = [UIFont fontWithName:@"Helvetica" size:14];
+    lbl8.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    lbl8.numberOfLines = 0;
+    lbl8.lineBreakMode = UILineBreakModeWordWrap;
+    [rightCommentBgView addSubview:lbl8];
+}
+
 -(void)setRightTableSelectIndex:(NSIndexPath*)indexpath
 {
+    ListItem *incidentItem = [self.incidentListArray objectAtIndex:indexpath.row];
+    NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
+    NSDictionary *propertyData = (NSDictionary *)[incidentItem getData:@"sl_propertyID"];
+    NSDictionary *inspectionData = (NSDictionary *)[incidentItem getData:@"sl_inspectionID"];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.detailViewIsShowing = YES;
+        self.detailLeftView.frame = CGRectMake(24, 480, 315, 288);
+        self.detailLeftView.hidden = NO;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.detailRightView.frame = CGRectMake(349, 91, 675, 677);
+            self.detailRightView.hidden = NO;
+        } completion:^(BOOL finished) {
+            self.backButton.hidden = NO;
+        }];
+    }];
+    
+}
 
+-(void)backAction
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.backButton.hidden = YES;
+        self.detailLeftView.frame = CGRectMake(24, 768, 315, 288);
+    } completion:^(BOOL finished) {
+        self.detailLeftView.hidden = YES;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.detailRightView.frame = CGRectMake(1024, 91, 675, 677);
+        } completion:^(BOOL finished) {
+            self.detailRightView.hidden = YES;
+            self.detailViewIsShowing = NO;
+        }];
+    }];
 }
 
 -(void)loadData{
@@ -646,13 +780,24 @@
     else if(tableView == self.contactOwnerTableView ||
             tableView == self.contactOfficeTableView )
     {
-        if(self.currentRightIndexPath!=nil)
+        if(self.propertyDetailDic != nil)
         {
             return 1;
         }
         else
         {
-            return 1;
+            return 0;
+        }
+    }
+    else if(tableView == self.detailInspectionDetailTableView)
+    {
+        if(self.detailViewIsShowing && self.inspectionDetailDic != nil)
+        {
+            return [self.inspectionDetailDic count];
+        }
+        else
+        {
+            return 0;
         }
     }
     else
@@ -678,7 +823,8 @@
         }
     }
     else if(tableView == self.contactOwnerTableView ||
-            tableView == self.contactOfficeTableView )
+            tableView == self.contactOfficeTableView ||
+            tableView == self.detailInspectionDetailTableView)
     {
         return 42;
     }
@@ -692,7 +838,8 @@
         return 60;
     }
     else if(tableView == self.contactOfficeTableView ||
-            tableView == self.contactOwnerTableView)
+            tableView == self.contactOwnerTableView ||
+            tableView == self.detailInspectionDetailTableView)
     {
         return 0;
     }
@@ -759,48 +906,74 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         return cell;
     }
-    else if(tableView == self.propertyDetailTableView)
+    else if(tableView == self.propertyDetailTableView ||
+            tableView == self.detailInspectionDetailTableView)
     {
-        if(self.propertyDetailDic != nil)
+        if(tableView == self.propertyDetailTableView)
         {
-                    if(indexPath.row==2)
-                    {
-                        NSString *identifier = @"PropertyDetailsImage";
-                        PropertyDetailsImage *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
-                        if (cell == nil) {
-                            [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsImage" bundle:nil] forCellReuseIdentifier:identifier];
-                            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-                        }
-                        NSString *address = [self.propertyDetailDic objectForKey:@"sl_address1"];
-                        UIImage *image =(UIImage *)[self.propertyDetailDic objectForKey:@"photo"];
-                        //NSLog(@"address:%@",address);
-                        [cell setCellValue:image title:address];
             
-                        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-                        return cell;
-                    }
-                    else
-                    {
-                        NSString *identifier = @"PropertyDetailsCell";
-                        PropertyDetailsCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
-                        if (cell == nil) {
-                            [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsCell" bundle:nil] forCellReuseIdentifier:identifier];
-                            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-                        }
-                        if (indexPath.row == 0) {
-                            NSString *title = [self.propertyDetailDic objectForKey:@"Title"];
-                            [cell setCellValue:[UIImage imageNamed:@"home"] title:title];
-                        }
-                        else
-                        {
-                            NSString *title = [self.propertyDetailDic objectForKey:@"sl_owner"];
-                            [cell setCellValue:[UIImage imageNamed:@"man"] title:title];
-                        }
-                        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-                        return cell;
-                    }
-                    
+            if(indexPath.row==2)
+            {
+                NSString *identifier = @"PropertyDetailsImage";
+                PropertyDetailsImage *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsImage" bundle:nil] forCellReuseIdentifier:identifier];
+                    cell = [tableView dequeueReusableCellWithIdentifier:identifier];
                 }
+                NSString *address = [self.propertyDetailDic objectForKey:@"sl_address1"];
+                UIImage *image =(UIImage *)[self.propertyDetailDic objectForKey:@"photo"];
+                //NSLog(@"address:%@",address);
+                [cell setCellValue:image title:address];
+                
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                return cell;
+            }
+            else
+            {
+                NSString *identifier = @"PropertyDetailsCell";
+                PropertyDetailsCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (cell == nil) {
+                    [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsCell" bundle:nil] forCellReuseIdentifier:identifier];
+                    cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                }
+                if (indexPath.row == 0) {
+                    NSString *title = [self.propertyDetailDic objectForKey:@"Title"];
+                    [cell setCellValue:[UIImage imageNamed:@"home"] title:title];
+                }
+                else
+                {
+                    NSString *title = [self.propertyDetailDic objectForKey:@"sl_owner"];
+                    [cell setCellValue:[UIImage imageNamed:@"man"] title:title];
+                }
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                return cell;
+            }
+        }
+        else
+        {
+            NSString *identifier = @"InspectionDetailsCell";
+            PropertyDetailsCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (cell == nil) {
+                [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsCell" bundle:nil] forCellReuseIdentifier:identifier];
+                cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            }
+            if (indexPath.row == 0) {
+                NSString *name = [self.inspectionDetailDic objectForKey:@"name" ];
+                [cell setCellValue:[UIImage imageNamed:@"man"] title:name];
+            }
+            else if(indexPath.row == 1)
+            {
+                NSString *email = [self.inspectionDetailDic objectForKey:@"email" ];
+                [cell setCellValue:[UIImage imageNamed:@"email"] title:email];
+            }
+            else
+            {
+                NSString *date = [self.inspectionDetailDic objectForKey:@"date"];
+                [cell setCellValue:[UIImage imageNamed:@"calendar"] title:date];
+            }
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return cell;
+        }
     }
     return nil;
 }

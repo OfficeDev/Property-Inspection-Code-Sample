@@ -189,7 +189,7 @@
     
     // Do any additional setup after loading the view.
     [self checkParameters];
-    [self loginButtonAction];
+    //[self loginButtonAction];
 }
 
 - (void)didReceiveMemoryWarning
