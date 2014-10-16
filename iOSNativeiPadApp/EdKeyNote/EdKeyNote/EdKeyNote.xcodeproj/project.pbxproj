@@ -303,6 +303,9 @@
 		0EADF96819E8371300E1DE77 /* PropertyCell */ = {
 			isa = PBXGroup;
 			children = (
+				F360DE2019E7DAA400311CFC /* EKNCollectionViewCell.h */,
+				F360DE2119E7DAA400311CFC /* EKNCollectionViewCell.m */,
+				F360DE2219E7DAA400311CFC /* EKNCollectionViewCell.xib */,
 				0E25E96219F01DEC004343E0 /* CommentCollectionViewCell.h */,
 				0E25E96319F01DEC004343E0 /* CommentCollectionViewCell.m */,
 				0E25E96419F01DEC004343E0 /* CommentCollectionViewCell.xib */,
@@ -396,9 +399,6 @@
 			children = (
 				F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */,
 				F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */,
-				F360DE2019E7DAA400311CFC /* EKNCollectionViewCell.h */,
-				F360DE2119E7DAA400311CFC /* EKNCollectionViewCell.m */,
-				F360DE2219E7DAA400311CFC /* EKNCollectionViewCell.xib */,
 			);
 			name = "Room Detail page";
 			sourceTree = "<group>";
