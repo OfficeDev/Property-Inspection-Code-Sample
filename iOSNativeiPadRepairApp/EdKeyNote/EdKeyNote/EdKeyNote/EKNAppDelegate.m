@@ -7,7 +7,6 @@
 //
 
 #import "EKNAppDelegate.h"
-#import "EKNPropertyDetailsViewController.h"
 
 @implementation EKNAppDelegate
 

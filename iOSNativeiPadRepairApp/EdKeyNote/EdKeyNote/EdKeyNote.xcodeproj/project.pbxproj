@@ -10,7 +10,6 @@
 		0E18378919D2692D0049C71E /* liboffice365-base-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18378619D2692D0049C71E /* liboffice365-base-sdk.a */; };
 		0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */; };
 		0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */; };
-		0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */; };
 		0E9D42BF19E8C6BF00329A81 /* detailsepartorline.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42BE19E8C6BF00329A81 /* detailsepartorline.png */; };
 		0E9D42C219E8CB7500329A81 /* PropertyDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D42C119E8CB7500329A81 /* PropertyDetailsCell.m */; };
 		0E9D42C419E8D72700329A81 /* PropertyDetailsImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42C319E8D72700329A81 /* PropertyDetailsImage.xib */; };
@@ -22,8 +21,6 @@
 		0E9D42D519E939AF00329A81 /* PropertyDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42D419E939AF00329A81 /* PropertyDetailsCell.xib */; };
 		0E9D42FE19E98D5600329A81 /* ContactOwnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D42F919E98D5600329A81 /* ContactOwnerCell.m */; };
 		0E9D42FF19E98D5600329A81 /* ContactOwnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42FA19E98D5600329A81 /* ContactOwnerCell.xib */; };
-		0E9D430019E98D5600329A81 /* InspectionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D42FC19E98D5600329A81 /* InspectionListCell.m */; };
-		0E9D430119E98D5600329A81 /* InspectionListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42FD19E98D5600329A81 /* InspectionListCell.xib */; };
 		0E9D430E19E98DDB00329A81 /* black@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430219E98DDB00329A81 /* black@2x~ipad.png */; };
 		0E9D430F19E98DDB00329A81 /* black~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430319E98DDB00329A81 /* black~ipad.png */; };
 		0E9D431019E98DDB00329A81 /* email@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D430419E98DDB00329A81 /* email@2x~ipad.png */; };
@@ -75,6 +72,7 @@
 		F3673A6D19ED2D5800C02B44 /* EKNIncidentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3673A6C19ED2D5800C02B44 /* EKNIncidentViewController.m */; };
 		F3673A7319ED2F2400C02B44 /* IncidentListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F3673A7119ED2F2400C02B44 /* IncidentListItemCell.m */; };
 		F3673A7419ED2F2400C02B44 /* IncidentListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3673A7219ED2F2400C02B44 /* IncidentListItemCell.xib */; };
+		F3A1DF2819EF5D5700B9762B /* default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2719EF5D5700B9762B /* default~ipad.png */; };
 		F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */; };
 		F3F94C6B19E93D13001EB785 /* demo_rightroom6~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F94C6019E93D13001EB785 /* demo_rightroom6~ipad.png */; };
 		F3F94C6C19E93D13001EB785 /* demo_rightroom5~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3F94C6119E93D13001EB785 /* demo_rightroom5~ipad.png */; };
@@ -94,8 +92,6 @@
 		0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboffice365-exchange-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos/liboffice365-exchange-sdk.a"; sourceTree = "<group>"; };
 		0E18390D19D2A7FA0049C71E /* EKNEKNGlobalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNEKNGlobalInfo.h; sourceTree = "<group>"; };
 		0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNEKNGlobalInfo.m; sourceTree = "<group>"; };
-		0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNPropertyDetailsViewController.h; sourceTree = "<group>"; };
-		0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNPropertyDetailsViewController.m; sourceTree = "<group>"; };
 		0E9D42BE19E8C6BF00329A81 /* detailsepartorline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detailsepartorline.png; sourceTree = "<group>"; };
 		0E9D42C019E8CB7500329A81 /* PropertyDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyDetailsCell.h; sourceTree = "<group>"; };
 		0E9D42C119E8CB7500329A81 /* PropertyDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyDetailsCell.m; sourceTree = "<group>"; };
@@ -110,9 +106,6 @@
 		0E9D42F819E98D5600329A81 /* ContactOwnerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactOwnerCell.h; sourceTree = "<group>"; };
 		0E9D42F919E98D5600329A81 /* ContactOwnerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactOwnerCell.m; sourceTree = "<group>"; };
 		0E9D42FA19E98D5600329A81 /* ContactOwnerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactOwnerCell.xib; sourceTree = "<group>"; };
-		0E9D42FB19E98D5600329A81 /* InspectionListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectionListCell.h; sourceTree = "<group>"; };
-		0E9D42FC19E98D5600329A81 /* InspectionListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectionListCell.m; sourceTree = "<group>"; };
-		0E9D42FD19E98D5600329A81 /* InspectionListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionListCell.xib; sourceTree = "<group>"; };
 		0E9D430219E98DDB00329A81 /* black@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black@2x~ipad.png"; sourceTree = "<group>"; };
 		0E9D430319E98DDB00329A81 /* black~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black~ipad.png"; sourceTree = "<group>"; };
 		0E9D430419E98DDB00329A81 /* email@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "email@2x~ipad.png"; sourceTree = "<group>"; };
@@ -179,6 +172,7 @@
 		F3673A7019ED2F2400C02B44 /* IncidentListItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncidentListItemCell.h; sourceTree = "<group>"; };
 		F3673A7119ED2F2400C02B44 /* IncidentListItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncidentListItemCell.m; sourceTree = "<group>"; };
 		F3673A7219ED2F2400C02B44 /* IncidentListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncidentListItemCell.xib; sourceTree = "<group>"; };
+		F3A1DF2719EF5D5700B9762B /* default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default~ipad.png"; sourceTree = "<group>"; };
 		F3D2B21A19E6349100069182 /* EKNRoomDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNRoomDetailsViewController.h; sourceTree = "<group>"; };
 		F3D2B21B19E6349100069182 /* EKNRoomDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNRoomDetailsViewController.m; sourceTree = "<group>"; };
 		F3F94C6019E93D13001EB785 /* demo_rightroom6~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "demo_rightroom6~ipad.png"; sourceTree = "<group>"; };
@@ -210,16 +204,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0E68CEB219DB7A6600E29C4A /* Property Detail page */ = {
-			isa = PBXGroup;
-			children = (
-				0EADF96819E8371300E1DE77 /* PropertyCell */,
-				0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */,
-				0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */,
-			);
-			name = "Property Detail page";
-			sourceTree = "<group>";
-		};
 		0EA20B1719E549BD007EBF6A /* Lists */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +231,7 @@
 		0EADF92B19E79F9200E1DE77 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F3A1DF2719EF5D5700B9762B /* default~ipad.png */,
 				0EB26CDE19EBC0DA007172F5 /* seg2@2x~ipad.png */,
 				0EB26CDF19EBC0DA007172F5 /* seg2~ipad.png */,
 				0EB26CDA19EB9EAF007172F5 /* before@2x~ipad.png */,
@@ -308,16 +293,6 @@
 			name = UIViewControllerEX;
 			sourceTree = "<group>";
 		};
-		0EADF96819E8371300E1DE77 /* PropertyCell */ = {
-			isa = PBXGroup;
-			children = (
-				0E9D42FB19E98D5600329A81 /* InspectionListCell.h */,
-				0E9D42FC19E98D5600329A81 /* InspectionListCell.m */,
-				0E9D42FD19E98D5600329A81 /* InspectionListCell.xib */,
-			);
-			name = PropertyCell;
-			sourceTree = "<group>";
-		};
 		0EC4F5AD19CFF2C600BEF583 = {
 			isa = PBXGroup;
 			children = (
@@ -358,7 +333,6 @@
 				0EADF95519E7C48600E1DE77 /* UIViewControllerEX */,
 				F3D2B21919E633D800069182 /* Room Detail page */,
 				0EA20B1719E549BD007EBF6A /* Lists */,
-				0E68CEB219DB7A6600E29C4A /* Property Detail page */,
 				0EC4F5C819CFF2C600BEF583 /* EKNAppDelegate.h */,
 				0EC4F5C919CFF2C600BEF583 /* EKNAppDelegate.m */,
 				0EC4F5E819CFF9FD00BEF583 /* EKNLoginViewController.h */,
@@ -531,6 +505,7 @@
 				0EADF93819E79F9200E1DE77 /* demo_room@2x~ipad.png in Resources */,
 				0EADF93F19E79F9200E1DE77 /* setting~ipad.png in Resources */,
 				0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */,
+				F3A1DF2819EF5D5700B9762B /* default~ipad.png in Resources */,
 				0EADF93C19E79F9200E1DE77 /* navigation_background@2x~ipad.png in Resources */,
 				0EADF93A19E79F9200E1DE77 /* dropdown_arrow@2x~ipad.png in Resources */,
 				F3F94C6D19E93D13001EB785 /* demo_rightroom4~ipad.png in Resources */,
@@ -539,7 +514,6 @@
 				0EADF94519E7A3AF00E1DE77 /* sepratorline~ipad.png in Resources */,
 				0E9D431119E98DDB00329A81 /* email~ipad.png in Resources */,
 				0EB26CDD19EB9EB0007172F5 /* before~ipad.png in Resources */,
-				0E9D430119E98D5600329A81 /* InspectionListCell.xib in Resources */,
 				0E9D431719E98DDB00329A81 /* red~ipad.png in Resources */,
 				3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */,
 				F3F94C6B19E93D13001EB785 /* demo_rightroom6~ipad.png in Resources */,
@@ -557,7 +531,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EADF94819E7AD2A00E1DE77 /* EKN+UIImagePickerController.m in Sources */,
-				0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */,
 				0E9D42C219E8CB7500329A81 /* PropertyDetailsCell.m in Sources */,
 				0EADF95119E7C2B900E1DE77 /* EKN+NavigationController.m in Sources */,
 				F3673A7319ED2F2400C02B44 /* IncidentListItemCell.m in Sources */,
@@ -569,7 +542,6 @@
 				F3673A6D19ED2D5800C02B44 /* EKNIncidentViewController.m in Sources */,
 				F360DE2319E7DAA400311CFC /* EKNCollectionViewCell.m in Sources */,
 				0EA20B1C19E549DB007EBF6A /* ListClient.m in Sources */,
-				0E9D430019E98D5600329A81 /* InspectionListCell.m in Sources */,
 				0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */,
 				0EA20B1D19E549DB007EBF6A /* ListItem.m in Sources */,
 				0E9D42C719E8F22200329A81 /* PropertyDetailsImage.m in Sources */,

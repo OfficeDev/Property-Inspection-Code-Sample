@@ -13,7 +13,6 @@
 #import "EKN+UIViewController.h"
 #import "EKNCollectionViewCell.h"
 #import "ContactOwnerCell.h"
-#import "InspectionListCell.h"
 #import "ListClient.h"
 #import "ListItem.h"
 

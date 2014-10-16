@@ -15,7 +15,6 @@
 #import "IncidentListItemCell.h"
 #import "PropertyDetailsImage.h"
 #import "PropertyDetailsCell.h"
-#import "InspectionListCell.h"
 #import "EKNEKNGlobalInfo.h"
 #import "ContactOwnerCell.h"
 
@@ -82,6 +81,5 @@
 -(void)getIncidentsListArray:(ListClient*)client;
 -(void)setRightTableCell:(IncidentListItemCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 -(void)didUpdateRightTableCell:(NSIndexPath *)indexpath image:(UIImage*)image;
--(void)setLeftInspectionTableCell:(InspectionListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end
 

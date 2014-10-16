@@ -741,7 +741,6 @@
         {
             NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
             [cell setCellValue: [standardUserDefaults objectForKey:@"dispatcherEmail"]];
-            //NSLog(@"contact office:%@)",[standardUserDefaults objectForKey:@"dispatcherEmail"]);
         }
         else
         {
@@ -751,6 +750,7 @@
                 [cell setCellValue:contactOwner];
             }
         }
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         return cell;
     }
     else if(tableView == self.propertyDetailTableView)
@@ -810,7 +810,7 @@
     ListItem *incidentItem = nil;
     incidentItem = [self.incidentListArray objectAtIndex:indexPath.row];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM/dd/yyyy HH:mm"];
+    [dateFormat setDateFormat:@"MM'/'dd'/'yyyy"];
     
     NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
     NSDictionary *propertyData = (NSDictionary *)[incidentItem getData:@"sl_propertyID"];
@@ -821,18 +821,18 @@
     {
         NSString *room = (NSString *)[roomData objectForKey:@"Title"];
         NSString *incident = (NSString *)[incidentItem getData:@"Title"];
-        NSDate *inspectionDate = [dateFormat dateFromString:(NSString *)[inspectionData objectForKey:@"sl_datetime"]];
-        NSLog(@"date time:%@,%@",inspectionDate,[inspectionData objectForKey:@"sl_datetime"]);
+        NSDate *inspectionDate = [EKNEKNGlobalInfo converDateFromString:(NSString *)[inspectionData objectForKey:@"sl_datetime"]];
         NSString *inspectionDateStr = [dateFormat stringFromDate:inspectionDate];
+        //NSLog(@"date time:%@,%@,%@",inspectionDate,[inspectionData objectForKey:@"sl_datetime"],inspectionDateStr);
         NSString *approved = (NSString *)[incidentItem getData:@"sl_status"];
         UIImage *image = nil;
         NSMutableDictionary *dic = [self.incidentPhotoListDic objectForKey:incidentID];
         if(dic != nil)
         {
             image =(UIImage *)[dic objectForKey:@"photo"];
+            NSLog(@"image size width:%f heigth:%f",image.size.width,image.size.height);
         }
-        [cell.imageView setFrame:CGRectMake(10, 10, 170, 140)];
-        [cell setCellValue:image room:room incident:incident inspectionDate:inspectionDateStr repairDate:@"2014/10/24 12:08" approved:approved];
+        [cell setCellValue:image room:room incident:incident inspectionDate:inspectionDateStr repairDate:@"10/25/2014" approved:approved];
     }
 }
 @end

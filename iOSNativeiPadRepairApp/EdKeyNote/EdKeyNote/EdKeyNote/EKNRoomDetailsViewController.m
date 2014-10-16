@@ -862,28 +862,6 @@
         }
         return cell;
     }
-    else if(tableView == self.inspectionLeftTableView)
-    {
-        NSString *identifier = @"InspectionListCell";
-        InspectionListCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (cell == nil) {
-            [tableView registerNib:[UINib nibWithNibName:@"InspectionListCell" bundle:nil] forCellReuseIdentifier:identifier];
-            cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        }
-        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
-        
-        NSMutableArray *inspectionList = [self.inspectionsDic objectForKey:@"inspectionslist"];
-        NSDictionary *inspecdic =[inspectionList objectAtIndex:indexPath.row];
-        if(inspecdic!=nil)
-        {
-            [cell setCellValue:[inspecdic objectForKey:@"sl_datetime"]
-                         owner:[inspecdic objectForKey:@"sl_accountname"]
-                      incident:[inspecdic objectForKey:@"icon"]
-                          plus:[[inspecdic objectForKey:@"bowner"] isEqualToString:@"YES"]];
-        }
-        
-        return cell;
-    }
     return nil;
 }
 - (void)didReceiveMemoryWarning {
