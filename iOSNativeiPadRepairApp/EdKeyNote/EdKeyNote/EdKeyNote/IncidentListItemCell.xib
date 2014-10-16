@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7QD-iq-E1a">
-                        <rect key="frame" x="8" y="12" width="169" height="141"/>
+                        <rect key="frame" x="10" y="10" width="170" height="140"/>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Room:" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="none" minimumFontSize="10" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgU-ld-WXV">
                         <rect key="frame" x="200" y="19" width="42" height="21"/>
@@ -54,7 +54,7 @@
                         <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="none" minimumFontSize="10" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3H-ud-pyu">
-                        <rect key="frame" x="280" y="117" width="120" height="21"/>
+                        <rect key="frame" x="294" y="118" width="106" height="20"/>
                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -82,14 +82,14 @@
             <connections>
                 <outlet property="approvalTitleLbl" destination="dwF-o2-pYd" id="0uU-Kw-UEe"/>
                 <outlet property="approvalValueLbl" destination="fA1-JI-vg1" id="Icc-FO-rzB"/>
-                <outlet property="imageView" destination="7QD-iq-E1a" id="TKe-vh-8sR"/>
+                <outlet property="incidentImageView" destination="7QD-iq-E1a" id="rR2-ca-oce"/>
                 <outlet property="incidentLbl" destination="qhm-UZ-lFk" id="M0l-Vl-5Rv"/>
                 <outlet property="inspectionLbl" destination="A3H-ud-pyu" id="zkU-7J-Ibk"/>
                 <outlet property="repairDateTitleLbl" destination="FCS-Vg-d2z" id="lBK-uD-o74"/>
                 <outlet property="repairDateValueLbl" destination="ruo-8E-Zx5" id="Vm2-Xe-dkW"/>
                 <outlet property="roomLbl" destination="Vqv-cB-gVW" id="JuE-r6-uXO"/>
             </connections>
-            <point key="canvasLocation" x="-153" y="123"/>
+            <point key="canvasLocation" x="-153" y="119"/>
         </tableViewCell>
     </objects>
 </document>

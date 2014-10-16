@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface IncidentListItemCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet UIImageView *incidentImageView;
 @property (strong, nonatomic) IBOutlet UILabel *roomLbl;
 @property (strong, nonatomic) IBOutlet UILabel *incidentLbl;
 @property (strong, nonatomic) IBOutlet UILabel *inspectionLbl;

@@ -24,7 +24,11 @@
 {
     if(image != nil)
     {
-        self.imageView.image = image;
+        self.incidentImageView.image = image;
+    }
+    else
+    {
+        self.incidentImageView.image = [UIImage imageNamed:@"default"];
     }
     self.roomLbl.text = room;
     self.incidentLbl.text = incident;
