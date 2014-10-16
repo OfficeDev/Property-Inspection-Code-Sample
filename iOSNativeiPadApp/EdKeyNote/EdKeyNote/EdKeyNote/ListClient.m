@@ -69,6 +69,8 @@ const NSString *apiUrl = @"/_api/lists";
     }];
 }
 
+
+
 - (BOOL)uploadImageToDocumentLibrary:(NSString *)token libraryName:(NSString *)libraryName image:(UIImage *)image
 {
     BOOL success = NO;
@@ -278,11 +280,86 @@ const NSString *apiUrl = @"/_api/lists";
 
 - (NSData*) sanitizeJson : (NSData*) data{
     NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"dataString:%@",dataString);
+    NSLog(@"sanitizeJson:%@",dataString);
     NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
     
     NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];
     
     return bytes;
 }
+
+#pragma mark - Update/create List Item/File using REST
+- (void)updateListItemID:(NSString *)token listName:(NSString *)listName itemID:(NSString *)itemID body:(NSString *)body
+                callback:(void (^)(NSData *data,
+                                   NSURLResponse *response,
+                                   NSError *error))callback
+{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",siteUrl,[listName urlencode],itemID];
+    NSData *postData = [body dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
+    [request addValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
+    [request addValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
+    [request addValue:[NSString stringWithFormat:@"%ld",[postData length]] forHTTPHeaderField:@"content-length"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:callback];
+    [task resume];
+}
+- (void)createListItemID:(NSString *)token listName:(NSString *)listName body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback
+{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items",siteUrl,[listName urlencode]];
+    NSLog(@"requestUrl %@",requestUrl);
+     NSLog(@"body %@",body);
+    
+    NSData *postData = [body dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
+    [request addValue:[NSString stringWithFormat:@"%ld",[postData length]] forHTTPHeaderField:@"content-length"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:callback];
+    [task resume];
+}
+#pragma mark - get File using REST
+-(void)getFile:(NSString *)token ServerRelativeUrl:(NSString *)filePath
+      callback:(void (^)(NSData *data,
+                         NSURLResponse *response,
+                         NSError *error))callback
+
+{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",siteUrl,filePath,@"')/$value"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", token];
+    [request addValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        callback(data,response,error);
+    }];
+    [task resume];
+}
+
+
+
 @end

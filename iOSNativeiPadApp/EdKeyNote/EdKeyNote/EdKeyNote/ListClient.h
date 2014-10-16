@@ -13,4 +13,13 @@
 - (NSURLSessionDataTask *)getListItems:(NSString *)name callback:(void (^)(NSMutableArray *listItems, NSError *error))callback;
 - (NSURLSessionDataTask *)getListItemsByFilter:(NSString *)name filter:(NSString *)filter callback:(void (^)(NSMutableArray *listItems, NSError *))callback;
 - (NSURLSessionDataTask *)getListItemFileByFilter:(NSString *)name FileId:(NSString *)fileId filter:(NSString *)filter callback:(void (^)(NSMutableArray *listItems, NSError *))callback;
+
+- (NSMutableArray *)parseDataArray:(NSData *)data;
+- (NSData*) sanitizeJson : (NSData*) data;
+
+- (void)createListItemID:(NSString *)token listName:(NSString *)listName body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback;
+
+- (void)updateListItemID:(NSString *)token listName:(NSString *)listName itemID:(NSString *)itemID body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback;
+
+-(void)getFile:(NSString *)token ServerRelativeUrl:(NSString *)filePath callback:(void (^)(NSData *data,NSURLResponse *response,NSError *error))callback;
 @end

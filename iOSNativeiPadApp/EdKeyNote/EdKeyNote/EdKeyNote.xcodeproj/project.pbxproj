@@ -10,6 +10,8 @@
 		0E18378919D2692D0049C71E /* liboffice365-base-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18378619D2692D0049C71E /* liboffice365-base-sdk.a */; };
 		0E18390A19D2847A0049C71E /* liboffice365-exchange-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */; };
 		0E18390F19D2A7FA0049C71E /* EKNEKNGlobalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */; };
+		0E25E96519F01DEC004343E0 /* CommentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E25E96319F01DEC004343E0 /* CommentCollectionViewCell.m */; };
+		0E25E96619F01DEC004343E0 /* CommentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E25E96419F01DEC004343E0 /* CommentCollectionViewCell.xib */; };
 		0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */; };
 		0E9D42BF19E8C6BF00329A81 /* detailsepartorline.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E9D42BE19E8C6BF00329A81 /* detailsepartorline.png */; };
 		0E9D42C219E8CB7500329A81 /* PropertyDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9D42C119E8CB7500329A81 /* PropertyDetailsCell.m */; };
@@ -90,6 +92,9 @@
 		0E18390919D2847A0049C71E /* liboffice365-exchange-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboffice365-exchange-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/EdKeyNote-gwpjorpdejqxsbddzrvilujfnaey/Build/Products/Debug-iphoneos/liboffice365-exchange-sdk.a"; sourceTree = "<group>"; };
 		0E18390D19D2A7FA0049C71E /* EKNEKNGlobalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNEKNGlobalInfo.h; sourceTree = "<group>"; };
 		0E18390E19D2A7FA0049C71E /* EKNEKNGlobalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNEKNGlobalInfo.m; sourceTree = "<group>"; };
+		0E25E96219F01DEC004343E0 /* CommentCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCollectionViewCell.h; sourceTree = "<group>"; };
+		0E25E96319F01DEC004343E0 /* CommentCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCollectionViewCell.m; sourceTree = "<group>"; };
+		0E25E96419F01DEC004343E0 /* CommentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCollectionViewCell.xib; sourceTree = "<group>"; };
 		0E68CEAA19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKNPropertyDetailsViewController.h; sourceTree = "<group>"; };
 		0E68CEAB19DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKNPropertyDetailsViewController.m; sourceTree = "<group>"; };
 		0E9D42BE19E8C6BF00329A81 /* detailsepartorline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detailsepartorline.png; sourceTree = "<group>"; };
@@ -298,6 +303,9 @@
 		0EADF96819E8371300E1DE77 /* PropertyCell */ = {
 			isa = PBXGroup;
 			children = (
+				0E25E96219F01DEC004343E0 /* CommentCollectionViewCell.h */,
+				0E25E96319F01DEC004343E0 /* CommentCollectionViewCell.m */,
+				0E25E96419F01DEC004343E0 /* CommentCollectionViewCell.xib */,
 				0EAF258819EEAEEC001F4D0B /* RoomListCell.h */,
 				0EAF258919EEAEEC001F4D0B /* RoomListCell.m */,
 				0EAF258A19EEAEEC001F4D0B /* RoomListCell.xib */,
@@ -501,6 +509,7 @@
 				0EADF96D19E8377000E1DE77 /* PropertyListCell.xib in Resources */,
 				0EAF259819EEAF2D001F4D0B /* redRoom~ipad.png in Resources */,
 				0E9D430119E98D5600329A81 /* InspectionListCell.xib in Resources */,
+				0E25E96619F01DEC004343E0 /* CommentCollectionViewCell.xib in Resources */,
 				0E9D431719E98DDB00329A81 /* red~ipad.png in Resources */,
 				3006E1F219DA131B00557CE2 /* Settings.bundle in Resources */,
 				0EAF259519EEAF2D001F4D0B /* greenRoom@2x~ipad.png in Resources */,
@@ -520,6 +529,7 @@
 				0E68CEB019DB7A5A00E29C4A /* EKNPropertyDetailsViewController.m in Sources */,
 				0E9D42C219E8CB7500329A81 /* PropertyDetailsCell.m in Sources */,
 				0EADF95119E7C2B900E1DE77 /* EKN+NavigationController.m in Sources */,
+				0E25E96519F01DEC004343E0 /* CommentCollectionViewCell.m in Sources */,
 				0E9D42FE19E98D5600329A81 /* ContactOwnerCell.m in Sources */,
 				0EC4F5EA19CFF9FD00BEF583 /* EKNLoginViewController.m in Sources */,
 				F3D2B21C19E6349100069182 /* EKNRoomDetailsViewController.m in Sources */,

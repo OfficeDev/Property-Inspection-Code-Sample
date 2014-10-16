@@ -44,10 +44,22 @@ typedef NS_ENUM(NSInteger, PropertySubViewsTag) {
     RightRoomImageDateLblTag,
     RightRoomImageLargeImageTag,
     RightRoomCollectionViewTag,
+    
+    CommentPopViewTag=700,
+    CommentCameraBtnTag,
+    CommentCollectionViewTag,
+    CommentTextBackgroundViewTag,
+    CommentTextViewTag,
+    CommentDoneBtnTag,
+    CommentCancelBtnTag,
+    
+    CommentPhotoDetailPopViewTag,
+    CommentPhotoDetailViewTag,
+    CommentPhotoCloseViewTag,
 };
 
 @interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,
-UICollectionViewDataSource,UICollectionViewDelegate>
+UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate>
 
 //@property NSMutableArray* SharepointList;
 
@@ -99,7 +111,7 @@ UICollectionViewDataSource,UICollectionViewDelegate>
 //one room maybe have many pictures
 //key insId
 //value rooms array
-//----key roomId value roomId
+//----key Id value roomId
 //----key Title  value roomTitle
 //----key ImagesArray value Array to store the images
 //--------------------------key Id value File item Id
@@ -108,23 +120,21 @@ UICollectionViewDataSource,UICollectionViewDelegate>
 //--------------------------key image vaule image
 @property(nonatomic) NSMutableDictionary *roomsOfInspectionDic;
 
-@property(nonatomic) UIActivityIndicatorView* spinner;
+
+//cammera Images
+@property(nonatomic) NSMutableArray *commentImages;
+@property(nonatomic) NSString *commentId;
+
+@property(nonatomic) UIActivityIndicatorView* donwloadspinner;
+@property(nonatomic) UIActivityIndicatorView* uploadspinner;
 
 
 
-
-
+@property(nonatomic) ListClient *listClient;
 /**/
 
--(void)getPropertyResourceListArray:(ListClient*)client;
--(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems;
--(void)getIncidentsListArray:(ListClient*)client;
 -(void)didUpdateRightPropertyTableCell:(NSIndexPath *)indexpath image:(UIImage*)image;
 -(void)setLeftInspectionTableCell:(InspectionListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 -(NSString *)getSelectLeftInspectionItemId;
--(void)getRoomImageFileREST:(NSString *)path
-propertyId:(NSInteger)proId
-inspectionId:(NSInteger)insid
-roomIndex:(NSInteger)roomIndex
-imageIndex:(NSInteger)imageIndex;
+-(void)getRoomImageFileREST:(NSString *)path propertyId:(NSInteger)proId inspectionId:(NSInteger)insid roomIndex:(NSInteger)roomIndex imageIndex:(NSInteger)imageIndex;
 @end
