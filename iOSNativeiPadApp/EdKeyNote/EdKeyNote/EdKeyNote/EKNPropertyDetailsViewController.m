@@ -325,10 +325,6 @@
 }
 -(void)setRightLargeImage:(UIImage *)image
 {
-    if(image!=nil)
-    {
-        [self stopPropertyViewSpiner];
-    }
     UIImageView *largeIamgeView = (UIImageView *)[self.view viewWithTag:RightRoomImageLargeImageTag];
     [largeIamgeView setImage:image];
 }
@@ -1269,7 +1265,6 @@
                          EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[clviw cellForItemAtIndexPath:[NSIndexPath indexPathForRow:imageIndex inSection:0]];
                          if (cell.selected) {
                              [self setRightLargeImage:image];
-                             //cell.selectImageViw.hidden = NO;
                          }
                          [clviw reloadItemsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:imageIndex inSection:0], nil]];
                          
@@ -1287,11 +1282,8 @@
                      NSInteger times =[[imagDic objectForKey:@"trytimes"] integerValue];
                      if(times>=3)
                      {
-                         UICollectionView *clviw =(UICollectionView *)[self.view viewWithTag:RightRoomCollectionViewTag];
-                         EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[clviw cellForItemAtIndexPath:[NSIndexPath indexPathForRow:imageIndex inSection:0]];
-                         if (cell.selected) {
-                             [self stopPropertyViewSpiner];
-                         }
+                         
+                         [self stopPropertyViewSpiner];
                      }
                      else
                      {
@@ -2213,8 +2205,6 @@
         self.selectRightCollectionIndexPath =nil;
         [self setRightLargeImage:nil];
         if ([self getRightCollectionViewItemsCount]>0) {
-            //load spiner for remote get image file;
-            [self startPropertyViewSpiner:CGRectMake(500,384,50,50)];
             self.selectRightCollectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             [collectionView selectItemAtIndexPath:self.selectRightCollectionIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
         }
@@ -2340,7 +2330,6 @@
             UIImage *roomImage = [imagedic objectForKey:@"image"];
             if(roomImage!=nil)
             {
-                
                 [cell.imagecell setImage:roomImage];
                 if (cell.selected) {
                     [self setRightLargeImage:roomImage];
@@ -2350,6 +2339,7 @@
             }
             else
             {
+                [self startPropertyViewSpiner:CGRectMake(500,384,50,50)];
                 [cell.imagecell setImage:nil];
                 
                 if([imagedic objectForKey:@"ServerRelativeUrl"] == nil)
