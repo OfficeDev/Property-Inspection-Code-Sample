@@ -578,12 +578,17 @@
     [self.view viewWithTag:CommentPickerViewTag].hidden = YES;
     
         
-    if(type != (NSString *)[NSNull null])
+    if(type!=nil && type != (NSString *)[NSNull null])
     {
        [(UIButton *)[self.view viewWithTag:CommentDpBtnTag] setTitle:type forState:UIControlStateNormal];
         
         NSInteger index = [self.incidentTypeArray indexOfObject:type];
         [(UIPickerView *)[self.view viewWithTag:CommentPickerViewTag] selectRow:index inComponent:0 animated:NO];
+    }
+    else
+    {
+         [(UIButton *)[self.view viewWithTag:CommentDpBtnTag] setTitle:@"" forState:UIControlStateNormal];
+       // [(UIPickerView *)[self.view viewWithTag:CommentPickerViewTag] selectRow:0 inComponent:0 animated:NO];
     }
 
 }
@@ -711,20 +716,25 @@
                                       {
                                           dispatch_async(dispatch_get_main_queue(), ^{
                                               if (error==nil) {
-                                                  NSString *text = @"";
+                                                  NSString *text = nil;
                                                   if([listItems count]>0)
                                                   {
                                                       
                                                       self.commentItemId =[NSString stringWithFormat:@"%@",(NSString *)[[listItems objectAtIndex:0] getData:@"Id"]];
                                                       text = (NSString *)[[listItems objectAtIndex:0] getData:@"Title"];
-
+                                                      if(text!=nil && text != (NSString *)[NSNull null])
+                                                      {
+                                                          ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = text;
+                                                      }
+                                                     
                                                   }
                                                   else
                                                   {
                                                       //can't find, we need creat a new item
                                                       self.commentItemId = nil;
+                                                      ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = @"";
                                                   }
-                                                  ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = text;
+                                                  
                                                   [self setCommmentViewShow];
                                               }
                                               else
@@ -1318,7 +1328,7 @@
                                   {
                                       dispatch_async(dispatch_get_main_queue(), ^{
                                           if (error==nil) {
-                                              NSString *text;
+                                              NSString *text =nil ;
                                               NSString *type=nil;
                                               if([listItems count]>0)
                                               {
@@ -1327,16 +1337,16 @@
                                                   
                                                   //if type is null??
                                                   type =(NSString *)[[listItems objectAtIndex:0] getData:@"sl_type"] ;
-                                                  
+                                                  if(text != (NSString *)[NSNull null])
+                                                  {
+                                                      ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = text;
+                                                  }
                                               }
                                               else
                                               {
                                                   //can't find, we need creat a new item
                                                   self.commentItemId = nil;
-                                              }
-                                              if(text != (NSString *)[NSNull null])
-                                              {
-                                                  ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = text;
+                                                  ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = @"";
                                               }
                                               [self setIncidentCommmentViewShow:type];
 
@@ -1442,7 +1452,7 @@
 {
     
     [self startCommentViewSpiner:CGRectMake(880,319,50,50)];
-    NSString *type = ((UIButton *)[self.view viewWithTag:CommentDpBtnTag]).titleLabel.text;
+    NSString *type = [(UIButton *)[self.view viewWithTag:CommentDpBtnTag] currentTitle];
     
     if (self.commentItemId == nil) {
         NSString *insIdstr = [self getSelectLeftInspectionItemId];
