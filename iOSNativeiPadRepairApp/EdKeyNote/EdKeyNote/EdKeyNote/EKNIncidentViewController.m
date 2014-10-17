@@ -59,6 +59,8 @@
 {
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     self.siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
+    self.client = [self getClient];
+    
     self.incidentPhotoListDic = [[NSMutableDictionary alloc] init];
     
     self.detailViewIsShowing = YES;
@@ -66,11 +68,9 @@
     self.loginName = @"Rob Barker";//for test
     self.currentRightIndexPath = nil;
     
+    self.inspectorCommentImages = [NSMutableArray array];
+    self.commentImages = [NSMutableArray array];
     self.inspectionDetailDic = [[NSMutableDictionary alloc] init];
-    //test data
-    [self.inspectionDetailDic setObject:@"Carl Spackler" forKey:@"name"];
-    [self.inspectionDetailDic setObject:@"cspackler@cpm.com" forKey:@"email"];
-    [self.inspectionDetailDic setObject:@"09/30/14" forKey:@"date"];
 }
 
 -(void)addPropertyDetailTable{
@@ -168,7 +168,7 @@
     [self.finalizeBtn setBackgroundImage:[UIImage imageNamed:@"finalize_repair"] forState:UIControlStateNormal];
     [self.detailLeftView addSubview:self.finalizeBtn];
     
-    self.detailRightView = [[UIView alloc] initWithFrame:CGRectMake(1024, 91, 680, 677)];
+    self.detailRightView = [[UIView alloc] initWithFrame:CGRectMake(1024, 91, 675, 677)];
     self.detailRightView.backgroundColor = [UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
     self.detailRightView.hidden = YES;
     [self.view addSubview:self.detailRightView];
@@ -176,64 +176,299 @@
     UIView *rightTopView = [[UIView alloc] initWithFrame:CGRectMake(31, 15, 620, 50)];
     rightTopView.backgroundColor = [UIColor colorWithRed:134.00f/255.00f green:134.00f/255.00f blue:134.00f/255.00f alpha:1];
     [self.detailRightView addSubview:rightTopView];
-    NSString *lbl4Str = @"Room:Kitchen";
+    
+    NSString *lbl4Str = @"Room: ";
     CGSize size1 = [EKNEKNGlobalInfo getSizeFromStringWithFont:lbl4Str font:font];
-    UILabel *lbl4 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, size1.width, 50)];
-    lbl4.text = lbl4Str;
-    lbl4.textAlignment = NSTextAlignmentLeft;
-    lbl4.font = font;
-    lbl4.textColor = [UIColor whiteColor];
-    [rightTopView addSubview:lbl4];
+    self.roomTitleLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, size1.width, 50)];
+    self.roomTitleLbl.text = lbl4Str;
+    self.roomTitleLbl.textAlignment = NSTextAlignmentLeft;
+    self.roomTitleLbl.font = font;
+    self.roomTitleLbl.textColor = [UIColor whiteColor];
+    [rightTopView addSubview:self.roomTitleLbl];
     
-    UILabel *lbl5 = [[UILabel alloc] initWithFrame:CGRectMake(10 + size1.width, 5, 40, 40)];
-    lbl5.text = @"|";
-    lbl5.textAlignment = NSTextAlignmentCenter;
-    lbl5.font = font;
-    lbl5.textColor = [UIColor whiteColor];
-    [rightTopView addSubview:lbl5];
+    self.separatorLbl = [[UILabel alloc] initWithFrame:CGRectMake(10 + size1.width, 5, 40, 40)];
+    self.separatorLbl.text = @"|";
+    self.separatorLbl.textAlignment = NSTextAlignmentCenter;
+    self.separatorLbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:30];
+    self.separatorLbl.textColor = [UIColor whiteColor];
+    [rightTopView addSubview:self.separatorLbl];
     
-    NSString *lbl6Str = @"Type:Plumbing";
+    NSString *lbl6Str = @"Type: ";
     CGSize size2 = [EKNEKNGlobalInfo getSizeFromStringWithFont:lbl6Str font:font];
-    UILabel *lbl6 = [[UILabel alloc] initWithFrame:CGRectMake((10 + size1.width + 40), 0, size2.width, 50)];
-    lbl6.text = lbl6Str;
-    lbl6.textAlignment = NSTextAlignmentLeft;
-    lbl6.font = font;
-    lbl6.textColor = [UIColor whiteColor];
-    [rightTopView addSubview:lbl6];
+    self.incidentTypeLbl = [[UILabel alloc] initWithFrame:CGRectMake((10 + size1.width + 40), 0, size2.width, 50)];
+    self.incidentTypeLbl.text = lbl6Str;
+    self.incidentTypeLbl.textAlignment = NSTextAlignmentLeft;
+    self.incidentTypeLbl.font = font;
+    self.incidentTypeLbl.textColor = [UIColor whiteColor];
+    [rightTopView addSubview:self.incidentTypeLbl];
     
     UIImageView *rightTopImageView = [[UIImageView alloc] initWithFrame:CGRectMake(31, 90, 620, 64)];
     rightTopImageView.image = [UIImage imageNamed:@"incident_detailtab"];
     [self.detailRightView addSubview:rightTopImageView];
     
-    UILabel *lbl7 = [[UILabel alloc] initWithFrame:CGRectMake(31, 170, 620, 30)];
+    //add tab button
+    UIButton *tabBtn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    tabBtn1.frame = CGRectMake(31, 90, 206, 64);
+    tabBtn1.tag = 1;
+    [tabBtn1 addTarget:self action:@selector(rightTabSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [self.detailRightView addSubview:tabBtn1];
+    
+    UIButton *tabBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    tabBtn2.frame = CGRectMake(237, 90, 207, 64);
+    tabBtn2.tag = 2;
+    [tabBtn2 addTarget:self action:@selector(rightTabSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [self.detailRightView addSubview:tabBtn2];
+    
+    UIButton *tabBtn3 = [UIButton buttonWithType:UIButtonTypeCustom];
+    tabBtn3.frame = CGRectMake(444, 90, 207, 64);
+    tabBtn3.tag = 3;
+    [tabBtn3 addTarget:self action:@selector(rightTabSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [self.detailRightView addSubview:tabBtn3];
+    
+    self.detailRightDispatcher = [[UIView alloc] initWithFrame:CGRectMake(31, 170, 644, 507)];
+    [self.detailRightView addSubview:self.detailRightDispatcher];
+    
+    UILabel *lbl7 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 620, 30)];
     lbl7.text = @"DISPATCHER COMMENTS";
     lbl7.textAlignment = NSTextAlignmentLeft;
     lbl7.font = [UIFont fontWithName:@"Helvetica" size:30];
     lbl7.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    [self.detailRightView addSubview:lbl7];
+    [self.detailRightDispatcher addSubview:lbl7];
     
-    UIView *rightCommentBgView = [[UIView alloc] initWithFrame:CGRectMake(31, 220, 620, 400)];
+    UIView *rightCommentBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, 620, 400)];
     rightCommentBgView.backgroundColor = [UIColor whiteColor];
     rightCommentBgView.layer.masksToBounds = YES;
     rightCommentBgView.layer.cornerRadius = 10;
-    [self.detailRightView addSubview:rightCommentBgView];
+    [self.detailRightDispatcher addSubview:rightCommentBgView];
     
-    UILabel *lbl8 = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 600, 380)];
-    lbl8.text = @"Duis fringilla rutrum urna. Integer vel justo ut sem egestas ullamcorper. Nullam feugiat lacus eu lectus lacinia, id gravida enim vulputate. Pellentesque posuere nunc quis pharetra pulvinar. Morbi vehicula sed libero eget bibendum. Ut convallis pellentesque purus, in mollis justo suscipit id. Maecenas fringilla, odio nec euismod consectetur, sem tortor rutrum nisl, in efficitur lorem dui sed dui. Aenean urna lectus, pulvinar sed dapibus quis, consectetur a justo. Vivamus eu ante lectus. Phasellus consequat orci lorem, sed sollicitudin augue facilisis eget. Nulla fringilla nibh ullamcorper tellus pellentesque, nec aliquet tellus vehicula. Nullam commodo fermentum tempor";
-    lbl8.textAlignment = NSTextAlignmentLeft;
-    lbl8.font = [UIFont fontWithName:@"Helvetica" size:14];
-    lbl8.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    lbl8.numberOfLines = 0;
-    lbl8.lineBreakMode = UILineBreakModeWordWrap;
-    [rightCommentBgView addSubview:lbl8];
+    self.tabDispatcherComments = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 600, 380)];
+    self.tabDispatcherComments.textAlignment = NSTextAlignmentLeft;
+    self.tabDispatcherComments.font = [UIFont fontWithName:@"Helvetica" size:14];
+    self.tabDispatcherComments.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.tabDispatcherComments.numberOfLines = 0;
+    self.tabDispatcherComments.lineBreakMode = UILineBreakModeWordWrap;
+    [rightCommentBgView addSubview:self.tabDispatcherComments];
+    
+    self.detailRightInspector = [[UIView alloc] initWithFrame:CGRectMake(675, 170, 644, 507)];
+    self.detailRightInspector.hidden = YES;
+    [self.detailRightView addSubview:self.detailRightInspector];
+    UILabel *lbl9 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 620, 30)];
+    lbl9.text = @"INSPECTOR COMMENTS & PHOTOS";
+    lbl9.textAlignment = NSTextAlignmentLeft;
+    lbl9.font = [UIFont fontWithName:@"Helvetica" size:30];
+    lbl9.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    [self.detailRightInspector addSubview:lbl9];
+    
+    UIView *collectionBg = [[UIView alloc] initWithFrame:CGRectMake(0, 40, 620, 136)];
+    collectionBg.backgroundColor = [UIColor whiteColor];
+    collectionBg.layer.masksToBounds = YES;
+    collectionBg.layer.cornerRadius = 10;
+    [self.detailRightInspector addSubview:collectionBg];
+    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    
+    self.inspectorCommentCollection = [[UICollectionView alloc] initWithFrame:CGRectMake(15, 10, 590, 116) collectionViewLayout:flowLayout];
+    self.inspectorCommentCollection.translatesAutoresizingMaskIntoConstraints = NO;
+    self.inspectorCommentCollection.delegate = self;
+    self.inspectorCommentCollection.dataSource = self;
+    self.inspectorCommentCollection.allowsMultipleSelection = YES;
+    self.inspectorCommentCollection.allowsSelection = YES;
+    self.inspectorCommentCollection.showsHorizontalScrollIndicator = NO;
+    self.inspectorCommentCollection.backgroundColor = [UIColor whiteColor];
+    [collectionBg addSubview:self.inspectorCommentCollection];
+    
+    [self.inspectorCommentCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
+    self.inspectorCommentCollection.delegate = self;
+    self.inspectorCommentCollection.dataSource =self;
+    
+    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    
+    [self.inspectorCommentCollection reloadData];
+    
+    UIView *inspectorCommentBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 186, 620, 281)];
+    inspectorCommentBgView.backgroundColor = [UIColor whiteColor];
+    inspectorCommentBgView.layer.masksToBounds = YES;
+    inspectorCommentBgView.layer.cornerRadius = 10;
+    [self.detailRightInspector addSubview:inspectorCommentBgView];
+    
+    self.tabInsptorComments = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 600, 261)];
+    self.tabInsptorComments.textAlignment = NSTextAlignmentLeft;
+    self.tabInsptorComments.font = [UIFont fontWithName:@"Helvetica" size:14];
+    self.tabInsptorComments.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.tabInsptorComments.numberOfLines = 0;
+    self.tabInsptorComments.lineBreakMode = UILineBreakModeWordWrap;
+    [inspectorCommentBgView addSubview:self.tabInsptorComments];
+    
+    self.detailRightAdd = [[UIView alloc] initWithFrame:CGRectMake(675, 170, 644, 507)];
+    self.detailRightAdd.hidden = YES;
+    [self.detailRightView addSubview:self.detailRightAdd];
+    UILabel *lbl10 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 620, 30)];
+    lbl10.text = @"ADD REPAIR COMMENTS & PHOTOS";
+    lbl10.textAlignment = NSTextAlignmentLeft;
+    lbl10.font = [UIFont fontWithName:@"Helvetica" size:30];
+    lbl10.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    [self.detailRightAdd addSubview:lbl10];
+    
+    UIImageView *repairCamera = [[UIImageView alloc] initWithFrame:CGRectMake(15, 75, 58, 47)];
+    repairCamera.image = [UIImage imageNamed:@"camera_gray"];
+    [self.detailRightAdd addSubview:repairCamera];
+    
+    UIView *repariCollectionBg = [[UIView alloc] initWithFrame:CGRectMake(100, 40, 520, 136)];
+    repariCollectionBg.backgroundColor = [UIColor whiteColor];
+    repariCollectionBg.layer.masksToBounds = YES;
+    repariCollectionBg.layer.cornerRadius = 10;
+    [self.detailRightAdd addSubview:repariCollectionBg];
+    
+    self.commentCollection = [[UICollectionView alloc] initWithFrame:CGRectMake(15, 10, 490, 116) collectionViewLayout:flowLayout];
+    self.commentCollection.translatesAutoresizingMaskIntoConstraints = NO;
+    self.commentCollection.delegate = self;
+    self.commentCollection.dataSource = self;
+    self.commentCollection.allowsMultipleSelection = YES;
+    self.commentCollection.allowsSelection = YES;
+    self.commentCollection.showsHorizontalScrollIndicator = NO;
+    self.commentCollection.backgroundColor = [UIColor whiteColor];
+    [repariCollectionBg addSubview:self.commentCollection];
+    
+    [self.commentCollection registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"cvCell"];
+    self.commentCollection.delegate = self;
+    self.commentCollection.dataSource =self;
+    
+    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
+    
+    [self.commentCollection reloadData];
+    
+    UIView *repariCommentBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 186, 620, 241)];
+    repariCommentBgView.backgroundColor = [UIColor whiteColor];
+    repariCommentBgView.layer.masksToBounds = YES;
+    repariCommentBgView.layer.cornerRadius = 10;
+    [self.detailRightAdd addSubview:repariCommentBgView];
+    
+    self.tabComments = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 600, 261)];
+    self.tabComments.textAlignment = NSTextAlignmentLeft;
+    self.tabComments.font = [UIFont fontWithName:@"Helvetica" size:14];
+    self.tabComments.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
+    self.tabComments.numberOfLines = 0;
+    self.tabComments.lineBreakMode = UILineBreakModeWordWrap;
+    [repariCommentBgView addSubview:self.tabComments];
+    
+    UIButton *repairButton = [[UIButton alloc] initWithFrame:CGRectMake(508, 437, 112, 50)];
+    repairButton.backgroundColor = [UIColor colorWithRed:100.00f/255.00f green:153.00f/255.00f blue:209.00f/255.00f alpha:1];;
+    [repairButton setTitle:@"Done" forState:UIControlStateNormal];
+    repairButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+    repairButton.titleLabel.textColor = [UIColor whiteColor];
+    repairButton.layer.masksToBounds = YES;
+    repairButton.layer.cornerRadius = 5;
+
+    [self.detailRightAdd addSubview:repairButton];
+}
+
+-(void)setRoomTitleAndIncidentType:(NSString *)title type:(NSString *)type
+{
+    UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
+    
+    NSString *lblStr = [@"Room: " stringByAppendingString:[EKNEKNGlobalInfo getString:title]];
+    CGSize size1 = [EKNEKNGlobalInfo getSizeFromStringWithFont:lblStr font:font];
+    self.roomTitleLbl.frame = CGRectMake(10, 0, size1.width, 50);
+    self.roomTitleLbl.text = lblStr;
+    
+    self.separatorLbl.frame = CGRectMake(10 + size1.width, 5, 40, 40);
+    
+    NSString *lbl1Str = [@"Type: " stringByAppendingString:[EKNEKNGlobalInfo getString:type]];
+    CGSize size2 = [EKNEKNGlobalInfo getSizeFromStringWithFont:lbl1Str font:font];
+    self.incidentTypeLbl.frame = CGRectMake((10 + size1.width + 40), 0, size2.width, 50);
+    self.incidentTypeLbl.text = lbl1Str;
+}
+
+-(void)rightTabSelected:(UIButton *)button
+{
+    if(button.tag == 1)
+    {
+        if(self.detailRightDispatcher.hidden == YES)
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.detailRightInspector.hidden = YES;
+                self.detailRightAdd.hidden = YES;
+                self.detailRightDispatcher.hidden = NO;
+                self.detailRightDispatcher.frame = CGRectMake(31, 170, 644, 507);
+            } completion:^(BOOL finished) {
+                self.detailRightInspector.frame = CGRectMake(675, 170, 644, 507);
+                self.detailRightAdd.frame = CGRectMake(675, 170, 644, 507);
+            }];
+        }
+    }
+    else if(button.tag == 2)
+    {
+        if(self.detailRightInspector.hidden == YES)
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.detailRightDispatcher.hidden = YES;
+                self.detailRightAdd.hidden = YES;
+                self.detailRightInspector.hidden = NO;
+                self.detailRightInspector.frame = CGRectMake(31, 170, 644, 507);
+            } completion:^(BOOL finished) {
+                self.detailRightDispatcher.frame = CGRectMake(675, 170, 644, 507);
+                self.detailRightAdd.frame = CGRectMake(675, 170, 644, 507);
+            }];
+        }
+    }
+    else if(button.tag == 3)
+    {
+        if(self.detailRightAdd.hidden == YES)
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.detailRightDispatcher.hidden = YES;
+                self.detailRightInspector.hidden = YES;
+                self.detailRightAdd.hidden = NO;
+                self.detailRightAdd.frame = CGRectMake(31, 170, 644, 507);
+            } completion:^(BOOL finished) {
+                self.detailRightDispatcher.frame = CGRectMake(675, 170, 644, 507);
+                self.detailRightInspector.frame = CGRectMake(675, 170, 644, 507);
+            }];
+        }
+    }
 }
 
 -(void)setRightTableSelectIndex:(NSIndexPath*)indexpath
 {
     ListItem *incidentItem = [self.incidentListArray objectAtIndex:indexpath.row];
-    NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
-    NSDictionary *propertyData = (NSDictionary *)[incidentItem getData:@"sl_propertyID"];
-    NSDictionary *inspectionData = (NSDictionary *)[incidentItem getData:@"sl_inspectionID"];
+    NSString *incidentType = (NSString *)[incidentItem getData:@"sl_type"];
+    NSDictionary *roomData = (NSDictionary *)[incidentItem getData:@"sl_roomID"];
+    NSString *roomTitle = (NSString *)[roomData objectForKey:@"Title"];
+    NSString *inspectionID = (NSString *)[incidentItem getData:@"sl_inspectionIDId"];
+    
+    //set the inspection table
+    [self.inspectionDetailDic setObject:@"" forKey:@"name"];
+    [self.inspectionDetailDic setObject:@"" forKey:@"email"];
+    [self.inspectionDetailDic setObject:@"" forKey:@"date"];
+    [self.detailInspectionDetailTableView reloadData];
+    [self getInspectionDataByID:inspectionID];
+    
+    //set room title and incident type
+    [self setRoomTitleAndIncidentType:roomTitle type:incidentType];
+    
+    //set comments [sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments]
+    self.tabDispatcherComments.text = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_dispatcherComments"]];
+    self.tabInsptorComments.text = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_inspectorIncidentComments"]];
+    self.tabComments.text = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_repairComments"]];
+    
+    //set the tab view to default
+    self.detailRightDispatcher.frame = CGRectMake(31, 170, 644, 507);
+    self.detailRightInspector.frame = CGRectMake(675, 170, 644, 507);
+    self.detailRightAdd.frame = CGRectMake(675, 170, 644, 507);
+    self.detailRightInspector.hidden = YES;
+    self.detailRightAdd.hidden = YES;
+    self.detailRightDispatcher.hidden = NO; 
     
     [UIView animateWithDuration:0.3 animations:^{
         self.detailViewIsShowing = YES;
@@ -247,7 +482,6 @@
             self.backButton.hidden = NO;
         }];
     }];
-    
 }
 
 -(void)backAction
@@ -280,10 +514,7 @@
     NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     NSLog(@"filter string:%@",filterStr);
     
-    ListClient* client = [self getClient];
-    
-    
-    NSURLSessionTask* task = [client getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
+    NSURLSessionTask* task = [self.client getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
             //NSMutableArray *list = [[NSMutableArray alloc] init];
@@ -307,8 +538,41 @@
                 [self.rightTableView reloadData];
             }
             
-            [self getPropertyPhoto:client];
-            [self getIncidentListPhoto:client];
+            [self getPropertyPhoto:self.client];
+            [self getIncidentListPhoto:self.client];
+        });
+    }];
+    
+    [task resume];
+}
+
+-(void)getInspectionDataByID:(NSString *)inspectionID
+{
+    self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0,0,1024,768)];
+    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.spinner setBackgroundColor:[UIColor colorWithRed:0.00f/255.00f green:0.00f/255.00f blue:0.00f/255.00f alpha:0.2]];
+    [self.view addSubview:self.spinner];
+    self.spinner.hidesWhenStopped = YES;
+    
+    [self.spinner startAnimating];
+    
+    NSString *filter = [NSString stringWithFormat:@"$select=Id,sl_datetime,sl_inspector/Title,sl_inspector/sl_emailaddress&$expand=sl_inspector&$filter=Id eq %@&$orderby=sl_datetime desc&$top=1",inspectionID];
+    NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSLog(@"filter string:%@",filterStr);
+    
+    NSURLSessionTask* task = [self.client getListItemsByFilter:@"Inspections" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(listItems != nil && [listItems count] > 0)
+            {
+                ListItem *item = listItems[0];
+                NSDictionary *inspector = (NSDictionary *)[item getData:@"sl_inspector"];
+                [self.inspectionDetailDic setObject:[inspector objectForKey:@"Title"] forKey:@"name"];
+                [self.inspectionDetailDic setObject:[inspector objectForKey:@"sl_emailaddress"] forKey:@"email"];
+                [self.inspectionDetailDic setObject:[item getData:@"sl_datetime"] forKey:@"date"];
+                [self.detailInspectionDetailTableView reloadData];
+                
+                [self.spinner stopAnimating];
+            }
         });
     }];
     
@@ -969,7 +1233,8 @@
             else
             {
                 NSString *date = [self.inspectionDetailDic objectForKey:@"date"];
-                [cell setCellValue:[UIImage imageNamed:@"calendar"] title:date];
+                NSString *dateStr = [EKNEKNGlobalInfo converStringToDateString:date];
+                [cell setCellValue:[UIImage imageNamed:@"calendar"] title:dateStr];
             }
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             return cell;
@@ -1015,4 +1280,110 @@
         [cell setCellValue:image room:room incident:incident inspectionDate:inspectionDate repairDate:repairDate repairHidden:repariDateHidden approved:approved approvedHidden:approvedHidden];
     }
 }
+
+//collection view
+//
+//
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    if(collectionView == self.inspectorCommentCollection)//inspector collection view
+    {
+        if(self.inspectorCommentImages != nil)
+        {
+            return [self.inspectorCommentImages count];
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else if(collectionView == self.commentCollection)//comment image collection view
+    {
+        if(self.commentImages != nil)
+        {
+            return [self.commentImages count];
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *collectionCellID= @"cvCell";
+    EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionCellID forIndexPath:indexPath];
+    if(collectionView == self.inspectorCommentCollection)
+    {
+        UIImage *image = self.inspectorCommentImages[indexPath.row];
+        CGFloat width = image.size.width;
+        CGFloat heigth = image.size.height;
+        if(heigth > 116)
+        {
+            width = width / (heigth / 116);
+            heigth = 116;
+        }
+
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, heigth)];
+        imageView.image = image;
+        [cell addSubview:imageView];
+    }
+    else
+    {
+        UIImage *image = self.commentImages[indexPath.row];
+        CGFloat width = image.size.width;
+        CGFloat heigth = image.size.height;
+        if(heigth > 116)
+        {
+            width = width / (heigth / 116);
+            heigth = 116;
+        }
+
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, heigth)];
+        imageView.image = image;
+        [cell addSubview:imageView];
+    }
+    return cell;
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIImage *image;
+    if(collectionView == self.inspectorCommentCollection)
+    {
+        image = self.inspectorCommentImages[indexPath.row];
+    }
+    else
+    {
+        image = self.commentImages[indexPath.row];
+    }
+    CGFloat width = image.size.width;
+    CGFloat heigth = image.size.height;
+    if(heigth > 116)
+    {
+        width = width / (heigth / 116);
+        heigth = 116;
+    }
+    return CGSizeMake(width, heigth);
+}
+
+
+
+//picker view
+
 @end

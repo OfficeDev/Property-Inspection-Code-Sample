@@ -17,11 +17,14 @@
 #import "PropertyDetailsCell.h"
 #import "EKNEKNGlobalInfo.h"
 #import "ContactOwnerCell.h"
+#import "EKNCollectionViewCell.h"
 
-@interface EKNIncidentViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface EKNIncidentViewController : UIViewController<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITableViewDelegate, UITableViewDataSource>
 
 //@property NSMutableArray* SharepointList;
 
+
+@property(nonatomic) ListClient *client;
 //need get data from extend
 @property(nonatomic) NSString* loginName;
 @property(nonatomic) NSString* token;
@@ -87,6 +90,18 @@
 @property(nonatomic) UIButton *finalizeBtn;
 
 @property(nonatomic) BOOL detailViewIsShowing;
+
+@property(nonatomic) NSMutableArray *commentImages;
+@property(nonatomic) NSMutableArray *inspectorCommentImages;
+@property(nonatomic) UICollectionView *commentCollection;
+@property(nonatomic) UICollectionView *inspectorCommentCollection;
+
+@property(nonatomic) UILabel *roomTitleLbl;
+@property(nonatomic) UILabel *separatorLbl;
+@property(nonatomic) UILabel *incidentTypeLbl;
+@property(nonatomic) UILabel *tabDispatcherComments;
+@property(nonatomic) UILabel *tabInsptorComments;
+@property(nonatomic) UILabel *tabComments;
 
 /**/
 

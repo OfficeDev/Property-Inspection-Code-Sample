@@ -63,4 +63,14 @@
     return size;
 }
 
++(NSString *)getString:(NSString *)string
+{
+    NSString *result = @"";
+    if(![self isBlankString:string])
+    {
+        return string;
+    }
+    return  result;
+}
+
 @end

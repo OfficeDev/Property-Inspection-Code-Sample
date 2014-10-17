@@ -14,4 +14,5 @@
 +(NSString *)converStringToDateString:(NSString *)stringDate;
 +(BOOL)isBlankString:(NSString *)string;
 +(CGSize)getSizeFromStringWithFont:(NSString *)string font:(UIFont *)font;
++(NSString *)getString:(NSString *)string;
 @end
