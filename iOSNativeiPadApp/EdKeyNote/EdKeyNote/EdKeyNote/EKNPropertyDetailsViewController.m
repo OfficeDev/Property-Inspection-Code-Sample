@@ -440,6 +440,7 @@
     idPicker.delegate = self;
     idPicker.backgroundColor = [UIColor colorWithRed:(0.00/255.00f) green:(0.00/255.00f) blue:(0.00/255.00f) alpha:0.8];
     idPicker.showsSelectionIndicator = YES;
+    idPicker.hidden = YES;
     [commentPopupView addSubview:idPicker];
     
     commentPopupView.hidden = YES;
@@ -592,6 +593,7 @@
     [self.view viewWithTag:CommentTextViewTag].frame =CGRectMake(121, 169, 856, 120);
     [self.view viewWithTag:CommentPopViewTag].hidden = NO;
     [self.view viewWithTag:CommentDpBtnTag].hidden = YES;
+    [self.view viewWithTag:CommentPickerViewTag].hidden = YES;
 }
 -(void)startPropertyViewSpiner:(CGRect)rect
 {
@@ -2218,7 +2220,7 @@
     }
     
 }
-#pragma mark - Room Detail Right Collection view
+#pragma mark - Collection view delegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if(collectionView.tag == RightRoomCollectionViewTag)//right image collection view
@@ -2311,7 +2313,7 @@
     
     
 }
-#pragma mark - Room Collection cell init value
+#pragma mark - Collection cell init value
 -(void)setRightCollectionCellValue:(EKNCollectionViewCell *)cell indexpath:(NSIndexPath *)indexpath
 {
     NSInteger proId = [self.selectRightPropertyItemId intValue];
