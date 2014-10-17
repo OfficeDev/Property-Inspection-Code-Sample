@@ -1055,7 +1055,7 @@
     }
     else if(tableView == self.detailInspectionDetailTableView)
     {
-        if(self.detailViewIsShowing && self.inspectionDetailDic != nil)
+        if(self.inspectionDetailDic != nil)
         {
             return [self.inspectionDetailDic count];
         }
