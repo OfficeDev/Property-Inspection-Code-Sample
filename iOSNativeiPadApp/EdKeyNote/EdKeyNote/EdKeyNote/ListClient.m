@@ -44,6 +44,7 @@ const NSString *apiUrl = @"/_api/lists";
     NSString *method = (NSString*)[[Constants alloc] init].Method_Get;
     
     return [connection execute:method callback:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(@"response %@",response);
         NSMutableArray *array = [NSMutableArray array];
         NSMutableArray *listsItemsArray =[self parseDataArray: data];
         for (NSDictionary* value in listsItemsArray) {
@@ -287,17 +288,32 @@ const NSString *apiUrl = @"/_api/lists";
     
     return bytes;
 }
-
+#pragma mark - Get Field Value using REST
+-(void)getFieldValue:(NSString* )token listTitle:(NSString *)listTitle field:(NSString *)fieldTitle propertyName:(NSString *)propertyName callback:(void (^)(NSMutableArray *listItems, NSError *error))callback
+{
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Fields/GetByTitle('%@')/%@", self.Url , apiUrl, [listTitle urlencode],fieldTitle,[propertyName urlencode]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                                  {
+                                      NSMutableArray *listsItemsArray =[self parseDataArray: data];
+                                      callback(listsItemsArray ,error);
+                                  }];
+    [task resume];
+    
+}
 #pragma mark - Update/create List Item/File using REST
-- (void)updateListItemID:(NSString *)token listName:(NSString *)listName itemID:(NSString *)itemID body:(NSString *)body
+- (void)updateListItem:(NSString *)token listName:(NSString *)listName itemID:(NSString *)itemID body:(NSString *)body
                 callback:(void (^)(NSData *data,
                                    NSURLResponse *response,
                                    NSError *error))callback
 {
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
-    
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",siteUrl,[listName urlencode],itemID];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",self.Url,[listName urlencode],itemID];
     NSData *postData = [body dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
@@ -313,12 +329,10 @@ const NSString *apiUrl = @"/_api/lists";
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:callback];
     [task resume];
 }
-- (void)createListItemID:(NSString *)token listName:(NSString *)listName body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback
+- (void)createListItem:(NSString *)token listName:(NSString *)listName body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback
 {
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
     
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items",siteUrl,[listName urlencode]];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items",self.Url,[listName urlencode]];
     NSLog(@"requestUrl %@",requestUrl);
      NSLog(@"body %@",body);
     
@@ -342,10 +356,7 @@ const NSString *apiUrl = @"/_api/lists";
                          NSError *error))callback
 
 {
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
-    
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",siteUrl,filePath,@"')/$value"];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",self.Url,filePath,@"')/$value"];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", token];

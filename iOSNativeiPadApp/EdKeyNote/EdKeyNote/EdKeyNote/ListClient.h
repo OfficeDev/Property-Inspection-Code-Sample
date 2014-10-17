@@ -17,9 +17,11 @@
 - (NSMutableArray *)parseDataArray:(NSData *)data;
 - (NSData*) sanitizeJson : (NSData*) data;
 
-- (void)createListItemID:(NSString *)token listName:(NSString *)listName body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback;
+- (void)createListItem:(NSString *)token listName:(NSString *)listName body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback;
 
-- (void)updateListItemID:(NSString *)token listName:(NSString *)listName itemID:(NSString *)itemID body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback;
+- (void)updateListItem:(NSString *)token listName:(NSString *)listName itemID:(NSString *)itemID body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback;
 
 -(void)getFile:(NSString *)token ServerRelativeUrl:(NSString *)filePath callback:(void (^)(NSData *data,NSURLResponse *response,NSError *error))callback;
+
+-(void)getFieldValue:(NSString* )token listTitle:(NSString *)listTitle field:(NSString *)fieldTitle propertyName:(NSString *)propertyName callback:(void (^)(NSMutableArray *listItems, NSError *error))callback;
 @end

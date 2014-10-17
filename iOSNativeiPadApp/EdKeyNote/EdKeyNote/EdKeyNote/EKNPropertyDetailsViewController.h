@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import <QuartzCore/QuartzCore.h>
 #import <office365-base-sdk/OAuthentication.h>
 #import <office365-base-sdk/NSString+NSStringExtensions.h>
@@ -52,6 +53,8 @@ typedef NS_ENUM(NSInteger, PropertySubViewsTag) {
     CommentTextViewTag,
     CommentDoneBtnTag,
     CommentCancelBtnTag,
+    CommentDpBtnTag,
+    CommentPickerViewTag,
     
     CommentPhotoDetailPopViewTag,
     CommentPhotoDetailViewTag,
@@ -59,7 +62,7 @@ typedef NS_ENUM(NSInteger, PropertySubViewsTag) {
 };
 
 @interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,
-UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate>
+UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,MFMailComposeViewControllerDelegate>
 
 //@property NSMutableArray* SharepointList;
 
@@ -121,20 +124,21 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate>
 @property(nonatomic) NSMutableDictionary *roomsOfInspectionDic;
 
 
-//cammera Images
-@property(nonatomic) NSMutableArray *commentImages;
-@property(nonatomic) NSString *commentId;
+//cammera Images on comment pop up view
+@property(nonatomic) NSMutableArray *commentViewImages;
+//update/create comment item
+@property(nonatomic) NSString *commentItemId;
 
-@property(nonatomic) UIActivityIndicatorView* donwloadspinner;
-@property(nonatomic) UIActivityIndicatorView* uploadspinner;
+//store the type filed value of the incident list
+@property(nonatomic)NSMutableArray *incidentTypeArray;
+
+@property(nonatomic) UIActivityIndicatorView* propertyViewSpinner;
+@property(nonatomic) UIActivityIndicatorView* commentViewSpinner;
 
 
 
 @property(nonatomic) ListClient *listClient;
-/**/
 
--(void)didUpdateRightPropertyTableCell:(NSIndexPath *)indexpath image:(UIImage*)image;
--(void)setLeftInspectionTableCell:(InspectionListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
--(NSString *)getSelectLeftInspectionItemId;
--(void)getRoomImageFileREST:(NSString *)path propertyId:(NSInteger)proId inspectionId:(NSInteger)insid roomIndex:(NSInteger)roomIndex imageIndex:(NSInteger)imageIndex;
+@property(nonatomic) MFMailComposeViewController *mailController;
+
 @end
