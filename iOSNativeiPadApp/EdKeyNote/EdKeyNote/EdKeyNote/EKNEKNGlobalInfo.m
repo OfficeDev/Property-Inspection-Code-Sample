@@ -28,4 +28,21 @@
     NSString *ret =[formatter stringFromDate:date];
     return ret;
 }
++(NSString *)createFileName:(NSString *)fileExtension
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    [dateFormatter setDateFormat:@"yyMMddHHmmssSSSSSS"];
+    
+    NSString *datestr = [dateFormatter stringFromDate:[NSDate date]];
+    NSMutableString *randstr = [[NSMutableString alloc]init];
+    for(int i = 0 ; i < 5 ; i++)
+    {
+        int val= arc4random()%10;
+        [randstr appendString:[NSString stringWithFormat:@"%d",val]];
+    }
+    NSString *string = [NSString stringWithFormat:@"%@%@%@",datestr,randstr,fileExtension];
+    return string;
+}
 @end

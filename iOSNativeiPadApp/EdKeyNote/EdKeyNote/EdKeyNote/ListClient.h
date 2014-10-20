@@ -21,7 +21,12 @@
 
 - (void)updateListItem:(NSString *)token listName:(NSString *)listName itemID:(NSString *)itemID body:(NSString *)body callback:(void (^)(NSData *data, NSURLResponse *response, NSError *error))callback;
 
--(void)getFile:(NSString *)token ServerRelativeUrl:(NSString *)filePath callback:(void (^)(NSData *data,NSURLResponse *response,NSError *error))callback;
+-(void)getFileValueByPath:(NSString *)token ServerRelativeUrl:(NSString *)filePath callback:(void (^)(NSData *data,NSURLResponse *response,NSError *error))callback;
 
 -(void)getFieldValue:(NSString* )token listTitle:(NSString *)listTitle field:(NSString *)fieldTitle propertyName:(NSString *)propertyName callback:(void (^)(NSMutableArray *listItems, NSError *error))callback;
+
+- (void)uploadImage:(NSString *)token image:(UIImage *)image libraryName:(NSString *)libraryName imageName:(NSString *)imageName
+           callback:(void (^)(NSData *data,  NSURLResponse *response, NSError *error))callback;
+- (void)getFileItemIDByFileName:(NSString *)token libraryName:(NSString *)libraryName imageName:(NSString *)imageName
+                       callback:(void (^)(NSMutableArray *listItems, NSError *error))callback;
 @end

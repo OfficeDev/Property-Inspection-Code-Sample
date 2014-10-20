@@ -12,4 +12,5 @@
 
 +(NSDate *)converDateFromString:(NSString *)stringdate;
 +(NSString *)converStringFromDate:(NSDate *)date;
++(NSString *)createFileName:(NSString *)fileExtension;
 @end

@@ -5,7 +5,6 @@
 //  Created by canviz on 9/22/14.
 //  Copyright (c) 2014 canviz. All rights reserved.
 //
-
 #import "EKNPropertyDetailsViewController.h"
 
 @interface EKNPropertyDetailsViewController ()
@@ -22,14 +21,17 @@
     //cloris will modify
     
     self.selectLetInspectionIndexPath = nil;
-    self.selectRightPropertyTableIndexPath = nil;
     self.selectLetRoomIndexPath = nil;
+    self.selectRightPropertyTableIndexPath = nil;
+    
     self.listClient = [self getClient];
     self.commentViewImages = [[NSMutableArray alloc] init];
+    
     self.commentItemId = nil;
     self.incidentTypeArray = nil;;
     self.mailController = nil;
     
+    self.propertyDic = [[NSMutableDictionary alloc] init];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -317,8 +319,6 @@
     rightCollectionView.showsHorizontalScrollIndicator = NO;
     rightCollectionView.backgroundColor = [UIColor colorWithRed:(225.00/255.00f) green:(225.00/255.00f) blue:(225.00/255.00f) alpha:0.00];
     rightCollectionView.tag = RightRoomCollectionViewTag;
-    rightCollectionView.delegate = self;
-    rightCollectionView.dataSource =self;
     
     [rightCollectionView registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"EKNCollectionViewCell"];
     [rightSlideView addSubview:rightCollectionView];
@@ -374,7 +374,7 @@
     commentCollectionView.showsHorizontalScrollIndicator = NO;
     commentCollectionView.backgroundColor = [UIColor whiteColor];
     commentCollectionView.tag = CommentCollectionViewTag;
-    [commentCollectionView registerClass:[EKNCollectionViewCell class] forCellWithReuseIdentifier:@"EKNCollectionViewCell"];
+    [commentCollectionView registerClass:[CommentCollectionViewCell class] forCellWithReuseIdentifier:@"CommentCollectionViewCell"];
     [commentPopupView addSubview:commentCollectionView];
     
     
@@ -470,11 +470,165 @@
  self.photoDetailPopupView.hidden = YES;
  [self.view addSubview:self.photoDetailPopupView];
  }*/
-#pragma mark - AlertView
+#pragma mark - UIAlertView/UIActionSheet/UIImagePicker
 -(void)showHintAlertView:(NSString *)title message:(NSString *)message
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if(buttonIndex == 0 )//take new photo
+    {
+        BOOL cameraIsAvailable=[UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+        if (cameraIsAvailable) {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [self openCamera];
+            }];
+        }
+    }
+    else if(buttonIndex == 1)//select photo library
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self selectPicture];
+        }];
+    }
+}
+- (void)openCamera
+{
+    [self pickMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+}
+-(void)selectPicture
+{
+    [self pickMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
+}
+-(void)pickMediaFromSource:(UIImagePickerControllerSourceType)sourceType
+{
+    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+    if([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediaTypes count] > 0)
+    {
+        //NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        //picker.mediaTypes = mediaTypes;
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:NULL];
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Error accessing media"
+                              message:@"Device doesn't support that media source."
+                              delegate:nil
+                              cancelButtonTitle:@"Error"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    UIImage *smallImage = [self shrinkImage:chosenImage toSize:CGSizeMake(120, 79)];
+    //UIImage *largeImage = [self shrinkImage:chosenImage toSize:CGSizeMake(210, 158)];
+    [self startCommentViewSpiner:CGRectMake(640,319,50,50)];
+    
+    NSString *imagename =[EKNEKNGlobalInfo createFileName:@".jpg"];
+    [self.listClient uploadImage:self.token image:smallImage libraryName:@"RoomInspectionPhotos" imageName:imagename
+                        callback: ^(NSData *data,NSURLResponse *response, NSError *error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if (error!=nil) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self stopCommentViewSpiner];
+                     [self showHintAlertView:@"ERROR" message:@"Upload image file failed."];
+                     return;
+                 });
+             }
+             [self.listClient getFileItemIDByFileName:self.token libraryName:@"RoomInspectionPhotos" imageName:imagename callback: ^(NSMutableArray *listItems, NSError *error)
+              {
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      if(error==nil && [listItems count]>0)
+                      {
+                          NSDictionary *temp =(NSDictionary *)[listItems objectAtIndex:0];
+                          NSString *fileId = [NSString stringWithFormat:@"%@",[temp objectForKey:@"Id"]];
+                          
+                          
+                          NSMutableString *body =[[NSMutableString alloc] init];
+                          [body appendFormat:@"{'__metadata': { 'type': 'SP.Data.RoomInspectionPhotosItem' }, 'sl_inspectionIDId':%d,'sl_roomIDId':%d}",[[self getSelectLeftInspectionItemId] intValue],[[self getSelectLeftRoomItemId] intValue]];
+                          
+                          [self.listClient updateListItem:self.token listName:@"Room Inspection Photos" itemID:fileId body:body callback:^(NSData *data, NSURLResponse *response, NSError *error)
+                           {
+                               dispatch_async(dispatch_get_main_queue(), ^{
+                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+                                   if(error!=nil
+                                      ||[httpResponse statusCode] == 400)
+                                   {
+                                       [self stopCommentViewSpiner];
+                                       [self showHintAlertView:@"ERROR" message:@"Update image item failed."];
+                                   }
+                                   else
+                                   {
+                                       [self.commentViewImages addObject:smallImage];
+                                       [((UICollectionView *)[self.view viewWithTag:CommentCollectionViewTag]) reloadData];
+                                       //update right collection view
+                                       NSMutableArray *roomArray =[[self.roomsOfInspectionDic objectForKey:[self getSelectLeftInspectionItemId]] objectForKey:[self getSelectLeftRoomItemId]];
+                                       if (roomArray==nil) {
+                                           roomArray = [[NSMutableArray alloc] init];
+                                           [[self.roomsOfInspectionDic objectForKey:[self getSelectLeftInspectionItemId]]  setObject:roomArray forKey:[self getSelectLeftRoomItemId]];
+                                       }
+                                       NSMutableDictionary *imageDic = [[NSMutableDictionary alloc] init];
+                                       [imageDic setObject:fileId forKey:@"Id"];
+                                       [imageDic setObject:imagename forKey:@"ServerRelativeUrl"];
+                                       [imageDic setObject:smallImage forKey:@"image"];
+                                       
+                                       [roomArray addObject:imageDic];
+                                       UICollectionView * collectionView = (UICollectionView *)[self.view viewWithTag:RightRoomCollectionViewTag];
+                                       [collectionView reloadData];
+                                       self.selectRightCollectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                                       [collectionView selectItemAtIndexPath:self.selectRightCollectionIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+                                       
+                                       
+                                       [self stopCommentViewSpiner];
+                                       [self showHintAlertView:@"Hint" message:@"Update image item successfully."];
+                                   }
+
+                                   
+                               });
+                           }];
+                           
+                           
+                      }
+                      else
+                      {
+                          [self stopCommentViewSpiner];
+                          [self showHintAlertView:@"ERROR" message:@"Get image file ID failed."];
+                      }
+                  });
+              }];
+             
+
+         });
+     }];
+
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+- (UIImage *)shrinkImage:(UIImage *)original toSize:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+    [original drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *final = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return final;
 }
 #pragma mark - textview delegate
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -499,23 +653,24 @@
 
 -(NSInteger)getRightCollectionViewItemsCount
 {
-    NSMutableArray *roomsArray = [self.roomsOfInspectionDic objectForKey:[self getSelectLeftInspectionItemId]];
-    if(roomsArray!=nil)
-    {
-        NSDictionary * roomdic = [roomsArray objectAtIndex:self.selectLetRoomIndexPath.row];
-        NSArray *imagesArray =[roomdic objectForKey:@"ImagesArray"];
-        if(imagesArray!=nil)
-        {
-            return [imagesArray count];
+    NSString *roomId = [self getSelectLeftRoomItemId];
+    if (roomId!=nil) {
+        NSDictionary *roomsDic =[self.roomsOfInspectionDic objectForKey:[self getSelectLeftInspectionItemId]];
+        if (roomsDic!=nil) {
+            NSArray *imageArray = [roomsDic objectForKey:roomId];
+            if (imageArray!=nil) {
+                return [imageArray count];
+            }
         }
     }
+
     return 0;
 }
 -(NSString *)getSelectLeftInspectionItemId
 {
     if(self.selectRightPropertyTableIndexPath!=nil)
     {
-        NSDictionary *tempdic  = [self.propertyDic objectForKey:self.selectRightPropertyItemId];
+        NSDictionary *tempdic  = [self getSelectPropertyDic];
         if(tempdic!=nil)
         {
             NSArray * inspectionlist = [tempdic objectForKey:@"inspectionslist"];
@@ -532,17 +687,22 @@
     }
     return nil;
 }
--(NSString *)getSelectLeftRoomItemId:(NSString *)insidstring
+-(NSString *)getSelectLeftRoomItemId
 {
-    NSInteger insId = [insidstring intValue];
-    
-    NSArray *roomsArray = [self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",insId]];
-    NSInteger roomIdex =self.selectLetRoomIndexPath.row;
-    if([roomsArray count]>=roomIdex+1)
-    {
-        NSDictionary *roomdic = [roomsArray objectAtIndex:roomIdex];
-        return (NSString *)[roomdic objectForKey:@"Id"];
+    if (self.selectLetRoomIndexPath!=nil) {
+        NSDictionary *prodic =[self getSelectPropertyDic];
+        if (prodic!=nil) {
+            NSArray *roomsArray = [prodic objectForKey:@"RoomsArray"];
+            NSInteger roomIdex =self.selectLetRoomIndexPath.row;
+            if([roomsArray count]>=roomIdex+1)
+            {
+                NSDictionary *roomdic = [roomsArray objectAtIndex:roomIdex];
+                return (NSString *)[roomdic objectForKey:@"Id"];
+            }
+        }
+
     }
+
     return nil;
 }
 -(BOOL)getCommentViewWhetherShow
@@ -555,6 +715,10 @@
     {
         return NO;
     }
+}
+-(NSMutableDictionary *)getSelectPropertyDic
+{
+    return [self.propertyDic objectForKey:self.selectRightPropertyItemId];
 }
 #pragma mark - set action
 -(void)disableViewAfterCommentPopUp
@@ -703,13 +867,14 @@
             return;
         }
         [self.commentViewImages removeAllObjects];
+        [((UICollectionView *)[self.view viewWithTag:CommentCollectionViewTag]) reloadData];
         [self disableViewAfterCommentPopUp];
         
         [self startCommentViewSpiner:CGRectMake(129+50,330+91,50,50)];
         
         NSString *insIdstr = [self getSelectLeftInspectionItemId];
         if (insIdstr!=nil) {
-            NSString *roomIdstr = [self getSelectLeftRoomItemId:insIdstr];
+            NSString *roomIdstr = [self getSelectLeftRoomItemId];
             NSMutableString *filterStr = [[NSMutableString alloc] initWithFormat:@"$select=Title,ID&$filter=sl_inspectionIDId%%20eq%%20%@%%20and%%20sl_roomIDId%%20eq%%20%@&$top=1",insIdstr,roomIdstr];
             
             NSURLSessionTask* task = [self.listClient getListItemsByFilter:@"Inspection Comments" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error)
@@ -780,6 +945,8 @@
         if(self.incidentTypeArray == nil)
         {
             [self.commentViewImages removeAllObjects];
+            [((UICollectionView *)[self.view viewWithTag:CommentCollectionViewTag]) reloadData];
+            
             [self disableViewAfterCommentPopUp];
             
             [self startCommentViewSpiner:CGRectMake(129+50,330+91,50,50)];
@@ -856,7 +1023,30 @@
 }
 -(void)cameraButtonClicked
 {
+    if([self.commentViewSpinner isAnimating])
+        return;
     //here we click the commerabutton
+    BOOL cameraIsAvailable = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+    UIActionSheet *sheet;;
+    if (cameraIsAvailable) {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"New Photo", @"Select Photo", nil];
+    }
+    else
+    {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"Select Photo", nil];
+    }
+    sheet.actionSheetStyle = UIActionSheetStyleDefault;
+    [sheet showInView:self.view];
 }
 -(void)cancelButtonClicked
 {
@@ -899,6 +1089,7 @@
             ListItem* currentInspectionData = [[ListItem alloc] init];
             BOOL bfound=false;
             self.inspectionsListArray =listItems;
+            
             for(ListItem* tempitem in listItems)
             {
                 /*NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
@@ -935,10 +1126,16 @@
                 NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
                 if(pdic!=nil)
                 {
-                    if([[pdic objectForKey:@"ID"] intValue] == [self.selectRightPropertyItemId intValue])
+                    NSString *pid=[NSString stringWithFormat:@"%@",[pdic objectForKey:@"ID"]];
+                    if([pid intValue] == [self.selectRightPropertyItemId intValue])
                     {
                         bfound = true;
                         currentInspectionData = tempitem;
+                    }
+                    if([self.propertyDic objectForKey:[NSString stringWithFormat:@"%@",pid]]==nil)
+                    {
+                        NSMutableDictionary *propertyDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[NSMutableArray alloc] init],@"RoomsArray", nil];
+                        [self.propertyDic setObject:propertyDic forKey:[NSString stringWithFormat:@"%@",pid]];
                     }
                 }
                 if(!bfound)
@@ -953,20 +1150,43 @@
                         }
                     }
                 }
+                
             }
             //get the right pannel data
             self.rightPropertyListDic = [[NSMutableDictionary alloc] init];
             [self.rightPropertyListDic setObject:currentInspectionData forKey:@"top"];
             [self.rightPropertyListDic setObject:upcomingList forKey:@"bottom"];
             
-            //get property resource list:
-            [self getPropertyResourceList];
+            [self getRoomsList];
         });
     }];
     
     [task resume];
 }
 
+-(void)getRoomsList
+{
+    NSURLSessionTask* getRoomsResourcetask = [self.listClient getListItemsByFilter:@"Rooms" filter:@"$select=sl_propertyIDId,Id,Title" callback:^(NSMutableArray * listItems, NSError *error)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         if (error==nil) {
+                                                             for (ListItem *listitem in listItems) {
+                                                                 NSString *pidStr = [NSString stringWithFormat:@"%@",[listitem getData:@"sl_propertyIDId"]];
+                                                                 
+                                                                 NSMutableDictionary *roomDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",[listitem getData:@"Id"]],@"Id",[listitem getData:@"Title"],@"Title", nil];
+                                                                 
+                                                                 [[[self.propertyDic objectForKey:pidStr] objectForKey:@"RoomsArray"]addObject:roomDic];
+                                                                 
+                                                             }
+                                                             //get property resource list:
+                                                             [self getPropertyResourceList];
+                                                             
+                                                         }
+                                                     });
+                                                 }];
+    
+    [getRoomsResourcetask resume];
+}
 -(void)getPropertyResourceList
 {
     NSURLSessionTask* getpropertyResourcetask = [self.listClient getListItemsByFilter:@"Property Photos" filter:@"$select=sl_propertyIDId,Id" callback:^(NSMutableArray * listItems, NSError *error)
@@ -984,7 +1204,7 @@
 {
     NSMutableString* loopindex = [[NSMutableString alloc] initWithString:@"0"];
     NSMutableArray *loopitems =listItems;
-    self.propertyDic = [[NSMutableDictionary alloc] init];
+    
     
     for (ListItem* tempitem in loopitems)
     {
@@ -1001,13 +1221,11 @@
                                                          
                             if([listItems count]>0)
                             {
-                                NSMutableDictionary *propertyData =[[NSMutableDictionary alloc] init];
+                                NSMutableDictionary *propertyData =[self.propertyDic objectForKey:propertyId];
+                                
                                 [propertyData setObject:[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"] forKey:@"ServerRelativeUrl"];
-                                                             
-                                [self.propertyDic setObject:propertyData forKey:propertyId];
                             }
-                                                         
-                            NSLog(@"propertyId %@",propertyId);
+                            
                             if(preindex == [loopitems count])
                             {
                                     //get Incidents list
@@ -1022,11 +1240,6 @@
         
         [getFileResourcetask resume];
     }
-}
--(void)getIncidentTypeField:(void (^)(NSMutableArray *listItems, NSError *error))callback
-{
-    //NSURLSessionTask* getIncidentTypeFiledtask =[self.listClient getListItemsByFilter:@"Incidents" filter:<#(NSString *)#> callback:<#^(NSMutableArray *listItems, NSError *)callback#>:]
-   // [getIncidentTypeFiledtask resume];
 }
 -(void)getIncidentsListArray
 {
@@ -1138,7 +1351,7 @@
     NSMutableDictionary *prodict = [self.propertyDic objectForKey:key];
     NSString *path =[prodict objectForKey:@"ServerRelativeUrl"];
     
-    [self.listClient getFile:self.token ServerRelativeUrl:path callback:^(NSData *data,NSURLResponse *response,NSError *error)
+    [self.listClient getFileValueByPath:self.token ServerRelativeUrl:path callback:^(NSData *data,NSURLResponse *response,NSError *error)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
              NSLog(@"cloris get image erro %@",error);
@@ -1175,69 +1388,50 @@
          });
      }];
 }
+
 //Room
 -(void)getRoomInspectionPhotosList{
     [self startPropertyViewSpiner:CGRectMake(135,460,50,50)];
    // ((UIButton *)[self.view viewWithTag:LeftBackButtonViewTag]).enabled = NO;
     
-    ListClient* client = [self getClient];
+    ListClient* client = self.listClient;
     self.roomsOfInspectionDic = [[NSMutableDictionary alloc] init];
-    NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:@"$select=Id,sl_inspectionIDId,sl_roomID/Title,sl_roomID/Id&$expand=sl_roomID"
+    NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:@"$select=Id,sl_inspectionIDId,sl_roomIDId"
                                                      callback:^(NSMutableArray *listItems, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 for (ListItem *temp in listItems) {
                     NSString *insId =[NSString stringWithFormat:@"%@",[temp getData:@"sl_inspectionIDId"]];
-
-                    
-                    NSMutableArray *roomsArray= [self.roomsOfInspectionDic objectForKey:insId];
-                    if(roomsArray ==nil)
+                    NSString *roomId =[NSString stringWithFormat:@"%@",[temp getData:@"sl_roomIDId"]];
+                    if(insId == (NSString *)[NSNull null] || roomId == (NSString *)[NSNull null] )
                     {
-                        roomsArray = [[NSMutableArray alloc] init];
-                        [self.roomsOfInspectionDic setObject:roomsArray forKey:insId];
+                        continue;
+                    }
+                    NSMutableDictionary *roomsDic= [self.roomsOfInspectionDic objectForKey:insId];
+                    if(roomsDic ==nil)
+                    {
+                        roomsDic = [[NSMutableDictionary alloc] init];
+                        [self.roomsOfInspectionDic setObject:roomsDic forKey:insId];
                     }
                     
-                    NSDictionary *romtemp = (NSDictionary *)[temp getData:@"sl_roomID"];
-                    if(romtemp!=nil)
+                    NSMutableArray * imageArray = [roomsDic objectForKey:roomId];
+                    if (imageArray==nil) {
+                        imageArray= [[NSMutableArray alloc] init];
+                        [roomsDic setObject:imageArray forKey:roomId];
+                    }
+                    
+                    NSString *fileId = [NSString stringWithFormat:@"%@",[temp getData:@"Id"]];
+                    if(fileId!=nil)
                     {
-                        NSString *roomId =[NSString stringWithFormat:@"%@",[romtemp objectForKey:@"Id"]];
-                        //check roomid whehter exist
-                        NSMutableDictionary *roomDic=nil;
-                        for (NSMutableDictionary *tempDic in roomsArray) {
-                            if ([[tempDic objectForKey:@"Id"] isEqualToString:roomId]) {
-                                roomDic = tempDic;
-                                break;
-                            }
-                        }
-                        if(roomDic == nil)
-                        {
-                            roomDic = [[NSMutableDictionary alloc] init];
-                            [roomDic setObject:roomId forKey:@"Id"];
-                            [roomDic setObject:[romtemp objectForKey:@"Title"] forKey:@"Title"];
-                            [roomsArray addObject:roomDic];
-                            
-                        }
-                        
-                        NSMutableArray *imagesArray = [roomDic objectForKeyedSubscript:@"ImagesArray"];
-                        if(imagesArray ==nil)
-                        {
-                            imagesArray = [[NSMutableArray alloc] init];
-                            [roomDic setObject:imagesArray forKey:@"ImagesArray"];
-                        }
-                        
-                        NSString *fileId = [NSString stringWithFormat:@"%@",[temp getData:@"Id"]];
-                        if(fileId!=nil)
-                        {
-                            NSMutableDictionary *imagesDic = [[NSMutableDictionary alloc] init];
-                            [imagesDic setObject:fileId forKey:@"Id"];
-                            [imagesArray addObject:imagesDic];
-                        }
+                        NSMutableDictionary *imagesDic = [[NSMutableDictionary alloc] init];
+                        [imagesDic setObject:fileId forKey:@"Id"];
+                        [imageArray addObject:imagesDic];
                     }
                 }
-                [(UITableView *)[self.view viewWithTag:LeftRoomTableViewTag] reloadData];
+                
 
                 [self stopPropertyViewSpiner];
-                
+                [(UITableView *)[self.view viewWithTag:LeftRoomTableViewTag] reloadData];
                 [self didSelectLeftRoomTableItem:[NSIndexPath indexPathForRow:0 inSection:0] refresh:YES];
                 //((UIButton *)[self.view viewWithTag:LeftBackButtonViewTag]).enabled = YES;
             });
@@ -1249,17 +1443,17 @@
 -(void)getRoomImageFileREST:(NSString *)path
                  propertyId:(NSInteger)proId
                inspectionId:(NSInteger)insid
-                  roomIndex:(NSInteger)roomIndex
+                  roomId:(NSInteger)roomId
                  imageIndex:(NSInteger)imageIndex
 {
-    [self.listClient getFile:self.token ServerRelativeUrl:path callback:^(NSData *data,NSURLResponse *response,NSError *error)
+    [self.listClient getFileValueByPath:self.token ServerRelativeUrl:path callback:^(NSData *data,NSURLResponse *response,NSError *error)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
              NSLog(@"cloris get room image erro %@",error);
              if (error == nil) {
                  NSLog(@"data length %lu",[data length]);
                  UIImage *image =[[UIImage alloc] initWithData:data];
-                 NSMutableArray *imageArray = [[[self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",insid]] objectAtIndex:roomIndex] objectForKey:@"ImagesArray"];
+                 NSMutableArray *imageArray = [[self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",insid]] objectForKey:[NSString stringWithFormat:@"%ld",roomId]];
                  
                  if([imageArray count]>= imageIndex+1)
                  {
@@ -1269,9 +1463,8 @@
                      NSString *currentInsId =[self getSelectLeftInspectionItemId];
                      if (proId == [self.selectRightPropertyItemId intValue]
                          && currentInsId!=nil && insid == [currentInsId intValue]
-                         &&self.selectLetRoomIndexPath!=nil && roomIndex == self.selectLetRoomIndexPath.row) {
+                         &&self.selectLetRoomIndexPath!=nil && roomId == [[self getSelectLeftRoomItemId] intValue]) {
                          
-                         NSLog(@"proId %ld, insid = %ld, roomIndex =%ld",proId,insid,roomIndex);
                          //update collection cell
                          UICollectionView *clviw =(UICollectionView *)[self.view viewWithTag:RightRoomCollectionViewTag];
                          EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[clviw cellForItemAtIndexPath:[NSIndexPath indexPathForRow:imageIndex inSection:0]];
@@ -1287,7 +1480,7 @@
              else
              {
                  //retry one
-                 NSMutableDictionary *imagDic = [[[[self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",insid]] objectAtIndex:roomIndex] objectForKey:@"ImagesArray"] objectAtIndex:imageIndex];
+                 NSMutableDictionary *imagDic = [[[self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",insid]] objectForKey:[NSString stringWithFormat:@"%ld",roomId]] objectAtIndex:imageIndex];
                  
                  if([imagDic objectForKey:@"trytimes"]!=nil)
                  {
@@ -1301,13 +1494,13 @@
                      {
                          times=times+1;
                          [imagDic setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
-                         [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomIndex:roomIndex imageIndex:imageIndex];
+                         [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
                      }
                  }
                  else
                  {
                      [imagDic setObject:@"1" forKey:@"trytimes"];
-                     [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomIndex:roomIndex imageIndex:imageIndex];
+                     [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
                  }
              }
          });
@@ -1321,7 +1514,7 @@
         [self disableViewAfterCommentPopUp];
         [self startCommentViewSpiner:CGRectMake(129+50,330+91,50,50)];
         
-        NSString *roomIdstr = [self getSelectLeftRoomItemId:insIdstr];
+        NSString *roomIdstr = [self getSelectLeftRoomItemId];
         NSMutableString *filterStr = [[NSMutableString alloc] initWithFormat:@"$select=sl_inspectorIncidentComments,ID,sl_type&$filter=sl_inspectionIDId%%20eq%%20%@%%20and%%20sl_roomIDId%%20eq%%20%@&$top=1",insIdstr,roomIdstr];
         
         NSURLSessionTask* task = [self.listClient getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error)
@@ -1372,7 +1565,7 @@
     if (self.commentItemId == nil) {
         NSString *insIdstr = [self getSelectLeftInspectionItemId];
         if (insIdstr!=nil) {
-            NSString *roomIdstr = [self getSelectLeftRoomItemId:insIdstr];
+            NSString *roomIdstr = [self getSelectLeftRoomItemId];
             if(roomIdstr!=nil)
             {
                 
@@ -1457,7 +1650,7 @@
     if (self.commentItemId == nil) {
         NSString *insIdstr = [self getSelectLeftInspectionItemId];
         if (insIdstr!=nil) {
-            NSString *roomIdstr = [self getSelectLeftRoomItemId:insIdstr];
+            NSString *roomIdstr = [self getSelectLeftRoomItemId];
             if(roomIdstr!=nil)
             {
                 NSMutableString *body =[[NSMutableString alloc] init];
@@ -1683,7 +1876,7 @@
     {
         if(self.selectRightPropertyTableIndexPath!=nil)
         {
-            NSDictionary *tempdic  = [self.propertyDic objectForKey:self.selectRightPropertyItemId];
+            NSDictionary *tempdic  = [self getSelectPropertyDic];
             if(tempdic!=nil)
             {
                 NSArray * list = [tempdic objectForKey:@"inspectionslist"];
@@ -1709,13 +1902,17 @@
     }
     else if(tableView.tag == LeftRoomTableViewTag)
     {
-        if(self.selectLetInspectionIndexPath!=nil)
+        if(self.selectRightPropertyItemId!=nil)
         {
-            NSArray *roomArray = [self.roomsOfInspectionDic objectForKey:[self getSelectLeftInspectionItemId]];
-            if(roomArray!=nil)
-            {
-                return [roomArray count];
+            NSDictionary *prodic = [self getSelectPropertyDic];
+            if (prodic!=nil) {
+                NSArray *roomArray = [prodic objectForKey:@"RoomsArray"];
+                if(roomArray!=nil)
+                {
+                    return [roomArray count];
+                }
             }
+
         }
         return 0;
     }
@@ -1816,7 +2013,7 @@
     {
         NSString *identifier = @"ContactOwnerCell";
         ContactOwnerCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-        NSDictionary * tempdic = [self.propertyDic objectForKey:self.selectRightPropertyItemId];
+        NSDictionary * tempdic = [self getSelectPropertyDic];
         if(tempdic!=nil)
         {
             if(tableView.tag == LeftInspectionMidTableViewTag)
@@ -1881,7 +2078,7 @@
                         
                         NSString *address = [pro objectForKey:@"sl_address1"];
                         //NSString *propertyId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
-                        NSMutableDictionary *prodict = [self.propertyDic objectForKey:self.selectRightPropertyItemId];
+                        NSMutableDictionary *prodict = [self getSelectPropertyDic];
                         UIImage *image =(UIImage *)[prodict objectForKey:@"image"];
                         [cell setCellValue:image title:address];
                         
@@ -1920,11 +2117,18 @@
 {
     if(tableView.tag == RightPropertyDetailTableViewTag)
     {
-        [self didSelectRightPropertyTableItem:indexPath];
+        if(self.selectRightPropertyTableIndexPath != indexPath)
+        {
+            self.selectRightPropertyItemId = nil;
+            self.selectLetInspectionIndexPath = nil;
+            self.selectLetRoomIndexPath = nil;
+            self.selectRightCollectionIndexPath =nil;
+            [self didSelectRightPropertyTableItem:indexPath];
+        }
     }
     else if(tableView.tag == LeftInspectionLeftTableViewTag)
     {
-        [self didSelectLeftInspectionsTableItem:indexPath tableview:tableView];
+      [self didSelectLeftInspectionsTableItem:indexPath tableview:tableView];
     }
     else if(tableView.tag == LeftRoomTableViewTag)
     {
@@ -1963,7 +2167,7 @@
 
 -(void)setLeftInspectionTableCell:(InspectionListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSDictionary *prodic = [self.propertyDic objectForKey:self.selectRightPropertyItemId];
+    NSDictionary *prodic = [self getSelectPropertyDic];
     
     if(prodic!=nil)
     {
@@ -1980,12 +2184,13 @@
 }
 -(void)setLeftRoomTableCell:(RoomListCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSMutableArray *roomsArray = [self.roomsOfInspectionDic objectForKey:[self getSelectLeftInspectionItemId]];
+    NSMutableArray *roomsArray = [[self getSelectPropertyDic] objectForKey:@"RoomsArray"];
     if(roomsArray!=nil)
     {
         NSDictionary *roomDic = [roomsArray objectAtIndex:indexPath.row];
+        NSString *roomId = [roomDic objectForKey:@"Id"];
         NSString *roomIconName = @"greenRoom";
-        if(![self.roomsOfInspectionDic objectForKey:[self getSelectLeftInspectionItemId]])
+        if(![self.incidentOfRoomsDic objectForKey:roomId])
         {
             roomIconName = @"redRoom";
         }
@@ -2093,76 +2298,65 @@
 
 -(void)didSelectRightPropertyTableItem:(NSIndexPath*)indexpath
 {
-    if(self.selectRightPropertyTableIndexPath != indexpath)
+    self.selectRightPropertyTableIndexPath = indexpath;
+    
+    ListItem *inspectionitem = nil;
+    if(self.selectRightPropertyTableIndexPath.section == 0)
     {
-        self.selectRightPropertyTableIndexPath = indexpath;
-        self.selectRightPropertyItemId = nil;
-        
-        self.selectLetInspectionIndexPath = nil;
-        self.selectLetRoomIndexPath = nil;
-        
-        
-        //set currentsetId
-        ListItem *inspectionitem = nil;
-        if(self.selectRightPropertyTableIndexPath.section == 0)
-        {
-            inspectionitem = [self.rightPropertyListDic objectForKey:@"top"];
-        }
-        else
-        {
-            NSMutableArray *bottomarray = [self.rightPropertyListDic objectForKey:@"bottom"];
-            if(bottomarray!=nil)
-            {
-                inspectionitem = [bottomarray objectAtIndex:self.selectRightPropertyTableIndexPath.row];
-            }
-        }
-        if(inspectionitem!=nil)
-        {
-            NSDictionary *pro = (NSDictionary *)[inspectionitem getData:@"sl_propertyID"];
-            self.selectRightPropertyItemId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
-            
-            NSDictionary *insdic = (NSDictionary *)[inspectionitem getData:@"sl_inspector"];
-            NSMutableDictionary *propertydic=[self.propertyDic objectForKey:self.selectRightPropertyItemId];
-            if([self.propertyDic objectForKey:self.selectRightPropertyItemId] == nil)
-            {
-                propertydic = [[NSMutableDictionary alloc] init];
-            }
-            [propertydic setObject:[insdic objectForKey:@"sl_accountname"] forKey:@"contactowner"];
-            [propertydic setObject:[pro objectForKey:@"sl_emailaddress"] forKey:@"contactemail"];
-        }
-        
-        //reload left property detail table;
-        [(UITableView *)[self.view viewWithTag:LeftPropertyDetailTableViewTag] reloadData];
-        
-        [self getInspectionListAccordingPropertyId:self.selectRightPropertyItemId];
-        //reload left property insection left table;
-        [(UITableView *)[self.view viewWithTag:LeftInspectionLeftTableViewTag] reloadData];
-        [(UITableView *)[self.view viewWithTag:LeftInspectionMidTableViewTag] reloadData];
-        [(UITableView *)[self.view viewWithTag:LeftInspectionRightTableViewTag] reloadData];
+        inspectionitem = [self.rightPropertyListDic objectForKey:@"top"];
     }
+    else
+    {
+        NSMutableArray *bottomarray = [self.rightPropertyListDic objectForKey:@"bottom"];
+        if(bottomarray!=nil)
+        {
+            inspectionitem = [bottomarray objectAtIndex:self.selectRightPropertyTableIndexPath.row];
+        }
+    }
+    if(inspectionitem!=nil)
+    {
+        NSDictionary *pro = (NSDictionary *)[inspectionitem getData:@"sl_propertyID"];
+        self.selectRightPropertyItemId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
+        
+        NSDictionary *insdic = (NSDictionary *)[inspectionitem getData:@"sl_inspector"];
+        NSMutableDictionary *propertydic=[self getSelectPropertyDic];
+        if(propertydic == nil)
+        {
+            propertydic = [[NSMutableDictionary alloc] init];
+            [self.propertyDic setObject:propertydic forKey:self.selectRightPropertyItemId];
+        }
+        [propertydic setObject:[insdic objectForKey:@"sl_accountname"] forKey:@"contactowner"];
+        [propertydic setObject:[pro objectForKey:@"sl_emailaddress"] forKey:@"contactemail"];
+    }
+    
+    //reload left property detail table;
+    [(UITableView *)[self.view viewWithTag:LeftPropertyDetailTableViewTag] reloadData];
+    
+    [self getInspectionListAccordingPropertyId:self.selectRightPropertyItemId];
+    //reload left property insection left table;
+    [(UITableView *)[self.view viewWithTag:LeftInspectionLeftTableViewTag] reloadData];
+    [(UITableView *)[self.view viewWithTag:LeftInspectionMidTableViewTag] reloadData];
+    [(UITableView *)[self.view viewWithTag:LeftInspectionRightTableViewTag] reloadData];
 }
 -(void)didSelectLeftInspectionsTableItem:(NSIndexPath*)indexPath tableview:(UITableView *)tableView
 {
-    if(self.selectLetInspectionIndexPath !=indexPath)
+    InspectionListCell *cell = (InspectionListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *stringTemp = [NSString stringWithFormat:@"        %@  |  %@",cell.dateTime.text,cell.owner.text];
+    [(UILabel *)[self.view viewWithTag:RightRoomImageDateLblTag] setText:stringTemp];
+    if(cell.plusImage.image!=nil)
+    {
+        [self.view viewWithTag:LeftFinalizeBtnTag].hidden = NO;
+    }
+    else
+    {
+        [self.view viewWithTag:LeftFinalizeBtnTag].hidden = YES;
+    }
+    
+    if([self.view viewWithTag:LeftBackButtonViewTag].hidden)
     {
         self.selectLetInspectionIndexPath = indexPath;
         self.selectLetRoomIndexPath = nil;
-        
-        InspectionListCell *cell = (InspectionListCell *)[tableView cellForRowAtIndexPath:indexPath];
-        NSString *stringTemp = [NSString stringWithFormat:@"        %@  |  %@",cell.dateTime.text,cell.owner.text];
-        [(UILabel *)[self.view viewWithTag:RightRoomImageDateLblTag] setText:stringTemp];
-        if(cell.plusImage.image!=nil)
-        {
-            [self.view viewWithTag:LeftFinalizeBtnTag].hidden = NO;
-        }
-        else
-        {
-            [self.view viewWithTag:LeftFinalizeBtnTag].hidden = YES;
-        }
-        
-    }
-    if([self.view viewWithTag:LeftBackButtonViewTag].hidden)
-    {
+        self.selectRightCollectionIndexPath = nil;
         
         [UIView animateWithDuration:0.3 animations:
          ^{
@@ -2194,41 +2388,51 @@
     }
     else
     {
-        [(UITableView *)[self.view viewWithTag:LeftRoomTableViewTag] reloadData];
-        [self didSelectLeftRoomTableItem:[NSIndexPath indexPathForRow:0 inSection:0] refresh:YES];
+        if (self.selectLetInspectionIndexPath != indexPath) {
+            self.selectLetInspectionIndexPath = indexPath;
+            self.selectLetRoomIndexPath = nil;
+            self.selectRightCollectionIndexPath = nil;
+            
+           // [(UITableView *)[self.view viewWithTag:LeftRoomTableViewTag] reloadData];
+            [self didSelectLeftRoomTableItem:[NSIndexPath indexPathForRow:0 inSection:0] refresh:YES];
+        }
     }
 }
 -(void)didSelectLeftRoomTableItem:(NSIndexPath *)indexpath refresh:(BOOL)refresh
 {
-    if([[self.roomsOfInspectionDic objectForKey:[self getSelectLeftInspectionItemId]] count]>=indexpath.row+1)
-    {
-        
-        self.selectLetRoomIndexPath = indexpath;
-        if(refresh)
-        {
-            [(UITableView *)[self.view viewWithTag:LeftRoomTableViewTag] selectRowAtIndexPath:self.selectLetRoomIndexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+    self.selectLetRoomIndexPath =nil;
+    self.selectRightCollectionIndexPath =nil;
+    [self setRightLargeImage:nil];
+    UICollectionView * collectionView = (UICollectionView *)[self.view viewWithTag:RightRoomCollectionViewTag];
+    [collectionView reloadData];
+    
+    BOOL bRreshCollectionView = YES;
+    if (refresh) {
+        bRreshCollectionView = NO;
+        //here we need get room table
+        NSDictionary *prodic = [self getSelectPropertyDic];
+        if (prodic!=nil) {
+            NSMutableArray *roomsArray = [prodic objectForKey:@"RoomsArray"];
+            if(roomsArray!=nil && [roomsArray count]>0)
+            {
+                self.selectLetRoomIndexPath = indexpath;
+                [(UITableView *)[self.view viewWithTag:LeftRoomTableViewTag] selectRowAtIndexPath:self.selectLetRoomIndexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+                bRreshCollectionView =YES;
+            }
         }
-        
-        //
-        //here we will reload right collection view;
-        UICollectionView * collectionView = (UICollectionView *)[self.view viewWithTag:RightRoomCollectionViewTag];
-        [collectionView reloadData];
-        
-        self.selectRightCollectionIndexPath =nil;
-        [self setRightLargeImage:nil];
-        if ([self getRightCollectionViewItemsCount]>0) {
-            self.selectRightCollectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [collectionView selectItemAtIndexPath:self.selectRightCollectionIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-        }
-        
     }
     else
     {
-        [self setRightLargeImage:nil];
-        UICollectionView * collectionView = (UICollectionView *)[self.view viewWithTag:RightRoomCollectionViewTag];
-        [collectionView reloadData];
+         self.selectLetRoomIndexPath = indexpath;
     }
-    
+    if (bRreshCollectionView) {
+        if ([self getRightCollectionViewItemsCount]>0)
+        {
+            self.selectRightCollectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [collectionView selectItemAtIndexPath:self.selectRightCollectionIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        }
+    }
+
 }
 #pragma mark - Collection view delegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -2267,9 +2471,7 @@
     }
     else if(collectionView.tag == CommentCollectionViewTag)
     {
-        EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-        UIImage *image = [self.commentViewImages objectAtIndex:indexPath.row];
-        [cell.imagecell setImage:image];
+
     }
 }
 /*- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath;
@@ -2293,7 +2495,12 @@
     }
     else if(collectionView.tag == CommentCollectionViewTag)
     {
+        NSString *identifier = @"CommentCollectionViewCell";
         
+        CommentCollectionViewCell *cell  = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+        [cell.commetImage setImage:[self.commentViewImages  objectAtIndex:indexPath.row]];
+        cell.commetImage.hidden = NO;
+        return cell;
     }
     return nil;
 }
@@ -2326,16 +2533,17 @@
 #pragma mark - Collection cell init value
 -(void)setRightCollectionCellValue:(EKNCollectionViewCell *)cell indexpath:(NSIndexPath *)indexpath
 {
-    NSInteger proId = [self.selectRightPropertyItemId intValue];
-    NSInteger insId = [[self getSelectLeftInspectionItemId] intValue];
-    
-    NSArray *roomsArray = [self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",insId]];
+    NSString *proId = self.selectRightPropertyItemId;
+    NSString *insId = [self getSelectLeftInspectionItemId];
+    NSString *roomId = [self getSelectLeftRoomItemId];
     NSInteger roomIdex =self.selectLetRoomIndexPath.row;
+    
+    NSArray *roomsArray = [[self.propertyDic objectForKey:proId] objectForKey:@"RoomsArray"];
+    
     
     if([roomsArray count]>=roomIdex+1)
     {
-        NSDictionary *roomdic = [roomsArray objectAtIndex:roomIdex];
-        NSArray *imagesArray = [roomdic objectForKey:@"ImagesArray"];
+        NSArray *imagesArray = [[self.roomsOfInspectionDic objectForKey:insId] objectForKey:roomId];
         if([imagesArray count]>=indexpath.row+1)
         {
             NSDictionary *imagedic = [imagesArray objectAtIndex:indexpath.row];
@@ -2358,8 +2566,7 @@
                 {
                     NSString *fileId = [imagedic objectForKey:@"Id"];
                     //task read file infor
-                    ListClient *client = [self getClient];
-                    NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Room Inspection Photos"
+                    NSURLSessionTask* getFileResourcetask = [self.listClient getListItemFileByFilter:@"Room Inspection Photos"
                                                                                      FileId:fileId
                                                                                      filter:@"$select=ServerRelativeUrl"
                                                                                    callback:^(NSMutableArray *listItems, NSError *error)
@@ -2371,9 +2578,9 @@
                                                                          NSString *path =(NSString *)[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"];
                                                                          [imagedic setValue:path forKey:@"ServerRelativeUrl"];
                                                                          [self getRoomImageFileREST:path
-                                                                                         propertyId:proId
-                                                                                       inspectionId:insId
-                                                                                       roomIndex:roomIdex
+                                                                                         propertyId:[proId integerValue]
+                                                                                       inspectionId:[insId integerValue]
+                                                                                       roomId:[roomId integerValue]
                                                                                        imageIndex:indexpath.row];
                                                                      }
                                                                  });

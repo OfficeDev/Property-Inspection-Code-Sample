@@ -5,7 +5,6 @@
 //  Created by Gustavo on 7/22/14.
 //  Copyright (c) 2014 Lagash. All rights reserved.
 //
-
 #import "ListClient.h"
 #import "ListItem.h"
 #import <office365-base-sdk/HttpConnection.h>
@@ -72,7 +71,7 @@ const NSString *apiUrl = @"/_api/lists";
 
 
 
-- (BOOL)uploadImageToDocumentLibrary:(NSString *)token libraryName:(NSString *)libraryName image:(UIImage *)image
+/*- (BOOL)uploadImageToDocumentLibrary:(NSString *)token libraryName:(NSString *)libraryName image:(UIImage *)image
 {
     BOOL success = NO;
     NSString *imageName = [self createFileName:@".jpg"];
@@ -96,65 +95,7 @@ const NSString *apiUrl = @"/_api/lists";
     }
     
     return success;
-}
-
-- (BOOL)uploadImage:(NSString *)token image:(UIImage *)image libraryName:(NSString *)libraryName imageName:(NSString *)imageName
-{
-    static BOOL uploadSuccess = NO;
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
-    
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files/add(url='%@',overwrite=true)",siteUrl,libraryName,imageName];
-    NSData *postData = UIImageJPEGRepresentation(image, 1);
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:postData];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
-                                                                                          NSURLResponse *response,
-                                                                                          NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"data:%@, response:%@",dataString,response);
-            uploadSuccess = true;
-        });
-    }];
-    [task resume];
-    
-    return uploadSuccess;
-}
-
-- (NSInteger)getItemID:(NSString *)token libraryName:(NSString *)libraryName imageName:(NSString *)imageName
-{
-    static NSInteger id = 0;
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
-    
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files('%@')/ListItemAllFields",siteUrl,libraryName,imageName];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPMethod:@"GET"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
-                                                                                          NSURLResponse *response,
-                                                                                          NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"get image property data %@ ",dataString);
-            NSMutableArray *array = [NSMutableArray array];
-            NSMutableArray *listsItemsArray =[self parseDataArray: data];
-            
-        });
-    }];
-    [task resume];
-    
-    
-    return id;
-}
-
+}*/
 - (void)updateItemPropertiesByID:(NSString *)token listName:(NSString *)listName itemID:(NSInteger)itemID
 {
     NSInteger inspectionID = 1, incidentID = 1, roomID = 1;
@@ -183,25 +124,6 @@ const NSString *apiUrl = @"/_api/lists";
         });
     }];
     [task resume];
-}
-
-
-- (NSString *)createFileName:(NSString *)fileExtension
-{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    [dateFormatter setDateFormat:@"yyMMddHHmmssSSSSSS"];
-    
-    NSString *datestr = [dateFormatter stringFromDate:[NSDate date]];
-    NSMutableString *randstr = [[NSMutableString alloc]init];
-    for(int i = 0 ; i < 5 ; i++)
-    {
-        int val= arc4random()%10;
-        [randstr appendString:[NSString stringWithFormat:@"%d",val]];
-    }
-    NSString *string = [NSString stringWithFormat:@"%@%@%@",datestr,randstr,fileExtension];
-    return string;
 }
 
 /*
@@ -350,7 +272,7 @@ const NSString *apiUrl = @"/_api/lists";
     [task resume];
 }
 #pragma mark - get File using REST
--(void)getFile:(NSString *)token ServerRelativeUrl:(NSString *)filePath
+-(void)getFileValueByPath:(NSString *)token ServerRelativeUrl:(NSString *)filePath
       callback:(void (^)(NSData *data,
                          NSURLResponse *response,
                          NSError *error))callback
@@ -363,14 +285,52 @@ const NSString *apiUrl = @"/_api/lists";
     [request addValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
     [request setHTTPMethod:@"GET"];
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
-                                                                                          NSURLResponse *response,
-                                                                                          NSError *error) {
-        callback(data,response,error);
-    }];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:callback];
     [task resume];
 }
 
+#pragma mark -upload file using REST
 
-
+- (void)uploadImage:(NSString *)token
+              image:(UIImage *)image
+              libraryName:(NSString *)libraryName
+              imageName:(NSString *)imageName
+              callback:(void (^)(NSData *data,
+                              NSURLResponse *response,
+                              NSError *error))callback
+{
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files/add(url='%@',overwrite=true)",self.Url,libraryName,imageName];
+    NSLog(@"requestUrl %@",requestUrl);
+    NSData *postData = UIImageJPEGRepresentation(image, 1);
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:callback];
+    [task resume];
+}
+- (void)getFileItemIDByFileName:(NSString *)token libraryName:(NSString *)libraryName imageName:(NSString *)imageName
+                            callback:(void (^)(NSMutableArray *listItems, NSError *error))callback
+{
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files('%@')/ListItemAllFields?$select=Id",self.Url,libraryName,imageName];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request setHTTPMethod:@"GET"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error)
+                                  {
+                                      NSMutableArray *array = [NSMutableArray array];
+                                      
+                                      NSMutableArray *listsItemsArray =[self parseDataArray: data];
+                                      callback(listsItemsArray,error);
+                                  }];
+    [task resume];
+}
 @end

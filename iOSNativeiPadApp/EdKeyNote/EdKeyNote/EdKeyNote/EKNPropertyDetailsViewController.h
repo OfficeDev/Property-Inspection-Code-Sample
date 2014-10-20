@@ -22,6 +22,7 @@
 #import "ContactOwnerCell.h"
 #import "EKNCollectionViewCell.h"
 #import "RoomListCell.h"
+#import "CommentCollectionViewCell.h"
 
 typedef NS_ENUM(NSInteger, PropertySubViewsTag) {
     LeftPropertyDetailTableViewTag=390,
@@ -62,7 +63,7 @@ typedef NS_ENUM(NSInteger, PropertySubViewsTag) {
 };
 
 @interface EKNPropertyDetailsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,
-UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,MFMailComposeViewControllerDelegate>
+UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,MFMailComposeViewControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate>
 
 //@property NSMutableArray* SharepointList;
 
@@ -91,13 +92,17 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 @property(nonatomic) NSMutableDictionary *rightPropertyListDic;
 
 //key is propery Id, use to store property Resource and incidents
-//inspectionslist
-//----ID,sl_accountname, bowner, icon, sl_datetime
-//contactowner
-//contactemail
-//ServerRelativeUrl
-//image
-//trytimes
+//key propery Id,value is property dict
+//----key inspectionslist value nsarry(dic)
+//------------ID,sl_accountname, bowner, icon, sl_datetime
+//----key contactowner value contactowner
+//----key contactemail value contactemail
+//----key ServerRelativeUrl value ServerRelativeUrl
+//----key image value image
+//----key trytimesb value trytimes
+//----key RoomsArray value rooms arrary(dic)
+//--------key Id value roomid
+//--------key Title value roomtitle
 @property(nonatomic) NSMutableDictionary *propertyDic;
 
 
@@ -112,15 +117,13 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 //key is inspection Id, use to store rooms
 //one inspection maybe have many rooms
 //one room maybe have many pictures
-//key insId
-//value rooms array
-//----key Id value roomId
-//----key Title  value roomTitle
-//----key ImagesArray value Array to store the images
+//key insId value rooms dict
+//----key roomId value ImagesArray(diC)
 //--------------------------key Id value File item Id
 //--------------------------key ServerRelativeUrl vaule ServerRelativeUrl
 //--------------------------key trytimes vaule trytimes
 //--------------------------key image vaule image
+
 @property(nonatomic) NSMutableDictionary *roomsOfInspectionDic;
 
 
