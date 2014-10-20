@@ -52,7 +52,7 @@
     [self addPropertyDetailTable];
     [self addRightTable];
     [self addIncidentDetailView];
-    [self loadData];
+    [self loadPropertyIdByIncidentId];
 }
 
 -(void)initData
@@ -60,16 +60,17 @@
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     self.siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
     self.client = [self getClient];
+    self.cameraIsAvailable = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     
     self.incidentPhotoListDic = [[NSMutableDictionary alloc] init];
+    self.roomInspectionPhotoDic = [[NSMutableDictionary alloc] init];
+    self.repairPhotoDic = [[NSMutableDictionary alloc] init];
     
+    self.incidentId = @"1";
     self.detailViewIsShowing = YES;
     self.selectPropertyId = @"1";//for test
     self.loginName = @"Rob Barker";//for test
     self.currentRightIndexPath = nil;
-    
-    self.inspectorCommentImages = [NSMutableArray array];
-    self.commentImages = [NSMutableArray array];
     self.inspectionDetailDic = [[NSMutableDictionary alloc] init];
 }
 
@@ -241,12 +242,11 @@
     rightCommentBgView.layer.cornerRadius = 10;
     [self.detailRightDispatcher addSubview:rightCommentBgView];
     
-    self.tabDispatcherComments = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 600, 380)];
+    self.tabDispatcherComments = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 600, 380)];
     self.tabDispatcherComments.textAlignment = NSTextAlignmentLeft;
     self.tabDispatcherComments.font = [UIFont fontWithName:@"Helvetica" size:14];
     self.tabDispatcherComments.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    self.tabDispatcherComments.numberOfLines = 0;
-    self.tabDispatcherComments.lineBreakMode = UILineBreakModeWordWrap;
+    self.tabDispatcherComments.editable = NO;
     [rightCommentBgView addSubview:self.tabDispatcherComments];
     
     self.detailRightInspector = [[UIView alloc] initWithFrame:CGRectMake(675, 170, 644, 507)];
@@ -282,27 +282,17 @@
     self.inspectorCommentCollection.delegate = self;
     self.inspectorCommentCollection.dataSource =self;
     
-    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.inspectorCommentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    
-    [self.inspectorCommentCollection reloadData];
-    
     UIView *inspectorCommentBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 186, 620, 281)];
     inspectorCommentBgView.backgroundColor = [UIColor whiteColor];
     inspectorCommentBgView.layer.masksToBounds = YES;
     inspectorCommentBgView.layer.cornerRadius = 10;
     [self.detailRightInspector addSubview:inspectorCommentBgView];
     
-    self.tabInsptorComments = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 600, 261)];
+    self.tabInsptorComments = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 600, 261)];
     self.tabInsptorComments.textAlignment = NSTextAlignmentLeft;
     self.tabInsptorComments.font = [UIFont fontWithName:@"Helvetica" size:14];
     self.tabInsptorComments.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    self.tabInsptorComments.numberOfLines = 0;
-    self.tabInsptorComments.lineBreakMode = UILineBreakModeWordWrap;
+    self.tabInsptorComments.editable = NO;
     [inspectorCommentBgView addSubview:self.tabInsptorComments];
     
     self.detailRightAdd = [[UIView alloc] initWithFrame:CGRectMake(675, 170, 644, 507)];
@@ -315,8 +305,13 @@
     lbl10.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
     [self.detailRightAdd addSubview:lbl10];
     
-    UIImageView *repairCamera = [[UIImageView alloc] initWithFrame:CGRectMake(15, 75, 58, 47)];
-    repairCamera.image = [UIImage imageNamed:@"camera_gray"];
+    //UIImageView *repairCamera = [[UIImageView alloc] initWithFrame:CGRectMake(15, 75, 58, 47)];
+    //repairCamera.image = [UIImage imageNamed:@"camera_gray"];
+    //[self.detailRightAdd addSubview:repairCamera];
+    
+    UIButton *repairCamera = [[UIButton alloc] initWithFrame:CGRectMake(15, 75, 58, 47)];
+    [repairCamera setBackgroundImage:[UIImage imageNamed:@"camera_gray"] forState:UIControlStateNormal];
+    [repairCamera addTarget:self action:@selector(takeCameraAction) forControlEvents:UIControlEventTouchUpInside];
     [self.detailRightAdd addSubview:repairCamera];
     
     UIView *repariCollectionBg = [[UIView alloc] initWithFrame:CGRectMake(100, 40, 520, 136)];
@@ -325,7 +320,9 @@
     repariCollectionBg.layer.cornerRadius = 10;
     [self.detailRightAdd addSubview:repariCollectionBg];
     
-    self.commentCollection = [[UICollectionView alloc] initWithFrame:CGRectMake(15, 10, 490, 116) collectionViewLayout:flowLayout];
+    UICollectionViewFlowLayout *flowLayout2 = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout2 setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    self.commentCollection = [[UICollectionView alloc] initWithFrame:CGRectMake(15, 10, 490, 116) collectionViewLayout:flowLayout2];
     self.commentCollection.translatesAutoresizingMaskIntoConstraints = NO;
     self.commentCollection.delegate = self;
     self.commentCollection.dataSource = self;
@@ -339,27 +336,17 @@
     self.commentCollection.delegate = self;
     self.commentCollection.dataSource =self;
     
-    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    [self.commentImages addObject:[UIImage imageNamed:@"demo_room1"]];
-    
-    [self.commentCollection reloadData];
-    
     UIView *repariCommentBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 186, 620, 241)];
     repariCommentBgView.backgroundColor = [UIColor whiteColor];
     repariCommentBgView.layer.masksToBounds = YES;
     repariCommentBgView.layer.cornerRadius = 10;
     [self.detailRightAdd addSubview:repariCommentBgView];
     
-    self.tabComments = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 600, 261)];
+    self.tabComments = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 600, 261)];
     self.tabComments.textAlignment = NSTextAlignmentLeft;
+    self.tabComments.contentSize = CGSizeMake(600, 261);
     self.tabComments.font = [UIFont fontWithName:@"Helvetica" size:14];
     self.tabComments.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
-    self.tabComments.numberOfLines = 0;
-    self.tabComments.lineBreakMode = UILineBreakModeWordWrap;
     [repariCommentBgView addSubview:self.tabComments];
     
     UIButton *repairButton = [[UIButton alloc] initWithFrame:CGRectMake(508, 437, 112, 50)];
@@ -369,7 +356,7 @@
     repairButton.titleLabel.textColor = [UIColor whiteColor];
     repairButton.layer.masksToBounds = YES;
     repairButton.layer.cornerRadius = 5;
-
+    [repairButton addTarget:self action:@selector(updateRepairComment) forControlEvents:UIControlEventTouchUpInside];
     [self.detailRightAdd addSubview:repairButton];
 }
 
@@ -411,6 +398,12 @@
     {
         if(self.detailRightInspector.hidden == YES)
         {
+            if([self.roomInspectionPhotoDic objectForKey:self.selectIncidentId] == nil)
+            {
+                [self.inspectorCommentCollection reloadData];
+                [self showLoading];
+                [self getInspectorPhoto:self.selectInspectionId incidentId:self.selectIncidentId roomId:self.selectRoomId];
+            }
             [UIView animateWithDuration:0.3 animations:^{
                 self.detailRightDispatcher.hidden = YES;
                 self.detailRightAdd.hidden = YES;
@@ -426,6 +419,12 @@
     {
         if(self.detailRightAdd.hidden == YES)
         {
+            if([self.repairPhotoDic objectForKey:self.selectIncidentId] == nil)
+            {
+                [self.commentCollection reloadData];
+                [self showLoading];
+                [self getRepairPhoto:self.selectInspectionId incidentId:self.selectIncidentId roomId:self.selectRoomId];
+            }
             [UIView animateWithDuration:0.3 animations:^{
                 self.detailRightDispatcher.hidden = YES;
                 self.detailRightInspector.hidden = YES;
@@ -445,7 +444,18 @@
     NSString *incidentType = (NSString *)[incidentItem getData:@"sl_type"];
     NSDictionary *roomData = (NSDictionary *)[incidentItem getData:@"sl_roomID"];
     NSString *roomTitle = (NSString *)[roomData objectForKey:@"Title"];
+    NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
     NSString *inspectionID = (NSString *)[incidentItem getData:@"sl_inspectionIDId"];
+    NSString *roomID = (NSString *)[incidentItem getData:@"sl_roomIDId"];
+    
+    //set select index
+    self.selectedIndex = indexpath.row;
+    
+    //set the selected IDs
+    self.selectIncidentId = incidentID;
+    self.selectInspectionId = inspectionID;
+    self.selectRoomId = roomID;
+    NSLog(@"incident ID:%@,inspection ID:%@,room ID:%@",self.selectIncidentId,self.selectInspectionId,self.selectRoomId);
     
     //set the inspection table
     [self.inspectionDetailDic setObject:@"" forKey:@"name"];
@@ -500,19 +510,54 @@
     }];
 }
 
--(void)loadData{
-    
+-(void)showLoading
+{
     self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0,0,1024,768)];
     self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     [self.spinner setBackgroundColor:[UIColor colorWithRed:0.00f/255.00f green:0.00f/255.00f blue:0.00f/255.00f alpha:0.2]];
     [self.view addSubview:self.spinner];
     self.spinner.hidesWhenStopped = YES;
-    
     [self.spinner startAnimating];
+}
+
+-(void)hideLoading
+{
+    if(self.spinner != nil)
+    {
+        [self.spinner stopAnimating];
+    }
+}
+
+-(void)loadPropertyIdByIncidentId{
+    [self showLoading];
     
+    NSString *filter = [NSString stringWithFormat:@"$select=ID,sl_propertyIDId,sl_propertyID/ID&$expand=sl_propertyID&$filter=ID eq %@ and sl_propertyIDId gt 0 and sl_inspectionIDId gt 0 and sl_roomIDId gt 0",self.incidentId];
+    NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    NSURLSessionTask* task = [self.client getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(listItems != nil && [listItems count] == 1)
+            {
+                ListItem *item = listItems[0];
+                NSString *propertyId = (NSString *)[item getData:@"sl_propertyIDId"];
+                self.selectPropertyId = propertyId;
+                
+                [self loadData];
+            }
+            else
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"The incident with ID %@ not found.",self.incidentId] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Cancel", nil];
+                [alert show];
+            }
+        });
+    }];
+    
+    [task resume];
+}
+
+-(void)loadData{
     NSString *filter = [NSString stringWithFormat:@"$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_inspectionIDId,sl_roomIDId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$filter=sl_propertyIDId eq %@ and sl_inspectionIDId gt 0 and sl_roomIDId gt 0&$orderby=sl_date desc",self.selectPropertyId];
     NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    NSLog(@"filter string:%@",filterStr);
     
     NSURLSessionTask* task = [self.client getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -536,6 +581,7 @@
                 [self.contactOwnerTableView reloadData];
                 [self.contactOfficeTableView reloadData];
                 [self.rightTableView reloadData];
+                [self hideLoading];
             }
             
             [self getPropertyPhoto:self.client];
@@ -543,6 +589,40 @@
         });
     }];
     
+    [task resume];
+}
+
+- (void)updateRepairComment
+{
+    NSString *repairComments = [EKNEKNGlobalInfo getString:self.tabComments.text];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",self.siteUrl,@"Incidents",self.selectIncidentId];
+    NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' },'sl_repairComments':'%@'}",repairComments];
+    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
+    [request addValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
+    [request addValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
+            //NSLog(@"update incident data %@,respones %@ ",dataString,response);
+            if([EKNEKNGlobalInfo isBlankString:dataString])
+            {
+                //ListItem *item = (ListItem *)[self.incidentListArray objectAtIndex:self.selectedIndex];
+                //[item setValue:repairComments forKey:@"sl_repairComments"];
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Update successfully" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                [alert show];
+            }
+        });
+    }];
     [task resume];
 }
 
@@ -558,7 +638,6 @@
     
     NSString *filter = [NSString stringWithFormat:@"$select=Id,sl_datetime,sl_inspector/Title,sl_inspector/sl_emailaddress&$expand=sl_inspector&$filter=Id eq %@&$orderby=sl_datetime desc&$top=1",inspectionID];
     NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    NSLog(@"filter string:%@",filterStr);
     
     NSURLSessionTask* task = [self.client getListItemsByFilter:@"Inspections" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -634,7 +713,6 @@
             if (error == nil) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
                 [self.propertyDetailDic setValue:image forKey:@"photo"];
-                NSLog(@"property table reload");
                 [self.propertyDetailTableView reloadData];
             }
             else
@@ -667,7 +745,6 @@
 
 -(void)getIncidentListPhoto:(ListClient *)client
 {
-    int index = 0;
     for (ListItem* item in self.incidentListArray) {
         
         NSString *incidentID = (NSString *)[item getData:@"ID"];
@@ -677,23 +754,20 @@
         NSString *filter = [NSString stringWithFormat:@"$select=ID,Title&$filter=sl_inspectionIDId eq %@ and sl_incidentIDId eq %@ and sl_roomIDId eq %@&$orderby=Modified desc&$top=1",inspectionID,incidentID,roomID];
         
         NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        NSLog(@"incident photo filter url:%@",filterStr);
         NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(listItems != nil && [listItems count] == 1)
                 {
                     NSString *photoID = (NSString *)[listItems[0] getData:@"ID"];
-                    NSLog(@"Get incident photo ID success,%@",photoID);
-                        [self getRoomInspectionPhotoServerRelativeUrl:client photoID:photoID incidentID:incidentID index:index];
+                    [self getRoomInspectionPhotoServerRelativeUrl:client photoID:photoID incidentID:incidentID];
                 }
             });
         }];
         [task resume];
-        index = index + 1;
     }
 }
 
--(void)getRoomInspectionPhotoServerRelativeUrl:(ListClient *)client photoID:(NSString *)photoID incidentID:(NSString *)incidentID index:(NSInteger)index
+-(void)getRoomInspectionPhotoServerRelativeUrl:(ListClient *)client photoID:(NSString *)photoID incidentID:(NSString *)incidentID
 {
     NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Room Inspection Photos"
                                                                      FileId:photoID
@@ -704,7 +778,7 @@
                                                      if(listItems != nil && [listItems count] > 0)
                                                      {
                                                          NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
-                                                         [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID index:index];
+                                                         [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID];
                                                      }
                                                  });
                                                  
@@ -713,7 +787,7 @@
     [getFileResourcetask resume];
 }
 
--(void)getRoomInspectionPhoto:(NSString *)serverRelativeUrl incidentID:(NSString *)incidentID index:(NSInteger)index
+-(void)getRoomInspectionPhoto:(NSString *)serverRelativeUrl incidentID:(NSString *)incidentID
 {
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",self.siteUrl,serverRelativeUrl,@"')/$value"];
     
@@ -726,15 +800,12 @@
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            ListItem* tempItem = [self.incidentListArray objectAtIndex:index];
             if (error == nil) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
                 //[tempItem setValue:@"test" forKey:@"photo"];
                 NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
                 [self.incidentPhotoListDic setObject:dic forKey:incidentID];
                 [[self.incidentPhotoListDic objectForKey:incidentID] setObject:image forKey:@"photo"];
-                //NSIndexPath *updateIndexPath =[NSIndexPath indexPathForRow:index inSection:0];
-                //[self didUpdateRightTableCell:updateIndexPath image:image];
                 
                 [self.rightTableView reloadData];
             }
@@ -752,13 +823,179 @@
                     {
                         times=times+1;
                         [[self.incidentPhotoListDic objectForKey:incidentID] setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
-                        [self getPhoto];
+                        [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID];
                     }
                 }
                 else
                 {
                     [[self.incidentPhotoListDic objectForKey:incidentID] setObject:@"1" forKey:@"trytimes"];
-                    [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID index:index];
+                    [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID];
+                }
+            }
+        });
+    }];
+    [task resume];
+}
+
+//get selected inspection photos
+-(void)getInspectorPhoto:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId
+{
+        NSString *filter = [NSString stringWithFormat:@"$select=ID,Title&$filter=sl_inspectionIDId eq %@ and sl_incidentIDId eq %@ and sl_roomIDId eq %@&$orderby=Modified desc",inspectionId,incidentId,roomId];
+        NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+        NSURLSessionTask* task = [self.client getListItemsByFilter:@"Room Inspection Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self hideLoading];
+                if(listItems != nil && [listItems count] > 0)
+                {
+                    for (ListItem *item in listItems) {
+                        NSString *photoID = (NSString *)[item getData:@"ID"];
+                        [self getInspectorPhotoServerRelativeUrl:inspectionId incidentId:incidentId roomId:roomId photoId:photoID];
+                    }
+                }
+            });
+        }];
+        [task resume];
+}
+
+-(void)getInspectorPhotoServerRelativeUrl:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId
+{
+    NSURLSessionTask* getFileResourcetask = [self.client getListItemFileByFilter:@"Room Inspection Photos"
+                                                                     FileId:photoId
+                                                                     filter:@"$select=ServerRelativeUrl"
+                                                                   callback:^(NSMutableArray *listItems, NSError *error)
+                                             {
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     if(listItems != nil && [listItems count] > 0)
+                                                     {
+                                                         NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
+                                                         [self getInspectorPhotoByServerRelativeUrl:serverRelativeUrl inspectionId:inspectionId incidentId:incidentId roomId:roomId photoId:photoId tryTimes:0];
+                                                     }
+                                                 });
+                                                 
+                                             }];
+    
+    [getFileResourcetask resume];
+}
+
+-(void)getInspectorPhotoByServerRelativeUrl:(NSString *)serverRelativeUrl inspectionId:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId tryTimes:(NSInteger)tryTimes
+{
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",self.siteUrl,serverRelativeUrl,@"')/$value"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
+    [request addValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error == nil) {
+                UIImage *image =[[UIImage alloc] initWithData:data];
+                if([self.roomInspectionPhotoDic objectForKey:incidentId] != nil && [[self.roomInspectionPhotoDic objectForKey:incidentId] objectForKey:@"photos"] != nil)
+                {
+                    [[[self.roomInspectionPhotoDic objectForKey:incidentId] objectForKey:@"photos"] addObject:image];
+                }
+                else
+                {
+                    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                    NSMutableArray *photos = [[NSMutableArray alloc] init];
+                    [photos addObject:image];
+                    [dic setObject:photos forKey:@"photos"];
+                    [self.roomInspectionPhotoDic setObject:dic forKey:incidentId];
+                }
+                [self.inspectorCommentCollection reloadData];
+            }
+            else
+            {
+                if(tryTimes < 3)
+                {
+                    NSInteger times = tryTimes + 1;
+                    [self getInspectorPhotoByServerRelativeUrl:serverRelativeUrl inspectionId:inspectionId incidentId:incidentId roomId:roomId photoId:photoId tryTimes:times];
+                }
+            }
+        });
+    }];
+    [task resume];
+}
+
+//get selected repair photos
+-(void)getRepairPhoto:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId
+{
+    NSString *filter = [NSString stringWithFormat:@"$select=ID,Title&$filter=sl_inspectionIDId eq %@ and sl_incidentIDId eq %@ and sl_roomIDId eq %@&$orderby=Modified desc",inspectionId,incidentId,roomId];
+    NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    NSURLSessionTask* task = [self.client getListItemsByFilter:@"Repair Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideLoading];
+            if(listItems != nil && [listItems count] > 0)
+            {
+                for (ListItem *item in listItems) {
+                    NSString *photoID = (NSString *)[item getData:@"ID"];
+                    [self getRepairServerRelativeUrl:inspectionId incidentId:incidentId roomId:roomId photoId:photoID];
+                }
+            }
+        });
+    }];
+    [task resume];
+}
+
+-(void)getRepairServerRelativeUrl:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId
+{
+    NSURLSessionTask* getFileResourcetask = [self.client getListItemFileByFilter:@"Repair Photos"
+                                                                          FileId:photoId
+                                                                          filter:@"$select=ServerRelativeUrl"
+                                                                        callback:^(NSMutableArray *listItems, NSError *error)
+                                             {
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     if(listItems != nil && [listItems count] > 0)
+                                                     {
+                                                         NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
+                                                         [self getRepairPhotoByServerRelativeUrl:serverRelativeUrl inspectionId:inspectionId incidentId:incidentId roomId:roomId photoId:photoId tryTimes:0];
+                                                     }
+                                                 });
+                                                 
+                                             }];
+    
+    [getFileResourcetask resume];
+}
+
+-(void)getRepairPhotoByServerRelativeUrl:(NSString *)serverRelativeUrl inspectionId:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId tryTimes:(NSInteger)tryTimes
+{
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",self.siteUrl,serverRelativeUrl,@"')/$value"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
+    [request addValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error == nil) {
+                UIImage *image =[[UIImage alloc] initWithData:data];
+                if([self.repairPhotoDic objectForKey:incidentId] != nil && [[self.repairPhotoDic objectForKey:incidentId] objectForKey:@"photos"] != nil)
+                {
+                    [[[self.repairPhotoDic objectForKey:incidentId] objectForKey:@"photos"] addObject:image];
+                }
+                else
+                {
+                    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                    NSMutableArray *photos = [[NSMutableArray alloc] init];
+                    [photos addObject:image];
+                    [dic setObject:photos forKey:@"photos"];
+                    [self.repairPhotoDic setObject:dic forKey:incidentId];
+                }
+                [self.commentCollection reloadData];
+            }
+            else
+            {
+                if(tryTimes < 3)
+                {
+                    NSInteger times = tryTimes + 1;
+                    [self getRepairPhotoByServerRelativeUrl:serverRelativeUrl inspectionId:inspectionId incidentId:incidentId roomId:roomId photoId:photoId tryTimes:times];
                 }
             }
         });
@@ -1282,15 +1519,13 @@
 }
 
 //collection view
-//
-//
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if(collectionView == self.inspectorCommentCollection)//inspector collection view
     {
-        if(self.inspectorCommentImages != nil)
+        if([self.roomInspectionPhotoDic objectForKey:self.selectIncidentId] != nil && [[self.roomInspectionPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] != nil)
         {
-            return [self.inspectorCommentImages count];
+            return [[[self.roomInspectionPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] count];
         }
         else
         {
@@ -1299,9 +1534,9 @@
     }
     else if(collectionView == self.commentCollection)//comment image collection view
     {
-        if(self.commentImages != nil)
+        if([self.repairPhotoDic objectForKey:self.selectIncidentId] != nil && [[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] != nil)
         {
-            return [self.commentImages count];
+            return [[[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] count];
         }
         else
         {
@@ -1330,7 +1565,8 @@
     EKNCollectionViewCell *cell = (EKNCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionCellID forIndexPath:indexPath];
     if(collectionView == self.inspectorCommentCollection)
     {
-        UIImage *image = self.inspectorCommentImages[indexPath.row];
+        NSMutableArray *imageArray = (NSMutableArray *)[[self.roomInspectionPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"];
+        UIImage *image = imageArray[indexPath.row];
         CGFloat width = image.size.width;
         CGFloat heigth = image.size.height;
         if(heigth > 116)
@@ -1345,7 +1581,8 @@
     }
     else
     {
-        UIImage *image = self.commentImages[indexPath.row];
+        NSMutableArray *imageArray = (NSMutableArray *)[[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"];
+        UIImage *image = imageArray[indexPath.row];
         CGFloat width = image.size.width;
         CGFloat heigth = image.size.height;
         if(heigth > 116)
@@ -1366,11 +1603,13 @@
     UIImage *image;
     if(collectionView == self.inspectorCommentCollection)
     {
-        image = self.inspectorCommentImages[indexPath.row];
+        NSMutableArray *imageArray = (NSMutableArray *)[[self.roomInspectionPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"];
+        image = imageArray[indexPath.row];
     }
     else
     {
-        image = self.commentImages[indexPath.row];
+        NSMutableArray *imageArray = (NSMutableArray *)[[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"];
+        image = imageArray[indexPath.row];
     }
     CGFloat width = image.size.width;
     CGFloat heigth = image.size.height;
@@ -1385,5 +1624,126 @@
 
 
 //picker view
+-(void) takeCameraAction
+{
+    [self takePhoto];
+}
+
+- (void)takePhoto
+{
+    UIActionSheet *sheet;
+    if(self.cameraIsAvailable)
+    {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"New Photo", @"Select Photo", nil];
+    }
+    else
+    {
+        sheet = [[UIActionSheet alloc]
+                 initWithTitle:nil
+                 delegate:self
+                 cancelButtonTitle:@"Cancel"
+                 destructiveButtonTitle:nil
+                 otherButtonTitles:@"Select Photo", nil];
+    }
+    sheet.actionSheetStyle = UIActionSheetStyleDefault;
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0 && self.cameraIsAvailable)//take new photo
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self openCamera];
+        }];
+    }
+    else if(buttonIndex == 1)//select photo library
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self selectPicture];
+        }];
+    }
+}
+
+- (void)openCamera
+{
+    [self pickMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+}
+
+-(void)selectPicture
+{
+    [self pickMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
+}
+
+-(void)pickMediaFromSource:(UIImagePickerControllerSourceType)sourceType
+{
+    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+    if([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediaTypes count] > 0)
+    {
+        //NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        //picker.mediaTypes = mediaTypes;
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:NULL];
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Error accessing media"
+                              message:@"Device doesn't support that media source."
+                              delegate:nil
+                              cancelButtonTitle:@"Error"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (UIImage *)shrinkImage:(UIImage *)original toSize:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+    [original drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *final = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return final;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    /*
+    [self.client uploadImageToRepairPhotos:self.token image:chosenImage inspectionId:self.selectInspectionId incidentId:self.selectIncidentId roomId:self.selectRoomId callback:^(NSError *error) {
+        
+        NSLog(@"test upload image");
+    }];
+    */
+    
+    if([self.repairPhotoDic objectForKey:self.selectIncidentId] != nil && [[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] != nil)
+    {
+        [[[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] addObject:chosenImage];
+    }
+    else
+    {
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        NSMutableArray *photos = [[NSMutableArray alloc] init];
+        [photos addObject:chosenImage];
+        [dic setObject:photos forKey:@"photos"];
+        [self.repairPhotoDic setObject:dic forKey:self.selectIncidentId];
+    }
+    [self.commentCollection reloadData];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
 
 @end

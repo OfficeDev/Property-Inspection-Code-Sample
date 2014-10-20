@@ -29,7 +29,12 @@
 @property(nonatomic) NSString* loginName;
 @property(nonatomic) NSString* token;
 @property(nonatomic) NSString* siteUrl;
+@property(nonatomic) NSString* incidentId;
 @property(nonatomic) NSString* selectPropertyId;
+@property(nonatomic) NSString* selectIncidentId;
+@property(nonatomic) NSString* selectInspectionId;
+@property(nonatomic) NSString* selectRoomId;
+@property(nonatomic) NSInteger selectedIndex;
 //end
 
 
@@ -39,6 +44,8 @@
 //sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode
 @property(nonatomic) NSMutableArray *incidentListArray;
 @property(nonatomic) NSMutableDictionary *incidentPhotoListDic;
+@property(nonatomic) NSMutableDictionary *roomInspectionPhotoDic;
+@property(nonatomic) NSMutableDictionary *repairPhotoDic;
 
 //current and upcoming inspections dict
 //top: current listitem
@@ -90,18 +97,17 @@
 @property(nonatomic) UIButton *finalizeBtn;
 
 @property(nonatomic) BOOL detailViewIsShowing;
+@property(nonatomic) BOOL cameraIsAvailable;
 
-@property(nonatomic) NSMutableArray *commentImages;
-@property(nonatomic) NSMutableArray *inspectorCommentImages;
 @property(nonatomic) UICollectionView *commentCollection;
 @property(nonatomic) UICollectionView *inspectorCommentCollection;
 
 @property(nonatomic) UILabel *roomTitleLbl;
 @property(nonatomic) UILabel *separatorLbl;
 @property(nonatomic) UILabel *incidentTypeLbl;
-@property(nonatomic) UILabel *tabDispatcherComments;
-@property(nonatomic) UILabel *tabInsptorComments;
-@property(nonatomic) UILabel *tabComments;
+@property(nonatomic) UITextView *tabDispatcherComments;
+@property(nonatomic) UITextView *tabInsptorComments;
+@property(nonatomic) UITextView *tabComments;
 
 /**/
 
