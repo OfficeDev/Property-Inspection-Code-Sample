@@ -103,39 +103,16 @@ const NSString *apiUrl = @"/_api/lists";
     //[task resume];
 }
 
-- (BOOL)uploadImageToDocumentLibrary:(NSString *)token libraryName:(NSString *)libraryName image:(UIImage *)image
+- (void)uploadImageToRepairPhotos:(NSString *)token image:(UIImage *)image inspectionId:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId callback:(void (^)(NSError *error))callback
 {
-    BOOL success = NO;
     NSString *imageName = [self createFileName:@".jpg"];
-    NSString *listName = [libraryName urlencode];
-    if([self uploadImage:token image:image libraryName:listName imageName:imageName])
-    {
-        int itemID = [self getItemID:token libraryName:listName imageName:imageName];
-        if(itemID > 0)
-        {
-            //update sl_inspectionID, sl_incidentID,sl_roomID
-            
-        }
-        else
-        {
-            NSLog(@"Get Item ID failed.");
-        }
-    }
-    else
-    {
-        NSLog(@"upload image failed.");
-    }
-    
-    return success;
+    //[self uploadImage:token image:image imageName:imageName inspectionId:inspectionId incidentId:incidentId roomId:roomId callback:callback];
+    [self getItemID:token imageName:@"14102020214908100020097.jpg" inspectionId:inspectionId incidentId:incidentId roomId:roomId callback:callback];
 }
 
-- (BOOL)uploadImage:(NSString *)token image:(UIImage *)image libraryName:(NSString *)libraryName imageName:(NSString *)imageName
+- (void)uploadImage:(NSString *)token image:(UIImage *)image imageName:(NSString *)imageName inspectionId:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId callback:(void (^)(NSError *error))callback
 {
-    static BOOL uploadSuccess = NO;
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
-    
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files/add(url='%@',overwrite=true)",siteUrl,libraryName,imageName];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('RepairPhotos')/Files/add(url='%@',overwrite=true)",self.Url,imageName];
     NSData *postData = UIImageJPEGRepresentation(image, 1);
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
@@ -150,21 +127,36 @@ const NSString *apiUrl = @"/_api/lists";
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
             NSLog(@"data:%@, response:%@",dataString,response);
-            uploadSuccess = true;
+            [self getItemID:token imageName:imageName inspectionId:inspectionId incidentId:incidentId roomId:roomId callback:callback];
         });
     }];
     [task resume];
-    
-    return uploadSuccess;
 }
 
-- (NSInteger)getItemID:(NSString *)token libraryName:(NSString *)libraryName imageName:(NSString *)imageName
+- (NSInteger)getItemID:(NSString *)token imageName:(NSString *)imageName inspectionId:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId callback:(void (^)(NSError *error))callback
 {
-    static NSInteger id = 0;
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
     
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files('%@')/ListItemAllFields",siteUrl,libraryName,imageName];
+    NSString *url = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('RepairPhotos')/Files('%@')/ListItemAllFields",self.Url,imageName];
+    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential url:url];
+    
+    NSString *method = (NSString*)[[Constants alloc] init].Method_Get;
+    
+    return [connection execute:method callback:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSMutableArray *array = [NSMutableArray array];
+        
+        NSMutableArray *listsItemsArray =[self parseDataArray: data];
+        for (NSDictionary* value in listsItemsArray) {
+            [array addObject: [[ListItem alloc] initWithDictionary:value]];
+        }
+        
+        
+    }];
+    
+    return 0;
+    
+    static NSInteger id = 0;
+    
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('RepairPhotos')/Files('%@')/ListItemAllFields",self.Url,imageName];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
     [request setHTTPMethod:@"GET"];
@@ -173,11 +165,27 @@ const NSString *apiUrl = @"/_api/lists";
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"get image property data %@ ",dataString);
-            NSMutableArray *array = [NSMutableArray array];
-            NSMutableArray *listsItemsArray =[self parseDataArray: data];
+            //NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
+            //NSLog(@"get image property data %@ ",dataString);
             
+            //NSMutableArray *array = [NSMutableArray array];
+            //NSMutableArray *listsItemsArray =[self parseDataArray: data];
+            
+            //NSArray *jsonArray = [[jsonResult valueForKey : @"d"] valueForKey : @"results"];
+            //for (NSDictionary* value in listsItemsArray) {
+            //    [array addObject: [[ListItem alloc] initWithDictionary:value]];
+            //}
+            
+            
+            
+            NSError *error ;
+            
+            NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:[self sanitizeJson:data]
+                                                                       options: kNilOptions
+                                                                         error:&error];
+            
+            NSString *id = [jsonResult objectForKey:@"Id"];
+            NSLog(@"Id: %@",id);
         });
     }];
     [task resume];
@@ -191,7 +199,7 @@ const NSString *apiUrl = @"/_api/lists";
     NSInteger inspectionID = 1, incidentID = 1, roomID = 1;
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
-    listName = [@"Room Inspection Photos" urlencode];
+    listName = [@"Repair Photos" urlencode];
     
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(83)",siteUrl,listName];
     NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.RoomInspectionPhotosItem' },'sl_inspectionIDId':%i,'sl_incidentIDId':%i,'sl_roomIDId':%i}",inspectionID,incidentID,roomID];
@@ -312,7 +320,7 @@ const NSString *apiUrl = @"/_api/lists";
 
 - (NSData*) sanitizeJson : (NSData*) data{
     NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-    //NSLog(@"dataString:%@",dataString);
+    NSLog(@"dataString:%@",dataString);
     NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
     
     NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];

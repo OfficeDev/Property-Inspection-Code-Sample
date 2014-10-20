@@ -352,7 +352,6 @@
 		0EC4F5BF19CFF2C600BEF583 /* EdKeyNote */ = {
 			isa = PBXGroup;
 			children = (
-				F3673A6E19ED2D6C00C02B44 /* Incident Detail Page */,
 				F3673A6A19ED2D1700C02B44 /* Incident Page */,
 				0EADF95519E7C48600E1DE77 /* UIViewControllerEX */,
 				F3D2B21919E633D800069182 /* Room Detail page */,
@@ -389,13 +388,6 @@
 				F3673A6C19ED2D5800C02B44 /* EKNIncidentViewController.m */,
 			);
 			name = "Incident Page";
-			sourceTree = "<group>";
-		};
-		F3673A6E19ED2D6C00C02B44 /* Incident Detail Page */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Incident Detail Page";
 			sourceTree = "<group>";
 		};
 		F3673A6F19ED2ED400C02B44 /* IncidentCell */ = {
