@@ -32,16 +32,24 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    if(self.naviController!=nil)
+
+    NSString *low = [((NSString *)[url absoluteString]) lowercaseString];
+    if([low hasPrefix:@"inspectionapp://"])
     {
-        [self.naviController popToRootViewControllerAnimated:NO];
-        EKNLoginViewController *login = [[EKNLoginViewController alloc] init];
-        [self.naviController pushViewController:login animated:YES];
+        NSString *propertyId = [low substringFromIndex:(@"inspectionapp://").length-1];
+        if([[NSScanner scannerWithString:propertyId] scanInt:nil])
+        {
+            NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+            [standardUserDefaults setValue:propertyId forKey:@"propertyId"];
+            [standardUserDefaults synchronize];
+            if(self.naviController!=nil)
+            {
+                [self.naviController popToRootViewControllerAnimated:NO];
+                EKNLoginViewController *login = [[EKNLoginViewController alloc] init];
+                [self.naviController pushViewController:login animated:YES];
+            }
+        }
     }
-    
-    
-    
-    NSLog(@"URL query: %@", [url query]);
     
     return  YES;
     

@@ -27,7 +27,7 @@
 			<string>com.canviz.EdKeyNote</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>EdKeyNoteAPP</string>
+				<string>inspectionApp</string>
 			</array>
 		</dict>
 	</array>
