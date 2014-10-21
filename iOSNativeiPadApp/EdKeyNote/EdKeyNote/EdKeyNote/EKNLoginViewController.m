@@ -8,7 +8,6 @@
 
 #import "EKNLoginViewController.h"
 #import "EKNPropertyDetailsViewController.h"
-#import "EKNRoomDetailsViewController.h"
 @interface EKNLoginViewController ()
 
 @end
@@ -208,7 +207,6 @@
 }
 */
 - (void) performLogin: (BOOL) clearCache{
-    
     UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(480,440,50,50)];
     spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     [spinner setColor:[UIColor blackColor]];

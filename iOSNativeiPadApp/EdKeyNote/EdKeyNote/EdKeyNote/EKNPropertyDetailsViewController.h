@@ -94,7 +94,7 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 //key is propery Id, use to store property Resource and incidents
 //key propery Id,value is property dict
 //----key inspectionslist value nsarry(dic)
-//------------ID,sl_accountname, bowner, icon, sl_datetime
+//------------ID,sl_accountname, bowner, icon, sl_datetime,sl_finalized
 //----key contactowner value contactowner
 //----key contactemail value contactemail
 //----key ServerRelativeUrl value ServerRelativeUrl
@@ -111,7 +111,9 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 //----sl_status
 @property(nonatomic) NSMutableDictionary *incidentOfInspectionDic;
 
-//key is room Id, use to store room andincidents
+//key is propertyId,value is dic
+//--key is inspectionid,value is dic
+//----key is roomid,value is string, indictate the incident item whether exsit
 @property(nonatomic)NSMutableDictionary *incidentOfRoomsDic;
 
 //key is inspection Id, use to store rooms

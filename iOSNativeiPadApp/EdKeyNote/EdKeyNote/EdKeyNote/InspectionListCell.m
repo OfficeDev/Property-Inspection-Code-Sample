@@ -19,11 +19,12 @@
 
     // Configure the view for the selected state
 }
--(void)setCellValue:(NSString *)dateTime owner:(NSString *)owner incident:(NSString *)incident plus:(BOOL)bplus
+-(void)setCellValue:(NSString *)dateTime owner:(NSString *)owner incident:(NSString *)incident plus:(BOOL)bplus final:(BOOL)final
 {
     
     self.dateTime.text = dateTime;
     self.owner.text = owner;
+    self.bfinalized = final;
     if(incident!=nil)
     {
         [self.incidentImage setImage:[UIImage imageNamed:incident]];

@@ -13,4 +13,5 @@
 +(NSDate *)converDateFromString:(NSString *)stringdate;
 +(NSString *)converStringFromDate:(NSDate *)date;
 +(NSString *)createFileName:(NSString *)fileExtension;
++(BOOL)isEqualTodayDate:(NSString *)tempDate;
 @end

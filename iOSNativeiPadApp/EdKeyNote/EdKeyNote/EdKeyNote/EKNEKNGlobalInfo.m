@@ -28,6 +28,19 @@
     NSString *ret =[formatter stringFromDate:date];
     return ret;
 }
++(BOOL)isEqualTodayDate:(NSString *)tempDate
+{
+    NSString *tempstr =[EKNEKNGlobalInfo converStringFromDate:[EKNEKNGlobalInfo converDateFromString:tempDate]];
+    NSString *currentstr = [EKNEKNGlobalInfo converStringFromDate:[NSDate date]];
+    if ([tempstr isEqualToString:currentstr]) {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+    
+}
 +(NSString *)createFileName:(NSString *)fileExtension
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
