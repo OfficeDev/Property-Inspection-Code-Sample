@@ -211,6 +211,7 @@
     
     UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(480,440,50,50)];
     spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [spinner setColor:[UIColor blackColor]];
     [self.view addSubview:spinner];
     spinner.hidesWhenStopped = YES;
     

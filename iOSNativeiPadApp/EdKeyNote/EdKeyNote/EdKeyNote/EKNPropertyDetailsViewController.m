@@ -332,12 +332,14 @@
 -(void)addSpinner
 {
     self.propertyViewSpinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
-    self.propertyViewSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.propertyViewSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [self.propertyViewSpinner setColor:[UIColor blackColor]];
     [self.view addSubview:self.propertyViewSpinner];
     self.propertyViewSpinner.hidesWhenStopped = YES;
     
     self.commentViewSpinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,550+91,50,50)];
-    self.commentViewSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.commentViewSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.commentViewSpinner.color = [UIColor blackColor];
     [self.view addSubview:self.commentViewSpinner];
     self.commentViewSpinner.hidesWhenStopped = YES;
     
@@ -356,7 +358,7 @@
     [commentPopupView addSubview:commentCamera];
     
     UIView *imgBackgoundView = [[UIView alloc] initWithFrame:CGRectMake(106, 30, 886, 99)];
-    imgBackgoundView.backgroundColor = [UIColor whiteColor];
+    imgBackgoundView.backgroundColor = [UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
     imgBackgoundView.layer.masksToBounds = YES;
     imgBackgoundView.layer.cornerRadius = 5;
     [commentPopupView addSubview:imgBackgoundView];
@@ -380,7 +382,7 @@
     
     UIView *commentBackgoundView = [[UIView alloc] initWithFrame:CGRectMake(106, 149, 886, 160)];
     commentBackgoundView.tag =CommentTextBackgroundViewTag;
-    commentBackgoundView.backgroundColor = [UIColor whiteColor];
+    commentBackgoundView.backgroundColor = [UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
     commentBackgoundView.layer.masksToBounds = YES;
     commentBackgoundView.layer.cornerRadius = 5;
     [commentPopupView addSubview:commentBackgoundView];
@@ -533,7 +535,7 @@
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     UIImage *smallImage = [self shrinkImage:chosenImage toSize:CGSizeMake(120, 79)];
     //UIImage *largeImage = [self shrinkImage:chosenImage toSize:CGSizeMake(210, 158)];
-    [self startCommentViewSpiner:CGRectMake(640,319,50,50)];
+    [self startCommentViewSpiner:CGRectMake(106+443,30+40,50,50)];
     
     NSString *imagename =[EKNEKNGlobalInfo createFileName:@".jpg"];
     [self.listClient uploadImage:self.token image:smallImage libraryName:@"RoomInspectionPhotos" imageName:imagename
@@ -680,11 +682,13 @@
                 {
                     NSDictionary *inspecdic =[inspectionlist objectAtIndex:self.selectLetInspectionIndexPath.row];
                     NSString *insId = [inspecdic objectForKey:@"ID"];
+                    NSLog(@"getSelectLeftInspectionItemId %@",insId);
                     return insId;
                 }
             }
         }
     }
+    NSLog(@"getSelectLeftInspectionItemId nil");
     return nil;
 }
 -(NSString *)getSelectLeftRoomItemId
@@ -697,12 +701,14 @@
             if([roomsArray count]>=roomIdex+1)
             {
                 NSDictionary *roomdic = [roomsArray objectAtIndex:roomIdex];
-                return (NSString *)[roomdic objectForKey:@"Id"];
+                NSString *roomId =(NSString *)[roomdic objectForKey:@"Id"];
+                 NSLog(@"roomId %@",roomId);
+                return roomId;
             }
         }
 
     }
-
+   NSLog(@"roomId nil");
     return nil;
 }
 -(BOOL)getCommentViewWhetherShow
@@ -1080,7 +1086,7 @@
 }
 #pragma mark - read/update/create sharepoint list item using REST
 -(void)loadPropertyData{
-    [self startPropertyViewSpiner:CGRectMake(135,140,50,50)];
+    [self startPropertyViewSpiner:CGRectMake(380+250,140+300,50,50)];
     
     NSURLSessionTask* task = [self.listClient getListItemsByFilter:@"Inspections" filter:@"$select=ID,sl_datetime,sl_finalized,sl_inspector/ID,sl_inspector/Title,sl_inspector/sl_accountname,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_emailaddress&$expand=sl_inspector,sl_propertyID&$orderby=sl_datetime%20desc" callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
