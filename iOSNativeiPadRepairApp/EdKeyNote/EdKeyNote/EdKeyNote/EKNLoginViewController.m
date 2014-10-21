@@ -8,7 +8,6 @@
 
 #import "EKNLoginViewController.h"
 #import "EKNIncidentViewController.h"
-#import "EKNRoomDetailsViewController.h"
 @interface EKNLoginViewController ()
 
 @end

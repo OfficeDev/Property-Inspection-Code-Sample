@@ -15,4 +15,5 @@
 +(BOOL)isBlankString:(NSString *)string;
 +(CGSize)getSizeFromStringWithFont:(NSString *)string font:(UIFont *)font;
 +(NSString *)getString:(NSString *)string;
++(BOOL)requestSuccess:(NSURLResponse *)response;
 @end
