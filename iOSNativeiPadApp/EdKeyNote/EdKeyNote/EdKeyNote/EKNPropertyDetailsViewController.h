@@ -97,6 +97,7 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 //------------ID,sl_accountname, bowner, icon, sl_datetime,sl_finalized
 //----key contactowner value contactowner
 //----key contactemail value contactemail
+//----key imageID value imageID
 //----key ServerRelativeUrl value ServerRelativeUrl
 //----key image value image
 //----key trytimesb value trytimes
@@ -106,15 +107,17 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 @property(nonatomic) NSMutableDictionary *propertyDic;
 
 
-//key is inspection Id, use to store inspection andincidents
-//---icon: red
-//----sl_status
+//key is propertyId,value is dic
+//--key is inspectionid,value is dic
+//------key icon, value red to flag the inspection list red/green iocn
+//------key roomId(room1), value YES to flag the room list red/green iocn
+
 @property(nonatomic) NSMutableDictionary *incidentOfInspectionDic;
 
 //key is propertyId,value is dic
 //--key is inspectionid,value is dic
 //----key is roomid,value is string, indictate the incident item whether exsit
-@property(nonatomic)NSMutableDictionary *incidentOfRoomsDic;
+//@property(nonatomic)NSMutableDictionary *incidentOfRoomsDic;
 
 //key is inspection Id, use to store rooms
 //one inspection maybe have many rooms

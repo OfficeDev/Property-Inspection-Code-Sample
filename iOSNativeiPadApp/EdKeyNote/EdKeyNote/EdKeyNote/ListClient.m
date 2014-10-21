@@ -243,7 +243,7 @@ const NSString *apiUrl = @"/_api/lists";
     [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
     [request addValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
     [request addValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
-    [request addValue:[NSString stringWithFormat:@"%ld",[postData length]] forHTTPHeaderField:@"content-length"];
+    [request addValue:[NSString stringWithFormat:@"%ld",(unsigned long)[postData length]] forHTTPHeaderField:@"content-length"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:postData];
     
@@ -263,7 +263,7 @@ const NSString *apiUrl = @"/_api/lists";
     [request addValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
     [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
     [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
-    [request addValue:[NSString stringWithFormat:@"%ld",[postData length]] forHTTPHeaderField:@"content-length"];
+    [request addValue:[NSString stringWithFormat:@"%ld",(unsigned long)[postData length]] forHTTPHeaderField:@"content-length"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:postData];
     
@@ -327,8 +327,6 @@ const NSString *apiUrl = @"/_api/lists";
                                                                                           NSURLResponse *response,
                                                                                           NSError *error)
                                   {
-                                      NSMutableArray *array = [NSMutableArray array];
-                                      
                                       NSMutableArray *listsItemsArray =[self parseDataArray: data];
                                       callback(listsItemsArray,error);
                                   }];

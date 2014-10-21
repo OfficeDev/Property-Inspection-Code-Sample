@@ -701,6 +701,30 @@
     NSLog(@"getSelectLeftInspectionItemId pid %@",pid);
     return pid;
 }
+-(NSString *)getInspectionItemIcon:(NSString *)insidkey
+{
+    NSMutableDictionary *pic =[self.incidentOfInspectionDic objectForKey:self.selectRightPropertyItemId];
+    if (pic!=nil) {
+        NSMutableDictionary *insdic = [pic objectForKey:insidkey];
+        if (insdic!=nil) {
+            NSString *status = [insdic objectForKey:@"icon"];
+            return status;
+        }
+    }
+    return nil;
+}
+-(NSString *)getRoomItemIcon:(NSString *)roomid
+{
+    NSMutableDictionary *pic =[self.incidentOfInspectionDic objectForKey:self.selectRightPropertyItemId];
+    if (pic!=nil) {
+        NSMutableDictionary *insdic = [pic objectForKey:[self getSelectLeftInspectionItemId]];
+        if (insdic!=nil) {
+            NSString *roomicon =[insdic objectForKey:[NSString stringWithFormat:@"room%@",roomid]];
+            return roomicon;
+        }
+    }
+    return nil;
+}
 /*-(BOOL)getUseThisPropertyIdInList:(NSString *)pid;
 {
     NSMutableArray *toparray = [self.rightPropertyListDic objectForKeyedSubscript:@"top"];
@@ -1158,7 +1182,6 @@
             {
                 NSMutableArray *upcomingList = [[NSMutableArray alloc] init];
                 NSMutableArray *currentList = [[NSMutableArray alloc] init];
-                BOOL bfound=false;
                 self.inspectionsListArray =listItems;
                 
                 for(ListItem* tempitem in listItems)
@@ -1193,7 +1216,7 @@
                      InspectionDateTime:(NSString *)[tempitem getData:@"sl_datetime"]
                      InspectorData:indata
                      PropertyData:pdata];*/
-                    bfound = false;
+                    BOOL bAdded = NO;
                     NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
                     NSString *pid=[NSString stringWithFormat:@"%@",[pdic objectForKey:@"ID"]];
                     NSString *tempdatetime =(NSString *)[tempitem getData:@"sl_datetime"];
@@ -1212,6 +1235,7 @@
                                 }
                             }
                             if (!bexist) {
+                                bAdded = YES;
                                 [currentList addObject:tempitem];
                             }
                         }
@@ -1229,11 +1253,12 @@
                                     }
                                 }
                                 if (!bexist) {
+                                    bAdded = YES;
                                     [upcomingList addObject:tempitem];
                                 }
                             }
                         }
-                        if([self.propertyDic objectForKey:[NSString stringWithFormat:@"%@",pid]]==nil)
+                        if(bAdded && [self.propertyDic objectForKey:[NSString stringWithFormat:@"%@",pid]]==nil)
                         {
                             NSMutableDictionary *propertyDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[NSMutableArray alloc] init],@"RoomsArray", nil];
                             [self.propertyDic setObject:propertyDic forKey:[NSString stringWithFormat:@"%@",pid]];
@@ -1266,11 +1291,12 @@
                                                          if (error==nil) {
                                                              for (ListItem *listitem in listItems) {
                                                                  NSString *pidStr = [NSString stringWithFormat:@"%@",[listitem getData:@"sl_propertyIDId"]];
-                                                                 
-                                                                 NSMutableDictionary *roomDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",[listitem getData:@"Id"]],@"Id",[listitem getData:@"Title"],@"Title", nil];
-                                                                 
-                                                                 [[[self.propertyDic objectForKey:pidStr] objectForKey:@"RoomsArray"]addObject:roomDic];
-                                                                 
+                                                                 if (pidStr != (NSString *)[NSNull null]&& [self.propertyDic objectForKey:pidStr]!=nil) {
+                                                                     NSMutableDictionary *roomDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",[listitem getData:@"Id"]],@"Id",[listitem getData:@"Title"],@"Title", nil];
+                                                                     
+                                                                     [[[self.propertyDic objectForKey:pidStr] objectForKey:@"RoomsArray"]addObject:roomDic];
+                                                                 }
+
                                                              }
                                                              //get property resource list:
                                                              [self getPropertyResourceList];
@@ -1283,29 +1309,61 @@
 }
 -(void)getPropertyResourceList
 {
-    NSURLSessionTask* getpropertyResourcetask = [self.listClient getListItemsByFilter:@"Property Photos" filter:@"$select=sl_propertyIDId,Id" callback:^(NSMutableArray * listItems, NSError *error)
-                    {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            //self.propertyResourceListArray =listItems;
-                            [self getPropertyResourceFile:(NSMutableArray* )listItems];
-                        });
-                    }];
-    
-    [getpropertyResourcetask resume];
+    NSMutableString* loopindex = [[NSMutableString alloc] initWithString:@"0"];
+    NSArray *loopitems =[self.propertyDic allKeys];
+    for (NSString *pid in loopitems)
+    {
+        NSURLSessionTask* getpropertyResourcetask = [self.listClient getListItemsByFilter:@"Property Photos" filter:[NSString stringWithFormat:@"$select=sl_propertyIDId,Id&$filter=sl_propertyIDId%%20eq%%20%@&$top=1",pid] callback:^(NSMutableArray * listItems, NSError *error)
+                                                     {
+                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                             //self.propertyResourceListArray =listItems;
+                                                             if(error==nil)
+                                                             {
+                                                                 int preindex = [loopindex intValue];
+                                                                 preindex++;
+                                                                 
+                                                                 if(listItems!=nil && [listItems count]>0)
+                                                                 {
+                                                                     ListItem *tempitem = [listItems objectAtIndex:0];
+                                                                     NSString *propertyId =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_propertyIDId"]];
+                                                                     NSString *propertyImageId =[NSString stringWithFormat:@"%@",[tempitem getData:@"ID"]];
+                                                                     
+                                                                     if ([self.propertyDic objectForKey:propertyId]!=nil) {
+                                                                         [[self.propertyDic objectForKey:propertyId] setObject:propertyImageId forKey:@"imageID"];
+                                                                     }
+                                                                 }
+                                                                 
+                                                                 if(preindex == [loopitems count])
+                                                                 {
+                                                                     [self getPropertyResourceFile];
+                                                                     
+                                                                 }
+                                                                 [loopindex setString:[NSString stringWithFormat:@"%d",preindex]];
+                                                                 NSLog(@"getPropertyResourceList loopindex %@",loopindex);
+                                                                 
+                                                             }
+                                                             
+
+                                                             
+
+
+                                                             
+                                                         });
+                                                     }];
+        
+        [getpropertyResourcetask resume];
+    }
 }
 
--(void)getPropertyResourceFile:(NSMutableArray* )listItems
+-(void)getPropertyResourceFile
 {
     NSMutableString* loopindex = [[NSMutableString alloc] initWithString:@"0"];
-    NSMutableArray *loopitems =listItems;
+    NSArray *loopitems =[self.propertyDic allKeys];
     
-    
-    for (ListItem* tempitem in loopitems)
+    for (NSString *pid in loopitems)
     {
-        NSString *propertyId =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_propertyIDId"]];
-    
         NSURLSessionTask* getFileResourcetask = [self.listClient getListItemFileByFilter:@"Property Photos"
-                                                        FileId:(NSString *)[tempitem getData:@"ID"]
+                                                        FileId:(NSString *)[[self.propertyDic objectForKey:pid] objectForKey:@"imageID"]
                                                         filter:@"$select=ServerRelativeUrl"
                                                         callback:^(NSMutableArray *listItems, NSError *error)
                     {
@@ -1315,7 +1373,7 @@
                                                          
                             if([listItems count]>0)
                             {
-                                NSMutableDictionary *propertyData =[self.propertyDic objectForKey:propertyId];
+                                NSMutableDictionary *propertyData =[self.propertyDic objectForKey:pid];
                                 
                                 [propertyData setObject:[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"] forKey:@"ServerRelativeUrl"];
                             }
@@ -1338,41 +1396,48 @@
 -(void)getIncidentsListArray
 {
     self.incidentOfInspectionDic = [[NSMutableDictionary alloc] init];
-    self.incidentOfRoomsDic = [[NSMutableDictionary alloc] init];
+    //self.incidentOfRoomsDic = [[NSMutableDictionary alloc] init];
     NSURLSessionTask* getincidentstask = [self.listClient getListItemsByFilter:@"Incidents" filter:@"$select=sl_propertyIDId,sl_inspectionIDId,sl_roomIDId,Id"  callback:^(NSMutableArray *        listItems, NSError *error)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                
-                
                 for (ListItem* tempitem in listItems) {
+                    if ([tempitem getData:@"sl_propertyIDId"] == [NSNull null]
+                        ||[tempitem getData:@"sl_inspectionIDId"] ==[NSNull null]) {
+                        continue;
+                    }
                     NSString *pid = [NSString stringWithFormat:@"%@",[tempitem getData:@"sl_propertyIDId"]];
                     NSString *insid =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_inspectionIDId"]];
-                    NSString *roomId =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_roomIDId"]];
                     
-                    if(![self.incidentOfInspectionDic objectForKey:insid])
-                    {
-                        NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"red",@"icon", nil];
-                        [self.incidentOfInspectionDic setObject:temp forKey:insid];
-
-                    }
-                    NSMutableDictionary* prodic =[self.incidentOfRoomsDic objectForKey:pid];
-                    if (prodic ==nil) {
-                        prodic = [[NSMutableDictionary alloc] init];
-                        [self.incidentOfRoomsDic  setObject:prodic forKey:pid];
+                    if ([self.propertyDic objectForKey:pid]!=nil) {
+                        NSMutableDictionary *prodic = [self.incidentOfInspectionDic objectForKey:pid];
+                        if(prodic == nil)
+                        {
+                            prodic  =[[NSMutableDictionary alloc] init];
+                            [self.incidentOfInspectionDic setObject:prodic forKey:pid];
+                        }
+                        NSMutableDictionary *insdic =[prodic objectForKey:insid];
+                        if (insdic ==nil) {
+                            insdic  =[[NSMutableDictionary alloc] init];
+                            [prodic setObject:insdic forKey:insid];
+                        }
+                        NSString *inspectionStatus = [insdic objectForKey:@"icon"];
+                        if(inspectionStatus == nil)
+                        {
+                            [insdic setObject:@"red" forKey:@"icon"];
+                        }
+                       
                         
-                       // [self.incidentOfRoomsDic setObject:@"1" forKey:roomId];
-                    }
-                    
-                    NSMutableDictionary *insDic = [prodic objectForKey:insid];
-                    if (insDic==nil) {
-                        insDic = [[NSMutableDictionary alloc] init];
-                        [prodic setObject:insDic forKey:insid];
-                    }
-                    
-                    NSString *roomFlag = [insDic objectForKey:roomId];
-                    if (roomFlag==nil) {
-                        roomFlag = @"YES";
-                        [insDic setObject:roomFlag forKey:roomId];
+                        if ([tempitem getData:@"sl_roomIDId"] == [NSNull null]) {
+                            continue;
+                        }
+                        
+                         NSString *roomId =[NSString stringWithFormat:@"room%@",[tempitem getData:@"sl_roomIDId"]];
+                        
+                         NSString *roomFlag = [insdic objectForKey:roomId];
+                         if (roomFlag==nil) {
+                            [insdic setObject:@"YES" forKey:roomId];
+                        }
+                        
                     }
                 }
                 [self InitRightPropertyTable];
@@ -1386,13 +1451,7 @@
 }
 -(void)getInspectionListAccordingPropertyId:(NSString*)pid
 {
-    if([self.propertyDic objectForKey:pid] ==nil)
-    {
-        NSMutableDictionary *propertyTempDic = [[NSMutableDictionary alloc] init];
-        [self.propertyDic setObject:propertyTempDic forKey:pid];
-    }
-    
-    if(![[self.propertyDic objectForKey:pid] objectForKey:@"inspectionslist"])
+    if([self.propertyDic objectForKey:pid] !=nil && ![[self.propertyDic objectForKey:pid] objectForKey:@"inspectionslist"])
     {
         NSMutableArray *inspectionslistTemp = [[NSMutableArray alloc] init];
         
@@ -1433,7 +1492,8 @@
                     }
                     else
                     {
-                        if([[self.incidentOfInspectionDic objectForKey:inspectionId] objectForKey:@"icon"]!=nil)
+                        NSString *icon = [self getInspectionItemIcon:inspectionId];
+                        if(icon!=nil)
                         {
                              [inspectionItem setObject:@"red" forKey:@"icon"];
                         }
@@ -1515,12 +1575,14 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 for (ListItem *temp in listItems) {
-                    NSString *insId =[NSString stringWithFormat:@"%@",[temp getData:@"sl_inspectionIDId"]];
-                    NSString *roomId =[NSString stringWithFormat:@"%@",[temp getData:@"sl_roomIDId"]];
-                    if(insId == (NSString *)[NSNull null] || roomId == (NSString *)[NSNull null] )
+                    if([temp getData:@"sl_inspectionIDId"] == [NSNull null] || [temp getData:@"sl_roomIDId"] == [NSNull null] )
                     {
                         continue;
                     }
+                    
+                    NSString *insId =[NSString stringWithFormat:@"%@",[temp getData:@"sl_inspectionIDId"]];
+                    NSString *roomId =[NSString stringWithFormat:@"%@",[temp getData:@"sl_roomIDId"]];
+
                     NSMutableDictionary *roomsDic= [self.roomsOfInspectionDic objectForKey:insId];
                     if(roomsDic ==nil)
                     {
@@ -2353,7 +2415,7 @@
         NSString *roomId = [roomDic objectForKey:@"Id"];
         NSString *roomIconName = @"greenRoom";
         
-        if([[[[self.incidentOfRoomsDic objectForKey:self.selectRightPropertyItemId] objectForKey:[self getSelectLeftInspectionItemId]] objectForKey:roomId] isEqualToString:@"YES"])
+        if([[self getRoomItemIcon:roomId] isEqualToString:@"YES"])
         {
             roomIconName = @"redRoom";
         }
@@ -2387,7 +2449,7 @@
 }
 -(void)updateRightPropertyTableCellImage:(NSString *)proid image:(UIImage *)image
 {
-    BOOL found =  false;
+   // BOOL found =  false;
     ListItem *inspectionitem = nil;
     if([[self.rightPropertyListDic objectForKey:@"top"] count]>0)
     {
