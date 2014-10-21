@@ -72,5 +72,15 @@
     }
     return  result;
 }
++(BOOL)requestSuccess:(NSURLResponse *)response
+{
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSInteger statusCode = [httpResponse statusCode];
+    if(statusCode >= 200 && statusCode <= 206)
+    {
+        return YES;
+    }
+    return NO;
+}
 
 @end

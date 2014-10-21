@@ -65,13 +65,11 @@
     self.incidentPhotoListDic = [[NSMutableDictionary alloc] init];
     self.roomInspectionPhotoDic = [[NSMutableDictionary alloc] init];
     self.repairPhotoDic = [[NSMutableDictionary alloc] init];
-    
-    self.incidentId = @"1";
-    self.detailViewIsShowing = YES;
-    self.selectPropertyId = @"1";//for test
-    self.loginName = @"Rob Barker";//for test
-    self.currentRightIndexPath = nil;
     self.inspectionDetailDic = [[NSMutableDictionary alloc] init];
+    
+    self.detailViewIsShowing = NO;
+    self.incidentId = @"1";
+    self.selectPropertyId = @"1";
 }
 
 -(void)addPropertyDetailTable{
@@ -167,6 +165,7 @@
     
     self.finalizeBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 196, 315, 33)];
     [self.finalizeBtn setBackgroundImage:[UIImage imageNamed:@"finalize_repair"] forState:UIControlStateNormal];
+    [self.finalizeBtn addTarget:self action:@selector(updateRepairCompleted) forControlEvents:UIControlEventTouchUpInside];
     [self.detailLeftView addSubview:self.finalizeBtn];
     
     self.detailRightView = [[UIView alloc] initWithFrame:CGRectMake(1024, 91, 675, 677)];
@@ -305,10 +304,6 @@
     lbl10.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
     [self.detailRightAdd addSubview:lbl10];
     
-    //UIImageView *repairCamera = [[UIImageView alloc] initWithFrame:CGRectMake(15, 75, 58, 47)];
-    //repairCamera.image = [UIImage imageNamed:@"camera_gray"];
-    //[self.detailRightAdd addSubview:repairCamera];
-    
     UIButton *repairCamera = [[UIButton alloc] initWithFrame:CGRectMake(15, 75, 58, 47)];
     [repairCamera setBackgroundImage:[UIImage imageNamed:@"camera_gray"] forState:UIControlStateNormal];
     [repairCamera addTarget:self action:@selector(takeCameraAction) forControlEvents:UIControlEventTouchUpInside];
@@ -398,9 +393,9 @@
     {
         if(self.detailRightInspector.hidden == YES)
         {
+            [self.inspectorCommentCollection reloadData];
             if([self.roomInspectionPhotoDic objectForKey:self.selectIncidentId] == nil)
             {
-                [self.inspectorCommentCollection reloadData];
                 [self showLoading];
                 [self getInspectorPhoto:self.selectInspectionId incidentId:self.selectIncidentId roomId:self.selectRoomId];
             }
@@ -419,9 +414,9 @@
     {
         if(self.detailRightAdd.hidden == YES)
         {
+            [self.commentCollection reloadData];
             if([self.repairPhotoDic objectForKey:self.selectIncidentId] == nil)
             {
-                [self.commentCollection reloadData];
                 [self showLoading];
                 [self getRepairPhoto:self.selectInspectionId incidentId:self.selectIncidentId roomId:self.selectRoomId];
             }
@@ -447,6 +442,7 @@
     NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
     NSString *inspectionID = (NSString *)[incidentItem getData:@"sl_inspectionIDId"];
     NSString *roomID = (NSString *)[incidentItem getData:@"sl_roomIDId"];
+    NSString *completedDate = (NSString *)[incidentItem getData:@"sl_repairCompleted"];
     
     //set select index
     self.selectedIndex = indexpath.row;
@@ -456,6 +452,9 @@
     self.selectInspectionId = inspectionID;
     self.selectRoomId = roomID;
     NSLog(@"incident ID:%@,inspection ID:%@,room ID:%@",self.selectIncidentId,self.selectInspectionId,self.selectRoomId);
+    
+    //set finalize repair button
+    self.finalizeBtn.hidden = ![EKNEKNGlobalInfo isBlankString:completedDate];
     
     //set the inspection table
     [self.inspectionDetailDic setObject:@"" forKey:@"name"];
@@ -478,7 +477,7 @@
     self.detailRightAdd.frame = CGRectMake(675, 170, 644, 507);
     self.detailRightInspector.hidden = YES;
     self.detailRightAdd.hidden = YES;
-    self.detailRightDispatcher.hidden = NO; 
+    self.detailRightDispatcher.hidden = NO;
     
     [UIView animateWithDuration:0.3 animations:^{
         self.detailViewIsShowing = YES;
@@ -513,8 +512,8 @@
 -(void)showLoading
 {
     self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0,0,1024,768)];
-    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [self.spinner setBackgroundColor:[UIColor colorWithRed:0.00f/255.00f green:0.00f/255.00f blue:0.00f/255.00f alpha:0.2]];
+    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [self.spinner setBackgroundColor:[UIColor colorWithRed:0.00f/255.00f green:0.00f/255.00f blue:0.00f/255.00f alpha:0.6]];
     [self.view addSubview:self.spinner];
     self.spinner.hidesWhenStopped = YES;
     [self.spinner startAnimating];
@@ -528,12 +527,22 @@
     }
 }
 
+-(void)showSuccessMessage:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [alert show];
+}
+
+-(void)showErrorMessage:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [alert show];
+}
+
 -(void)loadPropertyIdByIncidentId{
     [self showLoading];
-    
     NSString *filter = [NSString stringWithFormat:@"$select=ID,sl_propertyIDId,sl_propertyID/ID&$expand=sl_propertyID&$filter=ID eq %@ and sl_propertyIDId gt 0 and sl_inspectionIDId gt 0 and sl_roomIDId gt 0",self.incidentId];
     NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-    
     NSURLSessionTask* task = [self.client getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if(listItems != nil && [listItems count] == 1)
@@ -546,8 +555,8 @@
             }
             else
             {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"The incident with ID %@ not found.",self.incidentId] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Cancel", nil];
-                [alert show];
+                [self hideLoading];
+                [self showErrorMessage:[NSString stringWithFormat:@"The incident with ID %@ not found.",self.incidentId]];
             }
         });
     }];
@@ -556,20 +565,13 @@
 }
 
 -(void)loadData{
-    NSString *filter = [NSString stringWithFormat:@"$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_inspectionIDId,sl_roomIDId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$filter=sl_propertyIDId eq %@ and sl_inspectionIDId gt 0 and sl_roomIDId gt 0&$orderby=sl_date desc",self.selectPropertyId];
+    NSString *filter = [NSString stringWithFormat:@"$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_repairCompleted,sl_inspectionIDId,sl_roomIDId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$filter=sl_propertyIDId eq %@ and sl_inspectionIDId gt 0 and sl_roomIDId gt 0&$orderby=sl_date desc",self.selectPropertyId];
     NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     
     NSURLSessionTask* task = [self.client getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            //NSMutableArray *list = [[NSMutableArray alloc] init];
-            //ListItem* currentInspectionData = [[ListItem alloc] init];
-            
+            [self hideLoading];
             self.incidentListArray = listItems;
-            
-            //for (ListItem* item in listItems) {
-            //    [self.incidentListDic setObject:item forKey:(NSString *)[item getData:@"ID"]];
-            //}
             
             if(listItems != nil && [listItems count] > 0)
             {
@@ -581,11 +583,10 @@
                 [self.contactOwnerTableView reloadData];
                 [self.contactOfficeTableView reloadData];
                 [self.rightTableView reloadData];
-                [self hideLoading];
+                
+                [self getPropertyPhoto];
+                [self getIncidentListPhoto];
             }
-            
-            [self getPropertyPhoto:self.client];
-            [self getIncidentListPhoto:self.client];
         });
     }];
     
@@ -594,6 +595,7 @@
 
 - (void)updateRepairComment
 {
+    [self showLoading];
     NSString *repairComments = [EKNEKNGlobalInfo getString:self.tabComments.text];
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",self.siteUrl,@"Incidents",self.selectIncidentId];
     NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' },'sl_repairComments':'%@'}",repairComments];
@@ -611,30 +613,66 @@
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-            //NSLog(@"update incident data %@,respones %@ ",dataString,response);
-            if([EKNEKNGlobalInfo isBlankString:dataString])
+            [self hideLoading];
+            if([EKNEKNGlobalInfo requestSuccess:response])
             {
-                //ListItem *item = (ListItem *)[self.incidentListArray objectAtIndex:self.selectedIndex];
-                //[item setValue:repairComments forKey:@"sl_repairComments"];
-                
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Update successfully" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-                [alert show];
+                ListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
+                NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
+                [dic setValue:repairComments forKey:@"sl_repairComments"];
+                [self showSuccessMessage:@"Update successfully."];
+            }
+            else
+            {
+                [self showErrorMessage:@"Update failed."];
             }
         });
     }];
     [task resume];
 }
 
+- (void)updateRepairCompleted
+{
+    [self showLoading];
+    NSDate *currentDate = [NSDate date];
+    NSString *repairCompleted = [EKNEKNGlobalInfo converStringFromDate:currentDate];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",self.siteUrl,@"Incidents",self.selectIncidentId];
+    NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' },'sl_repairCompleted':'%@'}",repairCompleted];
+    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
+    [request addValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
+    [request addValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideLoading];
+            if([EKNEKNGlobalInfo requestSuccess:response])
+            {
+                ListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
+                NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
+                [dic setValue:repairCompleted forKey:@"sl_repairCompleted"];
+                self.finalizeBtn.hidden = YES;
+                [self showSuccessMessage:@"Update successfully."];
+            }
+            else
+            {
+                [self showErrorMessage:@"Update failed."];
+            }
+        });
+    }];
+    [task resume];
+}
+
+
 -(void)getInspectionDataByID:(NSString *)inspectionID
 {
-    self.spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0,0,1024,768)];
-    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [self.spinner setBackgroundColor:[UIColor colorWithRed:0.00f/255.00f green:0.00f/255.00f blue:0.00f/255.00f alpha:0.2]];
-    [self.view addSubview:self.spinner];
-    self.spinner.hidesWhenStopped = YES;
-    
-    [self.spinner startAnimating];
+    [self showLoading];
     
     NSString *filter = [NSString stringWithFormat:@"$select=Id,sl_datetime,sl_inspector/Title,sl_inspector/sl_emailaddress&$expand=sl_inspector&$filter=Id eq %@&$orderby=sl_datetime desc&$top=1",inspectionID];
     NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
@@ -649,44 +687,41 @@
                 [self.inspectionDetailDic setObject:[inspector objectForKey:@"sl_emailaddress"] forKey:@"email"];
                 [self.inspectionDetailDic setObject:[item getData:@"sl_datetime"] forKey:@"date"];
                 [self.detailInspectionDetailTableView reloadData];
-                
-                [self.spinner stopAnimating];
             }
+            [self hideLoading];
         });
     }];
     
     [task resume];
 }
 
--(void)getPropertyPhoto:(ListClient *)client
+-(void)getPropertyPhoto
 {
-    NSURLSessionTask* task = [client getListItemsByFilter:@"Property Photos" filter:@"$select=ID,Title&$filter=sl_propertyIDId%20eq%202&$orderby=Modified%20desc&$top=1" callback:^(NSMutableArray *listItems, NSError *error) {
+    NSURLSessionTask* task = [self.client getListItemsByFilter:@"Property Photos" filter:@"$select=ID,Title&$filter=sl_propertyIDId%20eq%202&$orderby=Modified%20desc&$top=1" callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.spinner stopAnimating];
             if(listItems != nil && [listItems count] == 1)
             {
                 NSString *propertyPhotoFileID = (NSString *)[listItems[0] getData:@"ID"];
                 [self.propertyDetailDic setValue:propertyPhotoFileID forKey:@"photoID"];
-                //NSLog(@"Get property photo ID success");
-                [self getPropertyPhotoServerRelativeUrl:client];
+                [self getPropertyPhotoServerRelativeUrl];
             }
         });
     }];
     [task resume];
 }
 
--(void)getPropertyPhotoServerRelativeUrl:(ListClient *)client
+-(void)getPropertyPhotoServerRelativeUrl
 {
-    NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Property Photos"
-                                                                     FileId:(NSString *)[self.propertyDetailDic objectForKey:@"photoID"]
-                                                                     filter:@"$select=ServerRelativeUrl"
-                                                                   callback:^(NSMutableArray *listItems, NSError *error)
+    NSURLSessionTask* getFileResourcetask = [self.client getListItemFileByFilter:@"Property Photos"
+                                                                          FileId:(NSString *)[self.propertyDetailDic objectForKey:@"photoID"]
+                                                                          filter:@"$select=ServerRelativeUrl"
+                                                                        callback:^(NSMutableArray *listItems, NSError *error)
                                              {
                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                      if(listItems != nil && [listItems count] > 0)
                                                      {
                                                          [self.propertyDetailDic setValue:[listItems[0] getData:@"ServerRelativeUrl"] forKey:@"photoServerRelativeUrl"];
-                                                         //NSLog(@"Get property photo ServerRelativeUrl success");
                                                          [self getPhoto];
                                                      }
                                                  });
@@ -710,14 +745,13 @@
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (error == nil) {
+            if ([EKNEKNGlobalInfo requestSuccess:response]) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
                 [self.propertyDetailDic setValue:image forKey:@"photo"];
                 [self.propertyDetailTableView reloadData];
             }
             else
             {
-                //retry one
                 if([self.propertyDetailDic objectForKey:@"trytimes"]!=nil)
                 {
                     NSInteger times =[[self.propertyDetailDic objectForKey:@"trytimes"] integerValue];
@@ -743,23 +777,21 @@
     [task resume];
 }
 
--(void)getIncidentListPhoto:(ListClient *)client
+-(void)getIncidentListPhoto
 {
     for (ListItem* item in self.incidentListArray) {
-        
         NSString *incidentID = (NSString *)[item getData:@"ID"];
         NSString *inspectionID =(NSString *)[item getData:@"sl_inspectionIDId"];
         NSString *roomID = (NSString *)[item getData:@"sl_roomIDId"];
-        
         NSString *filter = [NSString stringWithFormat:@"$select=ID,Title&$filter=sl_inspectionIDId eq %@ and sl_incidentIDId eq %@ and sl_roomIDId eq %@&$orderby=Modified desc&$top=1",inspectionID,incidentID,roomID];
         
         NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        NSURLSessionTask* task = [client getListItemsByFilter:@"Room Inspection Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
+        NSURLSessionTask* task = [self.client getListItemsByFilter:@"Room Inspection Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(listItems != nil && [listItems count] == 1)
                 {
                     NSString *photoID = (NSString *)[listItems[0] getData:@"ID"];
-                    [self getRoomInspectionPhotoServerRelativeUrl:client photoID:photoID incidentID:incidentID];
+                    [self getRoomInspectionPhotoServerRelativeUrl:photoID incidentID:incidentID];
                 }
             });
         }];
@@ -767,12 +799,12 @@
     }
 }
 
--(void)getRoomInspectionPhotoServerRelativeUrl:(ListClient *)client photoID:(NSString *)photoID incidentID:(NSString *)incidentID
+-(void)getRoomInspectionPhotoServerRelativeUrl:(NSString *)photoID incidentID:(NSString *)incidentID
 {
-    NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Room Inspection Photos"
-                                                                     FileId:photoID
-                                                                     filter:@"$select=ServerRelativeUrl"
-                                                                   callback:^(NSMutableArray *listItems, NSError *error)
+    NSURLSessionTask* getFileResourcetask = [self.client getListItemFileByFilter:@"Room Inspection Photos"
+                                                                          FileId:photoID
+                                                                          filter:@"$select=ServerRelativeUrl"
+                                                                        callback:^(NSMutableArray *listItems, NSError *error)
                                              {
                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                      if(listItems != nil && [listItems count] > 0)
@@ -800,26 +832,27 @@
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (error == nil) {
+            if ([EKNEKNGlobalInfo requestSuccess:response]) {
+                if([self.incidentPhotoListDic objectForKey:incidentID] == nil)
+                {
+                    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                    [self.incidentPhotoListDic setObject:dic forKey:incidentID];
+                }
                 UIImage *image =[[UIImage alloc] initWithData:data];
-                //[tempItem setValue:@"test" forKey:@"photo"];
-                NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-                [self.incidentPhotoListDic setObject:dic forKey:incidentID];
                 [[self.incidentPhotoListDic objectForKey:incidentID] setObject:image forKey:@"photo"];
-                
                 [self.rightTableView reloadData];
             }
             else
             {
-                //retry one
+                if([self.incidentPhotoListDic objectForKey:incidentID] == nil)
+                {
+                    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                    [self.incidentPhotoListDic setObject:dic forKey:incidentID];
+                }
                 if([[self.incidentPhotoListDic objectForKey:incidentID] objectForKey:@"trytimes"]!=nil)
                 {
                     NSInteger times =(NSInteger)[[self.incidentPhotoListDic objectForKey:incidentID] objectForKey:@"trytimes"];
-                    if(times>=3)
-                    {
-                        
-                    }
-                    else
+                    if(times < 3)
                     {
                         times=times+1;
                         [[self.incidentPhotoListDic objectForKey:incidentID] setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
@@ -840,30 +873,30 @@
 //get selected inspection photos
 -(void)getInspectorPhoto:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId
 {
-        NSString *filter = [NSString stringWithFormat:@"$select=ID,Title&$filter=sl_inspectionIDId eq %@ and sl_incidentIDId eq %@ and sl_roomIDId eq %@&$orderby=Modified desc",inspectionId,incidentId,roomId];
-        NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSString *filter = [NSString stringWithFormat:@"$select=ID,Title&$filter=sl_inspectionIDId eq %@ and sl_incidentIDId eq %@ and sl_roomIDId eq %@&$orderby=Modified desc",inspectionId,incidentId,roomId];
+    NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     
-        NSURLSessionTask* task = [self.client getListItemsByFilter:@"Room Inspection Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self hideLoading];
-                if(listItems != nil && [listItems count] > 0)
-                {
-                    for (ListItem *item in listItems) {
-                        NSString *photoID = (NSString *)[item getData:@"ID"];
-                        [self getInspectorPhotoServerRelativeUrl:inspectionId incidentId:incidentId roomId:roomId photoId:photoID];
-                    }
+    NSURLSessionTask* task = [self.client getListItemsByFilter:@"Room Inspection Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideLoading];
+            if(listItems != nil && [listItems count] > 0)
+            {
+                for (ListItem *item in listItems) {
+                    NSString *photoID = (NSString *)[item getData:@"ID"];
+                    [self getInspectorPhotoServerRelativeUrl:inspectionId incidentId:incidentId roomId:roomId photoId:photoID];
                 }
-            });
-        }];
-        [task resume];
+            }
+        });
+    }];
+    [task resume];
 }
 
 -(void)getInspectorPhotoServerRelativeUrl:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId
 {
     NSURLSessionTask* getFileResourcetask = [self.client getListItemFileByFilter:@"Room Inspection Photos"
-                                                                     FileId:photoId
-                                                                     filter:@"$select=ServerRelativeUrl"
-                                                                   callback:^(NSMutableArray *listItems, NSError *error)
+                                                                          FileId:photoId
+                                                                          filter:@"$select=ServerRelativeUrl"
+                                                                        callback:^(NSMutableArray *listItems, NSError *error)
                                              {
                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                      if(listItems != nil && [listItems count] > 0)
@@ -891,7 +924,7 @@
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (error == nil) {
+            if ([EKNEKNGlobalInfo requestSuccess:response]) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
                 if([self.roomInspectionPhotoDic objectForKey:incidentId] != nil && [[self.roomInspectionPhotoDic objectForKey:incidentId] objectForKey:@"photos"] != nil)
                 {
@@ -974,7 +1007,7 @@
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (error == nil) {
+            if ([EKNEKNGlobalInfo requestSuccess:response]) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
                 if([self.repairPhotoDic objectForKey:incidentId] != nil && [[self.repairPhotoDic objectForKey:incidentId] objectForKey:@"photos"] != nil)
                 {
@@ -1001,224 +1034,6 @@
         });
     }];
     [task resume];
-}
-
--(void)getPropertyResourceListArray:(ListClient*)client
-{
-    NSURLSessionTask* getpropertyResourcetask = [client getListItemsByFilter:@"Property Photos" filter:@"$select=sl_propertyIDId,Id" callback:^(NSMutableArray * listItems, NSError *error)
-                                                 {
-                                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                                         //NSLog(@"get photo success,%@,%@",listItems,error);
-                                                         //self.propertyResourceListArray =listItems;
-                                                         //[self getPropertyResourceFile:client PropertyResourceItems:listItems];
-                                                     });
-                                                 }];
-    
-    [getpropertyResourcetask resume];
-}
-
--(void)getPropertyResourceFile:(ListClient*)client  PropertyResourceItems:(NSMutableArray* )listItems
-{
-    NSMutableString* loopindex = [[NSMutableString alloc] initWithString:@"0"];
-    NSMutableArray *loopitems =listItems;
-    self.propertyDic = [[NSMutableDictionary alloc] init];
-    
-    for (ListItem* tempitem in loopitems)
-    {
-        NSString *propertyId =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_propertyIDId"]];
-        
-        NSURLSessionTask* getFileResourcetask = [client getListItemFileByFilter:@"Property%20Photos"
-                                                                         FileId:(NSString *)[tempitem getData:@"ID"]
-                                                                         filter:@"$select=ServerRelativeUrl"
-                                                                       callback:^(NSMutableArray *listItems, NSError *error)
-                                                 {
-                                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                                         int preindex = [loopindex intValue];
-                                                         preindex++;
-                                                         
-                                                         if([listItems count]>0)
-                                                         {
-                                                             NSMutableDictionary *propertyData =[[NSMutableDictionary alloc] init];
-                                                             [propertyData setObject:[[listItems objectAtIndex:0] getData:@"ServerRelativeUrl"] forKey:@"ServerRelativeUrl"];
-                                                             
-                                                             [self.propertyDic setObject:propertyData forKey:propertyId];
-                                                         }
-                                                         
-                                                         //NSLog(@"propertyId %@",propertyId);
-                                                         if(preindex == [loopitems count])
-                                                         {
-                                                             //get Incidents list
-                                                             [self getIncidentsListArray:client];
-                                                             
-                                                         }
-                                                         [loopindex setString:[NSString stringWithFormat:@"%d",preindex]];
-                                                         //NSLog(@"loopindex %@",loopindex);
-                                                     });
-                                                     
-                                                 }];
-        
-        [getFileResourcetask resume];
-    }
-}
-
--(void)getIncidentsListArray:(ListClient*)client
-{
-    self.incidentOfInspectionDic = [[NSMutableDictionary alloc] init];
-    
-    NSURLSessionTask* getincidentstask = [client getListItemsByFilter:@"Incidents" filter:@"$select=sl_inspectionIDId,Id"  callback:^(NSMutableArray *        listItems, NSError *error)
-                                          {
-                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                  
-                                                  for (ListItem* tempitem in listItems) {
-                                                      NSString *key =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_inspectionIDId"]];
-                                                      
-                                                      if(![self.incidentOfInspectionDic objectForKey:key])
-                                                      {
-                                                          [self.incidentOfInspectionDic setObject:@"red" forKey:key];
-                                                      }
-                                                  }
-                                                  
-                                                  //get current property inspection list
-                                                  //[self GetInspectionListAccordingPropertyId:self.selectPropertyId];
-                                                  //right table need reload data
-                                                  [self.rightTableView reloadData];
-                                                  NSIndexPath *temp = [NSIndexPath indexPathForRow:0 inSection:0];
-                                                  [self.rightTableView selectRowAtIndexPath:temp animated:NO scrollPosition:UITableViewScrollPositionNone];
-                                                  [self setRightTableSelectIndex:temp];
-                                                  
-                                                  //get images
-                                                  [self getAllImageFiles:client];
-                                                  //
-                                                  [self.spinner stopAnimating];
-                                                  
-                                              });
-                                          }];
-    [getincidentstask resume];
-}
-
-
--(void)getAllImageFiles:(ListClient*)client
-{
-    NSArray *prokeys = [self.propertyDic allKeys];
-    for (NSString *key in prokeys) {
-        [self getFile:key];
-    }
-}
-
--(void)getFile:(NSString *)key
-{
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *siteUrl = [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"];
-    
-    NSMutableDictionary *prodict = [self.propertyDic objectForKey:key];
-    NSString *path =[prodict objectForKey:@"ServerRelativeUrl"];
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",siteUrl,path,@"')/$value"];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-    NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
-    [request addValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
-    [request setHTTPMethod:@"GET"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
-                                                                                          NSURLResponse *response,
-                                                                                          NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if (error == nil) {
-                
-                UIImage *image =[[UIImage alloc] initWithData:data];
-                [[self.propertyDic objectForKey:key] setObject:image
-                                                        forKey:@"image"];
-                [self updateTableCellImage:key image:image];
-            }
-            else
-            {
-                //retry one
-                if([[self.propertyDic objectForKey:key] objectForKey:@"trytimes"]!=nil)
-                {
-                    NSInteger times =[[[self.propertyDic objectForKey:key] objectForKey:@"trytimes"] integerValue];
-                    if(times>=3)
-                    {
-                        
-                    }
-                    else
-                    {
-                        times=times+1;
-                        [[self.propertyDic objectForKey:key] setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
-                        [self getFile:key];
-                    }
-                }
-                else
-                {
-                    [[self.propertyDic objectForKey:key] setObject:@"1" forKey:@"trytimes"];
-                    [self getFile:key];
-                }
-            }
-        });
-    }];
-    [task resume];
-}
-
--(void)updateTableCellImage:(NSString *)proid image:(UIImage *)image
-{
-    BOOL found =  false;
-    ListItem *inspectionitem = nil;
-    inspectionitem = [self.rightPannelListDic objectForKey:@"top"];
-    NSIndexPath *updateIndexPath = nil;
-    if(inspectionitem!=nil)
-    {
-        NSDictionary *pro = (NSDictionary *)[inspectionitem getData:@"sl_propertyID"];
-        if(pro!=nil)
-        {
-            NSString *propertyId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
-            if([propertyId isEqualToString:proid])
-            {
-                updateIndexPath =[NSIndexPath indexPathForRow:0 inSection:0];
-                [self didUpdateRightTableCell:updateIndexPath image:image];
-                found = true;
-            }
-        }
-    }
-    if(!found)
-    {
-        NSMutableArray *bottomarray = [self.rightPannelListDic objectForKey:@"bottom"];
-        if(bottomarray!=nil)
-        {
-            for(NSInteger i = 0; i< [bottomarray count]; i++)
-            {
-                ListItem *tp = [bottomarray objectAtIndex:i];
-                
-                NSDictionary *pro = (NSDictionary *)[tp getData:@"sl_propertyID"];
-                if(pro!=nil)
-                {
-                    NSString *propertyId =[NSString stringWithFormat:@"%@",[pro objectForKey:@"ID"]];
-                    if([propertyId isEqualToString:proid])
-                    {
-                        updateIndexPath =[NSIndexPath indexPathForRow:i inSection:1];
-                        [self didUpdateRightTableCell:updateIndexPath image:image];
-                        found = true;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    if(found && self.currentRightIndexPath == updateIndexPath)
-    {
-        [self.propertyDetailTableView beginUpdates];
-        NSIndexPath *upi = [NSIndexPath indexPathForRow:2 inSection:0];
-        
-        [self.propertyDetailTableView reloadRowsAtIndexPaths:@[upi] withRowAnimation:UITableViewRowAnimationNone];
-        if(self.currentRightIndexPath == updateIndexPath)
-        {
-            [self.rightTableView selectRowAtIndexPath:updateIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        }
-        [self.propertyDetailTableView endUpdates];
-        
-        
-        //PropertyDetailsImage *up = (PropertyDetailsImage *)[self.propertyDetailTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-        // [up.imageView setImage:image];
-    }
 }
 
 -(void)didUpdateRightTableCell:(NSIndexPath *)indexpath image:(UIImage*)image
@@ -1423,7 +1238,6 @@
                 }
                 NSString *address = [self.propertyDetailDic objectForKey:@"sl_address1"];
                 UIImage *image =(UIImage *)[self.propertyDetailDic objectForKey:@"photo"];
-                //NSLog(@"address:%@",address);
                 [cell setCellValue:image title:address];
                 
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -1503,8 +1317,6 @@
         NSString *incident = (NSString *)[incidentItem getData:@"Title"];
         NSString *inspectionDate = [EKNEKNGlobalInfo converStringToDateString:(NSString *)[inspectionData objectForKey:@"sl_datetime"]];
         NSString *repairDate = [EKNEKNGlobalInfo converStringToDateString:(NSString *)[inspectionData objectForKey:@"sl_finalized"]];
-        //NSLog(@"date time:%@,%@",inspectionDate,[inspectionData objectForKey:@"sl_datetime"]);
-        //NSLog(@"date time:%@,%@",repairDate,[inspectionData objectForKey:@"sl_finalized"]);
         NSString *approved = (NSString *)[incidentItem getData:@"sl_status"];
         BOOL repariDateHidden = [EKNEKNGlobalInfo isBlankString:repairDate];
         BOOL approvedHidden = [EKNEKNGlobalInfo isBlankString:approved];
@@ -1574,7 +1386,7 @@
             width = width / (heigth / 116);
             heigth = 116;
         }
-
+        
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, heigth)];
         imageView.image = image;
         [cell addSubview:imageView];
@@ -1590,7 +1402,7 @@
             width = width / (heigth / 116);
             heigth = 116;
         }
-
+        
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, heigth)];
         imageView.image = image;
         [cell addSubview:imageView];
@@ -1716,34 +1528,45 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    /*
-    [self.client uploadImageToRepairPhotos:self.token image:chosenImage inspectionId:self.selectInspectionId incidentId:self.selectIncidentId roomId:self.selectRoomId callback:^(NSError *error) {
-        
-        NSLog(@"test upload image");
-    }];
-    */
-    
-    if([self.repairPhotoDic objectForKey:self.selectIncidentId] != nil && [[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] != nil)
+    CGFloat width = chosenImage.size.width;
+    CGFloat heigth = chosenImage.size.height;
+    if(heigth > 116)
     {
-        [[[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] addObject:chosenImage];
+        width = width / (heigth / 116);
+        heigth = 116;
     }
-    else
-    {
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        NSMutableArray *photos = [[NSMutableArray alloc] init];
-        [photos addObject:chosenImage];
-        [dic setObject:photos forKey:@"photos"];
-        [self.repairPhotoDic setObject:dic forKey:self.selectIncidentId];
-    }
-    [self.commentCollection reloadData];
+    UIImage *thumb = [self shrinkImage:chosenImage toSize:CGSizeMake(width, heigth)];
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+    [self showLoading];
+    [self.client uploadImageToRepairPhotos:self.token image:thumb inspectionId:self.selectInspectionId incidentId:self.selectIncidentId roomId:self.selectRoomId callback:^(NSError *error) {
+        [self hideLoading];
+        if(error != nil)
+        {
+            [self showErrorMessage:@"Upload image failed."];
+        }
+        else
+        {
+            if([self.repairPhotoDic objectForKey:self.selectIncidentId] != nil && [[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] != nil)
+            {
+                [[[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"] addObject:thumb];
+            }
+            else
+            {
+                NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                NSMutableArray *photos = [[NSMutableArray alloc] init];
+                [photos addObject:thumb];
+                [dic setObject:photos forKey:@"photos"];
+                [self.repairPhotoDic setObject:dic forKey:self.selectIncidentId];
+            }
+            [self.commentCollection reloadData];
+        }
+    }];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
-
-
 
 @end
