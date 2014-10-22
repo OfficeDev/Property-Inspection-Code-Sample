@@ -1,0 +1,954 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0EAA652C19F7B7E0001936F9 /* liboffice365_odata_interfaces.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EAA652B19F7B7E0001936F9 /* liboffice365_odata_interfaces.a */; };
+		EC28337519E4866F00E5FEA4 /* ODataExecutable.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337419E4866F00E5FEA4 /* ODataExecutable.m */; };
+		EC28337719E4875800E5FEA4 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337619E4875800E5FEA4 /* Event.m */; };
+		EC28338E19E488C800E5FEA4 /* Attachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337819E488C800E5FEA4 /* Attachment.m */; };
+		EC28338F19E488C800E5FEA4 /* Attendee.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337919E488C800E5FEA4 /* Attendee.m */; };
+		EC28339019E488C800E5FEA4 /* Calendar.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337A19E488C800E5FEA4 /* Calendar.m */; };
+		EC28339119E488C800E5FEA4 /* CalendarGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337B19E488C800E5FEA4 /* CalendarGroup.m */; };
+		EC28339219E488C800E5FEA4 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337C19E488C800E5FEA4 /* Contact.m */; };
+		EC28339319E488C800E5FEA4 /* ContactFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337D19E488C800E5FEA4 /* ContactFolder.m */; };
+		EC28339419E488C800E5FEA4 /* EmailAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337E19E488C800E5FEA4 /* EmailAddress.m */; };
+		EC28339519E488C800E5FEA4 /* Entity.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28337F19E488C800E5FEA4 /* Entity.m */; };
+		EC28339619E488C800E5FEA4 /* FileAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338019E488C800E5FEA4 /* FileAttachment.m */; };
+		EC28339719E488C800E5FEA4 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338119E488C800E5FEA4 /* Folder.m */; };
+		EC28339819E488C800E5FEA4 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338219E488C800E5FEA4 /* Item.m */; };
+		EC28339919E488C800E5FEA4 /* ItemAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338319E488C800E5FEA4 /* ItemAttachment.m */; };
+		EC28339A19E488C800E5FEA4 /* ItemBody.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338419E488C800E5FEA4 /* ItemBody.m */; };
+		EC28339B19E488C800E5FEA4 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338519E488C800E5FEA4 /* Location.m */; };
+		EC28339C19E488C800E5FEA4 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338619E488C800E5FEA4 /* Message.m */; };
+		EC28339D19E488C800E5FEA4 /* PatternedRecurrence.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338719E488C800E5FEA4 /* PatternedRecurrence.m */; };
+		EC28339E19E488C800E5FEA4 /* PhysicalAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338819E488C800E5FEA4 /* PhysicalAddress.m */; };
+		EC28339F19E488C800E5FEA4 /* Recipient.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338919E488C800E5FEA4 /* Recipient.m */; };
+		EC2833A019E488C800E5FEA4 /* RecurrencePattern.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338A19E488C800E5FEA4 /* RecurrencePattern.m */; };
+		EC2833A119E488C800E5FEA4 /* RecurrenceRange.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338B19E488C800E5FEA4 /* RecurrenceRange.m */; };
+		EC2833A219E488C800E5FEA4 /* ResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338C19E488C800E5FEA4 /* ResponseStatus.m */; };
+		EC2833A319E488C800E5FEA4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = EC28338D19E488C800E5FEA4 /* User.m */; };
+		EC2833A519E48BA800E5FEA4 /* FolderCollectionFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2833A419E48BA800E5FEA4 /* FolderCollectionFetcher.m */; };
+		EC2833A719E575FD00E5FEA4 /* MessageCollectionFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2833A619E575FD00E5FEA4 /* MessageCollectionFetcher.m */; };
+		EC3AF52719DF2FE5004283FD /* office365_exchange_sdk.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3AF52619DF2FE5004283FD /* office365_exchange_sdk.m */; };
+		ECCC3F0319E453A700768B43 /* BaseODataContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3ED719E453A700768B43 /* BaseODataContainer.m */; };
+		ECCC3F1019E453A700768B43 /* EntityCollectionOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EE419E453A700768B43 /* EntityCollectionOperations.m */; };
+		ECCC3F1119E453A700768B43 /* EntityContainerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EE519E453A700768B43 /* EntityContainerClient.m */; };
+		ECCC3F1219E453A700768B43 /* EntityFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EE619E453A700768B43 /* EntityFetcher.m */; };
+		ECCC3F1319E453A700768B43 /* EntityOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EE719E453A700768B43 /* EntityOperations.m */; };
+		ECCC3F1A19E453A700768B43 /* FolderCollectionOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EEE19E453A700768B43 /* FolderCollectionOperations.m */; };
+		ECCC3F1B19E453A700768B43 /* FolderFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EEF19E453A700768B43 /* FolderFetcher.m */; };
+		ECCC3F1C19E453A700768B43 /* FolderOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EF019E453A700768B43 /* FolderOperations.m */; };
+		ECCC3F2319E453A700768B43 /* MessageCollectionOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EF719E453A700768B43 /* MessageCollectionOperations.m */; };
+		ECCC3F2419E453A700768B43 /* MessageFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EF819E453A700768B43 /* MessageFetcher.m */; };
+		ECCC3F2519E453A700768B43 /* MessageOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EF919E453A700768B43 /* MessageOperations.m */; };
+		ECCC3F2619E453A700768B43 /* ODataCollectionFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EFA19E453A700768B43 /* ODataCollectionFetcher.m */; };
+		ECCC3F2719E453A700768B43 /* ODataEntityFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EFB19E453A700768B43 /* ODataEntityFetcher.m */; };
+		ECCC3F2819E453A700768B43 /* ODataOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EFC19E453A700768B43 /* ODataOperations.m */; };
+		ECCC3F2919E453A700768B43 /* UserCollectionOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EFD19E453A700768B43 /* UserCollectionOperations.m */; };
+		ECCC3F2A19E453A700768B43 /* UserFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EFE19E453A700768B43 /* UserFetcher.m */; };
+		ECCC3F2B19E453A700768B43 /* UserOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCC3EFF19E453A700768B43 /* UserOperations.m */; };
+		ECCC3F3D19E4668200768B43 /* Attachment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6719E453A700768B43 /* Attachment.h */; };
+		ECCC3F3E19E4668200768B43 /* Attendee.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6819E453A700768B43 /* Attendee.h */; };
+		ECCC3F3F19E4668200768B43 /* AttendeeType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6919E453A700768B43 /* AttendeeType.h */; };
+		ECCC3F4019E4668200768B43 /* BodyType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6A19E453A700768B43 /* BodyType.h */; };
+		ECCC3F4119E4668200768B43 /* Calendar.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6B19E453A700768B43 /* Calendar.h */; };
+		ECCC3F4219E4668200768B43 /* CalendarGroup.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6C19E453A700768B43 /* CalendarGroup.h */; };
+		ECCC3F4319E4668200768B43 /* Contact.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6D19E453A700768B43 /* Contact.h */; };
+		ECCC3F4419E4668200768B43 /* ContactFolder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6E19E453A700768B43 /* ContactFolder.h */; };
+		ECCC3F4519E4668200768B43 /* DayOfWeek.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E6F19E453A700768B43 /* DayOfWeek.h */; };
+		ECCC3F4619E4668200768B43 /* EmailAddress.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7019E453A700768B43 /* EmailAddress.h */; };
+		ECCC3F4719E4668200768B43 /* Entity.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7119E453A700768B43 /* Entity.h */; };
+		ECCC3F4819E4668200768B43 /* Event.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7219E453A700768B43 /* Event.h */; };
+		ECCC3F4919E4668200768B43 /* EventType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7319E453A700768B43 /* EventType.h */; };
+		ECCC3F4A19E4668200768B43 /* FileAttachment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7419E453A700768B43 /* FileAttachment.h */; };
+		ECCC3F4B19E4668200768B43 /* Folder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7519E453A700768B43 /* Folder.h */; };
+		ECCC3F4C19E4668200768B43 /* FreeBusyStatus.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7619E453A700768B43 /* FreeBusyStatus.h */; };
+		ECCC3F4D19E4668200768B43 /* Importance.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7719E453A700768B43 /* Importance.h */; };
+		ECCC3F4E19E4668200768B43 /* Item.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7819E453A700768B43 /* Item.h */; };
+		ECCC3F4F19E4668200768B43 /* ItemAttachment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7919E453A700768B43 /* ItemAttachment.h */; };
+		ECCC3F5019E4668200768B43 /* ItemBody.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7A19E453A700768B43 /* ItemBody.h */; };
+		ECCC3F5119E4668200768B43 /* Location.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7B19E453A700768B43 /* Location.h */; };
+		ECCC3F5219E4668200768B43 /* MeetingMessageType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7C19E453A700768B43 /* MeetingMessageType.h */; };
+		ECCC3F5319E4668200768B43 /* Message.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7D19E453A700768B43 /* Message.h */; };
+		ECCC3F5419E4668200768B43 /* PatternedRecurrence.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7E19E453A700768B43 /* PatternedRecurrence.h */; };
+		ECCC3F5519E4668200768B43 /* MSOPhysicalAddress.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E7F19E453A700768B43 /* MSOPhysicalAddress.h */; };
+		ECCC3F5619E4668200768B43 /* Recipient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8019E453A700768B43 /* Recipient.h */; };
+		ECCC3F5719E4668200768B43 /* RecurrencePattern.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8119E453A700768B43 /* RecurrencePattern.h */; };
+		ECCC3F5819E4668200768B43 /* RecurrencePatternType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8219E453A700768B43 /* RecurrencePatternType.h */; };
+		ECCC3F5919E4668200768B43 /* RecurrenceRange.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8319E453A700768B43 /* RecurrenceRange.h */; };
+		ECCC3F5A19E4668200768B43 /* RecurrenceRangeType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8419E453A700768B43 /* RecurrenceRangeType.h */; };
+		ECCC3F5B19E4668200768B43 /* ResponseStatus.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8519E453A700768B43 /* ResponseStatus.h */; };
+		ECCC3F5C19E4668200768B43 /* ResponseType.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8619E453A700768B43 /* ResponseType.h */; };
+		ECCC3F5D19E4668200768B43 /* User.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8719E453A700768B43 /* User.h */; };
+		ECCC3F5E19E4668200768B43 /* WeekIndex.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8819E453A700768B43 /* WeekIndex.h */; };
+		ECCC3F5F19E4668200768B43 /* Protocols.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E8919E453A700768B43 /* Protocols.h */; };
+		ECCC3F6019E4668F00768B43 /* BaseODataContainer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3E9619E453A700768B43 /* BaseODataContainer.h */; };
+		ECCC3F6119E4668F00768B43 /* EntityCollectionFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EA719E453A700768B43 /* EntityCollectionFetcher.h */; };
+		ECCC3F6219E4668F00768B43 /* EntityCollectionOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EA819E453A700768B43 /* EntityCollectionOperations.h */; };
+		ECCC3F6319E4668F00768B43 /* EntityContainerClient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EA919E453A700768B43 /* EntityContainerClient.h */; };
+		ECCC3F6419E4668F00768B43 /* EntityFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EAA19E453A700768B43 /* EntityFetcher.h */; };
+		ECCC3F6519E4668F00768B43 /* EntityOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EAB19E453A700768B43 /* EntityOperations.h */; };
+		ECCC3F6619E4668F00768B43 /* EventCollectionFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EAC19E453A700768B43 /* EventCollectionFetcher.h */; };
+		ECCC3F6719E4668F00768B43 /* EventCollectionOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EAD19E453A700768B43 /* EventCollectionOperations.h */; };
+		ECCC3F6819E4668F00768B43 /* EventFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EAE19E453A700768B43 /* EventFetcher.h */; };
+		ECCC3F6919E4668F00768B43 /* EventOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EAF19E453A700768B43 /* EventOperations.h */; };
+		ECCC3F6A19E4668F00768B43 /* Executable.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EB019E453A700768B43 /* Executable.h */; };
+		ECCC3F6B19E4668F00768B43 /* FolderCollectionFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EB519E453A700768B43 /* FolderCollectionFetcher.h */; };
+		ECCC3F6C19E4668F00768B43 /* FolderCollectionOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EB619E453A700768B43 /* FolderCollectionOperations.h */; };
+		ECCC3F6D19E4668F00768B43 /* FolderFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EB719E453A700768B43 /* FolderFetcher.h */; };
+		ECCC3F6E19E4668F00768B43 /* FolderOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EB819E453A700768B43 /* FolderOperations.h */; };
+		ECCC3F6F19E4668F00768B43 /* MessageCollectionFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EC119E453A700768B43 /* MessageCollectionFetcher.h */; };
+		ECCC3F7019E4668F00768B43 /* MessageCollectionOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EC219E453A700768B43 /* MessageCollectionOperations.h */; };
+		ECCC3F7119E4668F00768B43 /* MessageFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EC319E453A700768B43 /* MessageFetcher.h */; };
+		ECCC3F7219E4668F00768B43 /* MessageOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EC419E453A700768B43 /* MessageOperations.h */; };
+		ECCC3F7319E4668F00768B43 /* ODataCollectionFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EC519E453A700768B43 /* ODataCollectionFetcher.h */; };
+		ECCC3F7419E4668F00768B43 /* ODataEntityFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EC619E453A700768B43 /* ODataEntityFetcher.h */; };
+		ECCC3F7519E4668F00768B43 /* ODataExecutable.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EC719E453A700768B43 /* ODataExecutable.h */; };
+		ECCC3F7619E4668F00768B43 /* ODataOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3EC819E453A700768B43 /* ODataOperations.h */; };
+		ECCC3F7819E4668F00768B43 /* UserCollectionOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3ECA19E453A700768B43 /* UserCollectionOperations.h */; };
+		ECCC3F7919E4668F00768B43 /* UserFetcher.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3ECB19E453A700768B43 /* UserFetcher.h */; };
+		ECCC3F7A19E4668F00768B43 /* UserOperations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ECCC3ECC19E453A700768B43 /* UserOperations.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EC3AF51F19DF2FE5004283FD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				ECCC3F6019E4668F00768B43 /* BaseODataContainer.h in CopyFiles */,
+				ECCC3F6119E4668F00768B43 /* EntityCollectionFetcher.h in CopyFiles */,
+				ECCC3F6219E4668F00768B43 /* EntityCollectionOperations.h in CopyFiles */,
+				ECCC3F6319E4668F00768B43 /* EntityContainerClient.h in CopyFiles */,
+				ECCC3F6419E4668F00768B43 /* EntityFetcher.h in CopyFiles */,
+				ECCC3F6519E4668F00768B43 /* EntityOperations.h in CopyFiles */,
+				ECCC3F6619E4668F00768B43 /* EventCollectionFetcher.h in CopyFiles */,
+				ECCC3F6719E4668F00768B43 /* EventCollectionOperations.h in CopyFiles */,
+				ECCC3F6819E4668F00768B43 /* EventFetcher.h in CopyFiles */,
+				ECCC3F6919E4668F00768B43 /* EventOperations.h in CopyFiles */,
+				ECCC3F6A19E4668F00768B43 /* Executable.h in CopyFiles */,
+				ECCC3F6B19E4668F00768B43 /* FolderCollectionFetcher.h in CopyFiles */,
+				ECCC3F6C19E4668F00768B43 /* FolderCollectionOperations.h in CopyFiles */,
+				ECCC3F6D19E4668F00768B43 /* FolderFetcher.h in CopyFiles */,
+				ECCC3F6E19E4668F00768B43 /* FolderOperations.h in CopyFiles */,
+				ECCC3F6F19E4668F00768B43 /* MessageCollectionFetcher.h in CopyFiles */,
+				ECCC3F7019E4668F00768B43 /* MessageCollectionOperations.h in CopyFiles */,
+				ECCC3F7119E4668F00768B43 /* MessageFetcher.h in CopyFiles */,
+				ECCC3F7219E4668F00768B43 /* MessageOperations.h in CopyFiles */,
+				ECCC3F7319E4668F00768B43 /* ODataCollectionFetcher.h in CopyFiles */,
+				ECCC3F7419E4668F00768B43 /* ODataEntityFetcher.h in CopyFiles */,
+				ECCC3F7519E4668F00768B43 /* ODataExecutable.h in CopyFiles */,
+				ECCC3F7619E4668F00768B43 /* ODataOperations.h in CopyFiles */,
+				ECCC3F7819E4668F00768B43 /* UserCollectionOperations.h in CopyFiles */,
+				ECCC3F7919E4668F00768B43 /* UserFetcher.h in CopyFiles */,
+				ECCC3F7A19E4668F00768B43 /* UserOperations.h in CopyFiles */,
+				ECCC3F3D19E4668200768B43 /* Attachment.h in CopyFiles */,
+				ECCC3F3E19E4668200768B43 /* Attendee.h in CopyFiles */,
+				ECCC3F3F19E4668200768B43 /* AttendeeType.h in CopyFiles */,
+				ECCC3F4019E4668200768B43 /* BodyType.h in CopyFiles */,
+				ECCC3F4119E4668200768B43 /* Calendar.h in CopyFiles */,
+				ECCC3F4219E4668200768B43 /* CalendarGroup.h in CopyFiles */,
+				ECCC3F4319E4668200768B43 /* Contact.h in CopyFiles */,
+				ECCC3F4419E4668200768B43 /* ContactFolder.h in CopyFiles */,
+				ECCC3F4519E4668200768B43 /* DayOfWeek.h in CopyFiles */,
+				ECCC3F4619E4668200768B43 /* EmailAddress.h in CopyFiles */,
+				ECCC3F4719E4668200768B43 /* Entity.h in CopyFiles */,
+				ECCC3F4819E4668200768B43 /* Event.h in CopyFiles */,
+				ECCC3F4919E4668200768B43 /* EventType.h in CopyFiles */,
+				ECCC3F4A19E4668200768B43 /* FileAttachment.h in CopyFiles */,
+				ECCC3F4B19E4668200768B43 /* Folder.h in CopyFiles */,
+				ECCC3F4C19E4668200768B43 /* FreeBusyStatus.h in CopyFiles */,
+				ECCC3F4D19E4668200768B43 /* Importance.h in CopyFiles */,
+				ECCC3F4E19E4668200768B43 /* Item.h in CopyFiles */,
+				ECCC3F4F19E4668200768B43 /* ItemAttachment.h in CopyFiles */,
+				ECCC3F5019E4668200768B43 /* ItemBody.h in CopyFiles */,
+				ECCC3F5119E4668200768B43 /* Location.h in CopyFiles */,
+				ECCC3F5219E4668200768B43 /* MeetingMessageType.h in CopyFiles */,
+				ECCC3F5319E4668200768B43 /* Message.h in CopyFiles */,
+				ECCC3F5419E4668200768B43 /* PatternedRecurrence.h in CopyFiles */,
+				ECCC3F5519E4668200768B43 /* MSOPhysicalAddress.h in CopyFiles */,
+				ECCC3F5619E4668200768B43 /* Recipient.h in CopyFiles */,
+				ECCC3F5719E4668200768B43 /* RecurrencePattern.h in CopyFiles */,
+				ECCC3F5819E4668200768B43 /* RecurrencePatternType.h in CopyFiles */,
+				ECCC3F5919E4668200768B43 /* RecurrenceRange.h in CopyFiles */,
+				ECCC3F5A19E4668200768B43 /* RecurrenceRangeType.h in CopyFiles */,
+				ECCC3F5B19E4668200768B43 /* ResponseStatus.h in CopyFiles */,
+				ECCC3F5C19E4668200768B43 /* ResponseType.h in CopyFiles */,
+				ECCC3F5D19E4668200768B43 /* User.h in CopyFiles */,
+				ECCC3F5E19E4668200768B43 /* WeekIndex.h in CopyFiles */,
+				ECCC3F5F19E4668200768B43 /* Protocols.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0EAA652B19F7B7E0001936F9 /* liboffice365_odata_interfaces.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liboffice365_odata_interfaces.a; path = "../../../../../Library/Developer/Xcode/DerivedData/simple-exchange-app-anzzpeuyresubgbofjwrijkzxuqo/Build/Products/Debug-iphoneos/liboffice365_odata_interfaces.a"; sourceTree = "<group>"; };
+		EC28337419E4866F00E5FEA4 /* ODataExecutable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODataExecutable.m; sourceTree = "<group>"; };
+		EC28337619E4875800E5FEA4 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		EC28337819E488C800E5FEA4 /* Attachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attachment.m; sourceTree = "<group>"; };
+		EC28337919E488C800E5FEA4 /* Attendee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendee.m; sourceTree = "<group>"; };
+		EC28337A19E488C800E5FEA4 /* Calendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calendar.m; sourceTree = "<group>"; };
+		EC28337B19E488C800E5FEA4 /* CalendarGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarGroup.m; sourceTree = "<group>"; };
+		EC28337C19E488C800E5FEA4 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
+		EC28337D19E488C800E5FEA4 /* ContactFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactFolder.m; sourceTree = "<group>"; };
+		EC28337E19E488C800E5FEA4 /* EmailAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailAddress.m; sourceTree = "<group>"; };
+		EC28337F19E488C800E5FEA4 /* Entity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entity.m; sourceTree = "<group>"; };
+		EC28338019E488C800E5FEA4 /* FileAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileAttachment.m; sourceTree = "<group>"; };
+		EC28338119E488C800E5FEA4 /* Folder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Folder.m; sourceTree = "<group>"; };
+		EC28338219E488C800E5FEA4 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		EC28338319E488C800E5FEA4 /* ItemAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemAttachment.m; sourceTree = "<group>"; };
+		EC28338419E488C800E5FEA4 /* ItemBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemBody.m; sourceTree = "<group>"; };
+		EC28338519E488C800E5FEA4 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		EC28338619E488C800E5FEA4 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		EC28338719E488C800E5FEA4 /* PatternedRecurrence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatternedRecurrence.m; sourceTree = "<group>"; };
+		EC28338819E488C800E5FEA4 /* PhysicalAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicalAddress.m; sourceTree = "<group>"; };
+		EC28338919E488C800E5FEA4 /* Recipient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recipient.m; sourceTree = "<group>"; };
+		EC28338A19E488C800E5FEA4 /* RecurrencePattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurrencePattern.m; sourceTree = "<group>"; };
+		EC28338B19E488C800E5FEA4 /* RecurrenceRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurrenceRange.m; sourceTree = "<group>"; };
+		EC28338C19E488C800E5FEA4 /* ResponseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseStatus.m; sourceTree = "<group>"; };
+		EC28338D19E488C800E5FEA4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		EC2833A419E48BA800E5FEA4 /* FolderCollectionFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderCollectionFetcher.m; sourceTree = "<group>"; };
+		EC2833A619E575FD00E5FEA4 /* MessageCollectionFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCollectionFetcher.m; sourceTree = "<group>"; };
+		EC3AF52119DF2FE5004283FD /* liboffice365_exchange_sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liboffice365_exchange_sdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC3AF52619DF2FE5004283FD /* office365_exchange_sdk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = office365_exchange_sdk.m; sourceTree = "<group>"; };
+		EC3AF52C19DF2FE5004283FD /* office365_exchange_sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = office365_exchange_sdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC3AF52F19DF2FE5004283FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ECCC3CD319E4272300768B43 /* office365_exchange_sdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = office365_exchange_sdk.h; sourceTree = "<group>"; };
+		ECCC3E6719E453A700768B43 /* Attachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attachment.h; sourceTree = "<group>"; };
+		ECCC3E6819E453A700768B43 /* Attendee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendee.h; sourceTree = "<group>"; };
+		ECCC3E6919E453A700768B43 /* AttendeeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendeeType.h; sourceTree = "<group>"; };
+		ECCC3E6A19E453A700768B43 /* BodyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyType.h; sourceTree = "<group>"; };
+		ECCC3E6B19E453A700768B43 /* Calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calendar.h; sourceTree = "<group>"; };
+		ECCC3E6C19E453A700768B43 /* CalendarGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarGroup.h; sourceTree = "<group>"; };
+		ECCC3E6D19E453A700768B43 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		ECCC3E6E19E453A700768B43 /* ContactFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactFolder.h; sourceTree = "<group>"; };
+		ECCC3E6F19E453A700768B43 /* DayOfWeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayOfWeek.h; sourceTree = "<group>"; };
+		ECCC3E7019E453A700768B43 /* EmailAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailAddress.h; sourceTree = "<group>"; };
+		ECCC3E7119E453A700768B43 /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		ECCC3E7219E453A700768B43 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		ECCC3E7319E453A700768B43 /* EventType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventType.h; sourceTree = "<group>"; };
+		ECCC3E7419E453A700768B43 /* FileAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileAttachment.h; sourceTree = "<group>"; };
+		ECCC3E7519E453A700768B43 /* Folder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
+		ECCC3E7619E453A700768B43 /* FreeBusyStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeBusyStatus.h; sourceTree = "<group>"; };
+		ECCC3E7719E453A700768B43 /* Importance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Importance.h; sourceTree = "<group>"; };
+		ECCC3E7819E453A700768B43 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		ECCC3E7919E453A700768B43 /* ItemAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemAttachment.h; sourceTree = "<group>"; };
+		ECCC3E7A19E453A700768B43 /* ItemBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemBody.h; sourceTree = "<group>"; };
+		ECCC3E7B19E453A700768B43 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		ECCC3E7C19E453A700768B43 /* MeetingMessageType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingMessageType.h; sourceTree = "<group>"; };
+		ECCC3E7D19E453A700768B43 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		ECCC3E7E19E453A700768B43 /* PatternedRecurrence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternedRecurrence.h; sourceTree = "<group>"; };
+		ECCC3E7F19E453A700768B43 /* MSOPhysicalAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSOPhysicalAddress.h; sourceTree = "<group>"; };
+		ECCC3E8019E453A700768B43 /* Recipient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipient.h; sourceTree = "<group>"; };
+		ECCC3E8119E453A700768B43 /* RecurrencePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurrencePattern.h; sourceTree = "<group>"; };
+		ECCC3E8219E453A700768B43 /* RecurrencePatternType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurrencePatternType.h; sourceTree = "<group>"; };
+		ECCC3E8319E453A700768B43 /* RecurrenceRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurrenceRange.h; sourceTree = "<group>"; };
+		ECCC3E8419E453A700768B43 /* RecurrenceRangeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurrenceRangeType.h; sourceTree = "<group>"; };
+		ECCC3E8519E453A700768B43 /* ResponseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseStatus.h; sourceTree = "<group>"; };
+		ECCC3E8619E453A700768B43 /* ResponseType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseType.h; sourceTree = "<group>"; };
+		ECCC3E8719E453A700768B43 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		ECCC3E8819E453A700768B43 /* WeekIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekIndex.h; sourceTree = "<group>"; };
+		ECCC3E8919E453A700768B43 /* Protocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocols.h; sourceTree = "<group>"; };
+		ECCC3E9619E453A700768B43 /* BaseODataContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseODataContainer.h; sourceTree = "<group>"; };
+		ECCC3EA719E453A700768B43 /* EntityCollectionFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityCollectionFetcher.h; sourceTree = "<group>"; };
+		ECCC3EA819E453A700768B43 /* EntityCollectionOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityCollectionOperations.h; sourceTree = "<group>"; };
+		ECCC3EA919E453A700768B43 /* EntityContainerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityContainerClient.h; sourceTree = "<group>"; };
+		ECCC3EAA19E453A700768B43 /* EntityFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityFetcher.h; sourceTree = "<group>"; };
+		ECCC3EAB19E453A700768B43 /* EntityOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityOperations.h; sourceTree = "<group>"; };
+		ECCC3EAC19E453A700768B43 /* EventCollectionFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCollectionFetcher.h; sourceTree = "<group>"; };
+		ECCC3EAD19E453A700768B43 /* EventCollectionOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCollectionOperations.h; sourceTree = "<group>"; };
+		ECCC3EAE19E453A700768B43 /* EventFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFetcher.h; sourceTree = "<group>"; };
+		ECCC3EAF19E453A700768B43 /* EventOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventOperations.h; sourceTree = "<group>"; };
+		ECCC3EB019E453A700768B43 /* Executable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Executable.h; sourceTree = "<group>"; };
+		ECCC3EB519E453A700768B43 /* FolderCollectionFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderCollectionFetcher.h; sourceTree = "<group>"; };
+		ECCC3EB619E453A700768B43 /* FolderCollectionOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderCollectionOperations.h; sourceTree = "<group>"; };
+		ECCC3EB719E453A700768B43 /* FolderFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderFetcher.h; sourceTree = "<group>"; };
+		ECCC3EB819E453A700768B43 /* FolderOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderOperations.h; sourceTree = "<group>"; };
+		ECCC3EC119E453A700768B43 /* MessageCollectionFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCollectionFetcher.h; sourceTree = "<group>"; };
+		ECCC3EC219E453A700768B43 /* MessageCollectionOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCollectionOperations.h; sourceTree = "<group>"; };
+		ECCC3EC319E453A700768B43 /* MessageFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFetcher.h; sourceTree = "<group>"; };
+		ECCC3EC419E453A700768B43 /* MessageOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageOperations.h; sourceTree = "<group>"; };
+		ECCC3EC519E453A700768B43 /* ODataCollectionFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODataCollectionFetcher.h; sourceTree = "<group>"; };
+		ECCC3EC619E453A700768B43 /* ODataEntityFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODataEntityFetcher.h; sourceTree = "<group>"; };
+		ECCC3EC719E453A700768B43 /* ODataExecutable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODataExecutable.h; sourceTree = "<group>"; };
+		ECCC3EC819E453A700768B43 /* ODataOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODataOperations.h; sourceTree = "<group>"; };
+		ECCC3ECA19E453A700768B43 /* UserCollectionOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCollectionOperations.h; sourceTree = "<group>"; };
+		ECCC3ECB19E453A700768B43 /* UserFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFetcher.h; sourceTree = "<group>"; };
+		ECCC3ECC19E453A700768B43 /* UserOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOperations.h; sourceTree = "<group>"; };
+		ECCC3ED719E453A700768B43 /* BaseODataContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseODataContainer.m; sourceTree = "<group>"; };
+		ECCC3EE419E453A700768B43 /* EntityCollectionOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityCollectionOperations.m; sourceTree = "<group>"; };
+		ECCC3EE519E453A700768B43 /* EntityContainerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityContainerClient.m; sourceTree = "<group>"; };
+		ECCC3EE619E453A700768B43 /* EntityFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityFetcher.m; sourceTree = "<group>"; };
+		ECCC3EE719E453A700768B43 /* EntityOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityOperations.m; sourceTree = "<group>"; };
+		ECCC3EEE19E453A700768B43 /* FolderCollectionOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderCollectionOperations.m; sourceTree = "<group>"; };
+		ECCC3EEF19E453A700768B43 /* FolderFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderFetcher.m; sourceTree = "<group>"; };
+		ECCC3EF019E453A700768B43 /* FolderOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderOperations.m; sourceTree = "<group>"; };
+		ECCC3EF719E453A700768B43 /* MessageCollectionOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCollectionOperations.m; sourceTree = "<group>"; };
+		ECCC3EF819E453A700768B43 /* MessageFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageFetcher.m; sourceTree = "<group>"; };
+		ECCC3EF919E453A700768B43 /* MessageOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageOperations.m; sourceTree = "<group>"; };
+		ECCC3EFA19E453A700768B43 /* ODataCollectionFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODataCollectionFetcher.m; sourceTree = "<group>"; };
+		ECCC3EFB19E453A700768B43 /* ODataEntityFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODataEntityFetcher.m; sourceTree = "<group>"; };
+		ECCC3EFC19E453A700768B43 /* ODataOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODataOperations.m; sourceTree = "<group>"; };
+		ECCC3EFD19E453A700768B43 /* UserCollectionOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCollectionOperations.m; sourceTree = "<group>"; };
+		ECCC3EFE19E453A700768B43 /* UserFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFetcher.m; sourceTree = "<group>"; };
+		ECCC3EFF19E453A700768B43 /* UserOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserOperations.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EC3AF51E19DF2FE5004283FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EAA652C19F7B7E0001936F9 /* liboffice365_odata_interfaces.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC3AF52919DF2FE5004283FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EC3AF51819DF2FE5004283FD = {
+			isa = PBXGroup;
+			children = (
+				0EAA652B19F7B7E0001936F9 /* liboffice365_odata_interfaces.a */,
+				EC3AF52319DF2FE5004283FD /* office365_exchange_sdk */,
+				EC3AF52D19DF2FE5004283FD /* office365_exchange_sdkTests */,
+				EC3AF52219DF2FE5004283FD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EC3AF52219DF2FE5004283FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EC3AF52119DF2FE5004283FD /* liboffice365_exchange_sdk.a */,
+				EC3AF52C19DF2FE5004283FD /* office365_exchange_sdkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EC3AF52319DF2FE5004283FD /* office365_exchange_sdk */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E6119E453A700768B43 /* com */,
+				ECCC3E8A19E453A700768B43 /* odata */,
+				ECCC3CD319E4272300768B43 /* office365_exchange_sdk.h */,
+				EC3AF52619DF2FE5004283FD /* office365_exchange_sdk.m */,
+			);
+			path = office365_exchange_sdk;
+			sourceTree = "<group>";
+		};
+		EC3AF52D19DF2FE5004283FD /* office365_exchange_sdkTests */ = {
+			isa = PBXGroup;
+			children = (
+				EC3AF52E19DF2FE5004283FD /* Supporting Files */,
+			);
+			path = office365_exchange_sdkTests;
+			sourceTree = "<group>";
+		};
+		EC3AF52E19DF2FE5004283FD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EC3AF52F19DF2FE5004283FD /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ECCC3E6119E453A700768B43 /* com */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E6219E453A700768B43 /* microsoft */,
+			);
+			path = com;
+			sourceTree = "<group>";
+		};
+		ECCC3E6219E453A700768B43 /* microsoft */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E6319E453A700768B43 /* office365 */,
+			);
+			path = microsoft;
+			sourceTree = "<group>";
+		};
+		ECCC3E6319E453A700768B43 /* office365 */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E6419E453A700768B43 /* exchange */,
+			);
+			path = office365;
+			sourceTree = "<group>";
+		};
+		ECCC3E6419E453A700768B43 /* exchange */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E6519E453A700768B43 /* services */,
+			);
+			path = exchange;
+			sourceTree = "<group>";
+		};
+		ECCC3E6519E453A700768B43 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E6619E453A700768B43 /* model */,
+				ECCC3E8919E453A700768B43 /* Protocols.h */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		ECCC3E6619E453A700768B43 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				EC28337819E488C800E5FEA4 /* Attachment.m */,
+				EC28337919E488C800E5FEA4 /* Attendee.m */,
+				EC28337A19E488C800E5FEA4 /* Calendar.m */,
+				EC28337B19E488C800E5FEA4 /* CalendarGroup.m */,
+				EC28337C19E488C800E5FEA4 /* Contact.m */,
+				EC28337D19E488C800E5FEA4 /* ContactFolder.m */,
+				EC28337E19E488C800E5FEA4 /* EmailAddress.m */,
+				EC28337F19E488C800E5FEA4 /* Entity.m */,
+				EC28338019E488C800E5FEA4 /* FileAttachment.m */,
+				EC28338119E488C800E5FEA4 /* Folder.m */,
+				EC28338219E488C800E5FEA4 /* Item.m */,
+				EC28338319E488C800E5FEA4 /* ItemAttachment.m */,
+				EC28338419E488C800E5FEA4 /* ItemBody.m */,
+				EC28338519E488C800E5FEA4 /* Location.m */,
+				EC28338619E488C800E5FEA4 /* Message.m */,
+				EC28338719E488C800E5FEA4 /* PatternedRecurrence.m */,
+				EC28338819E488C800E5FEA4 /* PhysicalAddress.m */,
+				EC28338919E488C800E5FEA4 /* Recipient.m */,
+				EC28338A19E488C800E5FEA4 /* RecurrencePattern.m */,
+				EC28338B19E488C800E5FEA4 /* RecurrenceRange.m */,
+				EC28338C19E488C800E5FEA4 /* ResponseStatus.m */,
+				EC28338D19E488C800E5FEA4 /* User.m */,
+				ECCC3E6719E453A700768B43 /* Attachment.h */,
+				ECCC3E6819E453A700768B43 /* Attendee.h */,
+				ECCC3E6919E453A700768B43 /* AttendeeType.h */,
+				ECCC3E6A19E453A700768B43 /* BodyType.h */,
+				ECCC3E6B19E453A700768B43 /* Calendar.h */,
+				ECCC3E6C19E453A700768B43 /* CalendarGroup.h */,
+				ECCC3E6D19E453A700768B43 /* Contact.h */,
+				ECCC3E6E19E453A700768B43 /* ContactFolder.h */,
+				ECCC3E6F19E453A700768B43 /* DayOfWeek.h */,
+				ECCC3E7019E453A700768B43 /* EmailAddress.h */,
+				ECCC3E7119E453A700768B43 /* Entity.h */,
+				ECCC3E7219E453A700768B43 /* Event.h */,
+				ECCC3E7319E453A700768B43 /* EventType.h */,
+				ECCC3E7419E453A700768B43 /* FileAttachment.h */,
+				ECCC3E7519E453A700768B43 /* Folder.h */,
+				ECCC3E7619E453A700768B43 /* FreeBusyStatus.h */,
+				ECCC3E7719E453A700768B43 /* Importance.h */,
+				ECCC3E7819E453A700768B43 /* Item.h */,
+				ECCC3E7919E453A700768B43 /* ItemAttachment.h */,
+				ECCC3E7A19E453A700768B43 /* ItemBody.h */,
+				ECCC3E7B19E453A700768B43 /* Location.h */,
+				ECCC3E7C19E453A700768B43 /* MeetingMessageType.h */,
+				ECCC3E7D19E453A700768B43 /* Message.h */,
+				ECCC3E7E19E453A700768B43 /* PatternedRecurrence.h */,
+				ECCC3E7F19E453A700768B43 /* MSOPhysicalAddress.h */,
+				ECCC3E8019E453A700768B43 /* Recipient.h */,
+				ECCC3E8119E453A700768B43 /* RecurrencePattern.h */,
+				ECCC3E8219E453A700768B43 /* RecurrencePatternType.h */,
+				ECCC3E8319E453A700768B43 /* RecurrenceRange.h */,
+				ECCC3E8419E453A700768B43 /* RecurrenceRangeType.h */,
+				ECCC3E8519E453A700768B43 /* ResponseStatus.h */,
+				ECCC3E8619E453A700768B43 /* ResponseType.h */,
+				ECCC3E8719E453A700768B43 /* User.h */,
+				ECCC3E8819E453A700768B43 /* WeekIndex.h */,
+				EC28337619E4875800E5FEA4 /* Event.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		ECCC3E8A19E453A700768B43 /* odata */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E8B19E453A700768B43 /* header */,
+				ECCC3ECD19E453A700768B43 /* implementation */,
+			);
+			path = odata;
+			sourceTree = "<group>";
+		};
+		ECCC3E8B19E453A700768B43 /* header */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E8C19E453A700768B43 /* com */,
+			);
+			path = header;
+			sourceTree = "<group>";
+		};
+		ECCC3E8C19E453A700768B43 /* com */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E8D19E453A700768B43 /* microsoft */,
+			);
+			path = com;
+			sourceTree = "<group>";
+		};
+		ECCC3E8D19E453A700768B43 /* microsoft */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E8E19E453A700768B43 /* office365 */,
+			);
+			path = microsoft;
+			sourceTree = "<group>";
+		};
+		ECCC3E8E19E453A700768B43 /* office365 */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E8F19E453A700768B43 /* exchange */,
+			);
+			path = office365;
+			sourceTree = "<group>";
+		};
+		ECCC3E8F19E453A700768B43 /* exchange */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E9019E453A700768B43 /* services */,
+			);
+			path = exchange;
+			sourceTree = "<group>";
+		};
+		ECCC3E9019E453A700768B43 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E9119E453A700768B43 /* odata */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		ECCC3E9119E453A700768B43 /* odata */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3E9619E453A700768B43 /* BaseODataContainer.h */,
+				ECCC3EA719E453A700768B43 /* EntityCollectionFetcher.h */,
+				ECCC3EA819E453A700768B43 /* EntityCollectionOperations.h */,
+				ECCC3EA919E453A700768B43 /* EntityContainerClient.h */,
+				ECCC3EAA19E453A700768B43 /* EntityFetcher.h */,
+				ECCC3EAB19E453A700768B43 /* EntityOperations.h */,
+				ECCC3EAC19E453A700768B43 /* EventCollectionFetcher.h */,
+				ECCC3EAD19E453A700768B43 /* EventCollectionOperations.h */,
+				ECCC3EAE19E453A700768B43 /* EventFetcher.h */,
+				ECCC3EAF19E453A700768B43 /* EventOperations.h */,
+				ECCC3EB019E453A700768B43 /* Executable.h */,
+				ECCC3EB519E453A700768B43 /* FolderCollectionFetcher.h */,
+				ECCC3EB619E453A700768B43 /* FolderCollectionOperations.h */,
+				ECCC3EB719E453A700768B43 /* FolderFetcher.h */,
+				ECCC3EB819E453A700768B43 /* FolderOperations.h */,
+				ECCC3EC119E453A700768B43 /* MessageCollectionFetcher.h */,
+				ECCC3EC219E453A700768B43 /* MessageCollectionOperations.h */,
+				ECCC3EC319E453A700768B43 /* MessageFetcher.h */,
+				ECCC3EC419E453A700768B43 /* MessageOperations.h */,
+				ECCC3EC519E453A700768B43 /* ODataCollectionFetcher.h */,
+				ECCC3EC619E453A700768B43 /* ODataEntityFetcher.h */,
+				ECCC3EC719E453A700768B43 /* ODataExecutable.h */,
+				ECCC3EC819E453A700768B43 /* ODataOperations.h */,
+				ECCC3ECA19E453A700768B43 /* UserCollectionOperations.h */,
+				ECCC3ECB19E453A700768B43 /* UserFetcher.h */,
+				ECCC3ECC19E453A700768B43 /* UserOperations.h */,
+			);
+			path = odata;
+			sourceTree = "<group>";
+		};
+		ECCC3ECD19E453A700768B43 /* implementation */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3ECE19E453A700768B43 /* com */,
+			);
+			path = implementation;
+			sourceTree = "<group>";
+		};
+		ECCC3ECE19E453A700768B43 /* com */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3ECF19E453A700768B43 /* microsoft */,
+			);
+			path = com;
+			sourceTree = "<group>";
+		};
+		ECCC3ECF19E453A700768B43 /* microsoft */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3ED019E453A700768B43 /* office365 */,
+			);
+			path = microsoft;
+			sourceTree = "<group>";
+		};
+		ECCC3ED019E453A700768B43 /* office365 */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3ED119E453A700768B43 /* exchange */,
+			);
+			path = office365;
+			sourceTree = "<group>";
+		};
+		ECCC3ED119E453A700768B43 /* exchange */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3ED219E453A700768B43 /* services */,
+			);
+			path = exchange;
+			sourceTree = "<group>";
+		};
+		ECCC3ED219E453A700768B43 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3ED319E453A700768B43 /* odata */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		ECCC3ED319E453A700768B43 /* odata */ = {
+			isa = PBXGroup;
+			children = (
+				ECCC3ED719E453A700768B43 /* BaseODataContainer.m */,
+				ECCC3EE419E453A700768B43 /* EntityCollectionOperations.m */,
+				ECCC3EE519E453A700768B43 /* EntityContainerClient.m */,
+				ECCC3EE619E453A700768B43 /* EntityFetcher.m */,
+				ECCC3EE719E453A700768B43 /* EntityOperations.m */,
+				ECCC3EEE19E453A700768B43 /* FolderCollectionOperations.m */,
+				ECCC3EEF19E453A700768B43 /* FolderFetcher.m */,
+				ECCC3EF019E453A700768B43 /* FolderOperations.m */,
+				ECCC3EF719E453A700768B43 /* MessageCollectionOperations.m */,
+				ECCC3EF819E453A700768B43 /* MessageFetcher.m */,
+				ECCC3EF919E453A700768B43 /* MessageOperations.m */,
+				ECCC3EFA19E453A700768B43 /* ODataCollectionFetcher.m */,
+				ECCC3EFB19E453A700768B43 /* ODataEntityFetcher.m */,
+				EC28337419E4866F00E5FEA4 /* ODataExecutable.m */,
+				ECCC3EFC19E453A700768B43 /* ODataOperations.m */,
+				ECCC3EFD19E453A700768B43 /* UserCollectionOperations.m */,
+				ECCC3EFE19E453A700768B43 /* UserFetcher.m */,
+				ECCC3EFF19E453A700768B43 /* UserOperations.m */,
+				EC2833A419E48BA800E5FEA4 /* FolderCollectionFetcher.m */,
+				EC2833A619E575FD00E5FEA4 /* MessageCollectionFetcher.m */,
+			);
+			path = odata;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EC3AF52019DF2FE5004283FD /* office365_exchange_sdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC3AF53219DF2FE5004283FD /* Build configuration list for PBXNativeTarget "office365_exchange_sdk" */;
+			buildPhases = (
+				EC3AF51D19DF2FE5004283FD /* Sources */,
+				EC3AF51E19DF2FE5004283FD /* Frameworks */,
+				EC3AF51F19DF2FE5004283FD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = office365_exchange_sdk;
+			productName = office365_exchange_sdk;
+			productReference = EC3AF52119DF2FE5004283FD /* liboffice365_exchange_sdk.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		EC3AF52B19DF2FE5004283FD /* office365_exchange_sdkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC3AF53519DF2FE5004283FD /* Build configuration list for PBXNativeTarget "office365_exchange_sdkTests" */;
+			buildPhases = (
+				EC3AF52819DF2FE5004283FD /* Sources */,
+				EC3AF52919DF2FE5004283FD /* Frameworks */,
+				EC3AF52A19DF2FE5004283FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = office365_exchange_sdkTests;
+			productName = office365_exchange_sdkTests;
+			productReference = EC3AF52C19DF2FE5004283FD /* office365_exchange_sdkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC3AF51919DF2FE5004283FD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = Microsoft;
+				TargetAttributes = {
+					EC3AF52019DF2FE5004283FD = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					EC3AF52B19DF2FE5004283FD = {
+						CreatedOnToolsVersion = 6.0;
+					};
+				};
+			};
+			buildConfigurationList = EC3AF51C19DF2FE5004283FD /* Build configuration list for PBXProject "office365_exchange_sdk" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EC3AF51819DF2FE5004283FD;
+			productRefGroup = EC3AF52219DF2FE5004283FD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EC3AF52019DF2FE5004283FD /* office365_exchange_sdk */,
+				EC3AF52B19DF2FE5004283FD /* office365_exchange_sdkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EC3AF52A19DF2FE5004283FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EC3AF51D19DF2FE5004283FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC28339519E488C800E5FEA4 /* Entity.m in Sources */,
+				ECCC3F2B19E453A700768B43 /* UserOperations.m in Sources */,
+				EC28339819E488C800E5FEA4 /* Item.m in Sources */,
+				EC28339919E488C800E5FEA4 /* ItemAttachment.m in Sources */,
+				ECCC3F0319E453A700768B43 /* BaseODataContainer.m in Sources */,
+				EC2833A219E488C800E5FEA4 /* ResponseStatus.m in Sources */,
+				ECCC3F1B19E453A700768B43 /* FolderFetcher.m in Sources */,
+				ECCC3F1A19E453A700768B43 /* FolderCollectionOperations.m in Sources */,
+				EC2833A319E488C800E5FEA4 /* User.m in Sources */,
+				EC28339419E488C800E5FEA4 /* EmailAddress.m in Sources */,
+				ECCC3F1019E453A700768B43 /* EntityCollectionOperations.m in Sources */,
+				EC2833A019E488C800E5FEA4 /* RecurrencePattern.m in Sources */,
+				EC28338F19E488C800E5FEA4 /* Attendee.m in Sources */,
+				ECCC3F2719E453A700768B43 /* ODataEntityFetcher.m in Sources */,
+				EC28339219E488C800E5FEA4 /* Contact.m in Sources */,
+				EC3AF52719DF2FE5004283FD /* office365_exchange_sdk.m in Sources */,
+				ECCC3F2319E453A700768B43 /* MessageCollectionOperations.m in Sources */,
+				EC28339119E488C800E5FEA4 /* CalendarGroup.m in Sources */,
+				ECCC3F2419E453A700768B43 /* MessageFetcher.m in Sources */,
+				EC2833A719E575FD00E5FEA4 /* MessageCollectionFetcher.m in Sources */,
+				EC28339A19E488C800E5FEA4 /* ItemBody.m in Sources */,
+				EC28339C19E488C800E5FEA4 /* Message.m in Sources */,
+				EC28339019E488C800E5FEA4 /* Calendar.m in Sources */,
+				ECCC3F1319E453A700768B43 /* EntityOperations.m in Sources */,
+				ECCC3F2819E453A700768B43 /* ODataOperations.m in Sources */,
+				EC28339F19E488C800E5FEA4 /* Recipient.m in Sources */,
+				ECCC3F2519E453A700768B43 /* MessageOperations.m in Sources */,
+				EC28337719E4875800E5FEA4 /* Event.m in Sources */,
+				EC28339719E488C800E5FEA4 /* Folder.m in Sources */,
+				ECCC3F1C19E453A700768B43 /* FolderOperations.m in Sources */,
+				ECCC3F2919E453A700768B43 /* UserCollectionOperations.m in Sources */,
+				ECCC3F2A19E453A700768B43 /* UserFetcher.m in Sources */,
+				EC28339319E488C800E5FEA4 /* ContactFolder.m in Sources */,
+				ECCC3F2619E453A700768B43 /* ODataCollectionFetcher.m in Sources */,
+				EC28339D19E488C800E5FEA4 /* PatternedRecurrence.m in Sources */,
+				EC28338E19E488C800E5FEA4 /* Attachment.m in Sources */,
+				ECCC3F1219E453A700768B43 /* EntityFetcher.m in Sources */,
+				ECCC3F1119E453A700768B43 /* EntityContainerClient.m in Sources */,
+				EC28339619E488C800E5FEA4 /* FileAttachment.m in Sources */,
+				EC28339B19E488C800E5FEA4 /* Location.m in Sources */,
+				EC2833A519E48BA800E5FEA4 /* FolderCollectionFetcher.m in Sources */,
+				EC28339E19E488C800E5FEA4 /* PhysicalAddress.m in Sources */,
+				EC28337519E4866F00E5FEA4 /* ODataExecutable.m in Sources */,
+				EC2833A119E488C800E5FEA4 /* RecurrenceRange.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC3AF52819DF2FE5004283FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		EC3AF53019DF2FE5004283FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		EC3AF53119DF2FE5004283FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EC3AF53319DF2FE5004283FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/gustavo/Documents/MsTest/office365_odata_interfaces/build/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/simple-exchange-app-anzzpeuyresubgbofjwrijkzxuqo/Build/Products/Debug-iphoneos",
+				);
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		EC3AF53419DF2FE5004283FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/gustavo/Documents/MsTest/office365_odata_interfaces/build/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/simple-exchange-app-anzzpeuyresubgbofjwrijkzxuqo/Build/Products/Debug-iphoneos",
+				);
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		EC3AF53619DF2FE5004283FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = office365_exchange_sdkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EC3AF53719DF2FE5004283FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = office365_exchange_sdkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EC3AF51C19DF2FE5004283FD /* Build configuration list for PBXProject "office365_exchange_sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC3AF53019DF2FE5004283FD /* Debug */,
+				EC3AF53119DF2FE5004283FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC3AF53219DF2FE5004283FD /* Build configuration list for PBXNativeTarget "office365_exchange_sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC3AF53319DF2FE5004283FD /* Debug */,
+				EC3AF53419DF2FE5004283FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC3AF53519DF2FE5004283FD /* Build configuration list for PBXNativeTarget "office365_exchange_sdkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC3AF53619DF2FE5004283FD /* Debug */,
+				EC3AF53719DF2FE5004283FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC3AF51919DF2FE5004283FD /* Project object */;
+}
