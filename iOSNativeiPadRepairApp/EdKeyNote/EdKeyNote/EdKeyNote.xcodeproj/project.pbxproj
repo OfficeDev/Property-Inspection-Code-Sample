@@ -58,6 +58,8 @@
 		F3673A7419ED2F2400C02B44 /* IncidentListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3673A7219ED2F2400C02B44 /* IncidentListItemCell.xib */; };
 		F370C4D019F10461000E5FA0 /* camera_gray~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F370C4CE19F10461000E5FA0 /* camera_gray~ipad.png */; };
 		F370C4D119F10461000E5FA0 /* camera_gray@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F370C4CF19F10461000E5FA0 /* camera_gray@2x~ipad.png */; };
+		F37730A119F7C3A400FF8B16 /* close@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F377309F19F7C3A400FF8B16 /* close@2x~ipad.png */; };
+		F37730A219F7C3A400FF8B16 /* close~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F37730A019F7C3A400FF8B16 /* close~ipad.png */; };
 		F3A1DF2819EF5D5700B9762B /* default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2719EF5D5700B9762B /* default~ipad.png */; };
 		F3A1DF2F19EFC00A00B9762B /* incident_detailtab~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2919EFC00A00B9762B /* incident_detailtab~ipad.png */; };
 		F3A1DF3019EFC00A00B9762B /* incident_detailtab@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F3A1DF2A19EFC00A00B9762B /* incident_detailtab@2x~ipad.png */; };
@@ -138,6 +140,8 @@
 		F3673A7219ED2F2400C02B44 /* IncidentListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncidentListItemCell.xib; sourceTree = "<group>"; };
 		F370C4CE19F10461000E5FA0 /* camera_gray~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_gray~ipad.png"; sourceTree = "<group>"; };
 		F370C4CF19F10461000E5FA0 /* camera_gray@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_gray@2x~ipad.png"; sourceTree = "<group>"; };
+		F377309F19F7C3A400FF8B16 /* close@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x~ipad.png"; sourceTree = "<group>"; };
+		F37730A019F7C3A400FF8B16 /* close~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close~ipad.png"; sourceTree = "<group>"; };
 		F3A1DF2719EF5D5700B9762B /* default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default~ipad.png"; sourceTree = "<group>"; };
 		F3A1DF2919EFC00A00B9762B /* incident_detailtab~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "incident_detailtab~ipad.png"; sourceTree = "<group>"; };
 		F3A1DF2A19EFC00A00B9762B /* incident_detailtab@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "incident_detailtab@2x~ipad.png"; sourceTree = "<group>"; };
@@ -190,6 +194,8 @@
 		0EADF92B19E79F9200E1DE77 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F377309F19F7C3A400FF8B16 /* close@2x~ipad.png */,
+				F37730A019F7C3A400FF8B16 /* close~ipad.png */,
 				F370C4CE19F10461000E5FA0 /* camera_gray~ipad.png */,
 				F370C4CF19F10461000E5FA0 /* camera_gray@2x~ipad.png */,
 				F3A1DF2919EFC00A00B9762B /* incident_detailtab~ipad.png */,
@@ -404,6 +410,7 @@
 				0E9D42CF19E8FEFD00329A81 /* man~ipad.png in Resources */,
 				0EADF93D19E79F9200E1DE77 /* navigation_background~ipad.png in Resources */,
 				0EADF93619E79F9200E1DE77 /* camera@2x~ipad.png in Resources */,
+				F37730A119F7C3A400FF8B16 /* close@2x~ipad.png in Resources */,
 				0E9D42FF19E98D5600329A81 /* ContactOwnerCell.xib in Resources */,
 				F370C4D019F10461000E5FA0 /* camera_gray~ipad.png in Resources */,
 				0EADF93719E79F9200E1DE77 /* camera~ipad.png in Resources */,
@@ -411,6 +418,7 @@
 				F360DE2419E7DAA400311CFC /* EKNCollectionViewCell.xib in Resources */,
 				0EADF93E19E79F9200E1DE77 /* setting@2x~ipad.png in Resources */,
 				0E9D431019E98DDB00329A81 /* email@2x~ipad.png in Resources */,
+				F37730A219F7C3A400FF8B16 /* close~ipad.png in Resources */,
 				F3A1DF3219EFC00A00B9762B /* calendar@2x~ipad.png in Resources */,
 				0EADF93F19E79F9200E1DE77 /* setting~ipad.png in Resources */,
 				0EC4F5CC19CFF2C600BEF583 /* Images.xcassets in Resources */,

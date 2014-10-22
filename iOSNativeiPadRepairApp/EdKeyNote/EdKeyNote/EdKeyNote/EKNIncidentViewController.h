@@ -64,6 +64,9 @@
 @property(nonatomic) UITextView *tabDispatcherComments;
 @property(nonatomic) UITextView *tabInsptorComments;
 @property(nonatomic) UITextView *tabComments;
+@property(nonatomic) UIView *largePhotoView;
+@property(nonatomic) UIImageView *largeImageView;
+@property(nonatomic) UIButton *largeImageCloseBtn;
 
 
 //property

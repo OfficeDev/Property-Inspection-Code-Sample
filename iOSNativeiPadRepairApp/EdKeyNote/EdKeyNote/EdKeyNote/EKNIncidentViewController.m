@@ -353,6 +353,19 @@
     repairButton.layer.cornerRadius = 5;
     [repairButton addTarget:self action:@selector(updateRepairComment) forControlEvents:UIControlEventTouchUpInside];
     [self.detailRightAdd addSubview:repairButton];
+    
+    self.largePhotoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    self.largePhotoView.backgroundColor = [UIColor colorWithRed:0.00f/255.00f green:0.00f/255.00f blue:0.00f/255.00f alpha:0.5];
+    self.largePhotoView.hidden = YES;
+    [self.view addSubview:self.largePhotoView];
+    
+    self.largeImageView = [[UIImageView alloc] init];
+    [self.largePhotoView addSubview:self.largeImageView];
+    
+    self.largeImageCloseBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 31)];
+    [self.largeImageCloseBtn setBackgroundImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+    [self.largeImageCloseBtn addTarget:self action:@selector(hideLargePhoto) forControlEvents:UIControlEventTouchUpInside];
+    [self.largePhotoView addSubview:self.largeImageCloseBtn];
 }
 
 -(void)setRoomTitleAndIncidentType:(NSString *)title type:(NSString *)type
@@ -436,13 +449,13 @@
 -(void)setRightTableSelectIndex:(NSIndexPath*)indexpath
 {
     ListItem *incidentItem = [self.incidentListArray objectAtIndex:indexpath.row];
-    NSString *incidentType = (NSString *)[incidentItem getData:@"sl_type"];
+    NSString *incidentType = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_type"]];
     NSDictionary *roomData = (NSDictionary *)[incidentItem getData:@"sl_roomID"];
-    NSString *roomTitle = (NSString *)[roomData objectForKey:@"Title"];
+    NSString *roomTitle = [EKNEKNGlobalInfo getString:(NSString *)[roomData objectForKey:@"Title"]];
     NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
     NSString *inspectionID = (NSString *)[incidentItem getData:@"sl_inspectionIDId"];
     NSString *roomID = (NSString *)[incidentItem getData:@"sl_roomIDId"];
-    NSString *completedDate = (NSString *)[incidentItem getData:@"sl_repairCompleted"];
+    NSString *completedDate = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_repairCompleted"]];
     
     //set select index
     self.selectedIndex = indexpath.row;
@@ -451,7 +464,7 @@
     self.selectIncidentId = incidentID;
     self.selectInspectionId = inspectionID;
     self.selectRoomId = roomID;
-    NSLog(@"incident ID:%@,inspection ID:%@,room ID:%@",self.selectIncidentId,self.selectInspectionId,self.selectRoomId);
+    NSLog(@"incidentID:%@,inspectionID:%@,roomID:%@",self.selectIncidentId,self.selectInspectionId,self.selectRoomId);
     
     //set finalize repair button
     self.finalizeBtn.hidden = ![EKNEKNGlobalInfo isBlankString:completedDate];
@@ -537,6 +550,35 @@
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
     [alert show];
+}
+
+-(void)showLargePhoto:(UIImage *)image
+{
+    CGFloat width = image.size.width;
+    CGFloat height =image.size.height;
+    if(width > 1009)
+    {
+        width = 1009;
+        height = height / (width / 1009);
+    }
+    if(height > 753)
+    {
+        height = 753;
+        width = width / (height / 753);
+    }
+    
+    CGFloat x = (1024 - width) / 2;
+    CGFloat y = (768 - height) / 2;
+    self.largeImageView.frame = CGRectMake(x, y, width, height);
+    self.largeImageView.image = image;
+    
+    self.largeImageCloseBtn.frame = CGRectMake(x + width - 15, y - 15, 30, 31);
+    self.largePhotoView.hidden = NO;
+}
+
+-(void)hideLargePhoto
+{
+    self.largePhotoView.hidden = YES;
 }
 
 -(void)loadPropertyIdByIncidentId{
@@ -658,11 +700,11 @@
                 NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
                 [dic setValue:repairCompleted forKey:@"sl_repairCompleted"];
                 self.finalizeBtn.hidden = YES;
-                [self showSuccessMessage:@"Update successfully."];
+                [self showSuccessMessage:@"Finalize repair successfully."];
             }
             else
             {
-                [self showErrorMessage:@"Update failed."];
+                [self showErrorMessage:@"Finalize repair failed."];
             }
         });
     }];
@@ -747,8 +789,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([EKNEKNGlobalInfo requestSuccess:response]) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
-                [self.propertyDetailDic setValue:image forKey:@"photo"];
-                [self.propertyDetailTableView reloadData];
+                if(image != nil)
+                {
+                    [self.propertyDetailDic setValue:image forKey:@"photo"];
+                    [self.propertyDetailTableView reloadData];
+                }
             }
             else
             {
@@ -811,6 +856,7 @@
                                                      {
                                                          NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
                                                          [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID];
+                                                         NSLog(@"ServerRelativeUrl:%@",serverRelativeUrl);
                                                      }
                                                  });
                                                  
@@ -839,8 +885,11 @@
                     [self.incidentPhotoListDic setObject:dic forKey:incidentID];
                 }
                 UIImage *image =[[UIImage alloc] initWithData:data];
-                [[self.incidentPhotoListDic objectForKey:incidentID] setObject:image forKey:@"photo"];
-                [self.rightTableView reloadData];
+                if(image != nil)
+                {
+                    [[self.incidentPhotoListDic objectForKey:incidentID] setObject:image forKey:@"photo"];
+                    [self.rightTableView reloadData];
+                }
             }
             else
             {
@@ -926,19 +975,22 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([EKNEKNGlobalInfo requestSuccess:response]) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
-                if([self.roomInspectionPhotoDic objectForKey:incidentId] != nil && [[self.roomInspectionPhotoDic objectForKey:incidentId] objectForKey:@"photos"] != nil)
+                if(image != nil)
                 {
-                    [[[self.roomInspectionPhotoDic objectForKey:incidentId] objectForKey:@"photos"] addObject:image];
+                    if([self.roomInspectionPhotoDic objectForKey:incidentId] != nil && [[self.roomInspectionPhotoDic objectForKey:incidentId] objectForKey:@"photos"] != nil)
+                    {
+                        [[[self.roomInspectionPhotoDic objectForKey:incidentId] objectForKey:@"photos"] addObject:image];
+                    }
+                    else
+                    {
+                        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                        NSMutableArray *photos = [[NSMutableArray alloc] init];
+                        [photos addObject:image];
+                        [dic setObject:photos forKey:@"photos"];
+                        [self.roomInspectionPhotoDic setObject:dic forKey:incidentId];
+                    }
+                    [self.inspectorCommentCollection reloadData];
                 }
-                else
-                {
-                    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-                    NSMutableArray *photos = [[NSMutableArray alloc] init];
-                    [photos addObject:image];
-                    [dic setObject:photos forKey:@"photos"];
-                    [self.roomInspectionPhotoDic setObject:dic forKey:incidentId];
-                }
-                [self.inspectorCommentCollection reloadData];
             }
             else
             {
@@ -1009,19 +1061,22 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([EKNEKNGlobalInfo requestSuccess:response]) {
                 UIImage *image =[[UIImage alloc] initWithData:data];
-                if([self.repairPhotoDic objectForKey:incidentId] != nil && [[self.repairPhotoDic objectForKey:incidentId] objectForKey:@"photos"] != nil)
+                if(image != nil)
                 {
-                    [[[self.repairPhotoDic objectForKey:incidentId] objectForKey:@"photos"] addObject:image];
+                    if([self.repairPhotoDic objectForKey:incidentId] != nil && [[self.repairPhotoDic objectForKey:incidentId] objectForKey:@"photos"] != nil)
+                    {
+                        [[[self.repairPhotoDic objectForKey:incidentId] objectForKey:@"photos"] addObject:image];
+                    }
+                    else
+                    {
+                        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                        NSMutableArray *photos = [[NSMutableArray alloc] init];
+                        [photos addObject:image];
+                        [dic setObject:photos forKey:@"photos"];
+                        [self.repairPhotoDic setObject:dic forKey:incidentId];
+                    }
+                    [self.commentCollection reloadData];
                 }
-                else
-                {
-                    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-                    NSMutableArray *photos = [[NSMutableArray alloc] init];
-                    [photos addObject:image];
-                    [dic setObject:photos forKey:@"photos"];
-                    [self.repairPhotoDic setObject:dic forKey:incidentId];
-                }
-                [self.commentCollection reloadData];
             }
             else
             {
@@ -1168,8 +1223,6 @@
     {
         UIFont *font = [UIFont fontWithName:@"Helvetica" size:24];
         NSString *lbl1str = @"INCIDENTS";
-        //NSDictionary *attributes = @{NSFontAttributeName:font};
-        //CGSize lbsize = [lbl1str sizeWithAttributes:attributes];
         UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 620, 60)];
         lbl1.text = lbl1str;
         lbl1.textAlignment = NSTextAlignmentLeft;
@@ -1212,7 +1265,7 @@
         }
         else
         {
-            NSString *contactOwner = [self.propertyDetailDic objectForKey:@"sl_emailaddress"];
+            NSString *contactOwner = [EKNEKNGlobalInfo getString:[self.propertyDetailDic objectForKey:@"sl_emailaddress"]];
             if(contactOwner != nil)
             {
                 [cell setCellValue:contactOwner];
@@ -1235,7 +1288,7 @@
                     [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsImage" bundle:nil] forCellReuseIdentifier:identifier];
                     cell = [tableView dequeueReusableCellWithIdentifier:identifier];
                 }
-                NSString *address = [self.propertyDetailDic objectForKey:@"sl_address1"];
+                NSString *address = [EKNEKNGlobalInfo getString:[self.propertyDetailDic objectForKey:@"sl_address1"]];
                 UIImage *image =(UIImage *)[self.propertyDetailDic objectForKey:@"photo"];
                 [cell setCellValue:image title:address];
                 
@@ -1251,12 +1304,12 @@
                     cell = [tableView dequeueReusableCellWithIdentifier:identifier];
                 }
                 if (indexPath.row == 0) {
-                    NSString *title = [self.propertyDetailDic objectForKey:@"Title"];
+                    NSString *title = [EKNEKNGlobalInfo getString:[self.propertyDetailDic objectForKey:@"Title"]];
                     [cell setCellValue:[UIImage imageNamed:@"home"] title:title];
                 }
                 else
                 {
-                    NSString *title = [self.propertyDetailDic objectForKey:@"sl_owner"];
+                    NSString *title = [EKNEKNGlobalInfo getString:[self.propertyDetailDic objectForKey:@"sl_owner"]];
                     [cell setCellValue:[UIImage imageNamed:@"man"] title:title];
                 }
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -1272,12 +1325,12 @@
                 cell = [tableView dequeueReusableCellWithIdentifier:identifier];
             }
             if (indexPath.row == 0) {
-                NSString *name = [self.inspectionDetailDic objectForKey:@"name" ];
+                NSString *name = [EKNEKNGlobalInfo getString:[self.inspectionDetailDic objectForKey:@"name"]];
                 [cell setCellValue:[UIImage imageNamed:@"man"] title:name];
             }
             else if(indexPath.row == 1)
             {
-                NSString *email = [self.inspectionDetailDic objectForKey:@"email" ];
+                NSString *email = [EKNEKNGlobalInfo getString:[self.inspectionDetailDic objectForKey:@"email"]];
                 [cell setCellValue:[UIImage imageNamed:@"email"] title:email];
             }
             else
@@ -1367,7 +1420,18 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    UIImage *image;
+    if(collectionView == self.inspectorCommentCollection)
+    {
+        NSMutableArray *imageArray = (NSMutableArray *)[[self.roomInspectionPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"];
+        image = imageArray[indexPath.row];
+    }
+    else
+    {
+        NSMutableArray *imageArray = (NSMutableArray *)[[self.repairPhotoDic objectForKey:self.selectIncidentId] objectForKey:@"photos"];
+        image = imageArray[indexPath.row];
+    }
+    [self showLargePhoto:image];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
