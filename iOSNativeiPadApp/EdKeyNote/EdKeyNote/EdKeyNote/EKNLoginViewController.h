@@ -20,7 +20,9 @@
 @property (strong, nonatomic)NSString* demoSiteCollectionUrl;
 @property (strong, nonatomic)NSString* dispatcherEmail;
 @property (strong, nonatomic)Credentials* credentials;
-@property (strong, nonatomic)NSString* token;
+//@property (strong, nonatomic)NSString* token;
+@property (strong, nonatomic)NSString* propertyId;
+
 
 @property (nonatomic) UIButton *login_bt;
 @property (nonatomic) UILabel *settings_lbl;

@@ -15,4 +15,5 @@
 @property (strong, nonatomic) IBOutlet UIImageView *incidentImage;
 @property (strong, nonatomic) IBOutlet UIImageView *plusImage;
 -(void)setCellValue:(NSString *)dateTime owner:(NSString *)owner incident:(NSString *)incident plus:(BOOL)bplus final:(BOOL)final;
+-(void)changeFinalValue:(BOOL)final;
 @end

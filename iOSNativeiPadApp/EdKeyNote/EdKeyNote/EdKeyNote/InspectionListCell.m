@@ -19,6 +19,10 @@
 
     // Configure the view for the selected state
 }
+-(void)changeFinalValue:(BOOL)final
+{
+    self.bfinalized = final;
+}
 -(void)setCellValue:(NSString *)dateTime owner:(NSString *)owner incident:(NSString *)incident plus:(BOOL)bplus final:(BOOL)final
 {
     

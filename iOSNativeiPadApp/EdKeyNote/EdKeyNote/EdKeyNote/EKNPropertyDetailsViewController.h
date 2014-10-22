@@ -114,10 +114,6 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 
 @property(nonatomic) NSMutableDictionary *incidentOfInspectionDic;
 
-//key is propertyId,value is dic
-//--key is inspectionid,value is dic
-//----key is roomid,value is string, indictate the incident item whether exsit
-//@property(nonatomic)NSMutableDictionary *incidentOfRoomsDic;
 
 //key is inspection Id, use to store rooms
 //one inspection maybe have many rooms
@@ -148,5 +144,5 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 @property(nonatomic) ListClient *listClient;
 
 @property(nonatomic) MFMailComposeViewController *mailController;
-
+-(void)setDataExternal:(NSString *)pid loginName:(NSString *)loginName token:(NSString *)token;
 @end

@@ -13,13 +13,22 @@
 
 @implementation EKNPropertyDetailsViewController
 
+-(void)setDataExternal:(NSString *)pid loginName:(NSString *)loginName token:(NSString *)token
+{
+    if (pid!=nil) {
+        self.selectRightPropertyItemId = pid;//for test
+    }
+    else
+    {
+        self.selectRightPropertyItemId = @"1";//for test
+    }
+    
+    self.loginName = loginName;//for test
+    self.token = token;
+    [self addSubViews];
+}
 -(void)initData
 {
-    //init extern data
-    self.selectRightPropertyItemId = @"1";//for test
-    self.loginName = @"Rob Barker";//for test
-    //cloris will modify
-    
     self.selectLetInspectionIndexPath = nil;
     self.selectLetRoomIndexPath = nil;
     self.selectRightPropertyTableIndexPath = nil;
@@ -45,11 +54,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+}
+-(void)addSubViews
+{
     [self initData];
     
     self.navigationController.navigationBar.hidden = YES;
-
+    
     self.view.backgroundColor=[UIColor colorWithRed:242.00f/255.00f green:242.00f/255.00f blue:242.00f/255.00f alpha:1];
     
     UIView *statusbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 20)];
@@ -535,100 +546,51 @@
 {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     UIImage *smallImage = [self shrinkImage:chosenImage toSize:CGSizeMake(120, 79)];
-    //UIImage *largeImage = [self shrinkImage:chosenImage toSize:CGSizeMake(210, 158)];
     [self startCommentViewSpiner:CGRectMake(106+443,30+40,50,50)];
+    BOOL bCommentViewShow = [self getCommentViewWhetherShow];
+    BOOL beSend = NO;
     
-    NSString *imagename =[EKNEKNGlobalInfo createFileName:@".jpg"];
-    [self.listClient uploadImage:self.token image:smallImage libraryName:@"RoomInspectionPhotos" imageName:imagename
-                        callback: ^(NSData *data,NSURLResponse *response, NSError *error)
-     {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             if (error!=nil) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [self stopCommentViewSpiner];
-                     [self showHintAlertView:@"ERROR" message:@"Upload image file failed."];
-                     return;
-                 });
-             }
-             [self.listClient getFileItemIDByFileName:self.token libraryName:@"RoomInspectionPhotos" imageName:imagename callback: ^(NSMutableArray *listItems, NSError *error)
-              {
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                      if(error==nil && [listItems count]>0)
-                      {
-                          NSDictionary *temp =(NSDictionary *)[listItems objectAtIndex:0];
-                          NSString *fileId = [NSString stringWithFormat:@"%@",[temp objectForKey:@"Id"]];
-                          
-                          
-                          NSMutableString *body =[[NSMutableString alloc] init];
-                          [body appendFormat:@"{'__metadata': { 'type': 'SP.Data.RoomInspectionPhotosItem' }, 'sl_inspectionIDId':%d,'sl_roomIDId':%d",[[self getSelectLeftInspectionItemId] intValue],[[self getSelectLeftRoomItemId] intValue]];
-                          if (![self getCommentViewWhetherShow]&&self.commentItemId!=nil) {
-                              [body appendFormat:@",'sl_incidentIDId':%d",[self.commentItemId intValue]];
-                          }
-                          [body appendString:@"}"];
-                          
-                          [self.listClient updateListItem:self.token listName:@"Room Inspection Photos" itemID:fileId body:body callback:^(NSData *data, NSURLResponse *response, NSError *error)
-                           {
-                               dispatch_async(dispatch_get_main_queue(), ^{
-                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-                                   if(error!=nil
-                                      ||[httpResponse statusCode] == 400)
-                                   {
-                                       [self stopCommentViewSpiner];
-                                       [self showHintAlertView:@"ERROR" message:@"Update image item failed."];
-                                   }
-                                   else
-                                   {
-                                       [self.commentViewImages addObject:smallImage];
-                                       [((UICollectionView *)[self.view viewWithTag:CommentCollectionViewTag]) reloadData];
-                                       //update right collection view
-                                       NSString *insId =[self getSelectLeftInspectionItemId];
-                                       NSString *roomId =[self getSelectLeftRoomItemId];
-                                       NSMutableDictionary *insdic = [self.roomsOfInspectionDic objectForKey:insId];
-                                       if (insdic == nil) {
-                                           insdic = [[NSMutableDictionary alloc] init];
-                                           [self.roomsOfInspectionDic setObject:insdic forKey:insId];
-                                       }
-                                       NSMutableArray *roomArray =[insdic objectForKey:roomId];
-                                       if (roomArray==nil) {
-                                           roomArray = [[NSMutableArray alloc] init];
-                                           [insdic  setObject:roomArray forKey:roomId];
-                                       }
-                                       NSMutableDictionary *imageDic = [[NSMutableDictionary alloc] init];
-                                       [imageDic setObject:fileId forKey:@"Id"];
-                                       [imageDic setObject:imagename forKey:@"ServerRelativeUrl"];
-                                       [imageDic setObject:smallImage forKey:@"image"];
-                                       
-                                       [roomArray addObject:imageDic];
-                                       UICollectionView * collectionView = (UICollectionView *)[self.view viewWithTag:RightRoomCollectionViewTag];
-                                       [collectionView reloadData];
-                                       self.selectRightCollectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                                       [collectionView selectItemAtIndexPath:self.selectRightCollectionIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-                                       
-                                       
-                                       [self stopCommentViewSpiner];
-                                       [self showHintAlertView:@"Hint" message:@"Update image item successfully."];
-                                   }
-
+    NSString *insid =[self getSelectLeftInspectionItemId];
+    if(insid!=nil)
+    {
+        NSString *roomId = [self getSelectLeftRoomItemId];
+        if (roomId!=nil) {
+            if (bCommentViewShow) {
+                beSend = YES;
+                [self uploadRoomImageFileFromPopupView:smallImage inspectionId:insid roomId:roomId incidentId:nil];
+            }
+            else
+            {
+                if (self.commentItemId == nil) {
+                    NSString *propertyId = self.selectRightPropertyItemId;
+                    if (propertyId!=nil) {
+                      beSend = YES;
+                        
+                      [self createIncidentItem:nil type:nil ispectionId:insid propertyId:propertyId roomId:roomId callback:
+                       ^(NSString *success)
+                       {
+                               if(![success isEqualToString:@"YES"])
+                               {
+                                   [self showHintAlertView:@"ERROR" message:@"Create the incident item failed."];
+                                   [self stopCommentViewSpiner];
+                               }
+                               else
+                               {
+                                    [self uploadRoomImageFileFromPopupView:smallImage inspectionId:insid roomId:roomId incidentId:self.commentItemId ];
                                    
-                               });
-                           }];
-                           
-                           
-                      }
-                      else
-                      {
-                          [self stopCommentViewSpiner];
-                          [self showHintAlertView:@"ERROR" message:@"Get image file ID failed."];
-                      }
-                  });
-              }];
-             
+                               }
+                       }];
+                    }
 
-         });
-     }];
-
-    
+                }
+            }
+        }
+    }
+    if(!beSend)
+    {
+        [self showHintAlertView:@"ERROR" message:@"Check inspection id/ "];
+        [self stopCommentViewSpiner];
+    }
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -1104,6 +1066,16 @@
                   else
                   {
                       //success.
+                      if (self.selectLetInspectionIndexPath!=nil) {
+                          NSMutableArray *inspectionList = [[self getSelectPropertyDic] objectForKey:@"inspectionslist"];
+                          NSMutableDictionary *insDic = [inspectionList objectAtIndex:self.selectLetInspectionIndexPath.row];
+                          [insDic removeObjectForKey:@"sl_finalized"];
+                          
+                          InspectionListCell *cell = (InspectionListCell *)[(UITableView *)[self.view viewWithTag:LeftInspectionLeftTableViewTag] cellForRowAtIndexPath:self.selectLetInspectionIndexPath];
+                          [cell changeFinalValue:NO];
+                          
+                           [self.view viewWithTag:LeftFinalizeBtnTag].hidden = YES;
+                      }
                       [self showHintAlertView:@"" message:@"Finalize Successfully."];
                       [self stopCommentViewSpiner];
                   }
@@ -1483,12 +1455,14 @@
                     }
                     
                     NSDate *inspectiondatetime = [EKNEKNGlobalInfo converDateFromString:(NSString *)[tempitem getData:@"sl_datetime"]];
-                    [inspectionItem setObject:[EKNEKNGlobalInfo converStringFromDate:inspectiondatetime] forKey:@"sl_datetime"];
+                    NSString *convertDateStr =[EKNEKNGlobalInfo converStringFromDate:inspectiondatetime];
+                    [inspectionItem setObject:convertDateStr forKey:@"sl_datetime"];
                     
-                    if([inspectiondatetime compare:[NSDate date]] == NSOrderedDescending)
+                    if([inspectiondatetime compare:[NSDate date]] == NSOrderedDescending
+                       ||[convertDateStr isEqualToString:[EKNEKNGlobalInfo converStringFromDate:[NSDate date]]])
                     {
-                    //upcoming
-                        [inspectionItem setObject:@"black" forKey:@"icon"];
+                        //upcoming
+                       [inspectionItem setObject:@"black" forKey:@"icon"];
                     }
                     else
                     {
@@ -1686,12 +1660,8 @@
 {
     NSString *propertyId = self.selectRightPropertyItemId;
     NSString *insIdstr = [self getSelectLeftInspectionItemId];
-    if (propertyId!=nil && insIdstr!=nil) {
-       // [self.commentViewImages removeAllObjects];
-        //[self disableViewAfterCommentPopUp];
-        //[self startCommentViewSpiner:CGRectMake(129+50,330+91,50,50)];
-        
-        NSString *roomIdstr = [self getSelectLeftRoomItemId];
+    NSString *roomIdstr = [self getSelectLeftRoomItemId];
+    if (propertyId!=nil && insIdstr!=nil&&roomIdstr!=nil) {
         NSMutableString *filterStr = [[NSMutableString alloc] initWithFormat:@"$select=sl_inspectorIncidentComments,ID,sl_type&$filter=sl_propertyIDId%%20eq%%20%@%%20and%%20sl_inspectionIDId%%20eq%%20%@%%20and%%20sl_roomIDId%%20eq%%20%@&$top=1",propertyId,insIdstr,roomIdstr];
         
         NSURLSessionTask* task = [self.listClient getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error)
@@ -1711,16 +1681,15 @@
                                                   {
                                                       ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = text;
                                                   }
-                                                  [self setIncidentCommmentViewShow:type];
-                                                  [self stopCommentViewSpiner];
                                               }
                                               else
                                               {
-                                                  //can't find, we need creat a new item
+                                                  
                                                   self.commentItemId = nil;
-                                                  //create a incident item here;
-                                                  [self createIncidentItem];
+                                                  ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = @"";
                                               }
+                                              [self setIncidentCommmentViewShow:type];
+                                              [self stopCommentViewSpiner];
                                               
 
                                           }
@@ -1731,12 +1700,16 @@
                                               [self enableViewAfterCommentDismiss];
                                               [self stopCommentViewSpiner];
                                           }
-                                          
-                                          
                                       });
                                   }];
         [task resume];
         
+    }
+    else
+    {
+        [self showHintAlertView:@"ERROR" message:@"Check propertyId/inspectionId/RoomId failed."];
+        [self enableViewAfterCommentDismiss];
+        [self stopCommentViewSpiner];
     }
 }
 -(void)updateCommentListItem
@@ -1828,15 +1801,16 @@
     [self startCommentViewSpiner:CGRectMake(880,319,50,50)];
     NSString *type = [(UIButton *)[self.view viewWithTag:CommentDpBtnTag] currentTitle];
     
+    NSString *comment =((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text;
     if (self.commentItemId != nil) {
         {
             
             NSMutableString *body =[[NSMutableString alloc] init];
             [body appendString:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' }"];
             
-            if(((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text.length>0)
+            if(comment.length>0)
             {
-                [body appendFormat:@",'sl_inspectorIncidentComments':'%@'",((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text];
+                [body appendFormat:@",'sl_inspectorIncidentComments':'%@'",comment];
             }
             else
             {
@@ -1874,80 +1848,203 @@
             
         }
     }
-}
--(void)createIncidentItem
-{
-    NSString *insIdstr = [self getSelectLeftInspectionItemId];
-    NSString *proId = self.selectRightPropertyItemId;
-    if (proId!=nil && insIdstr!=nil) {
-        NSString *roomIdstr = [self getSelectLeftRoomItemId];
-        if(roomIdstr!=nil)
-        {
-            NSMutableString *body =[[NSMutableString alloc] init];
-            [body appendFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' }, 'sl_inspectionIDId':%d,'sl_roomIDId':%d,'sl_date':'%@','sl_propertyIDId':%d",[insIdstr intValue],[roomIdstr intValue],[NSDate date],[proId intValue]];
-            [body appendString:@"}"];
-            
-            [self.listClient createListItem:self.token listName:@"Incidents" body:body callback:^(NSData *data, NSURLResponse *response, NSError *error)
-             {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     //NSMutableArray *test = [self.listClient parseDataArray:data];
-                     NSLog(@"response %@ .\r\n",response);
-                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                     if(error!=nil
-                        ||[httpResponse statusCode] != 201)
-                     {
-                         [self showHintAlertView:@"ERROR" message:@"Create the incident item failed."];
-                         [self stopCommentViewSpiner];
-                         [self enableViewAfterCommentDismiss];
-                     }
-                     else
-                     {
-                         //success.
-                         //get the incident id;
-                         //
-                         //self.commentItemId
-                         NSString *location=(NSString *)[httpResponse.allHeaderFields objectForKey:@"Location"];
-                         NSString *subId =nil;
-                         NSRange range = [location rangeOfString:@"/Items("];
-                         if (range.length>0) {
-                             NSString *substr = [location substringFromIndex:(range.location+range.length)];
-                             NSRange itemIdRange = [substr rangeOfString:@")"];
-                             if (itemIdRange.length>0) {
-                                 subId = [substr substringToIndex:itemIdRange.location];
-                             }
-                         }
-                         if (subId!=nil) {
-                             self.commentItemId = subId;
-                             ((UITextView *)[self.view viewWithTag:CommentTextViewTag]).text = @"";
-                             [self setIncidentCommmentViewShow:nil];
-                             [self stopCommentViewSpiner];
-                         }
-                         else
-                         {
-                             [self showHintAlertView:@"ERROR" message:@"Query the incident item ID failed."];
-                             [self stopCommentViewSpiner];
-                             [self enableViewAfterCommentDismiss];
-                         }
-                         
-                     }
-                 });
-             }];
-        }
-        else
-        {
-            [self showHintAlertView:@"ERROR" message:@"Room Id is null"];
-            [self stopCommentViewSpiner];
-            [self enableViewAfterCommentDismiss];
-        }
+    else
+    {
+        NSString *proId = self.selectRightPropertyItemId;
+        NSString *insid = [self getSelectLeftInspectionItemId];
+        NSString *roomId =[self getSelectLeftRoomItemId];
         
+        [self createIncidentItem:comment type:type ispectionId:insid propertyId:proId roomId:roomId callback:^(NSString *success)
+         {
+                 if(![success isEqualToString:@"YES"])
+                 {
+                     [self showHintAlertView:@"ERROR" message:@"Create the incident item failed."];
+                     [self stopCommentViewSpiner];
+                 }
+                 else
+                 {
+                     [self showHintAlertView:@"Hint" message:@"Update the incident item successfully."];
+                     [self stopCommentViewSpiner];
+                     [self cancelButtonClicked];
+                 }
+         }];
+    }
+}
+-(void)uploadRoomImageFileFromPopupView:(UIImage *)smallImage inspectionId:(NSString *)insid roomId:(NSString *)rId incidentId:(NSString *)incidentId
+{
+    NSString *imagename =[EKNEKNGlobalInfo createFileName:@".jpg"];
+    [self.listClient uploadImage:self.token image:smallImage libraryName:@"RoomInspectionPhotos" imageName:imagename
+                        callback: ^(NSData *data,NSURLResponse *response, NSError *error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if (error!=nil) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self stopCommentViewSpiner];
+                     [self showHintAlertView:@"ERROR" message:@"Upload image file failed."];
+                     return;
+                 });
+             }
+             [self.listClient getFileItemIDByFileName:self.token libraryName:@"RoomInspectionPhotos" imageName:imagename callback: ^(NSMutableArray *listItems, NSError *error)
+              {
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      if(error==nil && [listItems count]>0)
+                      {
+                          NSDictionary *temp =(NSDictionary *)[listItems objectAtIndex:0];
+                          NSString *fileId = [NSString stringWithFormat:@"%@",[temp objectForKey:@"Id"]];
+                          
+                          
+                          NSMutableString *body =[[NSMutableString alloc] init];
+                          [body appendFormat:@"{'__metadata': { 'type': 'SP.Data.RoomInspectionPhotosItem' }, 'sl_inspectionIDId':%d,'sl_roomIDId':%d",[[self getSelectLeftInspectionItemId] intValue],[[self getSelectLeftRoomItemId] intValue]];
+                          if (![self getCommentViewWhetherShow]&&self.commentItemId!=nil) {
+                              [body appendFormat:@",'sl_incidentIDId':%d",[self.commentItemId intValue]];
+                          }
+                          [body appendString:@"}"];
+                          
+                          [self.listClient updateListItem:self.token listName:@"Room Inspection Photos" itemID:fileId body:body callback:^(NSData *data, NSURLResponse *response, NSError *error)
+                           {
+                               dispatch_async(dispatch_get_main_queue(), ^{
+                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                   
+                                   if(error!=nil
+                                      ||[httpResponse statusCode] == 400)
+                                   {
+                                       [self stopCommentViewSpiner];
+                                       [self showHintAlertView:@"ERROR" message:@"Update image item failed."];
+                                   }
+                                   else
+                                   {
+                                       [self.commentViewImages addObject:smallImage];
+                                       [((UICollectionView *)[self.view viewWithTag:CommentCollectionViewTag]) reloadData];
+                                       //update right collection view
+                                       NSString *insId =[self getSelectLeftInspectionItemId];
+                                       NSString *roomId =[self getSelectLeftRoomItemId];
+                                       NSMutableDictionary *insdic = [self.roomsOfInspectionDic objectForKey:insId];
+                                       if (insdic == nil) {
+                                           insdic = [[NSMutableDictionary alloc] init];
+                                           [self.roomsOfInspectionDic setObject:insdic forKey:insId];
+                                       }
+                                       NSMutableArray *roomArray =[insdic objectForKey:roomId];
+                                       if (roomArray==nil) {
+                                           roomArray = [[NSMutableArray alloc] init];
+                                           [insdic  setObject:roomArray forKey:roomId];
+                                       }
+                                       NSMutableDictionary *imageDic = [[NSMutableDictionary alloc] init];
+                                       [imageDic setObject:fileId forKey:@"Id"];
+                                       [imageDic setObject:imagename forKey:@"ServerRelativeUrl"];
+                                       [imageDic setObject:smallImage forKey:@"image"];
+                                       
+                                       [roomArray addObject:imageDic];
+                                       UICollectionView * collectionView = (UICollectionView *)[self.view viewWithTag:RightRoomCollectionViewTag];
+                                       [collectionView reloadData];
+                                       self.selectRightCollectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                                       [collectionView selectItemAtIndexPath:self.selectRightCollectionIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+                                       
+                                       
+                                       [self stopCommentViewSpiner];
+                                       [self showHintAlertView:@"Hint" message:@"Update image item successfully."];
+                                   }
+                                   
+                                   
+                               });
+                           }];
+                          
+                          
+                      }
+                      else
+                      {
+                          [self stopCommentViewSpiner];
+                          [self showHintAlertView:@"ERROR" message:@"Get image file ID failed."];
+                      }
+                  });
+              }];
+             
+             
+         });
+     }];
+}
+-(void)createIncidentItem:(NSString *)comment type:(NSString *)type ispectionId:(NSString *)insIdstr propertyId:(NSString *)proId roomId:(NSString *)roomIdstr callback:(void (^)(NSString *success))callback
+{
+    
+    NSMutableString *body =[[NSMutableString alloc] init];
+    [body appendFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' }, 'sl_inspectionIDId':%d,'sl_roomIDId':%d,'sl_date':'%@','sl_propertyIDId':%d",[insIdstr intValue],[roomIdstr intValue],[NSDate date],[proId intValue]];
+    
+    if(comment!=nil && comment.length>0)
+    {
+        [body appendFormat:@",'sl_inspectorIncidentComments':'%@'",comment];
     }
     else
     {
-        [self showHintAlertView:@"ERROR" message:@"Inspection Id is null"];
-        [self stopCommentViewSpiner];
-        [self enableViewAfterCommentDismiss];
+        [body appendString:@",'sl_inspectorIncidentComments':null"];
+    }
+    if(type!=nil && type.length >0)
+    {
+        [body appendFormat:@",'sl_type':'%@'",type];
+    }
+    else
+    {
+        [body appendString:@",'sl_type':null"];
     }
     
+    [body appendString:@"}"];
+    [self.listClient createListItem:self.token listName:@"Incidents" body:body callback:
+         ^(NSData *data, NSURLResponse *response, NSError *error)
+         {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 NSLog(@"response %@ .\r\n",response);
+                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                 if(error!=nil
+                    ||[httpResponse statusCode] != 201)
+                 {
+                     callback(@"NO");
+                 }
+                 else
+                 {
+                     NSString *location=(NSString *)[httpResponse.allHeaderFields objectForKey:@"Location"];
+                     NSString *subId =nil;
+                     NSRange range = [location rangeOfString:@"/Items("];
+                     if (range.length>0) {
+                         NSString *substr = [location substringFromIndex:(range.location+range.length)];
+                         NSRange itemIdRange = [substr rangeOfString:@")"];
+                         if (itemIdRange.length>0) {
+                             subId = [substr substringToIndex:itemIdRange.location];
+                         }
+                     }
+                     if (subId!=nil) {
+                         self.commentItemId = subId;
+                         //update the incidentOfInspectionDic flag
+                         NSMutableDictionary *prodict =[self.incidentOfInspectionDic objectForKey:proId];
+                         NSMutableDictionary *insdict = [prodict objectForKey:insIdstr];
+                         if (insdict ==nil) {
+                             insdict =[[NSMutableDictionary alloc] init];
+                             [prodict setObject:insdict forKey:insIdstr];
+                         }
+                         if ([insdict objectForKey:[NSString stringWithFormat:@"room%@",roomIdstr]]==nil) {
+                             [insdict setObject:@"YES" forKey:[NSString stringWithFormat:@"room%@",roomIdstr]];
+                             [self didUpdateTableCell:self.selectLetRoomIndexPath tag:LeftRoomTableViewTag];
+                         }
+                         if ([insdict objectForKey:@"icon"]==nil) {
+                             [insdict setObject:@"red" forKey:@"icon"];
+                             
+                             //update list item
+                             NSMutableArray *inspectionList = [[self getSelectPropertyDic] objectForKey:@"inspectionslist"];
+                             NSMutableDictionary *insDic = [inspectionList objectAtIndex:self.selectLetInspectionIndexPath.row];
+                             NSString *icon =[insDic objectForKey:@"icon"];
+                             if (icon!=nil && [icon isEqualToString:@"green"]) {
+                                 [insDic setObject:@"red" forKey:@"icon"];
+                                 [self didUpdateTableCell:self.selectLetInspectionIndexPath tag:LeftInspectionLeftTableViewTag];
+                             }
+                             
+                         }
+                         callback(@"YES");
+                     }
+                     else
+                     {
+                         callback(@"NO");
+                     }
+                     
+                 }
+             });
+         }];
 }
 
 #pragma mark - other
@@ -2653,6 +2750,14 @@
         }
     }
 
+}
+-(void)didUpdateTableCell:(NSIndexPath *)indexpath tag:(PropertySubViewsTag)tag
+{
+    UITableView *table = (UITableView *)[self.view viewWithTag:tag];
+    [table beginUpdates];
+    [table reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+    [table endUpdates];
+    [table selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 #pragma mark - Collection view delegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

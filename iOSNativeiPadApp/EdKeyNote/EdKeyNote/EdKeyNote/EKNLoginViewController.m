@@ -22,13 +22,6 @@
     }
     return self;
 }
-
-- (void)propertyDetailsButtonAction
-{
-    EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
-    [self.navigationController pushViewController:propertydetailsctrl animated:YES];
-}
-
 - (void)loginButtonAction
 {
     //EKNRoomDetailsViewController *propertydetailsctrl = [[EKNRoomDetailsViewController alloc] init];
@@ -176,15 +169,9 @@
     _settings_lbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
     [self.view addSubview:_settings_lbl];
     
-    UIButton *property_details_bt = [[UIButton alloc] initWithFrame:CGRectMake(200, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+10, 150, 40)];
-    [property_details_bt setTitle:@"Property Details" forState:UIControlStateNormal];
-    [property_details_bt setBackgroundColor:[UIColor redColor]];
-    [property_details_bt addTarget:self action:@selector(propertyDetailsButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    
     UILabel *footer_lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 732, 1024, 36)];
     footer_lbl.backgroundColor = [UIColor colorWithRed:(81.00/255.00f) green:(81.00/255.00f) blue:(81.00/255.00f) alpha:1.0];
     [self.view addSubview:footer_lbl];
-    //[self.view addSubview:property_details_bt];
     
     // Do any additional setup after loading the view.
     [self checkParameters];
@@ -225,9 +212,10 @@
         {
             [spinner stopAnimating];
             [spinner removeFromSuperview];
-            self.token = t;
+           // self.token = t;
             EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
-            propertydetailsctrl.token = self.token;
+            [propertydetailsctrl setDataExternal:self.propertyId loginName:@"Rob Barker" token:t];
+            
             [self.navigationController pushViewController:propertydetailsctrl animated:YES];
         }
         else

@@ -18,9 +18,10 @@
     self.window = [[UIWindow alloc] initWithFrame:
                    [[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    
+    EKNLoginViewController *loginController  =[[EKNLoginViewController alloc] init];
+    loginController.propertyId = self.propertyId;
     self.naviController = [[UINavigationController alloc]
-                           initWithRootViewController:[[EKNLoginViewController alloc] init]];
+                           initWithRootViewController:loginController];
     
     self.window.rootViewController = self.naviController;
 
@@ -32,25 +33,24 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-
+    self.propertyId = nil;
     NSString *low = [((NSString *)[url absoluteString]) lowercaseString];
     if([low hasPrefix:@"inspectionapp://"])
     {
-        NSString *propertyId = [low substringFromIndex:(@"inspectionapp://").length-1];
+        NSString *propertyId = [low substringFromIndex:(@"inspectionapp://").length];
         if([[NSScanner scannerWithString:propertyId] scanInt:nil])
         {
-            NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-            [standardUserDefaults setValue:propertyId forKey:@"propertyId"];
-            [standardUserDefaults synchronize];
+            self.propertyId =propertyId;
             if(self.naviController!=nil)
             {
                 [self.naviController popToRootViewControllerAnimated:NO];
                 EKNLoginViewController *login = [[EKNLoginViewController alloc] init];
+                login.propertyId = self.propertyId;
                 [self.naviController pushViewController:login animated:YES];
             }
+            return YES;
         }
     }
-    
     return  YES;
     
     // Check the calling application Bundle ID
