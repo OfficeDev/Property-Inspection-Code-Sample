@@ -1194,7 +1194,6 @@
         }
         [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
         [self setRightTableCell:cell cellForRowAtIndexPath:indexPath];
-        [cell.imageView setBackgroundColor:[UIColor blackColor]];
         return cell;
     }
     else if(tableView == self.contactOwnerTableView ||
@@ -1313,11 +1312,11 @@
     
     if(propertyData != nil && inspectionData != nil && roomData != nil)
     {
-        NSString *room = (NSString *)[roomData objectForKey:@"Title"];
-        NSString *incident = (NSString *)[incidentItem getData:@"Title"];
+        NSString *room = [EKNEKNGlobalInfo getString:(NSString *)[roomData objectForKey:@"Title"]];
+        NSString *incident = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"Title"]];
         NSString *inspectionDate = [EKNEKNGlobalInfo converStringToDateString:(NSString *)[inspectionData objectForKey:@"sl_datetime"]];
         NSString *repairDate = [EKNEKNGlobalInfo converStringToDateString:(NSString *)[inspectionData objectForKey:@"sl_finalized"]];
-        NSString *approved = (NSString *)[incidentItem getData:@"sl_status"];
+        NSString *approved = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_status"]];
         BOOL repariDateHidden = [EKNEKNGlobalInfo isBlankString:repairDate];
         BOOL approvedHidden = [EKNEKNGlobalInfo isBlankString:approved];
         UIImage *image = nil;
