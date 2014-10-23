@@ -69,7 +69,6 @@
     
     self.detailViewIsShowing = NO;
     self.incidentId = @"1";
-    self.selectPropertyId = @"1";
 }
 
 -(void)addPropertyDetailTable{
@@ -455,6 +454,15 @@
     NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
     NSString *inspectionID = (NSString *)[incidentItem getData:@"sl_inspectionIDId"];
     NSString *roomID = (NSString *)[incidentItem getData:@"sl_roomIDId"];
+    NSString *taskId = (NSString *)[incidentItem getData:@"sl_taskId"];
+    if(taskId == nil || (NSNull *)taskId == [NSNull null])
+    {
+        taskId = [EKNEKNGlobalInfo getString:taskId];
+    }
+    else
+    {
+        taskId = [NSString stringWithFormat:@"%@",taskId];
+    }
     NSString *completedDate = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_repairCompleted"]];
     NSString *status = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_status"]];
     
@@ -465,7 +473,8 @@
     self.selectIncidentId = incidentID;
     self.selectInspectionId = inspectionID;
     self.selectRoomId = roomID;
-    NSLog(@"incidentID:%@,inspectionID:%@,roomID:%@",self.selectIncidentId,self.selectInspectionId,self.selectRoomId);
+    self.selectTaskId = taskId;
+    NSLog(@"incidentID:%@,inspectionID:%@,roomID:%@,taskID:%@",self.selectIncidentId,self.selectInspectionId,self.selectRoomId,self.selectTaskId);
     
     //set finalize repair button
     self.finalizeBtn.hidden = ![EKNEKNGlobalInfo isBlankString:completedDate];
@@ -644,7 +653,7 @@
 }
 
 -(void)loadData{
-    NSString *filter = [NSString stringWithFormat:@"$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_repairCompleted,sl_inspectionIDId,sl_roomIDId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$filter=sl_propertyIDId eq %@ and sl_inspectionIDId gt 0 and sl_roomIDId gt 0&$orderby=sl_date desc",self.selectPropertyId];
+    NSString *filter = [NSString stringWithFormat:@"$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_repairCompleted,sl_inspectionIDId,sl_roomIDId,sl_taskId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$filter=sl_propertyIDId eq %@ and sl_inspectionIDId gt 0 and sl_roomIDId gt 0&$orderby=sl_date desc",self.selectPropertyId];
     NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     
     NSURLSessionTask* task = [self.client getListItemsByFilter:@"Incidents" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
@@ -698,11 +707,11 @@
                 ListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
                 NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
                 [dic setValue:repairComments forKey:@"sl_repairComments"];
-                [self showSuccessMessage:@"Update successfully."];
+                [self showSuccessMessage:@"Update repair comments successfully."];
             }
             else
             {
-                [self showErrorMessage:@"Update failed."];
+                [self showErrorMessage:@"Update repair comments failed."];
             }
         });
     }];
@@ -730,12 +739,54 @@
                                                                                           NSURLResponse *response,
                                                                                           NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self hideLoading];
+            
             if([EKNEKNGlobalInfo requestSuccess:response])
             {
                 ListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
                 NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
                 [dic setValue:repairCompleted forKey:@"sl_repairCompleted"];
+                if([EKNEKNGlobalInfo isBlankString:self.selectTaskId])
+                {
+                    self.finalizeBtn.hidden = YES;
+                    [self hideLoading];
+                    [self showSuccessMessage:@"Finalize repair successfully."];
+                }
+                else
+                {
+                    [self updateIncidentWorkflowTask];
+                }
+            }
+            else
+            {
+                [self hideLoading];
+                [self showErrorMessage:@"Finalize repair failed."];
+            }
+        });
+    }];
+    [task resume];
+}
+
+- (void)updateIncidentWorkflowTask
+{
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",self.siteUrl,@"Incident%20Workflow%20Tasks",self.selectTaskId];
+    NSString *postString = @"{'__metadata': { 'type': 'SP.Data.Incident_x0020_Workflow_x0020_TasksListItem' },'PercentComplete':1,'Status':'Completed'}";
+    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
+    [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"content-type"];
+    [request addValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
+    [request addValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                          NSURLResponse *response,
+                                                                                          NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideLoading];
+            if([EKNEKNGlobalInfo requestSuccess:response])
+            {
                 self.finalizeBtn.hidden = YES;
                 [self showSuccessMessage:@"Finalize repair successfully."];
             }
@@ -747,7 +798,6 @@
     }];
     [task resume];
 }
-
 
 -(void)getInspectionDataByID:(NSString *)inspectionID
 {
@@ -776,9 +826,11 @@
 
 -(void)getPropertyPhoto
 {
-    NSURLSessionTask* task = [self.client getListItemsByFilter:@"Property Photos" filter:@"$select=ID,Title&$filter=sl_propertyIDId%20eq%202&$orderby=Modified%20desc&$top=1" callback:^(NSMutableArray *listItems, NSError *error) {
+    NSString *filter = [NSString stringWithFormat:@"$select=ID,Title&$filter=sl_propertyIDId eq %@&$orderby=Modified desc&$top=1",self.selectPropertyId];
+    NSString *filterStr = [filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    NSURLSessionTask* task = [self.client getListItemsByFilter:@"Property Photos" filter:filterStr callback:^(NSMutableArray *listItems, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.spinner stopAnimating];
             if(listItems != nil && [listItems count] == 1)
             {
                 NSString *propertyPhotoFileID = (NSString *)[listItems[0] getData:@"ID"];

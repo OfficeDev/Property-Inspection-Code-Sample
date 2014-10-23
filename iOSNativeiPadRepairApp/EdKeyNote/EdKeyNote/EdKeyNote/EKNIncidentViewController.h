@@ -33,6 +33,7 @@
 @property(nonatomic) NSString* selectIncidentId;
 @property(nonatomic) NSString* selectInspectionId;
 @property(nonatomic) NSString* selectRoomId;
+@property(nonatomic) NSString* selectTaskId;
 @property(nonatomic) NSInteger selectedIndex;
 
 @property(nonatomic) NSMutableArray *incidentListArray;
