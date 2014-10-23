@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import <QuartzCore/QuartzCore.h>
 #import <office365-base-sdk/OAuthentication.h>
 #import "ListClient.h"
@@ -19,7 +20,7 @@
 #import "ContactOwnerCell.h"
 #import "EKNCollectionViewCell.h"
 
-@interface EKNIncidentViewController : UIViewController<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITableViewDelegate, UITableViewDataSource>
+@interface EKNIncidentViewController : UIViewController<UIActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
 
 //data
@@ -61,6 +62,7 @@
 @property(nonatomic) UILabel *roomTitleLbl;
 @property(nonatomic) UILabel *separatorLbl;
 @property(nonatomic) UILabel *incidentTypeLbl;
+@property(nonatomic) UIButton *repairCommentDoneBtn;
 @property(nonatomic) UITextView *tabDispatcherComments;
 @property(nonatomic) UITextView *tabInsptorComments;
 @property(nonatomic) UITextView *tabComments;
@@ -68,8 +70,8 @@
 @property(nonatomic) UIImageView *largeImageView;
 @property(nonatomic) UIButton *largeImageCloseBtn;
 
-
 //property
+@property(nonatomic) BOOL canEditComments;
 @property(nonatomic) BOOL detailViewIsShowing;
 @property(nonatomic) BOOL cameraIsAvailable;
 

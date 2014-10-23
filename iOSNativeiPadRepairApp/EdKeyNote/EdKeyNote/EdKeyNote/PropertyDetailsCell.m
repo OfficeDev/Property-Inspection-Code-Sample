@@ -25,5 +25,10 @@
     self.propertyTitle.text = title;
     
 }
-
+-(void)setCellValue:(UIImage *)image title:(NSString *)title textColor:(UIColor *)color
+{
+    [self.propertyImage setImage:image];
+    self.propertyTitle.text = title;
+    self.propertyTitle.textColor = color;
+}
 @end

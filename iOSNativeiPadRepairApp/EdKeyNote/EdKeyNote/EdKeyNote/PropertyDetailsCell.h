@@ -12,4 +12,5 @@
 @property (strong, nonatomic) IBOutlet UIImageView *propertyImage;
 @property (strong, nonatomic) IBOutlet UILabel *propertyTitle;
 -(void)setCellValue:(UIImage *)image title:(NSString *)title;
+-(void)setCellValue:(UIImage *)image title:(NSString *)title textColor:(UIColor *)color;
 @end

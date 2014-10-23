@@ -344,15 +344,15 @@
     self.tabComments.textColor = [UIColor colorWithRed:136.00f/255.00f green:136.00f/255.00f blue:136.00f/255.00f alpha:1];
     [repariCommentBgView addSubview:self.tabComments];
     
-    UIButton *repairButton = [[UIButton alloc] initWithFrame:CGRectMake(508, 437, 112, 50)];
-    repairButton.backgroundColor = [UIColor colorWithRed:100.00f/255.00f green:153.00f/255.00f blue:209.00f/255.00f alpha:1];;
-    [repairButton setTitle:@"Done" forState:UIControlStateNormal];
-    repairButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
-    repairButton.titleLabel.textColor = [UIColor whiteColor];
-    repairButton.layer.masksToBounds = YES;
-    repairButton.layer.cornerRadius = 5;
-    [repairButton addTarget:self action:@selector(updateRepairComment) forControlEvents:UIControlEventTouchUpInside];
-    [self.detailRightAdd addSubview:repairButton];
+    self.repairCommentDoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(508, 437, 112, 50)];
+    self.repairCommentDoneBtn.backgroundColor = [UIColor colorWithRed:100.00f/255.00f green:153.00f/255.00f blue:209.00f/255.00f alpha:1];;
+    [self.repairCommentDoneBtn setTitle:@"Done" forState:UIControlStateNormal];
+    self.repairCommentDoneBtn.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+    self.repairCommentDoneBtn.titleLabel.textColor = [UIColor whiteColor];
+    self.repairCommentDoneBtn.layer.masksToBounds = YES;
+    self.repairCommentDoneBtn.layer.cornerRadius = 5;
+    [self.repairCommentDoneBtn addTarget:self action:@selector(updateRepairComment) forControlEvents:UIControlEventTouchUpInside];
+    [self.detailRightAdd addSubview:self.repairCommentDoneBtn];
     
     self.largePhotoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
     self.largePhotoView.backgroundColor = [UIColor colorWithRed:0.00f/255.00f green:0.00f/255.00f blue:0.00f/255.00f alpha:0.5];
@@ -456,6 +456,7 @@
     NSString *inspectionID = (NSString *)[incidentItem getData:@"sl_inspectionIDId"];
     NSString *roomID = (NSString *)[incidentItem getData:@"sl_roomIDId"];
     NSString *completedDate = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_repairCompleted"]];
+    NSString *status = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_status"]];
     
     //set select index
     self.selectedIndex = indexpath.row;
@@ -478,6 +479,11 @@
     
     //set room title and incident type
     [self setRoomTitleAndIncidentType:roomTitle type:incidentType];
+    
+    //check if use can edit repair comments
+    self.canEditComments = !([status isEqualToString:@"Repair Pending Approval"] || [status isEqualToString:@"Repair Approved"]);
+    self.repairCommentDoneBtn.hidden = !self.canEditComments;
+    self.tabComments.editable = self.canEditComments;
     
     //set comments [sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments]
     self.tabDispatcherComments.text = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_dispatcherComments"]];
@@ -542,15 +548,22 @@
 
 -(void)showSuccessMessage:(NSString *)message
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
 }
 
 -(void)showErrorMessage:(NSString *)message
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert show];
 }
+
+-(void)showHintAlertView:(NSString *)title message:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
 
 -(void)showLargePhoto:(UIImage *)image
 {
@@ -579,6 +592,30 @@
 -(void)hideLargePhoto
 {
     self.largePhotoView.hidden = YES;
+}
+
+-(void)showSendEmailViewController:(NSString *)address
+{
+    UIDevice *device =[UIDevice currentDevice];
+    if ([[device model] isEqualToString:@"iPad Simulator"]) {
+        [self showHintAlertView:@"Hint" message:@"Simulator does not support Mail View"];
+        return;
+    }
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    
+    NSArray *to = [NSArray arrayWithObjects:address, nil];
+    
+    NSString *body =@"Edkey Note Demo";
+    [mc setToRecipients:to];
+    [mc setMessageBody:body isHTML:NO];
+    [self presentViewController:mc animated:YES completion:NULL];
+}
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 -(void)loadPropertyIdByIncidentId{
@@ -1331,7 +1368,7 @@
             else if(indexPath.row == 1)
             {
                 NSString *email = [EKNEKNGlobalInfo getString:[self.inspectionDetailDic objectForKey:@"email"]];
-                [cell setCellValue:[UIImage imageNamed:@"email"] title:email];
+                [cell setCellValue:[UIImage imageNamed:@"email"] title:email textColor:[UIColor colorWithRed:76.00f/255.00f green:161.00f/255.00f blue:255.00f/255.00f alpha:1.0]];
             }
             else
             {
@@ -1351,6 +1388,22 @@
     if(tableView == self.rightTableView)
     {
         [self setRightTableSelectIndex:indexPath];
+    }
+    else if(tableView == self.contactOwnerTableView ||
+            tableView == self.contactOfficeTableView)
+    {
+        ContactOwnerCell *cell =(ContactOwnerCell *)[tableView cellForRowAtIndexPath:indexPath];
+        NSString *address = cell.emailLable.text;
+        [self showSendEmailViewController:address];
+    }
+    else if(tableView == self.detailInspectionDetailTableView)
+    {
+        if(indexPath.row == 1)
+        {
+            PropertyDetailsCell *cell = (PropertyDetailsCell *)[tableView cellForRowAtIndexPath:indexPath];
+            NSString *address = cell.propertyTitle.text;
+            [self showSendEmailViewController:address];
+        }
     }
 }
 
@@ -1501,7 +1554,10 @@
 //picker view
 -(void) takeCameraAction
 {
-    [self takePhoto];
+    if(self.canEditComments)
+    {
+        [self takePhoto];
+    }
 }
 
 - (void)takePhoto
