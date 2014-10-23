@@ -23,11 +23,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>com.canviz.EdKeyNote</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>EdKeyNoteAPP</string>
+				<string>repairApp</string>
 			</array>
 		</dict>
 	</array>
