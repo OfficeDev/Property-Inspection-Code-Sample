@@ -28,6 +28,10 @@
     {
         [self.roomImageView setImage:[UIImage imageNamed:roomImageName]];
     }
+    else
+    {
+        [self.roomImageView setImage:nil];
+    }
 }
 -(NSString *)getLabelTitle
 {

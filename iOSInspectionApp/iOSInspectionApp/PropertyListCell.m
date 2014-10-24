@@ -39,10 +39,7 @@
 -(void)setCellValue:(UIImage *)image address:(NSString *)address;
 {
     self.hotelAdress.text = address;
-    if(image!=nil)
-    {
-        [self.hotelImage setImage:image];
-    }
+    [self.hotelImage setImage:image];
 }
 
 /*-(void)getFiles:(UIImageView *)imageview path:(NSString *)path

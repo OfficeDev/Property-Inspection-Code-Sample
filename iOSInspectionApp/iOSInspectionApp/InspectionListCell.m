@@ -37,6 +37,10 @@
     {
         [self.plusImage setImage:[UIImage imageNamed:@"plus"]];
     }
+    else
+    {
+        [self.plusImage setImage:nil];
+    }
     self.inspectionItemId = inspectionItemId;
 }
 -(NSString *)getItemId

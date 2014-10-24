@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iOSInspectionApp/EKNPropertyDetailsViewController.m"
-            timestampString = "435768118.856923"
+            timestampString = "435848184.509136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1668"
-            endingLineNumber = "1668"
-            landmarkName = "-getRoomImageFileREST:propertyId:inspectionId:roomId:imageIndex:"
+            startingLineNumber = "1891"
+            endingLineNumber = "1891"
+            landmarkName = "-commentViewDone"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,14 +73,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iOSInspectionApp/EKNLoginViewController.m"
-            timestampString = "435767391.3723"
+            filePath = "iOSInspectionApp/EKNPropertyDetailsViewController.m"
+            timestampString = "435848184.509136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
-            landmarkName = "-test:"
+            startingLineNumber = "1899"
+            endingLineNumber = "1899"
+            landmarkName = "-commentViewDone"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__51-[EKNPropertyDetailsViewController commentViewDone]_block_invoke_2"
+                  moduleName = "iOSInspectionApp"
+                  urlString = "file:///Users/canviz/Desktop/77/Property-Inspection-Code-Sample/iOSInspectionApp/iOSInspectionApp/EKNPropertyDetailsViewController.m"
+                  timestampString = "435848217.560773"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1899"
+                  endingLineNumber = "1899"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__51-[EKNPropertyDetailsViewController commentViewDone]_block_invoke_3"
+                  moduleName = "iOSInspectionApp"
+                  urlString = "file:///Users/canviz/Desktop/77/Property-Inspection-Code-Sample/iOSInspectionApp/iOSInspectionApp/EKNPropertyDetailsViewController.m"
+                  timestampString = "435848217.561014"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1899"
+                  endingLineNumber = "1899"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -89,45 +119,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iOSInspectionApp/EKNLoginViewController.m"
-            timestampString = "435767447.622216"
+            filePath = "iOSInspectionApp/EKNPropertyDetailsViewController.m"
+            timestampString = "435848184.509136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "-test:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iOSInspectionApp/EKNLoginViewController.m"
-            timestampString = "435767649.878497"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "-test:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iOSInspectionApp/EKNLoginViewController.m"
-            timestampString = "435767652.675961"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
-            landmarkName = "-test:"
+            startingLineNumber = "1900"
+            endingLineNumber = "1900"
+            landmarkName = "-commentViewDone"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -22,10 +22,7 @@
 -(void)setCellValue:(UIImage *)image title:(NSString *)title
 {
     self.addressTitle.text = title;
-    if(image!=nil)
-    {
-        [self.addressImage setImage:image];
-    }
+    [self.addressImage setImage:image];
 }
 
 

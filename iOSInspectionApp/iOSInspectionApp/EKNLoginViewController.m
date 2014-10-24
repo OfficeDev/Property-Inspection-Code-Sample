@@ -193,38 +193,6 @@
     // Pass the selected object to the new view controller.
 }
 */
--(void)test:(NSString *)test
-{
-    ADAuthenticationError *error;
-    ADAuthenticationContext *authContext = [ADAuthenticationContext authenticationContextWithAuthority:[EKNEKNGlobalInfo getObjectFromDefault:@"authority"] error:&error];
-    
-    NSURL *redirectUri = [NSURL URLWithString:[EKNEKNGlobalInfo getObjectFromDefault:@"redirectUriString"]];
-    [authContext acquireTokenWithResource:@"https://sdfpilot.outlook.com"
-                                 clientId:[EKNEKNGlobalInfo getObjectFromDefault:@"clientId"]
-                              redirectUri:redirectUri
-                          completionBlock:^(ADAuthenticationResult  *result) {
-                              NSLog(@"result%@",result);
-                              if (AD_SUCCEEDED != result.status){
-                                  //[self showError:result.error.errorDetails];
-                              }
-                              else{
-                                  //NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                                  //[userDefaults setObject:result.tokenCacheStoreItem.userInformation.userId forKey:@"LogInUser"];
-                                  //[userDefaults synchronize];
-                                 // NSLog(@"result.accessToken %@",result.accessToken);
-                                  if([result.accessToken isEqualToString:test])
-                                  {
-                                      NSLog(@"here");
-                                  }
-                                  else
-                                  {
-                                      NSLog(@"here not equl");
-                                  }
-                                  //completionBlock(result.accessToken);
-                              }
-                              
-                          }];
-}
 - (void) performLogin: (BOOL) clearCache{
     UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(480,440,50,50)];
     spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
@@ -247,11 +215,11 @@
                           redirectUri:[NSURL URLWithString:self.redirectUriString]
                       completionBlock:^(ADAuthenticationResult *result) {
                           
-                          [spinner stopAnimating];
-                          [spinner removeFromSuperview];
-                          
                           if (result.status != AD_SUCCEEDED)
                           {
+                              [spinner stopAnimating];
+                              [spinner removeFromSuperview];
+                              
                               NSString *errorMessage = [@"Login failed. Reason: " stringByAppendingString: result.error.errorDetails];
                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
                               [alert show];
@@ -267,6 +235,9 @@
                                                         redirectUri:[NSURL URLWithString:self.redirectUriString]
                                                     completionBlock:^(ADAuthenticationResult  *result) {
                                                         NSLog(@"result%@",result);
+                                                        [spinner stopAnimating];
+                                                        [spinner removeFromSuperview];
+                                                        
                                                         if (AD_SUCCEEDED != result.status){
                                                             NSString *errorMessage = [@"Get Email Token failed. Reason: " stringByAppendingString: result.error.errorDetails];
                                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];

@@ -21,7 +21,7 @@ const NSString *apiUrl = @"/_api/lists";
 - (void)getListItems:(NSString *)name callback:(void (^)(NSMutableArray *listItems, NSError *))callback{
  
     NSString *requestUrl = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items", self.Url , apiUrl, [name urlencode]];
-    NSLog(@"requestUrl %@",requestUrl);
+   // NSLog(@"requestUrl %@",requestUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     [request addValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
@@ -30,7 +30,7 @@ const NSString *apiUrl = @"/_api/lists";
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                   {
-                                      NSLog(@"response %@",response);
+                                     // NSLog(@"response %@",response);
                                       NSMutableArray *array = [NSMutableArray array];
                                       
                                       NSMutableArray *listsItemsArray =[self parseDataArray: data];
@@ -46,7 +46,7 @@ const NSString *apiUrl = @"/_api/lists";
     
     
     NSString *requestUrl = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items?%@", self.Url , apiUrl, [name urlencode],filter];
-    NSLog(@"requestUrl %@",requestUrl);
+   // NSLog(@"requestUrl %@",requestUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     [request addValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
@@ -55,7 +55,7 @@ const NSString *apiUrl = @"/_api/lists";
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                   {
-                                      NSLog(@"response %@",response);
+                                    //  NSLog(@"response %@",response);
                                       NSMutableArray *array = [NSMutableArray array];
                                       
                                       NSMutableArray *listsItemsArray =[self parseDataArray: data];
@@ -70,7 +70,7 @@ const NSString *apiUrl = @"/_api/lists";
 - (void)getListItemFileByFilter:(NSString *)name FileId:(NSString *)fileId filter:(NSString *)filter callback:(void (^)(NSMutableArray *listItems, NSError *))callback{
     
     NSString *requestUrl = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items(%@)/File?%@", self.Url , apiUrl, [name urlencode],fileId,filter];
-    NSLog(@"requestUrl %@",requestUrl);
+   // NSLog(@"requestUrl %@",requestUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     [request addValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
     [request addValue:@"application/json;odata=verbose" forHTTPHeaderField:@"accept"];
@@ -79,7 +79,7 @@ const NSString *apiUrl = @"/_api/lists";
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                   {
-                                      NSLog(@"response %@",response);
+                                    //  NSLog(@"response %@",response);
                                       NSMutableArray *array = [NSMutableArray array];
                                       NSMutableArray *listsItemsArray =[self parseDataArray: data];
                                       for (NSDictionary* value in listsItemsArray) {
@@ -124,7 +124,7 @@ const NSString *apiUrl = @"/_api/lists";
 
 - (NSData*) sanitizeJson : (NSData*) data{
     NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"sanitizeJson:%@",dataString);
+    //NSLog(@"sanitizeJson:%@",dataString);
     NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
     
     NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];
@@ -176,8 +176,8 @@ const NSString *apiUrl = @"/_api/lists";
 {
     
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items",self.Url,[listName urlencode]];
-    NSLog(@"requestUrl %@",requestUrl);
-     NSLog(@"body %@",body);
+   // NSLog(@"requestUrl %@",requestUrl);
+     //NSLog(@"body %@",body);
     
     NSData *postData = [body dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
@@ -222,7 +222,7 @@ const NSString *apiUrl = @"/_api/lists";
 {
     
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFolderByServerRelativeUrl('%@')/Files/add(url='%@',overwrite=true)",self.Url,libraryName,imageName];
-    NSLog(@"requestUrl %@",requestUrl);
+    //NSLog(@"requestUrl %@",requestUrl);
     NSData *postData = UIImageJPEGRepresentation(image, 1);
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];

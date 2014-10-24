@@ -145,4 +145,5 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 
 @property(nonatomic) MFMailComposeViewController *mailController;
 -(void)setDataExternal:(NSString *)pid loginName:(NSString *)loginName token:(NSString *)token emailtoken:(NSString *)exchangetoken;
+
 @end
