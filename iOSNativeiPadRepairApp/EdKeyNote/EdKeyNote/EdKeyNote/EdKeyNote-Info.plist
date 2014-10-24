@@ -26,7 +26,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.canviz.EdKeyNote</string>
+			<string>com.canviz.iOSRepairApp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>repairApp</string>

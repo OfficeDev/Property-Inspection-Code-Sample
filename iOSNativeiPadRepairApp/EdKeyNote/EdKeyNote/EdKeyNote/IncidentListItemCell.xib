@@ -83,10 +83,13 @@
                 <outlet property="approvalValueLbl" destination="fA1-JI-vg1" id="Icc-FO-rzB"/>
                 <outlet property="incidentImageView" destination="7QD-iq-E1a" id="rR2-ca-oce"/>
                 <outlet property="incidentLbl" destination="qhm-UZ-lFk" id="M0l-Vl-5Rv"/>
+                <outlet property="incidentTitleLbl" destination="eM0-u1-1fw" id="68Q-bN-2vB"/>
+                <outlet property="inspectionDateTitleLbl" destination="cwI-e2-TSO" id="pK7-1V-zXH"/>
                 <outlet property="inspectionLbl" destination="A3H-ud-pyu" id="zkU-7J-Ibk"/>
                 <outlet property="repairDateTitleLbl" destination="FCS-Vg-d2z" id="lBK-uD-o74"/>
                 <outlet property="repairDateValueLbl" destination="ruo-8E-Zx5" id="Vm2-Xe-dkW"/>
                 <outlet property="roomLbl" destination="Vqv-cB-gVW" id="JuE-r6-uXO"/>
+                <outlet property="roomTitleLbl" destination="EgU-ld-WXV" id="ogD-9e-GUg"/>
             </connections>
             <point key="canvasLocation" x="-153" y="110"/>
         </tableViewCell>

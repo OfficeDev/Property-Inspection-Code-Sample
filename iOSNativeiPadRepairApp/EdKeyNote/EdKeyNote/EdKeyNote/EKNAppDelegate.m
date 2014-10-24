@@ -31,30 +31,26 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    if(self.naviController!=nil)
+    NSLog(@"test");
+    self.incidentId = nil;
+    NSString *low = [((NSString *)[url absoluteString]) lowercaseString];
+    if([low hasPrefix:@"repairapp://"])
     {
-        [self.naviController popToRootViewControllerAnimated:NO];
-        EKNLoginViewController *login = [[EKNLoginViewController alloc] init];
-        [self.naviController pushViewController:login animated:YES];
+        NSString *incidentId = [low substringFromIndex:(@"repairapp://").length];
+        if([[NSScanner scannerWithString:incidentId] scanInt:nil])
+        {
+            self.incidentId =incidentId;
+            if(self.naviController!=nil)
+            {
+                [self.naviController popToRootViewControllerAnimated:NO];
+                EKNLoginViewController *login = [[EKNLoginViewController alloc] init];
+                login.incidentId = self.incidentId;
+                [self.naviController pushViewController:login animated:YES];
+            }
+            return YES;
+        }
     }
-    
-    
-    
-    NSLog(@"URL query: %@", [url query]);
-    
     return  YES;
-    
-    // Check the calling application Bundle ID
-    /*if ([sourceApplication isEqualToString:@"com.canviz.EdKeyNote"])
-    {
-        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
-        NSLog(@"URL scheme:%@", [url scheme]);
-        NSLog(@"URL query: %@", [url query]);
-        
-        return YES;
-    }
-    else
-        return NO;*/
 }
 
 -(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window

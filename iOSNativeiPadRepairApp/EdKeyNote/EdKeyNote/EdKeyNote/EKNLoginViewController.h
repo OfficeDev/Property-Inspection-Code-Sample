@@ -25,4 +25,6 @@
 @property (retain) UIButton *login_bt;
 @property (retain) UILabel *settings_lbl;
 
+@property (strong, nonatomic)NSString* incidentId;
+
 @end
