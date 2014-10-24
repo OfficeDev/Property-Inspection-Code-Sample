@@ -229,7 +229,15 @@
             self.token = t;
             EKNIncidentViewController *incident = [[EKNIncidentViewController alloc] init];
             incident.token = self.token;
-            incident.selectPropertyId = @"1";
+            if(self.incidentId == nil || (NSNull *)self.incidentId == [NSNull null])
+            {
+                incident.incidentId = @"1";
+            }
+            else
+            {
+                incident.incidentId = self.incidentId;
+            }
+            
             [self.navigationController pushViewController:incident animated:YES];
         }
         else

@@ -30,6 +30,18 @@
     {
         self.incidentImageView.image = [UIImage imageNamed:@"default"];
     }
+    
+    self.roomTitleLbl.highlightedTextColor = [UIColor blackColor];
+    self.roomLbl.highlightedTextColor = [UIColor blackColor];
+    self.incidentTitleLbl.highlightedTextColor = [UIColor blackColor];
+    self.incidentLbl.highlightedTextColor = [UIColor blackColor];
+    self.inspectionDateTitleLbl.highlightedTextColor = [UIColor blackColor];
+    self.inspectionLbl.highlightedTextColor = [UIColor blackColor];
+    self.repairDateTitleLbl.highlightedTextColor = [UIColor blackColor];
+    self.repairDateValueLbl.highlightedTextColor = [UIColor blackColor];
+    self.approvalTitleLbl.highlightedTextColor = [UIColor blackColor];
+    self.approvalValueLbl.highlightedTextColor = [UIColor blackColor];
+    
     self.roomLbl.text = room;
     self.incidentLbl.text = incident;
     self.inspectionLbl.text = inspectionDate;

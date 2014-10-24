@@ -68,7 +68,6 @@
     self.inspectionDetailDic = [[NSMutableDictionary alloc] init];
     
     self.detailViewIsShowing = NO;
-    self.incidentId = @"1";
 }
 
 -(void)addPropertyDetailTable{
@@ -468,6 +467,7 @@
     
     //set select index
     self.selectedIndex = indexpath.row;
+    self.selectedIndexPath = indexpath;
     
     //set the selected IDs
     self.selectIncidentId = incidentID;
@@ -724,7 +724,7 @@
     NSDate *currentDate = [NSDate date];
     NSString *repairCompleted = [EKNEKNGlobalInfo converStringFromDate:currentDate];
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",self.siteUrl,@"Incidents",self.selectIncidentId];
-    NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' },'sl_repairCompleted':'%@'}",repairCompleted];
+    NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' },'sl_repairCompleted':'%@','sl_status':'Repair Pending Approval'}",repairCompleted];
     NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     [request addValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
@@ -744,11 +744,13 @@
             {
                 ListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
                 NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
+                [dic setValue:@"Repair Pending Approval" forKey:@"sl_status"];
                 [dic setValue:repairCompleted forKey:@"sl_repairCompleted"];
                 if([EKNEKNGlobalInfo isBlankString:self.selectTaskId])
                 {
                     self.finalizeBtn.hidden = YES;
                     [self hideLoading];
+                    [self updateRightTableCell:self.selectedIndexPath];
                     [self showSuccessMessage:@"Finalize repair successfully."];
                 }
                 else
@@ -788,6 +790,7 @@
             if([EKNEKNGlobalInfo requestSuccess:response])
             {
                 self.finalizeBtn.hidden = YES;
+                [self updateRightTableCell:self.selectedIndexPath];
                 [self showSuccessMessage:@"Finalize repair successfully."];
             }
             else
@@ -1485,6 +1488,13 @@
         }
         [cell setCellValue:image room:room incident:incident inspectionDate:inspectionDate repairDate:repairDate repairHidden:repariDateHidden approved:approved approvedHidden:approvedHidden];
     }
+}
+
+-(void)updateRightTableCell:(NSIndexPath *)indexpath
+{
+    [self.rightTableView beginUpdates];
+    [self.rightTableView reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.rightTableView endUpdates];
 }
 
 //collection view

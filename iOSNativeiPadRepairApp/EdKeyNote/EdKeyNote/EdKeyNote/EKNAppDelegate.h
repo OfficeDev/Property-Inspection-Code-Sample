@@ -13,5 +13,5 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *naviController;
-
+@property (strong, nonatomic)NSString* incidentId;
 @end

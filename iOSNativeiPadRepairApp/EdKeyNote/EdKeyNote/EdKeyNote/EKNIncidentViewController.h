@@ -35,6 +35,7 @@
 @property(nonatomic) NSString* selectRoomId;
 @property(nonatomic) NSString* selectTaskId;
 @property(nonatomic) NSInteger selectedIndex;
+@property(nonatomic) NSIndexPath* selectedIndexPath;
 
 @property(nonatomic) NSMutableArray *incidentListArray;
 @property(nonatomic) NSMutableDictionary *incidentPhotoListDic;
