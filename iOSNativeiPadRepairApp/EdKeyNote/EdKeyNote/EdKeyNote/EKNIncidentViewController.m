@@ -724,7 +724,7 @@
     NSDate *currentDate = [NSDate date];
     NSString *repairCompleted = [EKNEKNGlobalInfo converStringFromDate:currentDate];
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",self.siteUrl,@"Incidents",self.selectIncidentId];
-    NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' },'sl_repairCompleted':'%@'}",repairCompleted];
+    NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' },'sl_repairCompleted':'%@','sl_status':'Repair Pending Approval'}",repairCompleted];
     NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     [request addValue:[NSString stringWithFormat:@"Bearer %@", self.token] forHTTPHeaderField:@"Authorization"];
@@ -744,6 +744,7 @@
             {
                 ListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
                 NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
+                [dic setValue:@"Repair Pending Approval" forKey:@"sl_status"];
                 [dic setValue:repairCompleted forKey:@"sl_repairCompleted"];
                 if([EKNEKNGlobalInfo isBlankString:self.selectTaskId])
                 {
