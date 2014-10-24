@@ -38,16 +38,19 @@
         NSString *incidentId = [low substringFromIndex:(@"repairapp://").length];
         if([[NSScanner scannerWithString:incidentId] scanInt:nil])
         {
-            self.incidentId =incidentId;
-            if(self.naviController!=nil)
-            {
-                [self.naviController popToRootViewControllerAnimated:NO];
-                EKNLoginViewController *login = [[EKNLoginViewController alloc] init];
-                login.incidentId = self.incidentId;
-                [self.naviController pushViewController:login animated:YES];
-            }
-            return YES;
+            self.incidentId = incidentId;
         }
+        else
+        {
+            self.incidentId = @"1";
+        }
+        if(self.naviController != nil)
+        {
+            [self.naviController popToRootViewControllerAnimated:NO];
+        }
+        EKNLoginViewController *login = [[EKNLoginViewController alloc] init];
+        login.incidentId = self.incidentId;
+        [self.naviController pushViewController:login animated:YES];
     }
     return  YES;
 }
