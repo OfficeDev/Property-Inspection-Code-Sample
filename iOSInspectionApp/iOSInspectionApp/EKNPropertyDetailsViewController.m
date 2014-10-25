@@ -524,23 +524,18 @@
 }
 -(void)showSendEmailViewController:(NSString *)address
 {
-    UIDevice *device =[UIDevice currentDevice];
-    if ([[device model] isEqualToString:@"iPad Simulator"]) {
-        [self showHintAlertView:@"Hint" message:@"Simulator does not support Mail View"];
+    MFMailComposeViewController *mailCtrl =[[MFMailComposeViewController alloc] init];
+    if (mailCtrl==nil) {
+        [self showHintAlertView:@"Hint" message:@"Can't get mail controller, check your email settings."];
         return;
     }
     
-    if(self.mailController == nil)
-    {
-        self.mailController = [[MFMailComposeViewController alloc] init];
-        self.mailController.mailComposeDelegate = self;
-    }
+    mailCtrl.mailComposeDelegate = self;
     NSArray *to = [NSArray arrayWithObjects:address, nil];
-    
-    NSString *body =@"Edkey Note Demo";
-    [self.mailController setToRecipients:to];
-    [self.mailController setMessageBody:body isHTML:NO];
-    [self presentViewController:self.mailController animated:YES completion:NULL];
+    NSString *body =@"InspectionApp Demo";
+    [mailCtrl setToRecipients:to];
+    [mailCtrl setMessageBody:body isHTML:NO];
+    [self presentViewController:mailCtrl animated:YES completion:NULL];
 }
 -(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
@@ -1180,8 +1175,6 @@
 
 -(void)finalizeButtonClicked:(id)sender
 {
-    //here finalize
-    //cloris need add finalize action;
     if(![self.commentViewSpinner isAnimating])
     {
         [self startCommentViewSpiner:CGRectMake(135,550+91,50,50)];
@@ -1563,7 +1556,7 @@
     [self.listClient getFileValueByPath:path callback:^(NSData *data,NSURLResponse *response,NSError *error)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
-             NSLog(@"cloris get image erro is %@",error);
+             NSLog(@"get image erro is %@",error);
              if (error == nil) {
                  NSLog(@"data length %lu",(unsigned long)[data length]);
                  UIImage *image =[[UIImage alloc] initWithData:data];
@@ -1658,7 +1651,7 @@
     [self.listClient getFileValueByPath:path callback:^(NSData *data,NSURLResponse *response,NSError *error)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
-             NSLog(@"cloris get room image erro %@",error);
+             NSLog(@"get room image erro %@",error);
              if (error == nil) {
                  NSLog(@"data length %lu",(unsigned long)[data length]);
                  UIImage *image =[[UIImage alloc] initWithData:data];
@@ -2778,11 +2771,11 @@
     {
         NSDictionary *roomDic = [roomsArray objectAtIndex:indexPath.row];
         NSString *roomId = [roomDic objectForKey:@"Id"];
-        NSString *roomIconName = @"greenRoom";
+        NSString *roomIconName = @"green";
         
         if([[self getRoomItemIcon:roomId] isEqualToString:@"YES"])
         {
-            roomIconName = @"redRoom";
+            roomIconName = @"red";
         }
         [cell setCellValue:roomIconName title:[roomDic objectForKey:@"Title"]];
     }

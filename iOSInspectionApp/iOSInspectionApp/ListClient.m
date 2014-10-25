@@ -201,7 +201,7 @@ const NSString *apiUrl = @"/_api/lists";
 {
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/GetFileByServerRelativeUrl('%@%@",self.Url,filePath,@"')/$value"];
     
-    NSLog(@"getFileValueByPath requestUrl %@",requestUrl);
+   // NSLog(@"getFileValueByPath requestUrl %@",requestUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     NSString *authorizationHeaderValue = [NSString stringWithFormat:@"Bearer %@", self.token];
     [request addValue:authorizationHeaderValue forHTTPHeaderField:@"Authorization"];
