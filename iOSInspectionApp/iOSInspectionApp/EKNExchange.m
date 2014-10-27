@@ -40,7 +40,7 @@
      [credentialsImpl setCredentials:credentials];
      [resolver setCredentialsFactory:credentialsImpl];
      
-     MSOEntityContainerClient *client = [[MSOEntityContainerClient alloc] initWitUrl:@"https://sdfpilot.outlook.com/ews/odata" dependencyResolver:resolver];
+     MSOEntityContainerClient *client = [[MSOEntityContainerClient alloc] initWitUrl:@"https://outlook.office365.com/ews/odata" dependencyResolver:resolver];
      
      
      MSOMessage *message = [MSOMessage alloc];

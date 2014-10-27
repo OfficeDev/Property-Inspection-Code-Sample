@@ -230,7 +230,7 @@
                           {
                               NSString *token = result.accessToken;
                               //will retry to get email token
-                              [context acquireTokenWithResource:@"https://sdfpilot.outlook.com"
+                              [context acquireTokenWithResource:@"https://outlook.office365.com"
                                                            clientId:self.clientId
                                                         redirectUri:[NSURL URLWithString:self.redirectUriString]
                                                     completionBlock:^(ADAuthenticationResult  *result) {
