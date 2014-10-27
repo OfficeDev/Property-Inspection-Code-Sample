@@ -55,7 +55,7 @@
     else
     {
         settingsMissing = 1;
-        self.clientId = @"e632f423-b906-4d5c-b32d-a6e635f1e685";
+        self.clientId = @"9e57784a-6f56-4120-9d57-1c37c26dba61";
         [standardUserDefaults setValue:self.clientId  forKey:@"clientId"];
         [standardUserDefaults synchronize];
     }
@@ -68,7 +68,7 @@
     else
     {
         settingsMissing = 1;
-        self.authority =@"https://login.windows-ppe.net/common";
+        self.authority =@"https://login.windows.net/common";
         [standardUserDefaults setValue:self.authority forKey:@"authority"];
         [standardUserDefaults synchronize];
     }
@@ -81,7 +81,7 @@
     else
     {
         settingsMissing = 1;
-        self.resourceId = @"https://techedairlift04.spoppe.com";
+        self.resourceId = @"https://teeudev3.sharepoint.com";
         [standardUserDefaults setValue:self.resourceId forKey:@"resourceId"];
         [standardUserDefaults synchronize];
     }
@@ -94,7 +94,7 @@
     else
     {
         settingsMissing = 1;
-        self.redirectUriString = @"http://iOSiPadApp" ;
+        self.redirectUriString = @"http://PropertyManagementiOSiPadApp" ;
         [standardUserDefaults setValue:self.redirectUriString forKey:@"redirectUriString"];
         [standardUserDefaults synchronize];
     }
@@ -103,7 +103,7 @@
     if (nil == [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"])
     {
         settingsMissing = 1;
-        [standardUserDefaults setValue:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
+        [standardUserDefaults setValue:@"https://teeudev3.sharepoint.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
         [standardUserDefaults synchronize];
     }
     
@@ -111,7 +111,7 @@
     if (nil == [standardUserDefaults objectForKey:@"dispatcherEmail"])
     {
         settingsMissing = 1;
-        [standardUserDefaults setValue:@"lisaa@techedairlift04.ccsctp.net" forKey:@"dispatcherEmail"];
+        [standardUserDefaults setValue:@"katiej@TEEUdev3.onmicrosoft.com" forKey:@"dispatcherEmail"];
         [standardUserDefaults synchronize];
     }
     
@@ -119,7 +119,7 @@
     {
         [_login_bt setTitle:@"Sign In" forState:UIControlStateNormal];
         [_login_bt setEnabled:YES];
-        [_settings_lbl setText:@""];        
+        [_settings_lbl setText:@""];
     }
     else
     {
@@ -195,15 +195,15 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 - (void) performLogin: (BOOL) clearCache{
     UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(480,440,50,50)];
     spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
