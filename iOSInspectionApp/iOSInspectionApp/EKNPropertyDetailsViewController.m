@@ -488,12 +488,12 @@
             NSString *roomTitle= [((RoomListCell *)[roomTableView cellForRowAtIndexPath:self.selectLetRoomIndexPath]) getLabelTitle];
             
             NSMutableString *body =[[NSMutableString alloc] initWithString:@"\r\nDuring a recent inspection on your property an incident was reported. We are working to repair this incident and will email you when the incident is repaired.\r\n"];
-            [body appendFormat:@"\r\n\r\nProperty Name: %@\r\nProperty Address:%@\r\n\r\nInspection Date:<%@>\r\n\r\n",propertyName,propertyAddress,currentDate];
+            [body appendFormat:@"\r\n\r\nProperty Name: %@\r\nProperty Address: %@\r\n\r\nInspection Date: <%@>\r\n\r\n",propertyName,propertyAddress,currentDate];
             
             if (type==nil) {
                 type=@"";
             }
-            [body appendFormat:@"Incident Type:%@>r\n\r\nRoom:%@",type,roomTitle];
+            [body appendFormat:@"Incident Type: <%@>\r\n\r\nRoom: %@",type,roomTitle];
             if (comment==nil) {
                 comment=@"";
             }
