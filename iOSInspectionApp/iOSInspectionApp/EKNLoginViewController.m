@@ -52,7 +52,7 @@
     else
     {
         settingsMissing = 1;
-        self.clientId = @"e632f423-b906-4d5c-b32d-a6e635f1e685";
+        self.clientId =@"9e57784a-6f56-4120-9d57-1c37c26dba61";// @"e632f423-b906-4d5c-b32d-a6e635f1e685";
         [standardUserDefaults setValue:self.clientId  forKey:@"clientId"];
         [standardUserDefaults synchronize];
     }
@@ -65,7 +65,7 @@
     else
     {
         settingsMissing = 1;
-        self.authority =@"https://login.windows-ppe.net/common";
+        self.authority =@"https://login.windows.net/common";//@"https://login.windows-ppe.net/common";
         [standardUserDefaults setValue:self.authority forKey:@"authority"];
         [standardUserDefaults synchronize];
     }
@@ -78,7 +78,7 @@
     else
     {
         settingsMissing = 1;
-        self.resourceId = @"https://techedairlift04.spoppe.com";
+        self.resourceId = @"https://teeudev3.sharepoint.com";//@"https://techedairlift04.spoppe.com";
         [standardUserDefaults setValue:self.resourceId forKey:@"resourceId"];
         [standardUserDefaults synchronize];
     }
@@ -91,7 +91,7 @@
     else
     {
         settingsMissing = 1;
-        self.redirectUriString = @"http://iOSiPadApp" ;
+        self.redirectUriString = @"http://PropertyManagementiOSiPadApp";//@"http://iOSiPadApp" ;
         [standardUserDefaults setValue:self.redirectUriString forKey:@"redirectUriString"];
         [standardUserDefaults synchronize];
     }
@@ -100,7 +100,7 @@
     if (nil == [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"])
     {
         settingsMissing = 1;
-        [standardUserDefaults setValue:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
+        [standardUserDefaults setValue:@"https://teeudev3.sharepoint.com/sites/SuiteLevelAppDemo"/*@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo"*/ forKey:@"demoSiteCollectionUrl"];
         [standardUserDefaults synchronize];
     }
     
@@ -108,7 +108,7 @@
     if (nil == [standardUserDefaults objectForKey:@"dispatcherEmail"])
     {
         settingsMissing = 1;
-        [standardUserDefaults setValue:@"lisaa@techedairlift04.ccsctp.net" forKey:@"dispatcherEmail"];
+        [standardUserDefaults setValue:@"katiej@TEEUdev3.onmicrosoft.com"/*@"lisaa@techedairlift04.ccsctp.net"*/ forKey:@"dispatcherEmail"];
         [standardUserDefaults synchronize];
     }
     

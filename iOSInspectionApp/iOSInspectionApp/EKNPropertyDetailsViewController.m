@@ -2019,6 +2019,7 @@
                      else
                      {
                          dispatch_async(dispatch_get_main_queue(), ^{
+                             [self sendExchangeEmail:type comment:comment];
                              [self showHintAlertView:@"Hint" message:@"Create incident item successfully."];
                              [self stopCommentViewSpiner];
                              [self cancelButtonClicked];
