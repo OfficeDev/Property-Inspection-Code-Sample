@@ -745,6 +745,9 @@
                 if([EKNEKNGlobalInfo isBlankString:self.selectTaskId])
                 {
                     self.finalizeBtn.hidden = YES;
+                    self.canEditComments = NO;
+                    self.repairCommentDoneBtn.hidden = YES;
+                    self.tabComments.editable = NO;
                     [self hideLoading];
                     [self updateRightTableCell:self.selectedIndexPath];
                     [self showSuccessMessage:@"Finalize repair successfully."];
@@ -786,6 +789,9 @@
             if([EKNEKNGlobalInfo requestSuccess:response])
             {
                 self.finalizeBtn.hidden = YES;
+                self.canEditComments = NO;
+                self.repairCommentDoneBtn.hidden = YES;
+                self.tabComments.editable = NO;
                 [self updateRightTableCell:self.selectedIndexPath];
                 [self showSuccessMessage:@"Finalize repair successfully."];
             }
