@@ -4,7 +4,7 @@
 
 - [Overview](#overview)
 - [Getting Started](#installation)
-- [Running the sample end to end](#demo)
+- [Running the sample end to end](#running)
 - [Working with the iOS apps in XCode](#xcode)
 - [Contributing](#contributing)
 - [License](#license)
@@ -21,7 +21,7 @@ The Suite Level App is located in the PropertyManagementSLA folder.
 ## Installation
 To set up and configure the demo first download the Suite Level App and F5 in Visual Studio.  Then navigate the to /Home controller.  The Home controller includes all the setup and configuration instructions you need to runt he demo end to end.
 
-## Demo
+## Running
 The PowerPoint slide deck in the Documents folder describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.
 
 ## XCode
