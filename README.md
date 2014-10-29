@@ -3,9 +3,9 @@
 **Table of Contents**
 
 - [Overview](#overview)
-- [Getting Started](#Installation)
-- [Running the sample end to end](#Demo)
-- [Working with the iOS apps in XCode](#XCode)
+- [Getting Started](#installation)
+- [Running the sample end to end](#demo)
+- [Working with the iOS apps in XCode](#xcode)
 - [Contributing](#contributing)
 - [License](#license)
 
