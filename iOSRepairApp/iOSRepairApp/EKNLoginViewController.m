@@ -23,6 +23,17 @@
     return self;
 }
 
+-(id)init{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    self.clientId = [standardUserDefaults objectForKey:@"clientId"];
+    self.authority = [standardUserDefaults objectForKey:@"authority"];
+    self.resourceId = [standardUserDefaults objectForKey:@"resourceId"];
+    self.redirectUriString = [standardUserDefaults objectForKey:@"redirectUriString"];
+    
+    return self;
+}
+
 - (void)propertyDetailsButtonAction
 {
     EKNIncidentViewController *incident = [[EKNIncidentViewController alloc] init];
@@ -55,8 +66,8 @@
     else
     {
         settingsMissing = 1;
-        //self.clientId = @"e632f423-b906-4d5c-b32d-a6e635f1e685";
-        self.clientId = @"9e57784a-6f56-4120-9d57-1c37c26dba61";
+        self.clientId = @"e632f423-b906-4d5c-b32d-a6e635f1e685";
+        //self.clientId = @"9e57784a-6f56-4120-9d57-1c37c26dba61";
         [standardUserDefaults setValue:self.clientId  forKey:@"clientId"];
         [standardUserDefaults synchronize];
     }
@@ -69,8 +80,8 @@
     else
     {
         settingsMissing = 1;
-        //self.authority =@"https://login.windows-ppe.net/common";
-        self.authority =@"https://login.windows.net/common";
+        self.authority =@"https://login.windows-ppe.net/common";
+        //self.authority =@"https://login.windows.net/common";
         [standardUserDefaults setValue:self.authority forKey:@"authority"];
         [standardUserDefaults synchronize];
     }
@@ -83,8 +94,8 @@
     else
     {
         settingsMissing = 1;
-        //self.resourceId = @"https://techedairlift04.spoppe.com";
-        self.resourceId = @"https://teeudev3.sharepoint.com";
+        self.resourceId = @"https://techedairlift04.spoppe.com";
+        //self.resourceId = @"https://teeudev3.sharepoint.com";
         [standardUserDefaults setValue:self.resourceId forKey:@"resourceId"];
         [standardUserDefaults synchronize];
     }
@@ -97,8 +108,8 @@
     else
     {
         settingsMissing = 1;
-        //self.redirectUriString = @"http://iOSiPadApp" ;
-        self.redirectUriString = @"http://PropertyManagementiOSiPadApp" ;
+        self.redirectUriString = @"http://iOSiPadApp" ;
+        //self.redirectUriString = @"http://PropertyManagementiOSiPadApp" ;
         [standardUserDefaults setValue:self.redirectUriString forKey:@"redirectUriString"];
         [standardUserDefaults synchronize];
     }
@@ -107,8 +118,8 @@
     if (nil == [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"])
     {
         settingsMissing = 1;
-        //[standardUserDefaults setValue:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
-        [standardUserDefaults setValue:@"https://teeudev3.sharepoint.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
+        [standardUserDefaults setValue:@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
+        //[standardUserDefaults setValue:@"https://teeudev3.sharepoint.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
         [standardUserDefaults synchronize];
     }
     
@@ -116,8 +127,8 @@
     if (nil == [standardUserDefaults objectForKey:@"dispatcherEmail"])
     {
         settingsMissing = 1;
-        //[standardUserDefaults setValue:@"lisaa@techedairlift04.ccsctp.net" forKey:@"dispatcherEmail"];
-        [standardUserDefaults setValue:@"katiej@TEEUdev3.onmicrosoft.com" forKey:@"dispatcherEmail"];
+        [standardUserDefaults setValue:@"lisaa@techedairlift04.ccsctp.net" forKey:@"dispatcherEmail"];
+        //[standardUserDefaults setValue:@"katiej@TEEUdev3.onmicrosoft.com" forKey:@"dispatcherEmail"];
         [standardUserDefaults synchronize];
     }
     
@@ -219,6 +230,30 @@
     
     [spinner startAnimating];
     
+    
+    [self getTokenWith:TRUE completionHandler:^(NSString *token) {
+        [spinner stopAnimating];
+        [spinner removeFromSuperview];
+        
+        if(token != nil)
+        {
+            token = token;
+            EKNIncidentViewController *incident = [[EKNIncidentViewController alloc] init];
+            incident.token = token;
+            if(self.incidentId == nil || (NSNull *)self.incidentId == [NSNull null])
+            {
+                incident.incidentId = @"1";
+            }
+            else
+            {
+                incident.incidentId = self.incidentId;
+            }
+            
+            [self.navigationController pushViewController:incident animated:YES];
+        }
+    }];
+    
+    /*
     ADAuthenticationError *error;
     ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:self.authority error:&error];
     if (!context)
@@ -259,6 +294,124 @@
                               [self.navigationController pushViewController:incident animated:YES];
                           }
                       }];
+     */
 }
+
+-(void) getTokenWith :(BOOL) clearCache completionHandler:(void (^) (NSString *))completionBlock;
+{
+    if([self getCacheToken : self.resourceId completionHandler:completionBlock]) return;
+    
+    ADAuthenticationError *error;
+    ADAuthenticationContext* authContext = [ADAuthenticationContext authenticationContextWithAuthority:self.authority error:&error];
+    
+    NSURL *redirectUri = [NSURL URLWithString:self.redirectUriString];
+    
+    [authContext acquireTokenWithResource:self.resourceId
+                                 clientId:self.clientId
+                              redirectUri:redirectUri
+                          completionBlock:^(ADAuthenticationResult  *result) {
+                              
+                              if (AD_SUCCEEDED != result.status){
+                                  [self showError:result.error.errorDetails];
+                              }
+                              else{
+                                  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                  [userDefaults setObject:result.tokenCacheStoreItem.userInformation.userId forKey:@"LogInUser"];
+                                  [userDefaults synchronize];
+                                  
+                                  completionBlock(result.accessToken);
+                              }
+                          }];
+}
+
+-(void)showError : (NSString*)errorDetails{
+    NSString *errorMessage = [@"Login failed. Reason: " stringByAppendingString: errorDetails];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+    [alert show];
+}
+
+-(void) setStatus: (NSString *) status
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+    });
+}
+
+-(void)clearCredentials{
+    id<ADTokenCacheStoring> cache = [ADAuthenticationSettings sharedInstance].defaultTokenCacheStore;
+    ADAuthenticationError * error;
+    if ([[cache allItemsWithError:&error] count] > 0)
+        [cache removeAllWithError:&error];
+}
+
+-(BOOL)getCacheToken : (NSString *)resourceId  completionHandler:(void (^) (NSString *))completionBlock {
+    ADAuthenticationError * error;
+    id<ADTokenCacheStoring> cache = [ADAuthenticationSettings sharedInstance].defaultTokenCacheStore;
+    NSArray *array = [cache allItemsWithError:&error];
+    
+    if([array count] == 0) return false;
+    
+    
+    ADTokenCacheStoreItem *cacheItem;
+    
+    for (ADTokenCacheStoreItem *item in array) {
+        if([item.resource isEqualToString:resourceId]){
+            cacheItem = item;
+            break;
+        }
+    }
+    
+    ADUserInformation *user = cacheItem.userInformation;
+    
+    if(user == nil) return false;
+    
+    if([cacheItem isExpired]){
+        return [self refreshToken:resourceId completionHandler:completionBlock];
+    }
+    else
+    {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:user.userId forKey:@"LogInUser"];
+        [userDefaults synchronize];
+        
+        completionBlock(cacheItem.accessToken);
+        
+        return true;
+    }
+}
+
+-(BOOL)refreshToken : (NSString*)resourceId  completionHandler:(void (^) (NSString *))completionBlock{
+    
+    ADAuthenticationError *error;
+    ADAuthenticationContext* authContext = [ADAuthenticationContext authenticationContextWithAuthority:self.authority error:&error];
+    
+    ADTokenCacheStoreKey *key = [ADTokenCacheStoreKey keyWithAuthority:self.authority resource:nil clientId:self.clientId error:&error];
+    
+    if (!key)
+    {
+        [self setStatus:error.errorDetails];
+        return false;
+    }
+    
+    id<ADTokenCacheStoring> cache = authContext.tokenCacheStore;
+    ADTokenCacheStoreItem *item = [cache getItemWithKey:key userId:nil error:&error];
+    
+    if (!item)
+    {
+        [self setStatus:@"Missing cache item."];
+        return false;
+    }
+    
+    [authContext acquireTokenByRefreshToken:item.refreshToken
+                                   clientId:self.clientId
+                                   resource:resourceId
+                            completionBlock:^(ADAuthenticationResult *result)
+     {
+         completionBlock(result.tokenCacheStoreItem.accessToken);
+     }];
+    
+    return true;
+}
+
+
 
 @end

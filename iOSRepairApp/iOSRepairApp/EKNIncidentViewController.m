@@ -7,6 +7,7 @@
 //
 
 #import "EKNIncidentViewController.h"
+#import "BaseController.h"
 
 @interface EKNIncidentViewController ()
 
@@ -446,7 +447,7 @@
 
 -(void)setRightTableSelectIndex:(NSIndexPath*)indexpath
 {
-    ListItem *incidentItem = [self.incidentListArray objectAtIndex:indexpath.row];
+    EKNListItem *incidentItem = [self.incidentListArray objectAtIndex:indexpath.row];
     NSString *incidentType = [EKNEKNGlobalInfo getString:(NSString *)[incidentItem getData:@"sl_type"]];
     NSDictionary *roomData = (NSDictionary *)[incidentItem getData:@"sl_roomID"];
     NSString *roomTitle = [EKNEKNGlobalInfo getString:(NSString *)[roomData objectForKey:@"Title"]];
@@ -635,7 +636,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if(listItems != nil && [listItems count] == 1)
             {
-                ListItem *item = listItems[0];
+                EKNListItem *item = listItems[0];
                 NSString *propertyId = (NSString *)[item getData:@"sl_propertyIDId"];
                 self.selectPropertyId = propertyId;
                 
@@ -661,7 +662,7 @@
             
             if(listItems != nil && [listItems count] > 0)
             {
-                ListItem *item = listItems[0];
+                EKNListItem *item = listItems[0];
                 NSDictionary *property = (NSDictionary *)[item getData:@"sl_propertyID"];
                 self.propertyDetailDic = property;
                 
@@ -700,7 +701,7 @@
             [self hideLoading];
             if([EKNEKNGlobalInfo requestSuccess:response])
             {
-                ListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
+                EKNListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
                 NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
                 [dic setValue:repairComments forKey:@"sl_repairComments"];
                 [self showSuccessMessage:@"Update repair comments successfully."];
@@ -738,7 +739,7 @@
             
             if([EKNEKNGlobalInfo requestSuccess:response])
             {
-                ListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
+                EKNListItem *item = [self.incidentListArray objectAtIndex:self.selectedIndex];
                 NSMutableDictionary *dic = (NSMutableDictionary *)[item valueForKey:@"_jsonData"];
                 [dic setValue:@"Repair Pending Approval" forKey:@"sl_status"];
                 [dic setValue:repairCompleted forKey:@"sl_repairCompleted"];
@@ -815,7 +816,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if(listItems != nil && [listItems count] > 0)
             {
-                ListItem *item = listItems[0];
+                EKNListItem *item = listItems[0];
                 NSDictionary *inspector = (NSDictionary *)[item getData:@"sl_inspector"];
                 [self.inspectionDetailDic setObject:[inspector objectForKey:@"Title"] forKey:@"name"];
                 [self.inspectionDetailDic setObject:[inspector objectForKey:@"sl_emailaddress"] forKey:@"email"];
@@ -913,7 +914,7 @@
 
 -(void)getIncidentListPhoto
 {
-    for (ListItem* item in self.incidentListArray) {
+    for (EKNListItem* item in self.incidentListArray) {
         NSString *incidentID = (NSString *)[item getData:@"ID"];
         NSString *inspectionID =(NSString *)[item getData:@"sl_inspectionIDId"];
         NSString *roomID = (NSString *)[item getData:@"sl_roomIDId"];
@@ -1016,7 +1017,7 @@
             [self hideLoading];
             if(listItems != nil && [listItems count] > 0)
             {
-                for (ListItem *item in listItems) {
+                for (EKNListItem *item in listItems) {
                     NSString *photoID = (NSString *)[item getData:@"ID"];
                     [self getInspectorPhotoServerRelativeUrl:inspectionId incidentId:incidentId roomId:roomId photoId:photoID];
                 }
@@ -1099,7 +1100,7 @@
             [self hideLoading];
             if(listItems != nil && [listItems count] > 0)
             {
-                for (ListItem *item in listItems) {
+                for (EKNListItem *item in listItems) {
                     NSString *photoID = (NSString *)[item getData:@"ID"];
                     [self getRepairServerRelativeUrl:inspectionId incidentId:incidentId roomId:roomId photoId:photoID];
                 }
@@ -1178,8 +1179,8 @@
     [self.rightTableView endUpdates];
 }
 
--(ListClient*)getClient{
-    return [[ListClient alloc] initWithUrl:self.siteUrl
+-(EKNListClient*)getClient{
+    return [[EKNListClient alloc] initWithUrl:self.siteUrl
                                      token: self.token];
 }
 
@@ -1450,7 +1451,7 @@
 }
 
 -(void)setRightTableCell:(IncidentListItemCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ListItem *incidentItem = nil;
+    EKNListItem *incidentItem = nil;
     incidentItem = [self.incidentListArray objectAtIndex:indexPath.row];
     
     NSString *incidentID = (NSString *)[incidentItem getData:@"ID"];
@@ -1695,6 +1696,9 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    [self testAddFileUseNewSDKs];
+    return;
+    
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     CGFloat width = chosenImage.size.width;
     CGFloat heigth = chosenImage.size.height;
@@ -1736,5 +1740,53 @@
 {
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
+
+
+
+-(void)testAddFileUseNewSDKs
+{
+    [BaseController getClient:^(MSSharePointClient * client) {
+        
+        __block UIActivityIndicatorView *spinner = [BaseController getSpinner:self.view];
+        
+        MSSharePointItem* item = [[MSSharePointItem alloc] init];
+        item.name = @"FileName";
+        item.type = @"File";
+        
+        NSData* body = [@"test add file use new SDKs" dataUsingEncoding:NSUTF8StringEncoding];
+        
+        [[[client getfiles] add:item :^(MSSharePointItem *item, NSError *e) {
+            __block NSString* _id = item.id;
+            
+            [[[[[client getfiles] getById:_id] asFile] putContent:body :^(int result, NSError *error) {
+                
+                [[[[[client getfiles] getById:_id] asFile] getContent:^(NSData *content, NSError *error) {
+                    
+                    dispatch_async(dispatch_get_main_queue(),
+                                   ^{
+                                       
+                                       NSString* title = @"Error!";
+                                       NSString* contentResultString = [NSString alloc];
+                                       
+                                       if(error == nil){
+                                           title = @"File Created!";
+                                           contentResultString = [[NSString alloc] initWithData:content encoding:NSUTF8StringEncoding];
+                                       }else{
+                                           contentResultString = [[error userInfo] objectForKey:0];
+                                       }
+                                       
+                                       [spinner stopAnimating];
+                                       UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title message:contentResultString delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                                       [alert show];
+                                   });
+                    
+                }] resume];
+                
+                
+            }] resume];
+        }] resume];
+    }];
+}
+
 
 @end

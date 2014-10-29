@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <QuartzCore/QuartzCore.h>
-#import "ListClient.h"
-#import "ListItem.h"
+#import "EKNListClient.h"
+#import "EKNListItem.h"
 #import "EKN+UIViewController.h"
 #import "IncidentListItemCell.h"
 #import "PropertyDetailsImage.h"
@@ -23,7 +23,7 @@
 
 
 //data
-@property(nonatomic) ListClient *client;
+@property(nonatomic) EKNListClient *client;
 @property(nonatomic) NSString* loginName;
 @property(nonatomic) NSString* token;
 @property(nonatomic) NSString* siteUrl;

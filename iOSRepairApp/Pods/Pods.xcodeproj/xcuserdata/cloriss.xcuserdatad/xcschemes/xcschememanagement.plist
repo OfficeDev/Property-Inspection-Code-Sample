@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Office365.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>25727CA9488EE82FAB25E652</key>
+		<key>2E5D90829C9994A7E8C3CAAB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ECDE7AB3DFAE92A82BC5FC90</key>
+		<key>3517F483E9796C7EDC7368AF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>38B5619194675EC0021D85B6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
