@@ -3,21 +3,29 @@
 **Table of Contents**
 
 - [Overview](#overview)
-- [Working with the iOS apps in XCode](#Working with the iOS apps in XCode)
+- [Getting Started](#Installation)
+- [Running the sample end to end](#Demo)
+- [Working with the iOS apps in XCode](#XCode)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
-The Property Inspection code sample demonstrates how to create a line of business system with O365 and mobile technologies.
+The Property Inspection Code Sample demonstrates how to create a line of business system with O365 and mobile technologies.
 
-The [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** is used to create the iOS Apps. 
+The [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** is used to integrate the iOS Apps with several O365 services.
 
 The iOS Repair App is located in the iOSInspectionApp folder.
 The iOS Inspection App is located in the iOSRepairApp folder.
 The Suite Level App is located in the PropertyManagementSLA folder.
 
-## Working with the iOS apps in XCode
-In the iOSInspectionApp and iOSRepairApp folder you'll find runnable sample code for iOS Apps which use Outlook Services (aka Exchange), Files Services (aka Drive), and the Discovery Service.
+## Installation
+To set up and configure the demo first download the Suite Level App and F5 in Visual Studio.  Then navigate the to /Home controller.  The Home controller includes all the setup and configuration instructions you need to runt he demo end to end.
+
+## Demo
+The PowerPoint slide deck in the Documents folder describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.
+
+## XCode
+In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample code for iOS Apps which use Outlook Services (aka Exchange), Files Services (aka Drive), and the Discovery Service.
 
 The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.
 
