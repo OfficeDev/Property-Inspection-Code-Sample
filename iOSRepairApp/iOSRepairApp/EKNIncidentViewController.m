@@ -536,6 +536,8 @@
             self.detailViewIsShowing = NO;
         }];
     }];
+    
+    [self testAddFileUseNewSDKs];
 }
 
 -(void)showLoading
@@ -945,7 +947,6 @@
                                                      {
                                                          NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
                                                          [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID];
-                                                         NSLog(@"ServerRelativeUrl:%@",serverRelativeUrl);
                                                      }
                                                  });
                                                  
@@ -1696,9 +1697,6 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [self testAddFileUseNewSDKs];
-    return;
-    
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     CGFloat width = chosenImage.size.width;
     CGFloat heigth = chosenImage.size.height;
@@ -1750,7 +1748,7 @@
         __block UIActivityIndicatorView *spinner = [BaseController getSpinner:self.view];
         
         MSSharePointItem* item = [[MSSharePointItem alloc] init];
-        item.name = @"FileName";
+        item.name = @"MaxTestAddFile03.txt";
         item.type = @"File";
         
         NSData* body = [@"test add file use new SDKs" dataUsingEncoding:NSUTF8StringEncoding];

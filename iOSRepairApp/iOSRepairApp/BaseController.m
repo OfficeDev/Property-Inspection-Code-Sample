@@ -26,7 +26,7 @@
         [credentialsImpl setCredentials:credentials];
         [resolver setCredentialsFactory:credentialsImpl];
         
-        callback([[MSSharePointClient alloc] initWitUrl:[@"https://techedairlift04.spoppe.com" stringByAppendingString:@"/_api/v1.0/me"] dependencyResolver:resolver]);
+        callback([[MSSharePointClient alloc] initWitUrl:[@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" stringByAppendingString:@"/_api/v1.0"] dependencyResolver:resolver]);
     }];
 }
 
