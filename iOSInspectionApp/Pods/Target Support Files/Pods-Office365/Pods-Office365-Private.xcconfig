@@ -1,0 +1,5 @@
+#include "Pods-Office365.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/Office365" "${PODS_ROOT}/Headers/Build/Office365/office365_exchange_sdk" "${PODS_ROOT}/Headers/Build/Office365/office365_odata_base" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ADALiOS" "${PODS_ROOT}/Headers/Public/Office365" "${PODS_ROOT}/Headers/Public/Office365/office365_exchange_sdk" "${PODS_ROOT}/Headers/Public/Office365/office365_odata_base"
+OTHER_LDFLAGS = -ObjC
+PODS_ROOT = ${SRCROOT}
