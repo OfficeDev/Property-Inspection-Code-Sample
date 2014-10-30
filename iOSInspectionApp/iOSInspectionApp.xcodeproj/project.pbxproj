@@ -203,10 +203,10 @@
 			files = (
 				0EF697611A01C4CA0058A223 /* libPods-Office365.a in Frameworks */,
 				0EF6975F1A01C4C60058A223 /* libPods-ADALiOS.a in Frameworks */,
+				223ADCA1E409AA849EC191B9 /* libPods.a in Frameworks */,
 				0EAA64EE19F7A5C8001936F9 /* CoreGraphics.framework in Frameworks */,
 				0EAA64ED19F7A5C0001936F9 /* UIKit.framework in Frameworks */,
 				0EAA64EC19F7A5B9001936F9 /* Foundation.framework in Frameworks */,
-				223ADCA1E409AA849EC191B9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

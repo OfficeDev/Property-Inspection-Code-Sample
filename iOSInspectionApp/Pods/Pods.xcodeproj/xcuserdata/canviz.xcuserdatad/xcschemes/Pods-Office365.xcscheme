@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6273C76916F7C515BF0BB4D1"
+               BlueprintIdentifier = "FBA673649436EA6CD1271AB3"
                BuildableName = "libPods-Office365.a"
                BlueprintName = "Pods-Office365"
                ReferencedContainer = "container:Pods.xcodeproj">
