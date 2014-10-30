@@ -8,17 +8,8 @@
 
 #import "EKNExchange.h"
 #import "EKNEKNGlobalInfo.h"
-#import <office365_exchange_sdk/MSOMessage.h>
-#import <office365_exchange_sdk/MSORecipient.h>
-#import <office365_exchange_sdk/MSOEmailAddress.h>
-#import <office365_exchange_sdk/MSOItemBody.h>
-#import <office365_exchange_sdk/MSOMessageOperations.h>
-#import <office365_exchange_sdk/MSOMessageFetcher.h>
 #import <office365_odata_base/office365_odata_base.h>
-#import <office365_exchange_sdk/MSOEntityContainerClient.h>
-
-#import <ADALiOS/ADAuthenticationContext.h>
-#import <ADALiOS/ADAuthenticationSettings.h>
+#import <office365_exchange_sdk/office365_exchange_sdk.h>
 
 @implementation EKNExchange
 
@@ -31,48 +22,48 @@
     NSString *body = [sendDataDic objectForKey:@"body"];
     
     
-     MSODefaultDependencyResolver* resolver = [MSODefaultDependencyResolver alloc];
-     MSOOAuthCredentials* credentials = [MSOOAuthCredentials alloc];
-     [credentials addToken:token];
-     
-     MSOCredentialsImpl* credentialsImpl = [MSOCredentialsImpl alloc];
-     
-     [credentialsImpl setCredentials:credentials];
-     [resolver setCredentialsFactory:credentialsImpl];
-     
-     MSOEntityContainerClient *client = [[MSOEntityContainerClient alloc] initWitUrl:@"https://outlook.office365.com/ews/odata" dependencyResolver:resolver];
-     
-     
-     MSOMessage *message = [MSOMessage alloc];
-     
-     message.Subject = subject;
-     message.ToRecipients = [self getRecipients:to];
-     message.CcRecipients = [self getRecipients:cc];
-     message.Body = [[MSOItemBody alloc] init];
-     message.Body.Content = body;
-     
-     NSURLSessionDataTask* task = [[[client getMe] getOperations]sendMail:message :true :callback];
-     [task resume];
+    MSDefaultDependencyResolver* resolver = [MSDefaultDependencyResolver alloc];
+    MSOAuthCredentials* credentials = [MSOAuthCredentials alloc];
+    [credentials addToken:token];
+    
+    MSCredentialsImpl* credentialsImpl = [MSCredentialsImpl alloc];
+    
+    [credentialsImpl setCredentials:credentials];
+    [resolver setCredentialsFactory:credentialsImpl];
+    
+    MSOutlookClient *client = [[MSOutlookClient alloc] initWitUrl:@"https://outlook.office365.com/ews/odata" dependencyResolver:resolver];
+    
+    
+    MSOutlookMessage *message = [MSOutlookMessage alloc];
+    
+    message.Subject = subject;
+    message.ToRecipients = [self getRecipients:to];
+    message.CcRecipients = [self getRecipients:cc];
+    message.Body = [[MSOutlookItemBody alloc] init];
+    message.Body.Content = body;
+    
+    NSURLSessionDataTask* task = [[[client getMe] getOperations]sendMail:message :true :callback];
+    [task resume];
     
     /*
      UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Message sent!" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
      
      [alert show];
      */
-     
-     return;
+    
+    return;
 }
 
--(NSMutableArray<MSORecipient>*)getRecipients : (NSString*)text{
+-(NSMutableArray<MSOutlookRecipient>*)getRecipients : (NSString*)text{
     
-    NSMutableArray<MSORecipient>* result = (NSMutableArray<MSORecipient>*)[NSMutableArray array];
+    NSMutableArray<MSOutlookRecipient>* result = (NSMutableArray<MSOutlookRecipient>*)[NSMutableArray array];
     
     NSArray* recipients = [text componentsSeparatedByString:@","];
     
     for (NSString* r in recipients) {
         
-        MSORecipient* recipient = [[MSORecipient alloc] init];
-        recipient.EmailAddress = [MSOEmailAddress alloc];
+        MSOutlookRecipient* recipient = [[MSOutlookRecipient alloc] init];
+        recipient.EmailAddress = [MSOutlookEmailAddress alloc];
         recipient.EmailAddress.Address = [r stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         
         [result addObject: recipient];
