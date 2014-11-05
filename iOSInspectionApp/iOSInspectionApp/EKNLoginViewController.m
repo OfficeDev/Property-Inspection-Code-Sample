@@ -229,6 +229,9 @@
                           else
                           {
                               NSString *token = result.accessToken;
+                              NSString *userId = result.tokenCacheStoreItem.userInformation.userId;
+                              NSArray *userIdArray = [userId componentsSeparatedByString:@"@"];
+                              NSString *loginName = [userIdArray objectAtIndex:0];
                               //will retry to get email token
                               [context acquireTokenWithResource:@"https://outlook.office365.com"
                                                            clientId:self.clientId
@@ -247,7 +250,7 @@
                                                         }
                                                         else{
                                                             EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
-                                                            [propertydetailsctrl setDataExternal:self.propertyId loginName:@"Rob Barker" token:token emailtoken:result.accessToken];
+                                                            [propertydetailsctrl setDataExternal:self.propertyId loginName:loginName token:token emailtoken:result.accessToken];
                                                             
                                                             [self.navigationController pushViewController:propertydetailsctrl animated:YES];
                                                         }

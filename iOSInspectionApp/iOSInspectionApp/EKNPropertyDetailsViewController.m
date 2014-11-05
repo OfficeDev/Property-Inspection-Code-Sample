@@ -869,8 +869,7 @@
                     [inspectionItem setObject:inspectionId forKey:@"ID"];
                     [inspectionItem setObject:[insdic objectForKey:@"Title"] forKey:@"sl_accountname"];
                     
-                    
-                    if ([[insdic objectForKey:@"Title"] isEqualToString:self.loginName ])
+                    if ([[insdic objectForKey:@"sl_accountname"] isEqualToString:self.loginName ])
                     {
                         [inspectionItem setObject:@"YES" forKey:@"bowner"];
                     }
