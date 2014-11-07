@@ -35,7 +35,7 @@ The [PowerPoint slide deck] (https://github.com/OfficeDev/Property-Inspection-Co
 When this demo was built the O365 SDKs for ASP.Net and iOS were in the alpha/beta stages.  Consequently, some of the code in the demo uses REST based approaches to perform operations with O365 services like SharePoint and Exchange.  The following parts of the sample use REST based approaches to access O365 Services.
 
 * Working with Files in the iOS Apps and Suite Level Applications.  See [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** to see how this is done.
-* Sending Email with attachments in the Suite Level Application.  See the Office 365 SDK for ASP.NET to see how this is done.
+* Sending Email with attachments in the Suite Level Application.  See the Office 365 SDK for ASP.NET to see how this is done.  The sample sends email from the Suite Level App, but no attachments are included.
 
 ## MailAFO
 The Mail App for Office included in the demo renders properly in PC web browsers but it does not render in iOS devices in Safari, the OWA app, or the native iOS email client.  At this time they are not supported in Safari, the OWA app, or the native iOS email client.
