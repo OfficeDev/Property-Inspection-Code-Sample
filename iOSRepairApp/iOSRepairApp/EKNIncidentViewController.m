@@ -536,8 +536,6 @@
             self.detailViewIsShowing = NO;
         }];
     }];
-    
-    [self testAddFileUseNewSDKs];
 }
 
 -(void)showLoading
@@ -1738,53 +1736,5 @@
 {
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
-
-
-
--(void)testAddFileUseNewSDKs
-{
-    [BaseController getClient:^(MSSharePointClient * client) {
-        
-        __block UIActivityIndicatorView *spinner = [BaseController getSpinner:self.view];
-        
-        MSSharePointItem* item = [[MSSharePointItem alloc] init];
-        item.name = @"MaxTestAddFile03.txt";
-        item.type = @"File";
-        
-        NSData* body = [@"test add file use new SDKs" dataUsingEncoding:NSUTF8StringEncoding];
-        
-        [[[client getfiles] add:item :^(MSSharePointItem *item, NSError *e) {
-            __block NSString* _id = item.id;
-            
-            [[[[[client getfiles] getById:_id] asFile] putContent:body :^(NSInteger result, NSError *error) {
-                
-                [[[[[client getfiles] getById:_id] asFile] getContent:^(NSData *content, NSError *error) {
-                    
-                    dispatch_async(dispatch_get_main_queue(),
-                                   ^{
-                                       
-                                       NSString* title = @"Error!";
-                                       NSString* contentResultString = [NSString alloc];
-                                       
-                                       if(error == nil){
-                                           title = @"File Created!";
-                                           contentResultString = [[NSString alloc] initWithData:content encoding:NSUTF8StringEncoding];
-                                       }else{
-                                           contentResultString = [[error userInfo] objectForKey:0];
-                                       }
-                                       
-                                       [spinner stopAnimating];
-                                       UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title message:contentResultString delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                                       [alert show];
-                                   });
-                    
-                }] resume];
-                
-                
-            }] resume];
-        }] resume];
-    }];
-}
-
 
 @end
