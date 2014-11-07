@@ -5,6 +5,9 @@
 - [Overview](#overview)
 - [Getting Started](#installation)
 - [Running the sample end to end](#running)
+- [API Notes](#apis)
+- [Mail App for Office Notes](#mailafo)
+- [Links that open native iOS Apps](#deeplinks)
 - [Working with the iOS apps in XCode](#xcode)
 - [Contributing](#contributing)
 - [License](#license)
@@ -28,6 +31,17 @@ To set up and configure the demo first download the Suite Level App and F5 in Vi
 ## Running
 The [PowerPoint slide deck] (https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo%20Prep%20And%20Walkthrough.pptx) describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.  This is an excellent place to see what this demo really does and how the scenario in it unfolds.
 
+## APIs
+When this demo was built the O365 SDKs for ASP.Net and iOS were in the alpha/beta stages.  Consequently, some of the code in the demo uses REST based approaches to perform operations with O365 services like SharePoint and Exchange.  The following parts of the sample use REST based approaches to access O365 Services.
+
+* Working with Files in the iOS Apps and Suite Level Applications.  See [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** to see how this is done.
+* Sending Email with attachments in the Suite Level Application.  See the Office 365 SDK for ASP.NET to see how this is done.
+
+## MailAFO
+The Mail App for Office included in the demo renders properly in PC web browsers but it does not render in iOS devices in Safari, the OWA app, or the native iOS email client.  At this time they are not supported in Safari, the OWA app, or the native iOS email client.
+
+## Deeplinks
+The links in the workflow emails which open the native iOS apps on an iOS device work when using the native iOS email client.  At this time they are not supported in Safari or the OWA app.
 
 ## XCode
 In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample code for iOS Apps which use Outlook Services (aka Exchange), Files Services (aka Drive), and the Discovery Service.
