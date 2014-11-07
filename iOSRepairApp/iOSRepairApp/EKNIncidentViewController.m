@@ -848,19 +848,19 @@
 -(void)getPropertyPhotoServerRelativeUrl
 {
     [self.client getListItemFileByFilter:@"Property Photos"
-                                                                          FileId:(NSString *)[self.propertyDetailDic objectForKey:@"photoID"]
-                                                                          filter:@"$select=ServerRelativeUrl"
-                                                                        callback:^(NSMutableArray *listItems, NSError *error)
-                                             {
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     if(listItems != nil && [listItems count] > 0)
-                                                     {
-                                                         [self.propertyDetailDic setValue:[listItems[0] getData:@"ServerRelativeUrl"] forKey:@"photoServerRelativeUrl"];
-                                                         [self getPhoto];
-                                                     }
-                                                 });
-                                                 
-                                             }];
+                                  FileId:(NSString *)[self.propertyDetailDic objectForKey:@"photoID"]
+                                  filter:@"$select=ServerRelativeUrl"
+                                callback:^(NSMutableArray *listItems, NSError *error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if(listItems != nil && [listItems count] > 0)
+             {
+                 [self.propertyDetailDic setValue:[listItems[0] getData:@"ServerRelativeUrl"] forKey:@"photoServerRelativeUrl"];
+                 [self getPhoto];
+             }
+         });
+         
+     }];
 }
 
 -(void)getPhoto
@@ -936,19 +936,19 @@
 -(void)getRoomInspectionPhotoServerRelativeUrl:(NSString *)photoID incidentID:(NSString *)incidentID
 {
     [self.client getListItemFileByFilter:@"Room Inspection Photos"
-                                                                          FileId:photoID
-                                                                          filter:@"$select=ServerRelativeUrl"
-                                                                        callback:^(NSMutableArray *listItems, NSError *error)
-                                             {
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     if(listItems != nil && [listItems count] > 0)
-                                                     {
-                                                         NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
-                                                         [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID];
-                                                     }
-                                                 });
-                                                 
-                                             }];
+                                  FileId:photoID
+                                  filter:@"$select=ServerRelativeUrl"
+                                callback:^(NSMutableArray *listItems, NSError *error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if(listItems != nil && [listItems count] > 0)
+             {
+                 NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
+                 [self getRoomInspectionPhoto:serverRelativeUrl incidentID:incidentID];
+             }
+         });
+         
+     }];
 }
 
 -(void)getRoomInspectionPhoto:(NSString *)serverRelativeUrl incidentID:(NSString *)incidentID
@@ -1028,19 +1028,19 @@
 -(void)getInspectorPhotoServerRelativeUrl:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId
 {
     [self.client getListItemFileByFilter:@"Room Inspection Photos"
-                                                                          FileId:photoId
-                                                                          filter:@"$select=ServerRelativeUrl"
-                                                                        callback:^(NSMutableArray *listItems, NSError *error)
-                                             {
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     if(listItems != nil && [listItems count] > 0)
-                                                     {
-                                                         NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
-                                                         [self getInspectorPhotoByServerRelativeUrl:serverRelativeUrl inspectionId:inspectionId incidentId:incidentId roomId:roomId photoId:photoId tryTimes:0];
-                                                     }
-                                                 });
-                                                 
-                                             }];
+                                  FileId:photoId
+                                  filter:@"$select=ServerRelativeUrl"
+                                callback:^(NSMutableArray *listItems, NSError *error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if(listItems != nil && [listItems count] > 0)
+             {
+                 NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
+                 [self getInspectorPhotoByServerRelativeUrl:serverRelativeUrl inspectionId:inspectionId incidentId:incidentId roomId:roomId photoId:photoId tryTimes:0];
+             }
+         });
+         
+     }];
 }
 
 -(void)getInspectorPhotoByServerRelativeUrl:(NSString *)serverRelativeUrl inspectionId:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId tryTimes:(NSInteger)tryTimes
@@ -1111,19 +1111,19 @@
 -(void)getRepairServerRelativeUrl:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId
 {
     [self.client getListItemFileByFilter:@"Repair Photos"
-                                                                          FileId:photoId
-                                                                          filter:@"$select=ServerRelativeUrl"
-                                                                        callback:^(NSMutableArray *listItems, NSError *error)
-                                             {
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     if(listItems != nil && [listItems count] > 0)
-                                                     {
-                                                         NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
-                                                         [self getRepairPhotoByServerRelativeUrl:serverRelativeUrl inspectionId:inspectionId incidentId:incidentId roomId:roomId photoId:photoId tryTimes:0];
-                                                     }
-                                                 });
-                                                 
-                                             }];
+                                  FileId:photoId
+                                  filter:@"$select=ServerRelativeUrl"
+                                callback:^(NSMutableArray *listItems, NSError *error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if(listItems != nil && [listItems count] > 0)
+             {
+                 NSString *serverRelativeUrl = (NSString *)[listItems[0] getData:@"ServerRelativeUrl"];
+                 [self getRepairPhotoByServerRelativeUrl:serverRelativeUrl inspectionId:inspectionId incidentId:incidentId roomId:roomId photoId:photoId tryTimes:0];
+             }
+         });
+         
+     }];
 }
 
 -(void)getRepairPhotoByServerRelativeUrl:(NSString *)serverRelativeUrl inspectionId:(NSString *)inspectionId incidentId:(NSString *)incidentId roomId:(NSString *)roomId photoId:(NSString *)photoId tryTimes:(NSInteger)tryTimes
@@ -1180,7 +1180,7 @@
 
 -(EKNListClient*)getClient{
     return [[EKNListClient alloc] initWithUrl:self.siteUrl
-                                     token: self.token];
+                                        token: self.token];
 }
 
 - (void)didReceiveMemoryWarning
