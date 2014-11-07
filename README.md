@@ -14,7 +14,7 @@ The Property Inspection Code Sample demonstrates how to create a line of busines
 
 You can see the demo in action in the [Office 365 Developer Kick Off session] (http://channel9.msdn.com/events/TechEd/Europe/2014/DEV-B207) from TechEd Europe 2014.
 
-![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo_Video_Thumb.jpg)
+![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo_Video_Thumb.png)
 
 The [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** is used to integrate the iOS Apps with several O365 services.
 
