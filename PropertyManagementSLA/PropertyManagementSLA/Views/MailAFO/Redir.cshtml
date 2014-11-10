@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MailAFOLayout.cshtml";
+    ViewBag.Title = "Redir";
+}
+
+<h2>Redir</h2>
+<script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+<script type="text/javascript">
+    Office.initialize = function () {
+        $(document).ready(function () {
+            getSubject(Office.context.mailbox.item.getRegExMatches().Repair);
+        });
+    }
+    function getSubject(incident) {
+        var id = incident[0].split(':');
+        var incidentID = id[1].trim();
+        redir(incidentID);
+    }
+    function redir(id) {
+        document.location.replace("/MailAFO/Index/" + id)
+    }
+</script>

@@ -1,0 +1,8 @@
+﻿        table {
+            background:#eee;
+            width:100%;
+        }
+        table td
+        {border: 1px solid #111; 
+            padding:5px 15px;}
+        img{width:20%;}
