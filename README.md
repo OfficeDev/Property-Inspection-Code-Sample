@@ -24,9 +24,12 @@ The [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK
 The iOS Repair App is located in the iOSInspectionApp folder.
 The iOS Inspection App is located in the iOSRepairApp folder.
 The Suite Level App is located in the PropertyManagementSLA folder.
+The Mail App for Office is located in the MailAFO folder.
 
 ## Installation
-To set up and configure the demo first download the Suite Level App and F5 in Visual Studio.  Then navigate the to /Home controller.  The Home controller includes all the setup and configuration instructions you need to runt he demo end to end.
+To set up and configure the demo first download the Suite Level App and run it with F5 in Visual Studio.  Then navigate the to /Home controller.  The Home controller includes all the setup and configuration instructions you need to run the demo end to end.  You cannot run the sample code without following the steps in the various pages in the home controller.  The following image shows what the first page of setup documentation in the home controller looks like.
+
+![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/home-controller.jpg)
 
 ## Running
 The [PowerPoint slide deck] (https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo%20Prep%20And%20Walkthrough.pptx) describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.  This is an excellent place to see what this demo really does and how the scenario in it unfolds.
