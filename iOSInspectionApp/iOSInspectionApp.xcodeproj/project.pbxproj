@@ -460,11 +460,6 @@
 				CLASSPREFIX = EKN;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = canviz;
-				TargetAttributes = {
-					0EC4F5B519CFF2C600BEF583 = {
-						DevelopmentTeam = 259SG943ZS;
-					};
-				};
 			};
 			buildConfigurationList = 0EC4F5B119CFF2C600BEF583 /* Build configuration list for PBXProject "iOSInspectionApp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -701,8 +696,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSInspectionApp/iOSInspectionApp-Prefix.pch";
@@ -732,8 +727,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSInspectionApp/iOSInspectionApp-Prefix.pch";
