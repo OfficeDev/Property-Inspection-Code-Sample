@@ -49,10 +49,10 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="MailAFOManifest\SharePointProjectItem.spdata">
+    <None Include="MailAppManifest\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{a0a6db65-9922-47a7-acbb-7fec8cb95e2e}</SharePointProjectItemId>
     </None>
-    <Content Include="MailAFOManifest\MailAFO.xml">
+    <Content Include="MailAppManifest\MailApp.xml">
       <OpcRelationship>manifest-oemanifest</OpcRelationship>
     </Content>
   </ItemGroup>
