@@ -32,14 +32,23 @@ To set up and configure the demo first download the Property Manager My App and 
 To register the Property Manager My App with your Azure Active Directory right click the PropertyManagerMyApp project and select Add -> Connected Service.  Authenticate with the credentials associated with your tenancy and use the wizard to configure the appropriate permissions.  The following images demonstrate how your app settings and api permissions should be configured for the Property Manager My App to work.
 
 O365 API Calendar Permissions
+
 ![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/O365 API Calendar Permissions.jpg)
+
 O365 API Mail Permissions
+
 ![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/O365 API Mail Permissions.jpg)
+
 O365 API Sites Permissions
+
 ![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/O365 API Sites Permissions.jpg)
+
 O365 API AD Permissions
+
 ![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/O365 API AD Permissions.jpg)
+
 O365 App Settings
+
 ![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/O365 App Settings.jpg)
 
 Press F5 to run the web site and navigate the to http://localhost:44312/Home/Index controller.  The Home controller includes all the setup and configuration instructions you need to run the demo end to end.  You cannot run the sample code without following the steps in the various pages in the home controller.  The following image shows what the first page of setup documentation in the home controller looks like.
