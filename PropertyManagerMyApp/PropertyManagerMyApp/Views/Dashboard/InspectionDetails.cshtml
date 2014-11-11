@@ -1,0 +1,418 @@
+﻿@model SuiteLevelWebApp.Models.DashboardInspectionDetailsViewModel
+@{
+    Layout = "~/Views/Shared/_DemoLayout.cshtml";
+    ViewBag.Title = "Inspection Details";
+}
+<script>
+    $(function () {
+        $('.popup-window-fork').click(function () {
+            $('.popup-window, .popup-window .content-area > div').hide();
+        });
+        $('#btn_scheduleRepair').click(function (event) {
+            $('.error-message').hide();
+            if ($('#repairPeopleSelectedValue').val() == 0) {
+                event.preventDefault();
+                $('.error-message').eq(0).show();
+            }
+            if ($('#TimeSlots').val() == 0) {
+                event.preventDefault();
+                $('.error-message').eq(1).show();
+            }
+        });
+        (function initRoomControl() {
+            var count = $('.img-container img').length;
+            if (count <= 3) {
+                $('.img-scroll-control .left-arrow, .img-scroll-control .right-arrow').css('visibility', 'hidden');
+                return;
+            }
+            else {
+                $('.img-list').width(count * 153 + (count - 1) * 20);
+                $('.img-scroll-control .left-arrow').click(function () {
+                    var left = parseInt($('.img-list').css('left')),
+                        count = $('.img-container img').length;
+                    if (left < 0) {
+                        $('.img-list').animate({
+                            left: left + 173
+                        }, 500);
+                    }
+                });
+                $('.img-scroll-control .right-arrow').click(function () {
+                    var left = parseInt($('.img-list').css('left')),
+                        count = $('.img-container img').length;
+                    if (left > (count - 3) * -173) {
+                        $('.img-list').animate({
+                            left: left - 173
+                        }, 500);
+                    }
+                });
+            }
+        })();
+
+        (function initTimeSlots() {
+            var sel = $('#TimeSlots');
+            if (sel.length > 0) {
+                var now = new Date(), tomorrow = (now.setDate(now.getDate() + 1), new Date(now.toDateString()));
+                $.getJSON("/O365Calendar/GetAvailableTimeSlots?localTimeUtc=" + tomorrow.toJSON(), function (data) {
+                    if (data.length > 0) {
+                        sel.html('').append("<option value=0>Available Time Slots</option>");
+                        for (var i = 0; i < data.length; i++) {
+                            sel.append("<option value=" + data[i].Start + ">" + data[i].Value + "</option>");
+                        }
+                        sel.change(function () {
+                            if ($(this).val() > 0) {
+                                tomorrow.setHours($(this).val());
+                                $('#timeSlotsSelectedValue').val(tomorrow.toJSON());
+                            }
+                        })
+                    }
+                    else {
+                        sel.html('').append("<option value=0>No Available Time Slots</option>");
+                    }
+                })
+            }
+        })();
+    });
+    function popupwindow(type) {
+        var winHeight = $(window).height(),
+            bodyHeight = $('body').height();
+
+        $('.popup-window').height(bodyHeight > winHeight ? bodyHeight : winHeight);
+        $('.popup-window .content-area > div').hide();
+        $('.popup-window').find(type).show();
+        $('.popup-window').show();
+    }
+</script>
+
+<div class="contoso-container contoso-inspection-details">
+    <ul>
+        <li class="left-panel">
+            <header>
+                <h1>
+                    Inspection Details
+                </h1>
+            </header>
+            <div class="details">
+                <h3>
+                    Property Details
+                </h3>
+                <div class="details-block">
+                    <div class="content-row">
+                        <span>Name</span>
+                        <span>@Model.inspection.sl_propertyID.Title</span>
+                    </div>
+                    <div class="content-row">
+                        <span>Owner</span>
+                        <span>@Model.inspection.sl_propertyID.sl_owner</span>
+                    </div>
+                </div>
+                <div class="details-img">
+                    <a href="/Dashboard/Property/@Model.inspection.sl_propertyID.Id">
+                        <img src="@Model.inspection.sl_propertyID.propertyImgUrl" />
+                    </a>
+                    <span>
+                        @Model.inspection.sl_propertyID.sl_address1
+                        @Model.inspection.sl_propertyID.sl_address2
+                    </span>
+                </div>
+                <h3>
+                    Inspector Details
+                </h3>
+                <div class="details-block">
+                    <div class="content-row">
+                        <span>Name</span>
+                        <span>@Model.inspection.sl_inspector.Title</span>
+                    </div>
+                    <div class="content-row">
+                        <span>Email</span>
+                        <span>@Model.inspection.sl_inspector.sl_emailaddress</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="gradient-split"></li>
+        <li class="right-panel">
+            @switch (Model.viewName)
+            {
+                case "schedule a repair":
+                    <!-- Schedule a Repair begin-->
+            <div>
+                <header>
+                    Schedule a Repair
+                </header>
+                @using (Html.BeginForm("InspectionDetails", "Dashboard", FormMethod.Post))
+                        {
+                        @Html.HiddenFor(m => m.incidentId)
+                        <div class="form">
+                            <div class="dispatcher-comments">
+                                <label>
+                                    Dispatcher<br />Comments
+                                </label>
+                                <div>
+                                    @Html.TextAreaFor(m => m.dispatcherComments)
+                                </div>
+                            </div>
+                            <div class="section">
+                                <h4>Inspection</h4>
+                                <div class="section-main">
+                                    <div class="rooms">
+                                        <div class="img-scroll-control clear">
+                                            <a class="left-arrow"></a>
+                                            <div class="img-container">
+                                                <div class="img-list">
+                                                    <ul class="clear">
+                                                        @foreach (var item in Model.roomInspectionPhotos)
+                                                            {
+                                                            <li><img src="@item.sl_roomID.imgUrl" /><div><span>@item.sl_roomID.Title</span></div></li>
+                                                            }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <a class="right-arrow"></a>
+                                        </div>
+                                    </div>
+                                    <div class="photos-lists">
+                                        <ul class="clear">
+                                            @foreach (var item in Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId))
+                                                {
+                                                <li><img src="@item.sl_roomID.imgUrl" /></li>
+                                                }
+                                        </ul>
+                                    </div>
+                                    <div class="bottom-bar">
+                                        <a href="javascript:popupwindow('.inspection-comments-window')" class="btn-icon-1"></a>
+                                        <a href="javascript:popupwindow('.incident-window')" class="btn-icon-2"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-input">
+                                <label>
+                                    Repair person:
+                                </label>
+                                <div>
+                                    @Html.DropDownListFor(m => m.repairPeopleSelectedValue, ViewBag.RepairPeopleList as SelectList, "Select a repair person")
+                                    <span class="error-message">*</span>
+                                </div>
+                            </div>
+                            <div class="form-input">
+                                <label>
+                                    Date:
+                                </label>
+                                <div>
+                                    @System.DateTime.Now.AddDays(1).ToShortDateString()
+                                </div>
+                            </div>
+                            <div class="form-input">
+                                <label>
+                                    Time:
+                                </label>
+                                <div>
+                                    @Html.HiddenFor(m => m.timeSlotsSelectedValue)
+                                    <select id="TimeSlots">
+                                        <option>Loading...</option>
+                                    </select>
+                                    <span class="error-message">*</span>
+                                </div>
+                            </div>
+                            <div class="form-bottom-button">
+                                <button id="btn_scheduleRepair">Schedule Repair</button>
+                            </div>
+                        </div>
+                        }
+            </div>
+                    <!-- Schedule a Repair end-->
+                        break;
+                case "repair in progress":
+                    <!-- Repair in Progress begin-->
+            <div>
+                <header>
+                    Repair in Progress
+                </header>
+                <div class="form">
+                    <div class="dispatcher-comments">
+                        <label>
+                            Dispatcher<br />Comments
+                        </label>
+                        <div>
+                            @Html.TextAreaFor(m => m.incident.sl_dispatcherComments, new { @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h4>Inspection</h4>
+                        <div class="section-main">
+                            <div class="rooms">
+                                <div class="img-scroll-control clear">
+                                    <a class="left-arrow"></a>
+                                    <div class="img-container">
+                                        <div class="img-list">
+                                            <ul class="clear">
+                                                @foreach (var item in Model.roomInspectionPhotos)
+                                                    {
+                                                    <li><img src="@item.sl_roomID.imgUrl" /><div><span>@item.sl_roomID.Title</span></div></li>
+                                                    }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <a class="right-arrow"></a>
+                                </div>
+                            </div>
+                            <div class="photos-lists">
+                                <ul class="clear">
+                                    @foreach (var item in Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId))
+                                        {
+                                        <li><img src="@item.sl_roomID.imgUrl" /></li>
+                                        }
+                                </ul>
+                            </div>
+                            <div class="bottom-bar">
+                                <a href="javascript:popupwindow('.inspection-comments-window')" class="btn-icon-1"></a>
+                                <a href="javascript:popupwindow('.incident-window')" class="btn-icon-2"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <!-- Repair in Progress end-->
+                                        break;
+                case "repair complete":
+                    <!-- Repair Complete begin-->
+            <div>
+                <header>
+                    Repair Complete
+                </header>
+                @using (Html.BeginForm("AuditRepair", "Dashboard", FormMethod.Post))
+                    {
+                    @Html.HiddenFor(m => m.incidentId)
+                    <div class="form">
+                        <div class="dispatcher-comments">
+                            <label>
+                                Dispatcher<br />Comments
+                            </label>
+                            <div>
+                                @Html.TextAreaFor(m => m.incident.sl_dispatcherComments, new { @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="section">
+                            <h4>Inspection</h4>
+                            <div class="section-main">
+                                <div class="rooms">
+                                    <div class="img-scroll-control clear">
+                                        <a class="left-arrow"></a>
+                                        <div class="img-container">
+                                            <div class="img-list">
+                                                <ul class="clear">
+                                                    @foreach (var item in Model.roomInspectionPhotos)
+                                                        {
+                                                    <li><img src="@item.sl_roomID.imgUrl" /><div><span>@item.sl_roomID.Title</span></div></li>
+                                                        }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <a class="right-arrow"></a>
+                                    </div>
+                                </div>
+                                <div class="photos-lists">
+                                    <ul class="clear">
+                                        @foreach (var item in Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId == Model.incidentId))
+                                            {
+                                        <li><img src="@item.sl_roomID.imgUrl" /></li>
+                                            }
+                                    </ul>
+                                </div>
+                                <div class="bottom-bar">
+                                    <a href="javascript:popupwindow('.inspection-comments-window')" class="btn-icon-1"></a>
+                                    <a href="javascript:popupwindow('.incident-window')" class="btn-icon-2"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section">
+                            <h4>Repair</h4>
+                            <div class="section-main">
+                                <div class="photos-lists">
+                                    <ul class="clear">
+                                        @foreach (var item in Model.repairPhotos)
+                                            {
+                                        <li><img src="@item.imgUrl" /></li>
+                                            }
+                                    </ul>
+                                </div>
+                                <div class="bottom-bar">
+                                    <a href="javascript:popupwindow('.repair-comments-window')" class="btn-icon-1"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-bottom-button">
+                            <button class="white" name="button" value="Reject">Reject Repair</button>
+                            <button name="button" value="Approve">Approve Repair</button>
+                        </div>
+                    </div>
+                    }
+            </div>
+                    <!-- Repair Complete end-->
+                    break;
+            }
+        </li>
+    </ul>
+</div>
+<div class="popup-window" style="display:none">
+    <div class="content-area">
+        <span class="popup-window-fork">
+        </span>
+
+        <!--Incident begin -->
+        <div class="incident-window">
+            <h3>Incident</h3>
+            <div class="content-row clear">
+                <label>Incident Comments</label>
+                <div>
+                    <div>
+                        @Html.TextAreaFor(m => m.incident.sl_inspectorIncidentComments, new { @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="content-row clear">
+                <label>Incident Type</label>
+                <div>
+                    @Html.TextBoxFor(m => m.incident.sl_type, new { @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="content-row img">
+                @if (Model.roomInspectionPhotos != null && Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId).Count() > 0)
+                {
+                    <img src="@Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId).FirstOrDefault().sl_roomID.imgUrl" />
+                }
+            </div>
+        </div>
+        <!--Incident end -->
+        <!--Inspection Comments begin-->
+        <div class="inspection-comments-window">
+            <h3>Inspection Comment</h3>
+            <div class="content-row clear">
+                @Html.TextAreaFor(m => m.inspectionComment.Title, new { @readonly = "readonly" })
+            </div>
+            <div class="content-row img">
+                @if (Model.roomInspectionPhotos != null && Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId == null).Count() > 0)
+                {
+                    <img src="@Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId == null).FirstOrDefault().sl_roomID.imgUrl" />
+                }
+            </div>
+        </div>
+        <!--Inspector Comments end -->
+        @if (Model.viewName == "repair complete")
+        {
+        <!--Repair Comments begin-->
+        <div class="repair-comments-window">
+            <h3>Repair Comment</h3>
+            <div class="content-row clear">
+                @Html.TextAreaFor(m => m.incident.sl_repairComments, new { @readonly = "readonly" })
+            </div>
+            <div class="content-row img">
+                @if (Model.repairPhotos != null && Model.repairPhotos.Count > 0)
+                {
+                    <img src="@Model.repairPhotos.FirstOrDefault().imgUrl" />
+                }
+            </div>
+        </div>
+        <!--Repair Comments end -->
+        }
+    </div>
+</div>

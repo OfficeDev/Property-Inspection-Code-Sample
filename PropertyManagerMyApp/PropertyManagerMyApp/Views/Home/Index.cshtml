@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Property Manager My App Configuration Instructions";
+}
+
+<div class="jumbotron">
+    <h1>Property Manager My App</h1>
+    <p class="lead">This page includes helpful information about the Property Manager My App and how to install it.</p>
+    <p><a href="https://github.com/OfficeDev/Property-Inspection-Code-Sample" class="btn btn-primary btn-lg">Download the source code from GitHub &raquo;</a></p>
+</div>
+<div class="row">
+    <h2>Overview</h2>
+    <p>
+        The Property Manager My App demonstrates many different patterns used in real world scenarios.  At a high level, the Property Manager My App does the following things.
+        <ul>
+            <li>Provisions the Site Collection used by the Property Manager My App</li>
+            <li>Provisions information architecture and supporting components into the new Site Collection</li>
+            <li>Provisions content into the new Site Collection</li>
+            <li>Serves as a line of business application</li>
+        </ul>
+        The sections below provide more information about these patterns and how to get up and running.
+    </p>
+</div>
+<div class="row">
+    <h2>Getting Started</h2>
+    Some configuration is required to enable the Property Manager My App to work with your O365 environment.  Read on to learn about the configuration process.
+    <p></p>
+    <h3>Azure Active Directory</h3>
+    <h4>User Accounts</h4>
+    <p>The Property Manager My App and demo rely on Azure Active Directory Accounts to work.  First, create the following users in Azure Active Directory.  Note: It may take up to 24 hours for the O365 infrastructure to create an Exchange Mailbox and Calendar.</p>
+    <ul>
+        <li>Inspector: Rob Barker - alias: robb</li>
+        <li>Dispatcher: Katie Jordan - alias: katiej</li>
+        <li>Repair Person: Ron Gabel - alias: rong</li>
+        <li>Property Owner: Margaret Au - alias: marga</li>
+        <li>Inspector: Alisa Lawyer - alias: alisal</li>
+        <li>Repair Person: Chris Gray - alias: chrisg</li>
+        <li>Property Owner: Steven Wright - alias: stevenw</li>
+    </ul>
+    <h4>O365 APIs</h4>
+    <p>The Property Manager My App uses O365 APIs to interact with your O365 / Azure tenancy.  To register the Property Manager My App with your Azure Active Directory right click the PropertyManagerMyApp project and select Add -> Connected Service.  Authenticate with the credentials associated with your tenancy and use the wizard to configure the appropriate permissions.  The following images demonstrate how your app settings and api permissions should be configured for the Property Manager My App to work.</p>
+    <h4>O365 API Calendar Permissions</h4>
+    <img src="~/Content/Images/O365 API Calendar Permissions.jpg" />
+    <h4>O365 API Mail Permissions</h4>
+    <img src="~/Content/Images/O365 API Mail Permissions.jpg" />
+    <h4>O365 API Sites Permissions</h4>
+    <img src="~/Content/Images/O365 API Sites Permissions.jpg" />
+    <h4>O365 API AD Permissions</h4>
+    <img src="~/Content/Images/O365 API AD Permissions.jpg" />
+    <h4>O365 App Settings</h4>
+    <img src="~/Content/Images/O365 App Settings.jpg" />
+    <h4>web.config</h4>
+    <p>The Property Manager My App stores configuration settings in the web.config file.  These settings must be configured for your environment in order for the Property Manager My App to work.  The Add Connected Service wizard creates some of these settings in the web.config file when it registers you app with Azure Active Directory.  These settings include:</p>
+    <ul>
+        <li>ida:ClientID</li>
+        <li>ida:AppKey</li>
+        <li>ida:PostLogoutRedirectUri</li>
+        <li>ida:GraphResourceId</li>
+        <li>ida:GraphUserUrl</li>
+        <li>ida:AuthorizationUri</li>        
+    </ul>
+    <p>In addition to the settings above, other settings exist which allow you to perform additional configuration.  These settings include:</p>
+    <ul>
+        <li>ServiceResourceId - Url for the O365 tenant admin site</li>
+        <li>DashboardServiceResourceId - Url for the root Site Collection in the O365 Tenancy</li>
+        <li>DashboardServiceEndpointUri - Api Endpoint for the Site Collection used by the Property Manager My App</li>
+        <li>DemoSiteServiceResourceId - Url for the root Site Collection in the O365 Tenancy</li>
+        <li>DemoSiteCollectionUrl - Url used to create the Site Collection used by Property Manager My App</li>
+        <li>DemoSiteCollectionOwner - Email address for Site Collection owner (admin&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)</li>
+        <li>DispatcherName - Display Name for Dispatcher (Katie Jordan)</li>
+        <li>DispatcherEmail - Email address for Dispatcher (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)</li>
+    </ul>
+    <p>Configure these settings in the web.config file to match your O365 / Azure Tenancy.</p>
+    <h3>Trusted Sites</h3>
+    <p>Add <b>http://localhost</b> to the Trusted Sites list in Internet Explorer.</p>
+    <h3>Site Collection Provisioning</h3>
+    <p>
+        The O365SiteProvisingController is used to create the Site Collection used to store data and facilitate workflow for the Property Manager My App.
+        First, this controller retrieves an access token for the tenancy admin Site Collection.
+        Then it uses the access token to authenticate the call to determine if the Site Collection exists.
+        If the Site Collection exists this controller then redirects to the DashboardController.
+        If the Site Collection does not exist then the controller creates the Site Collection.
+        After the Site Collection is created the controller signs out from O365 and retrieves an access token for the new Site Collection.
+        Then it uses the access token to authenticate the calls to create the information architecture and supporting components in the new Site Collection.
+        Finally, the controller creates content in the new site collection to support the demo and redirects to the DashboardController.
+
+        These files contain the code which implements the Site Collection provisioning functionality:
+        <ul>
+            <li>/Controllers/O365SiteProvisioningController.cs</li>
+            <li>/Util/csomUtil.cs</li>
+            <li>/Util/SiteProvisioning.cs</li>
+            <li>/Views/O365SiteProvisioning/CreateSiteCollection.cshmtl</li>
+            <li>/Views/O365SiteProvisioning/Index.cshtml</li>
+            <li>/Views/O365SiteProvisioning/ProvisioningSiteComponents.cshmtl</li>
+            <li>/Content/SampleData.xml</li>
+        </ul>
+    </p>
+    <p>After you have performed the configuration steps described above, provision the Site Collection and content.</p>
+    <p><a class="btn btn-default" href="/O365SiteProvisioning">Invoke the O365SiteProvisioning controller to create the Site Collection and content &raquo;</a></p>
+    <h3>Line Of Business Application</h3>
+    <p>
+        This Property Manager My App provides a dashboard application used in a property management scenario.
+        This dashboard is used by dispatchers at the property management company's home office to coordinate inspections and repairs.
+        The dashboard uses O365 APIs and the SharePoint REST APIs to read and write information in Exchange and SharePoint.
+    </p>
+    <h4>User Accounts</h4>
+    <p>After you have provisioned the Site Collection and content you must grant Member access to the Dispatcher account.</p>
+    <ul>
+        <li>Dispatcher: Katie Jordan - alias: katiej</li>
+    </ul>
+    <h4>Property Manager My App Configuration</h4>
+    <p>If you wish to add a custom logo to your Property Manager My App you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  Use the following file you can find in the PropertyManagementMyApp Visual Studio Solution.  /Content/Images/AADAppLogos/logo-prop-man.jpg</p>
+    <h4>Property Manager My App Installation Complete!</h4>
+    <p>Now you can access the Property Manager My App dashboard landing page.</p>
+    <p><a class="btn btn-default" href="/Dashboard" target="_blank">Open the dashboard landing page &raquo;</a></p>
+    <h3>Next Steps: Install and Configure iOS Apps</h3>
+    <p>The demo also relies upon iOS Apps to function end to end.  Click the link below to learn how to install and configure the iOS Apps.</p>
+    <p><a class="btn btn-default" href="/Home/IOS">iOS Apps installation instructions &raquo;</a></p>
+</div>

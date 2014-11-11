@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Property Manager My App</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <header class="clearfix">
+        <span>Contoso Property Management</span>
+        <div>@Html.Partial("_LoginPartial")</div>
+    </header>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Property Manager My App", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("iOS Apps", "iOS", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Mail App for Office", "MailAFO", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Demo Walkthrough", "Walkthrough", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Property Management Dashboard", "Index", "Dashboard", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Icon Attribution", "IconAttribution", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p></p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
