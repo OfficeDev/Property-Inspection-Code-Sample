@@ -1,0 +1,34 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "com.example.o365testapp"
+        minSdkVersion 19
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Active Directory Authentication Library
+    compile 'com.microsoft.aad:adal:1.0.3'
+    // Base OData stuff
+    compile 'com.microsoft.services:odata-engine-interfaces:(,1.0)'
+    compile 'com.microsoft.services:odata-engine-java-impl:(,1.0)'
+    compile 'com.microsoft.services:odata-engine-android-impl:(,1.0)@aar'
+    compile 'com.microsoft.services:odata-engine-helpers:(,1.0)'
+// Service libraries
+    compile 'com.microsoft.services:outlook-services:(,1.0)'
+}

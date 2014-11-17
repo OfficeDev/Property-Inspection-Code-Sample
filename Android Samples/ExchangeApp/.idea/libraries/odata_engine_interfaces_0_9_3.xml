@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="odata-engine-interfaces-0.9.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.microsoft.services/odata-engine-interfaces/0.9.3/f8c7187f3eff226c0402409c7fcee5a8193e104f/odata-engine-interfaces-0.9.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.microsoft.services/odata-engine-interfaces/0.9.3/48f98fb6abc155a3dc0ae0a2075622d4fa443823/odata-engine-interfaces-0.9.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
