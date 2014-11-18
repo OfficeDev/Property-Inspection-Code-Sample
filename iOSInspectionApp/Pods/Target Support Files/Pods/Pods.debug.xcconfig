@@ -1,6 +1,0 @@
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ADALiOS" "${PODS_ROOT}/Headers/Public/Office365" "${PODS_ROOT}/Headers/Public/Office365/office365_exchange_sdk" "${PODS_ROOT}/Headers/Public/Office365/office365_odata_base"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/ADALiOS" -isystem "${PODS_ROOT}/Headers/Public/Office365" -isystem "${PODS_ROOT}/Headers/Public/Office365/office365_exchange_sdk" -isystem "${PODS_ROOT}/Headers/Public/Office365/office365_odata_base"
-OTHER_LDFLAGS = -ObjC -l"Pods-ADALiOS" -l"Pods-Office365"
-OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
-PODS_ROOT = ${SRCROOT}/Pods
