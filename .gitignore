@@ -181,3 +181,8 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Apple/Mac
+.DS_Store
+Pods/
+xcuserdata/
