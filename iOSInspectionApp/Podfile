@@ -1,3 +1,7 @@
-pod 'ADALiOS', '~> 1.0.2'
-pod 'Office365/Outlook', :git => 'https://github.com/officedev/office-365-sdk-for-ios'
+source 'https://github.com/Cocoapods/Specs.git'
+platform :ios, '8.0'
 
+xcodeproj 'iOSInspectionApp'
+
+pod 'ADALiOS', '~> 1.0.0'   # 1.0.0 < ver < 1.1.0
+pod 'Office365/Outlook', '~>0.5.0'
