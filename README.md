@@ -19,18 +19,19 @@ The Property Inspection Code Sample demonstrates how to create a line of busines
 
 You can see the demo in action in the [Office 365 Developer Kick Off session] (http://channel9.msdn.com/events/TechEd/Europe/2014/DEV-B207) from TechEd Europe 2014.
 
-![alt tag](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/demo_video_thumb.png)
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/demo_video_thumb.png)
 
 The [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** is used to integrate the iOS Apps with several O365 services.
 
-What is in this repo?
+<b>Where can I find things in this repo?</b>
+<ul>
+    <li>The iOS Repair App is located in the iOSInspectionApp folder.</li>
+    <li>The iOS Inspection App is located in the iOSRepairApp folder.</li>
+    <li>The Property Manager My App is located in the PropertyManagerMyApp folder.</li>
+    <li>The Mail App for Office is located in the MailApp folder.</li>
+</ul>
 
-The iOS Repair App is located in the iOSInspectionApp folder.
-The iOS Inspection App is located in the iOSRepairApp folder.
-The Property Manager My App is located in the PropertyManagerMyApp folder.
-The Mail App for Office is located in the MailAFO folder.
-
-Property Management My App
+<b>Property Management My App - A Line Of Business Application</b>
 
 The Property Manager My App demonstrates many different patterns used in real world scenarios.  At a high level, the Property Manager My App does the following things.
 <ul>
@@ -40,7 +41,6 @@ The Property Manager My App demonstrates many different patterns used in real wo
     <li>Serves as a line of business application</li>
 </ul>
 
-Line Of Business Application
 <p>
     This Property Manager My App provides a dashboard application used in a property management scenario.
     This dashboard is used by dispatchers at the property management company's home office to coordinate inspections and repairs.
@@ -49,7 +49,7 @@ Line Of Business Application
 
 The sections below provide more information about these patterns and how to get up and running.
 
-iOS Applications
+<b>iOS Applications</b>
 
 The iOS Apps demonstrate many different patterns used in real world scenarios.  At a high level, the iOS Apps do the following things.
 <ul>
@@ -59,12 +59,12 @@ The iOS Apps demonstrate many different patterns used in real world scenarios.  
 
 The sections below provide more information about these iOS Apps and how to get up and running.
 
-Mail App for Office
+<b>Mail App for Office</b>
 
 The Mail App for Office uses Outlook and Outlook Web Access to display data from Office 365 SharePoint lists.  The Mail App for Office is implemented with two main components.
 <ul>
-    <li>Mail App for Office – xml file installed on the O365 tenancy as an Exchange App</li>
-    <li>Web pages – Part of the Property Manager My App running on ASP.NET MVC</li>
+    <li>Mail App for Office â€“ xml file installed on the O365 tenancy as an Exchange App</li>
+    <li>Web pages â€“ Part of the Property Manager My App running on ASP.NET MVC</li>
 </ul>
 
 These files contain the code which implements the Mail App for Office:
@@ -177,7 +177,7 @@ Property Manager My App Configuration
 
 Property Manager My App Installation Complete!
 <p>Now you can access the Property Manager My App dashboard landing page.</p>
-<p>In your web browser, navigate to http://localhost:41322/Dashboard" to open the dashboard landing page.</p>
+<p>In your web browser, navigate to http://localhost:41322/Dashboard to open the dashboard landing page.</p>
 
 ## Install-iOS
 <p>The demo also relies upon iOS Apps to function end to end.  Some configuration is required to enable the iOS Apps to work with an O365 environment.  Read on to learn about the configuration process.</p>
