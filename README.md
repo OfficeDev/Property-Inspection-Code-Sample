@@ -188,25 +188,25 @@ The iOS Apps use O365 APIs and SharePoint REST APIs to interact with an O365 / A
 **Create Azure Active Directory App for the iPad Apps**
 
 1. Open the Azure Management Portal
-2.     Select **Active Directory**
-3.     Click on your AAD
-4.     Click **Applications**
-5.     Click **Add**
-6.     Click **Add an application my organization is developing**
-7.     In the Name textbox enter **PropertyManagementiOSiPadApp**
-8.     For Type, select **NATIVE CLIENT APPLICATION**
-9.     Click the **Arrow button**
-10.    In the Redirect URI textbox enter **http://PropertyManagementiOSiPadApp**
-11.    Click the **Checkmark button**
-12.    Expand the update your code section and **copy** the Redirect URI and Client ID values and **paste** them into a text file.  You will use these values when you configure the iPad app on your iPad.
-13.    Click **Configure**
-14.    In the permissions to other applications section, click the dropdown list next to Windows Azure Active Directory and select the following permissions.
+2. Select **Active Directory**
+3. Click on your AAD
+4. Click **Applications**
+5. Click **Add**
+6. Click **Add an application my organization is developing**
+7. In the Name textbox enter **PropertyManagementiOSiPadApp**
+8. For Type, select **NATIVE CLIENT APPLICATION**
+9. Click the **Arrow button**
+10. In the Redirect URI textbox enter **http://PropertyManagementiOSiPadApp**
+11. Click the **Checkmark button**
+12. Expand the update your code section and **copy** the Redirect URI and Client ID values and **paste** them into a text file.  You will use these values when you configure the iPad app on your iPad.
+13. Click **Configure**
+14. In the permissions to other applications section, click the dropdown list next to Windows Azure Active Directory and select the following permissions.
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App AAD Perms.png)
-15.    Configure the permissions to Exchange, use the screenshot below for reference.
+15. Configure the permissions to Exchange, use the screenshot below for reference.    
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App Exchange Perms.png)
-16.    Configure the permissions to SharePoint, use the screenshot below for reference.
+16. Configure the permissions to SharePoint, use the screenshot below for reference.    
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App SP Perms.png)
-17.    Click **Save**
+17. Click **Save**
 
 **iOS App Installation**
 
