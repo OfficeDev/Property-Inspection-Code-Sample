@@ -132,7 +132,7 @@ The Property Manager My App and demo rely on Azure Active Directory Accounts to 
 **Trusted Sites**
 Add **http://localhost** to the Trusted Sites list in Internet Explorer.
 
-- Site Collection Provisioning
+**Site Collection Provisioning**
 
 The O365SiteProvisingController is used to create the Site Collection used to store data and facilitate workflow for the Property Manager My App.
 
@@ -161,10 +161,11 @@ These files contain the code which implements the Site Collection provisioning f
 
 After you have performed the configuration steps described above, provision the Site Collection and content.
 
+In Visual Studio, **press F5** to run the project.  
+
 In your web browser, navigate to **http://localhost:41322/O365SiteProvisioning** to invoke the O365SiteProvisioning controller and create the Site Collection and content.
 
 **User Account Permission**
-
 After you have provisioned the Site Collection and content you must grant Member access to the Dispatcher account.
 
 - Dispatcher: Katie Jordan alias: katiej
@@ -173,7 +174,6 @@ After you have provisioned the Site Collection and content you must grant Member
 If you wish to add a custom logo to your Property Manager My App you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  Use the following file you can find in the PropertyManagementMyApp Visual Studio Solution.  **/Content/Images/AADAppLogos/logo-prop-man.jpg**
 
 **Property Manager My App Installation Complete!**
-
 Now you can access the Property Manager My App dashboard landing page.
 
 In your web browser, navigate to **http://localhost:44312/Dashboard** to open the dashboard landing page.
