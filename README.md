@@ -253,12 +253,14 @@ The Mail App for Office runs on an ASP.NET Web site.  You must configure the Mai
 
 **Modify Manifest**
 
-1. Open the **MailAFO Visual Studio Solution**
-2. In the MailAFO project, open the **MailAFO.xml** file
+1. Open the **MailApp Visual Studio Solution**
+2. In the MailApp project, open the **MailApp.xml** file
 3. Replace the **SourceLocation endpoints** in the DesktopSettings, TabletSettings, and PhoneSettings nodes with the URL to your Property Manager My App ASP.NET web site
 
 	Use the following template for the SoureLocation URL:
 	**https://&lt;Your Web Site&gt;.azurewebsites.net/Mailafo/redir**
+
+	**Note:** You must use an HTTPS URL for Mail Apps for Office.
 4. Save **MailApp.xml**
 5. Right click the MailApp project and select **Publish**
 6. Click **Package the app**        
