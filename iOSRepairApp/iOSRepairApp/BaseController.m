@@ -11,7 +11,7 @@
 
 @implementation BaseController
 
-+(void)getClient : (void (^) (MSSharePointClient* ))callback{
+/*+(void)getClient : (void (^) (MSSharePointClient* ))callback{
     
     EKNLoginViewController* loginController = [[EKNLoginViewController alloc] init];
     
@@ -28,7 +28,7 @@
         
         callback([[MSSharePointClient alloc] initWitUrl:[@"https://techedairlift04.spoppe.com/sites/SuiteLevelAppDemo" stringByAppendingString:@"/_api/v1.0"] dependencyResolver:resolver]);
     }];
-}
+}*/
 
 +(UIActivityIndicatorView*)getSpinner : (UIView*)view{
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];

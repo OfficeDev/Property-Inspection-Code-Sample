@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <office365_drive_sdk/office365_drive_sdk.h>
+//#import <office365_drive_sdk/office365_drive_sdk.h>
 
 @interface BaseController : NSObject
-+(void)getClient : (void (^) (MSSharePointClient* ))callback;
+//+(void)getClient : (void (^) (MSSharePointClient* ))callback;
 +(UIActivityIndicatorView*)getSpinner : (UIView*)view;
 @end
