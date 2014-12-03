@@ -4,12 +4,10 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>EdKeyNote.xcscheme</key>
+		<key>iOSRepairApp.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<true/>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>3</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
