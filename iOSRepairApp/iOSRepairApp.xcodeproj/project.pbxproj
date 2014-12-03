@@ -648,7 +648,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/iOSRepairApp/iOSRepairApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/build/Debug-iphoneos";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = iOSRepairApp;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.0;
@@ -674,7 +674,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/iOSRepairApp/iOSRepairApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/build/Debug-iphoneos";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = iOSRepairApp;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.0;
