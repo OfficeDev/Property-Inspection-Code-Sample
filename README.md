@@ -73,27 +73,37 @@ The sections below provide more information about these components and how to ge
 ## Install-MyApp
 To set up and configure the demo first download the Property Manager My App and open it in Visual Studio 2013.
 
-To register the Property Manager My App with your Azure Active Directory right click the PropertyManagerMyApp project and select Add -> Connected Service.  Authenticate with the credentials associated with your tenancy and use the wizard to configure the appropriate permissions.  The following images demonstrate how your app settings and api permissions should be configured for the Property Manager My App to work.
+To register the Property Manager My App with your Azure Active Directory follow these steps.
 
-O365 API Calendar Permissions
+1. Right click the **PropertyManagerMyApp project** and select **Add -> Connected Service**.  
+2. Authenticate with the administrator credentials associated with your tenancy.
+3. Use the wizard to configure the appropriate O365 permissions.
+  
+	The following images demonstrate how your app settings and api permissions should be configured for the Property Manager My App to work.
+	
+	O365 API Calendar Permissions
+	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Calendar Permissions.jpg)
+	
+	O365 API Mail Permissions
+	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Mail Permissions.jpg)
+	
+	O365 API Sites Permissions
+	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Sites Permissions.jpg)
+	
+	O365 API AD Permissions
+	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API AD Permissions.jpg)
+	
+	O365 App Settings
+	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 App Settings.jpg)
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Calendar Permissions.jpg)
+4. Click **OK** in the Add Connected Services wizard to commit the changes.  
 
-O365 API Mail Permissions
-
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Mail Permissions.jpg)
-
-O365 API Sites Permissions
-
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Sites Permissions.jpg)
-
-O365 API AD Permissions
-
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API AD Permissions.jpg)
-
-O365 App Settings
-
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 App Settings.jpg)
+At this point VS will add the appropriate O365 Nuget packages to the Visual Studio Solution.
 
 **web.config**
 The Property Manager My App stores configuration settings in the web.config file.  These settings must be configured for your environment in order for the Property Manager My App to work.  The Add Connected Service wizard creates some of these settings in the web.config file when it registers you app with Azure Active Directory.  These settings the Add Connected Service wizard creates include:
@@ -116,6 +126,10 @@ In addition to the settings above, other settings exist which allow you to perfo
 - **DispatcherEmail** Email address for Dispatcher (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)
 
 Configure these settings in the web.config file to match your O365 / Azure Tenancy.
+
+Finally, add the following setting to your web.config file.
+
+&lt;add key="ida:GraphResourceId" value="https://graph.windows.net/" /&gt;
 
 **Azure Active Directory User Accounts**
 The Property Manager My App and demo rely on Azure Active Directory Accounts to work.  Create the following users in Azure Active Directory.  Note: It may take up to 24 hours for the O365 infrastructure to create an Exchange Mailbox and Calendar.
