@@ -11,7 +11,6 @@
 - [Mail App for Office Notes](#mailafo)
 - [Links that open native iOS Apps Notes](#deeplinks)
 - [Working with the iOS apps in XCode](#xcode)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
@@ -161,9 +160,25 @@ These files contain the code which implements the Site Collection provisioning f
 
 After you have performed the configuration steps described above, provision the Site Collection and content.
 
-In Visual Studio, **press F5** to run the project.  
+In Visual Studio, **press F5** to run the project. Ignore any errors which appear, they are due to the fact the Site Collection has not been provisioned yet. 
 
-In your web browser, navigate to **http://localhost:41322/O365SiteProvisioning** to invoke the O365SiteProvisioning controller and create the Site Collection and content.
+In your web browser, navigate to **http://localhost:41322/O365SiteProvisioning** to invoke the O365SiteProvisioning controller and create the Site Collection and information architecture.
+
+When the process completes you will see this screen:
+
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/sc provision success.jpg)
+
+Next, click the **Create Sample Data** link in the top menu.  Then, click the **Populate** button.
+
+When the process completes you will see this screen:
+
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/content provision success.jpg)
+
+If you navigate to the Site Contents page in the Site Collection you will see all the new lists and libraries and sample content.
+
+Use this URL to access the Site Contents page:
+
+https://**&lt;Your Tenancy&gt;**.sharepoint.com/sites/SuiteLevelAppDemo/_layouts/15/viewlsts.aspx
 
 **User Account Permission**
 After you have provisioned the Site Collection and content you must grant Member access to the Dispatcher account.
@@ -171,12 +186,14 @@ After you have provisioned the Site Collection and content you must grant Member
 - Dispatcher: Katie Jordan alias: katiej
 
 **Property Manager My App Configuration**
-If you wish to add a custom logo to your Property Manager My App you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  Use the following file you can find in the PropertyManagementMyApp Visual Studio Solution.  **/Content/Images/AADAppLogos/logo-prop-man.jpg**
+This is steps is optional.  If you wish to add a custom logo to your Property Manager My App you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  Use the following file you can find in the PropertyManagementMyApp Visual Studio Solution.  **/Content/Images/AADAppLogos/logo-prop-man.jpg**
 
 **Property Manager My App Installation Complete!**
-Now you can access the Property Manager My App dashboard landing page.
+Now you can access the Property Manager My App dashboard landing page by clicking the **Property Management Dashboard** link in the top menu.  You can also access the dashboard by navigating to **http://localhost:44312/Dashboard** in your web browser.  
 
-In your web browser, navigate to **http://localhost:44312/Dashboard** to open the dashboard landing page.
+This is what the dashboard looks like.  In this screenshot, the Past Inspections tab is selected.
+
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard.jpg)
 
 ## Install-iOS
 
@@ -225,12 +242,13 @@ After the iOS Apps are deployed, you need to configure them to work with an O365
 
 To configure the iPad Apps settings follow these instructions.  You need to perform these same steps for both the Inspection and Repair iOS apps.
 
-1. Tap the **iPad App** on the iPad to open it.After the iPad App is loaded and the Sign In screen is displayed, push the **home button** two times and close the running instance of the application.
-2. Next, open the **native iOS Settings App**.
-3. In the left column, tap the **name of the app**.
-4. Enter the values which correspond to the Azure Active Directory application you created for the iPad Apps.
-5. Enter the URL to the Site Collection created by the Property Manager My App.
-6. Enter the email address for the Dispatcher. (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)
+1. Tap the **iPad App** on the iPad to open it.
+2. After the iPad App is loaded and the Sign In screen is displayed, push the **home button** two times and close/terminate the running instance of the application.
+3. Next, open the **native iOS Settings App**.
+4. In the left column, tap the **name of the app**.
+5. Enter the values which correspond to the Azure Active Directory application you created for the iPad Apps.
+6. Enter the URL to the Site Collection created by the Property Manager My App.
+7. Enter the email address for the Dispatcher. (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)
 
 These are the values that must be configured.
 
@@ -307,7 +325,7 @@ The Mail App for Office included in the demo renders properly in PC web browsers
 The links in the workflow emails which open the native iOS apps on an iOS device work when using the native iOS email client.  At this time they are not supported in Safari or the OWA app.
 
 ## XCode
-In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample code for iOS Apps which use Outlook Services (aka Exchange), Files Services (aka Drive), and the Discovery Service.
+In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample code for iOS Apps which the O365 APIs.
 
 The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.
 
@@ -320,10 +338,7 @@ Here's how to run these samples.  You need to perform these steps for both the I
 
 > For more info on Cocoapods setup see the Office 365 SDK for iOS [wiki](https://github.com/OfficeDev/Office-365-SDK-for-iOS/wiki/Cocoapods-Setup) and [their site](http://cocoapods.org).
 
-## Contributing
-You will need to sign a [Contributor License Agreement](https://cla.msopentech.com/) before submitting your pull request. To complete the Contributor License Agreement (CLA), you will need to submit a request via the form and then electronically sign the Contributor License Agreement when you receive the email containing the link to the document. This needs to only be done once for any Microsoft Open Technologies OSS project.
-
 ## License
-Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. Licensed under the Apache License, Version 2.0.
+Copyright (c) Microsoft, Inc. All rights reserved. Licensed under the Apache License, Version 2.0.
 
 
