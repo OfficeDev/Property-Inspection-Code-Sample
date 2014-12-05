@@ -180,10 +180,27 @@ Use this URL to access the Site Contents page:
 
 https://**&lt;Your Tenancy&gt;**.sharepoint.com/sites/SuiteLevelAppDemo/_layouts/15/viewlsts.aspx
 
-**User Account Permission**
-After you have provisioned the Site Collection and content you must grant Member access to the Dispatcher account.
 
+Next, click the **Provision Workflow** link in the top menu.  Then, click the **Populate** button.
+
+When the process completes you will see this screen:
+
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/workflow provision success.jpg)
+
+If you navigate to the Site Contents page in the Site Collection you will see the new Workflow History and Workflow Tasks lists.
+
+Use this URL to access the Site Contents page:
+
+https://**&lt;Your Tenancy&gt;**.sharepoint.com/sites/SuiteLevelAppDemo/_layouts/15/viewlsts.aspx
+
+**User Account Permission**
+After you have provisioned the Site Collection and content you must grant Member access to the Inspector, Dispatcher, and Repair People accounts.
+
+- Inspector: Rob Barker alias: robb
 - Dispatcher: Katie Jordan alias: katiej
+- Repair Person: Ron Gabel alias: rong
+- Inspector: Alisa Lawyer alias: alisal
+- Repair Person: Chris Gray alias: chrisg
 
 **Property Manager My App Configuration**
 This is steps is optional.  If you wish to add a custom logo to your Property Manager My App you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  Use the following file you can find in the PropertyManagementMyApp Visual Studio Solution.  **/Content/Images/AADAppLogos/logo-prop-man.jpg**
