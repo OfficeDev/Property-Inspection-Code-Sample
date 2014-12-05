@@ -550,7 +550,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
-    if(buttonIndex == 0 )//take new photo
+    if(buttonIndex == 1 )//take new photo
     {
         BOOL cameraIsAvailable=[UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
         if (cameraIsAvailable) {
@@ -559,7 +559,7 @@
             }];
         }
     }
-    else if(buttonIndex == 1)//select photo library
+    else if(buttonIndex == 0)//select photo library
     {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self selectPicture];
@@ -1229,7 +1229,7 @@
                  delegate:self
                  cancelButtonTitle:@"Cancel"
                  destructiveButtonTitle:nil
-                 otherButtonTitles:@"New Photo", @"Select Photo", nil];
+                 otherButtonTitles:@"Select Photo",@"New Photo", nil];
     }
     else
     {
