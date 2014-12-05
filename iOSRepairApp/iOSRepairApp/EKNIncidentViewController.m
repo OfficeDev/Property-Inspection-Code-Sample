@@ -1619,7 +1619,7 @@
                  delegate:self
                  cancelButtonTitle:@"Cancel"
                  destructiveButtonTitle:nil
-                 otherButtonTitles:@"New Photo", @"Select Photo", nil];
+                 otherButtonTitles:@"Select Photo",@"New Photo", nil];
     }
     else
     {
@@ -1636,13 +1636,13 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if(buttonIndex == 0 && self.cameraIsAvailable)//take new photo
+    if(buttonIndex == 1 && self.cameraIsAvailable)//take new photo
     {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self openCamera];
         }];
     }
-    else if(buttonIndex == 1)//select photo library
+    else if(buttonIndex == 0)//select photo library
     {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self selectPicture];
