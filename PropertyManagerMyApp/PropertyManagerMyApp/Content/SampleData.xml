@@ -1,0 +1,590 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Contents>
+  <List name="Repair People">
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Ron Gabel</column>
+      <column name="sl_accountname">rong</column>
+      <column name="sl_emailaddress">rong@(tenancy)</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Chris Gray</column>
+      <column name="sl_accountname">chrisg</column>
+      <column name="sl_emailaddress">chrisg@(tenancy)</column>
+    </item>
+  </List>
+  <List name="Inspectors">
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Rob Barker</column>
+      <column name="sl_accountname">robb</column>
+      <column name="sl_emailaddress">robb@(tenancy)</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Alisa Lawyer</column>
+      <column name="sl_accountname">alisal</column>
+      <column name="sl_emailaddress">alisal@(tenancy)</column>
+    </item>
+  </List>
+  <List name="Properties">
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Au Residence</column>
+      <column name="sl_owner">Margaret Au</column>
+      <column name="sl_emailaddress">marga@(tenancy)</column>
+      <column name="sl_address1">2002 Nob Hill Ave N</column>
+      <column name="sl_address2"></column>
+      <column name="sl_city">Seattle</column>
+      <column name="sl_state">WA</column>
+      <column name="sl_postalCode">98109</column>
+      <column name="sl_latitude">47.636701</column>
+      <column name="sl_longitude">-122.350490</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Wright Residence</column>
+      <column name="sl_owner">Steven Wright</column>
+      <column name="sl_emailaddress">stevenw@(tenancy)</column>
+      <column name="sl_address1">2450 4th Ave W</column>
+      <column name="sl_address2"></column>
+      <column name="sl_city">Seattle</column>
+      <column name="sl_state">WA</column>
+      <column name="sl_postalCode">98109</column>
+      <column name="sl_latitude">47.641079</column>
+      <column name="sl_longitude">-122.361961</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Jump Residence</column>
+      <column name="sl_owner">Dan Jump</column>
+      <column name="sl_emailaddress">danj@(tenancy)</column>
+      <column name="sl_address1">3301 8th Ave W</column>
+      <column name="sl_address2"></column>
+      <column name="sl_city">Seattle</column>
+      <column name="sl_state">WA</column>
+      <column name="sl_postalCode">98119</column>
+      <column name="sl_latitude">47.649310</column>
+      <column name="sl_longitude">-122.367827</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Johnson Residence</column>
+      <column name="sl_owner">Chris Johnson</column>
+      <column name="sl_emailaddress">chrisj@(tenancy)</column>
+      <column name="sl_address1">4560 W Cramer St</column>
+      <column name="sl_address2"></column>
+      <column name="sl_city">Seattle</column>
+      <column name="sl_state">WA</column>
+      <column name="sl_postalCode">98199</column>
+      <column name="sl_latitude">47.670199</column>
+      <column name="sl_longitude">-122.415486</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Troup Residence</column>
+      <column name="sl_owner">Carol Troup</column>
+      <column name="sl_emailaddress">carolt@(tenancy)</column>
+      <column name="sl_address1">4733 W Bertona St</column>
+      <column name="sl_address2"></column>
+      <column name="sl_city">Seattle</column>
+      <column name="sl_state">WA</column>
+      <column name="sl_postalCode">98199</column>
+      <column name="sl_latitude">47.650161</column>
+      <column name="sl_longitude">-122.417757</column>
+    </item>
+  </List>
+  <List name="Rooms">
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bathroom 1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bathroom 2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bedroom 1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bedroom 2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Kitchen</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Dining Room</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Living Room</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Lower Bathroom</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Upper Bathroom</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Master Bedroom</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Guest Bedroom</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Kitchenette</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Foyer</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Laundry Room</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bathroom 1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bathroom 2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bedroom 1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bedroom 2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Kitchen</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Dining Room</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Living Room</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Lower Bathroom</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Upper Bathroom</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Master Bedroom</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Guest Bedroom</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Kitchenette</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Foyer</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Laundry Room</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bathroom 1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bathroom 2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bedroom 1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Bedroom 2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Kitchen</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Dining Room</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Living Room</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+    </item>
+  </List>
+  <List name="Inspections">
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">10/25/2010</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_finalized">10/25/2010</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">6/21/2011</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_finalized">6/21/2011</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">10/27/2011</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_finalized">10/27/2011</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">6/22/2012</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_finalized">6/22/2012</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">10/24/2012</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_finalized">10/24/2012</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">6/23/2013</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_finalized">6/23/2013</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">10/25/2013</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_finalized">10/25/2013</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">6/28/2014</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_finalized">6/28/2014</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">5/21/2013</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+      <column name="sl_finalized">5/21/2013</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">9/22/2013</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+      <column name="sl_finalized">9/22/2013</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">5/27/2014</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">2</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+      <column name="sl_finalized">5/27/2014</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">5/28/2014</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+      <column name="sl_finalized">5/28/2014</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">5/29/2014</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+      <column name="sl_finalized">5/29/2014</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="sl_datetime">5/30/2014</column>
+      <column name="sl_inspector" Type="Lookup" Source="Inspectors">1</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+      <column name="sl_finalized">5/30/2014</column>
+    </item>
+  </List>
+  <List name="Inspection Comments">
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Everything looks good, no problems found.</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Everything looks good, no problems found.</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">2</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Everything looks good, no problems found.</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">3</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Everything looks good, no problems found.</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">4</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Everything looks good, no problems found.</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">5</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Everything looks good, no problems found.</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">6</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Everything looks good, no problems found.</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">7</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Everything looks good, no problems found.</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">8</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+  </List>
+  <List name="Incidents">
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Leaky Faucet</column>
+      <column name="sl_date">10/25/2010</column>
+      <column name="sl_inspectorIncidentComments">Faucet is leaking continuously. Turned off water supply to faucet.</column>
+      <column name="sl_dispatcherComments">Replace with model FAU-6420. Make sure to use replace with the brushed bronze finish.</column>
+      <column name="sl_repairComments">Faucet replaced and tested.</column>
+      <column name="sl_repairScheduled">10/26/2010</column>
+      <column name="sl_repairCompleted">10/26/2010</column>
+      <column name="sl_repairApproved">10/26/2010</column>
+      <column name="sl_status">Repair Approved</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">1</column>
+      <column name="sl_type">Plumbing</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Broken Window</column>
+      <column name="sl_date">6/21/2011</column>
+      <column name="sl_inspectorIncidentComments">Several hairline cracks present in window.</column>
+      <column name="sl_dispatcherComments">After replacing window ensure all gaps are re-caulked.</column>
+      <column name="sl_repairComments">Windows replaced and caulking fills all gaps.</column>
+      <column name="sl_repairScheduled">6/22/2011</column>
+      <column name="sl_repairCompleted">6/25/2011</column>
+      <column name="sl_repairApproved">6/26/2011</column>
+      <column name="sl_status">Repair Approved</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">2</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">4</column>
+      <column name="sl_type">Structural</column>
+    </item>
+    <item>
+      <column name="Id"></column>
+      <column name="Title">Broken Garbage Disposal</column>
+      <column name="sl_date">10/24/2012</column>
+      <column name="sl_inspectorIncidentComments">Garbage disposal does not turn on anymore.</column>
+      <column name="sl_dispatcherComments">Replace with Model GD-500-Elite.</column>
+      <column name="sl_repairComments">Disposal replaced and tested.</column>
+      <column name="sl_repairScheduled">10/26/2012</column>
+      <column name="sl_repairCompleted">10/26/2012</column>
+      <column name="sl_repairApproved">10/27/2012</column>
+      <column name="sl_status">Repair Approved</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">5</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">5</column>
+      <column name="sl_type">Appliances</column>
+    </item>
+  </List>
+  <List name="Room Inspection Photos">
+    <item path="Content\Images\property1Rooms\bathroom 1.jpg">
+      <column name="Id"></column>
+      <column name="Title">Bathroom 1</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents">1</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">1</column>
+    </item>
+    <item path="Content\Images\property1Rooms\bathroom 2.jpg">
+      <column name="Id"></column>
+      <column name="Title">Bathroom 2</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents"></column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">2</column>
+    </item>
+    <item path="Content\Images\property1Rooms\bedroom 1.jpg">
+      <column name="Id"></column>
+      <column name="Title">Bedroom 1</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents"></column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">3</column>
+    </item>
+    <item path="Content\Images\property1Rooms\bedroom 2.jpg">
+      <column name="Id"></column>
+      <column name="Title">Bedroom 2</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents"></column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">4</column>
+    </item>
+    <item path="Content\Images\property1Rooms\kitchen.jpg">
+      <column name="Id"></column>
+      <column name="Title">Kitchen</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents"></column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">5</column>
+    </item>
+    <item path="Content\Images\property1Rooms\dining room.png">
+      <column name="Id"></column>
+      <column name="Title">Dining Room</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents"></column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">6</column>
+    </item>
+    <item path="Content\Images\property1Rooms\living room.jpg">
+      <column name="Id"></column>
+      <column name="Title">Living Room</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents"></column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">7</column>
+    </item>
+    <item path="Content\Images\property1Rooms\bedroom 2.jpg">
+      <column name="Id"></column>
+      <column name="Title">Bedroom 2</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">2</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents">2</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">4</column>
+    </item>
+    <item path="Content\Images\property1Rooms\kitchen.jpg">
+      <column name="Id"></column>
+      <column name="Title">Kitchen</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">5</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents">3</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">5</column>
+    </item>
+  </List>
+  <List name="Repair Photos">
+    <item path="Content\Images\property1Repairs\fixed sink.jpeg">
+      <column name="Id"></column>
+      <column name="Title">Repair Photo 1</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">1</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents">1</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">1</column>
+    </item>
+    <item path="Content\Images\property1Repairs\fixed-window.jpg">
+      <column name="Id"></column>
+      <column name="Title">Repair Photo 2</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">2</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents">2</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">4</column>
+    </item>
+    <item path="Content\Images\property1Repairs\fixed-disposal.jpeg">
+      <column name="Id"></column>
+      <column name="Title">Repair Photo 3</column>
+      <column name="sl_inspectionID" Type="Lookup" Source="Inspections">5</column>
+      <column name="sl_incidentID" Type="Lookup" Source="Incidents">3</column>
+      <column name="sl_roomID" Type="Lookup" Source="Rooms">5</column>
+    </item>
+  </List>
+  <List name="Property Photos">
+    <item path="Content\Images\properties\house1.jpg">
+      <column name="Id"></column>
+      <column name="Title">Property 1 Photo</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
+    </item>
+    <item path="Content\Images\properties\house2.jpg">
+      <column name="Id"></column>
+      <column name="Title">Property 2 Photo</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
+    </item>
+    <item path="Content\Images\properties\house3.jpg">
+      <column name="Id"></column>
+      <column name="Title">Property 3 Photo</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
+    </item>
+    <item path="Content\Images\properties\house4.jpg">
+      <column name="Id"></column>
+      <column name="Title">Property 4 Photo</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">4</column>
+    </item>
+    <item path="Content\Images\properties\house5.jpg">
+      <column name="Id"></column>
+      <column name="Title">Property 5 Photo</column>
+      <column name="sl_propertyID" Type="Lookup" Source="Properties">5</column>
+    </item>
+  </List>
+</Contents>
