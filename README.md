@@ -10,7 +10,6 @@
 - [API Notes](#apis)
 - [Mail App for Office Notes](#mailafo)
 - [Links that open native iOS Apps Notes](#deeplinks)
-- [Working with the iOS apps in XCode](#xcode)
 - [License](#license)
 
 ## Overview
@@ -258,13 +257,20 @@ The iOS Apps use O365 APIs and SharePoint REST APIs to interact with an O365 / A
 
 **iOS App Installation**
 
-Now you are ready to install the iOS Apps.  This section provides details about your installation options.
+Now you are ready to install the iOS Apps.  
 
-The easiest way to install the iOS apps to your iPad is to download the .ipa files to your computer and install them on your iPad.  iFunBox is a tool capable of deploying iOS Apps to a non-rooted iPad.
+In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample code for iOS Apps which the O365 APIs.
 
-Optionally, you can clone the GitHub repository and load the iOS App Workspaces in XCode then run them in the iOS Simulator or deploy them to an iPad.  This option requires a Mac and XCode.  If you choose this option please see the installation notes in the [XCode](#xcode) section which describe how to register the CocoaPods with the iOS projects.  The CocoaPods must be installed to enable the iOS Apps project workspaces to build and run.
+First, on a Mac machine, clone the GitHub repository.  
 
-**Note:** A Mac and XCode is required if you wish to debug the iOS code.
+The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.  To use Cocoapods to add the SDKs to the workspaces perform these steps for both the Inspection and Repair iOS Apps.
+
+1. Open Terminal.
+2. Navigate to inside the project's folder.
+3. Run `pod install`.
+4. Run `open iOSInspectionApp.xcworkspace` or `open iOSRepairApp.xcworkspace` to open the workspace with all projects and dependencies loaded appropriately.
+
+> For more info on Cocoapods setup see the Office 365 SDK for iOS [wiki](https://github.com/OfficeDev/Office-365-SDK-for-iOS/wiki/Cocoapods-Setup) and [their site](http://cocoapods.org).
 
 **iOS App Configuration**
 After the iOS Apps are deployed, you need to configure them to work with an O365 / Azure Tenancy and the Azure Active Directory Applications you created.
@@ -354,20 +360,6 @@ The Mail App for Office included in the demo renders properly in PC web browsers
 
 ## Deeplinks
 The links in the workflow emails which open the native iOS apps on an iOS device work when using the native iOS email client.  At this time they are not supported in Safari or the OWA app.
-
-## XCode
-In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample code for iOS Apps which the O365 APIs.
-
-The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.
-
-Here's how to run these samples.  You need to perform these steps for both the Inspection and Repair iOS Apps.
-
-1. Open Terminal.
-2. Navigate to inside the project's folder.
-3. Run `pod install`.
-4. Run `open iOSInspectionApp.xcworkspace` or `open iOSRepairApp.xcworkspace` to open the workspace with all projects and dependencies loaded appropriately.
-
-> For more info on Cocoapods setup see the Office 365 SDK for iOS [wiki](https://github.com/OfficeDev/Office-365-SDK-for-iOS/wiki/Cocoapods-Setup) and [their site](http://cocoapods.org).
 
 ## License
 Copyright (c) Microsoft, Inc. All rights reserved. Licensed under the Apache License, Version 2.0.
