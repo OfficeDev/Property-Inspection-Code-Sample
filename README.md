@@ -72,9 +72,13 @@ The sections below provide more information about these components and how to ge
 ## Install-MyApp
 To set up and configure the demo first download the Property Manager My App and open it in Visual Studio 2013.
 
+**Important Note:**  Save the PropertyManagerMyApp directory to the root of one of your drives to ensure all Nuget functionality will work and your file paths will not become too long.
+
+**Register the Property Manager My App with your Azure Active Directory**
+
 To register the Property Manager My App with your Azure Active Directory follow these steps.
 
-1. Right click the **PropertyManagerMyApp project** and select **Add -> Connected Service**.  
+1. Right click the **PropertyManagerMyApp project** and select **Add -> Connected Service**.
 2. Authenticate with the administrator credentials associated with your tenancy.
 3. Use the wizard to configure the appropriate O365 permissions.
   
@@ -104,45 +108,50 @@ To register the Property Manager My App with your Azure Active Directory follow 
 
 At this point VS will add the appropriate O365 Nuget packages to the Visual Studio Solution.
 
-**web.config**
+**Edit web.config**
 The Property Manager My App stores configuration settings in the web.config file.  These settings must be configured for your environment in order for the Property Manager My App to work.  The Add Connected Service wizard creates some of these settings in the web.config file when it registers you app with Azure Active Directory.  These settings the Add Connected Service wizard creates include:
 
 - ida:ClientID
 - ida:Password
 - ida:AuthorizationUri
 
-In addition to the settings above, other settings exist which allow you to perform additional required configuration values.  These settings include:
+In addition to the settings above, other settings exist that you must configure to match your tenancy.  These settings include:
 
-- **ServiceResourceId** Url for the O365 tenant admin site
-- **DashboardServiceResourceId** Url for the root Site Collection in the O365 Tenancy
-- **DashboardServiceEndpointUri** Api Endpoint for the Site Collection used by the Property Manager My App
-- **DemoSiteServiceResourceId** Url for the root Site Collection in the O365 Tenancy
-- **DemoSiteCollectionUrl** Url used to create the Site Collection used by Property Manager My App
-- **O365SvcResourceId** Url for the O365 Discovery Service
-- **O365SvcEndpointUri** Api Endpoint for the O365 Discovery Service API
-- **DemoSiteCollectionOwner** Email address for Site Collection owner (admin&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)
-- **DispatcherName** Display Name for Dispatcher (Katie Jordan)
-- **DispatcherEmail** Email address for Dispatcher (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)
+- **ServiceResourceId** Url for the O365 tenant admin site 
 
-Configure these settings in the web.config file to match your O365 / Azure Tenancy.
+    Example: https://contoso-admin.sharepoint.com
+- **DashboardServiceResourceId** Url for the root Site Collection in the O365 Tenancy 
 
-Finally, add the following setting to your web.config file.
+    Example: https://contoso.sharepoint.com
+- **DashboardServiceEndpointUri** Api Endpoint for the Site Collection used by the Property Manager My App 
 
-&lt;add key="ida:GraphResourceId" value="https://graph.windows.net/" /&gt;
+    Example: https://contoso.sharepoint.com/sites/SuiteLevelAppDemo/_api/
+- **DemoSiteServiceResourceId** Url for the root Site Collection in the O365 Tenancy 
 
-**Azure Active Directory User Accounts**
-The Property Manager My App and demo rely on Azure Active Directory Accounts to work.  Create the following users in Azure Active Directory.  Note: It may take up to 24 hours for the O365 infrastructure to create an Exchange Mailbox and Calendar.
+    Example: https://contoso.sharepoint.com
+- **DemoSiteCollectionUrl** Url used to create the Site Collection used by Property Manager My App 
 
-- Inspector: Rob Barker alias: robb
-- Dispatcher: Katie Jordan alias: katiej
-- Repair Person: Ron Gabel alias: rong
-- Property Owner: Margaret Au alias: marga
-- Inspector: Alisa Lawyer alias: alisal
-- Repair Person: Chris Gray alias: chrisg
-- Property Owner: Steven Wright alias: stevenw
+    Example: https://contoso.sharepoint.com/sites/SuiteLevelAppDemo
 
-**Trusted Sites**
-Add **http://localhost** to the Trusted Sites list in Internet Explorer.
+- **DemoSiteCollectionOwner** Email address for Site Collection owner (admin&#64;&lt;Your Tenancy&gt;.onmicrosoft.com) 
+
+    Example: ADMIN@contoso.onmicrosoft.com
+- **DispatcherName** Display Name for Dispatcher (Katie Jordan) 
+
+    Example: Katie Jordan
+- **DispatcherEmail** Email address for Dispatcher (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com) 
+
+    Example: katiej@contoso.onmicrosoft.com
+
+1. Configure these settings in the web.config file to match your O365 / Azure Tenancy by **replacing the TENANCY placeholders in the web.config** with your tenancy name.  In the examples above, the TENANCY placeholder was replaced with contoso.
+2. Edit the **DemoSiteCollectionOwner setting** in the web.config file to match your O365 / Azure Tenancy global administrator account.
+3. Right click the **PropertyManagerMyApp project** and select **Manage Nuget Packages**.
+4. Click the **Updates tab** and select **nuget.org**.
+5. Click **Update All**.
+
+**Configure Trusted Sites**
+
+1. Add **http://localhost** to the Trusted Sites list in Internet Explorer.
 
 **Site Collection Provisioning**
 
@@ -173,41 +182,111 @@ These files contain the code which implements the Site Collection provisioning f
 
 After you have performed the configuration steps described above, provision the Site Collection and content.
 
-In Visual Studio, **press F5** to run the project. Ignore any errors which appear, they are due to the fact the Site Collection has not been provisioned yet. 
+1. In Visual Studio, **press F5** to run the project.   
 
-In your web browser, navigate to **http://localhost:41322/O365SiteProvisioning** to invoke the O365SiteProvisioning controller and create the Site Collection and information architecture.
+	**When you are prompted to log in you must use your O365 admin account.**  This allows you to grant consent to the Azure Active Directory application so the demo users will be able to use it.  
 
-When the process completes you will see this screen:
+5. When prompted, click the **Accept** button. 
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/sc provision success.jpg)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/grant consent.jpg)
+	
+	After you successfully build and run the project and login, **ignore the error you see in the web browser**.  The error occurs because the Site Collection has not been provisioned yet.
+	 
+**Provision Site Collection and information architecture**
 
-Next, click the **Create Sample Data** link in the top menu.  Then, click the **Populate** button.
+6. In your web browser, navigate to **http://localhost:44312/O365SiteProvisioning** to invoke the O365SiteProvisioning controller and create the Site Collection and information architecture.
 
-When the process completes you will see this screen:
+	**Note:**  This process can take up to 20 minutes to complete.  Do not refresh the page during this process.  The page will refresh every minute and display the current time to let you know it is still running.  When the process completes you will see this screen:
+	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/sc provision success.jpg)
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/content provision success.jpg)
+**Provision Workflow**
 
-If you navigate to the Site Contents page in the Site Collection you will see all the new lists and libraries and sample content.
+7. Next, click the **Provision Workflow** link in the top menu.  Then, click the **Populate** button.
 
-Use this URL to access the Site Contents page:
+	When the process completes you will see this screen:
+	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/workflow provision success.jpg)
+	
+	If you navigate to the Site Contents page in the Site Collection you will see the new Workflow History and Workflow Tasks lists.
+	
+	Use this URL to access the Site Contents page:
+	
+	https://**&lt;Your Tenancy&gt;**.sharepoint.com/sites/SuiteLevelAppDemo/_layouts/15/viewlsts.aspx
 
-https://**&lt;Your Tenancy&gt;**.sharepoint.com/sites/SuiteLevelAppDemo/_layouts/15/viewlsts.aspx
+**Provision Azure Active Directory Groups, Users, and demo data**
 
+Finally, you will create the Azure Active Directory Groups, Users, and demo data to support the demo.  This process creates the following AD Users and Groups.
 
-Next, click the **Provision Workflow** link in the top menu.  Then, click the **Populate** button.
+**Groups**
 
-When the process completes you will see this screen:
+- Repair People
+- Inspectors
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/workflow provision success.jpg)
+**Users**
+- Inspector: Rob Barker alias: robb
+- Dispatcher: Katie Jordan alias: katiej
+- Repair Person: Ron Gabel alias: rong
+- Property Owner: Margaret Au alias: marga
+- Inspector: Alisa Lawyer alias: alisal
+- Repair Person: Chris Gray alias: chrisg
+- Property Owner: Steven Wright alias: stevenw
 
-If you navigate to the Site Contents page in the Site Collection you will see the new Workflow History and Workflow Tasks lists.
+8. Next, click the **Create Sample Data** link in the top menu.  Then, click the **Populate** button.
 
-Use this URL to access the Site Contents page:
+9. Enter the date when you plan to execute the demo, then click the **Populate** button.
 
-https://**&lt;Your Tenancy&gt;**.sharepoint.com/sites/SuiteLevelAppDemo/_layouts/15/viewlsts.aspx
+	When the process completes you will see this screen:
+	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/demo data provision success.jpg)
+	
+	If you navigate to the Site Contents page in the Site Collection you will see the lists and libraries which indicate they just had sample data added to them.
+	
+	Use this URL to access the Site Contents page:
+	
+	https://**&lt;Your Tenancy&gt;**.sharepoint.com/sites/SuiteLevelAppDemo/_layouts/15/viewlsts.aspx
+	
+	If you open the Admin app and browse to your active directory you will see the groups and users are created.  
 
-**User Account Permission**
-After you have provisioned the Site Collection and content you must grant Member access to the Inspector, Dispatcher, and Repair People accounts.
+**Add Users to Groups**
+Currently, an issue has been discovered when trying to add users to groups via ADAL.  While we resolve this issue you will need to manually add some users to the Azure Active Directory Groups.
+
+1. Open the O365 Admin app.
+2. Add the following users to the Inspectors Azure Active Directory Group:
+	- Rob Barker alias: robb
+	- Alisa Lawyer alias: alisal
+3. Add the following users to the Repair People Azure Active Directory Group:
+	- Ron Gabel alias: rong
+	- Chris Gray alias: chrisg
+
+**Passwords**
+
+The initial password for all the users is **TempP@ssw0rd!**
+
+You will need to specify a new password for each user the first time you log in with them. 
+
+**Grant Licenses**
+Next, you must grant licenses to the Active Directory User Accounts.
+
+1. Open the O365 admin app.
+2. Grant licenses to all the accounts.
+
+- Rob Barker alias: robb
+- Katie Jordan alias: katiej
+- Ron Gabel alias: rong
+- Margaret Au alias: marga
+- Alisa Lawyer alias: alisal
+- Chris Gray alias: chrisg
+- Steven Wright alias: stevenw
+
+**Grant Member Access To Site Collection**
+Next you must grant access member to the Inspector, Dispatcher, and Repair People accounts.
+
+1. Log into the site collection with you O365 Global Administrator account.
+2. Navigate to the **Site Settings** Page.
+3. In the **Users and Permissions** section, click the **People and Groups** link.
+4. Select the **member** group.
+5. Add the following users to the members group.
 
 - Inspector: Rob Barker alias: robb
 - Dispatcher: Katie Jordan alias: katiej
@@ -215,15 +294,24 @@ After you have provisioned the Site Collection and content you must grant Member
 - Inspector: Alisa Lawyer alias: alisal
 - Repair Person: Chris Gray alias: chrisg
 
+**Mailbox setup**
+
+1. Next, log in with each user to your tenancy and access Outlook to set up their email.
+
+**Note:** It may take up to 24 hours for the O365 infrastructure to create an Exchange Mailbox and Calendar.  Usually, it takes 10 seconds.
+
 **Property Manager My App Configuration**
-This is steps is optional.  If you wish to add a custom logo to your Property Manager My App you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  Use the following file you can find in the PropertyManagementMyApp Visual Studio Solution.  **/Content/Images/AADAppLogos/logo-prop-man.jpg**
+This step is optional.  If you wish to add a custom logo to your Property Manager My App you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  
+
+1. To do this, access the AAD App in the Azure Management Portal and use the image file you can find in the PropertyManagementMyApp Visual Studio Solution.  **/Content/Images/AADAppLogos/logo-prop-man.jpg**
 
 **Property Manager My App Installation Complete!**
-Now you can access the Property Manager My App dashboard landing page by clicking the **Property Management Dashboard** link in the top menu.  You can also access the dashboard by navigating to **http://localhost:44312/Dashboard** in your web browser.  
 
-This is what the dashboard looks like.  In this screenshot, the Past Inspections tab is selected.
+1. Access the Property Manager My App dashboard landing page by clicking the **Dashboard** link in the top menu.  You can also access the dashboard by navigating to **http://localhost:44312/Dashboard** in your web browser.  
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard.jpg)
+This is what the dashboard looks like.  In this screenshot, the Need Repair tab is selected.
+
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard 2.jpg)
 
 ## Install-iOS
 
@@ -261,7 +349,7 @@ Now you are ready to install the iOS Apps.
 
 In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample code for iOS Apps which the O365 APIs.
 
-First, on a Mac machine, clone the GitHub repository.  
+1. On a Mac machine, clone the GitHub repository.  
 
 The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.  To use Cocoapods to add the SDKs to the workspaces perform these steps for both the Inspection and Repair iOS Apps.
 
@@ -273,19 +361,20 @@ The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.  To
 > For more info on Cocoapods setup see the Office 365 SDK for iOS [wiki](https://github.com/OfficeDev/Office-365-SDK-for-iOS/wiki/Cocoapods-Setup) and [their site](http://cocoapods.org).
 
 **iOS App Configuration**
-After the iOS Apps are deployed, you need to configure them to work with an O365 / Azure Tenancy and the Azure Active Directory Applications you created.
+After the iOS Apps are deployed, you need to configure them to work with an O365 / Azure Tenancy and the Azure Active Directory Applications you created.  This section describes how to do it.
 
 **Configure iPad Apps settings**
 
 To configure the iPad Apps settings follow these instructions.  You need to perform these same steps for both the Inspection and Repair iOS apps.
 
-1. Tap the **iPad App** on the iPad to open it.
-2. After the iPad App is loaded and the Sign In screen is displayed, push the **home button** two times and close/terminate the running instance of the application.
-3. Next, open the **native iOS Settings App**.
-4. In the left column, tap the **name of the app**.
-5. Enter the values which correspond to the Azure Active Directory application you created for the iPad Apps.
-6. Enter the URL to the Site Collection created by the Property Manager My App.
-7. Enter the email address for the Dispatcher. (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)
+1. In XCode, run the **iPad App**.
+2. Tap the **iPad App** on the iPad to open it.
+3. After the iPad App is loaded and the Sign In screen is displayed, push the **home button** two times and close/terminate the running instance of the application.
+4. Next, open the **native iOS Settings App**.
+5. In the left column, tap the **name of the app**.
+6. Enter the values which correspond to the Azure Active Directory application you created for the iPad Apps.
+7. Enter the URL to the Site Collection created by the Property Manager My App.
+8. Enter the email address for the Dispatcher. (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)
 
 These are the values that must be configured.
 
@@ -347,7 +436,7 @@ The redirect page then uses JavaScript to redirect to another controller (index.
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Mail AFO - Incident Details.png)
 
 ## Running
-The [PowerPoint slide deck] (https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo%20Prep%20And%20Walkthrough.pptx) describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.  This is an excellent place to see what this demo really does and how the scenario in it unfolds.
+The [PowerPoint slide deck] (https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo%20Script.pptx) describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.  This is an excellent place to see what this demo really does and how the scenario in it unfolds.
 
 ## APIs
 When this demo was built the O365 SDKs for ASP.Net and iOS were in the alpha/beta stages.  Consequently, some of the code in the demo uses REST based approaches to perform operations with O365 services like SharePoint and Exchange.  The following parts of the sample use REST based approaches to access O365 Services.
