@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Property Manager My App</title>
+    @Styles.Render("~/Content/contoso")
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <div class="sp-top-bar">
+        <span>Contoso Property Management</span>
+        <div>@Html.Partial("_LoginPartial")</div>
+    </div>
+    <div class="contoso-demo">
+        <header>
+            <div class="wrapper">
+                <a href="/Dashboard/Index">
+                    <img src="/Content/Images/contoso-logo.png" alt="Contoso" />
+                </a>
+                <a href="/Dashboard/Index">
+                    <h1>
+                        Contoso Property Management
+                    </h1>
+                </a>
+            </div>
+        </header>
+        <div class="wrapper">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>
