@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_alignParentTop="true"
+    android:background="@color/white" >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signin_topbg"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="10dp"
+        android:gravity="start"
+        android:background="@color/blue">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/logo_desc"
+            android:src="@drawable/logo"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signin_topbg"
+        android:layout_marginTop="120dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/sign_title"
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            android:text="@string/signin_title"/>
+
+        <Button
+            android:id="@+id/signIn_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sign_title"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textSize="24sp"
+            android:layout_marginTop="80dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="150dp"
+            android:paddingRight="150dp"
+            android:text="@string/signin_btntxt"
+            android:background="@drawable/button_corner"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray">
+    </RelativeLayout>
+</RelativeLayout>
+

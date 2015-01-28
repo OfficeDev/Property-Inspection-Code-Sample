@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B7439A1A-2506-4E01-9BEF-EE78D33FC9E9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>iOSInspectionApp</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D3F07714FCF35818327F873B33CFD7922A1B10C4</key>
+		<string>https://github.com/officedev/property-inspection-code-sample.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iOSInspectionApp/iOSInspectionApp.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D3F07714FCF35818327F873B33CFD7922A1B10C4</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/officedev/property-inspection-code-sample.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D3F07714FCF35818327F873B33CFD7922A1B10C4</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D3F07714FCF35818327F873B33CFD7922A1B10C4</string>
+			<key>IDESourceControlWCCName</key>
+			<string>property-inspection-code-sample</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,529 @@
+﻿menu, ol, ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    border: 0;
+}
+
+body {
+    font-family:Helvetica-Bold, Roboto-Bold, Arial, Helvetica, sans-serif;
+    margin:0px 0px;
+    padding:0px 0px;
+}
+.rp_header
+{
+    height:71px;
+    width:100%;
+    background-color:#4CA1FF;
+    background-image:url(../images/navigation_background.png);
+    background-size:100% 71px;
+    background-attachment:scroll;
+    background-repeat:no-repeat;
+    position:relative;
+}
+.rp_header>div{
+    display:none;
+}
+.rp_header .rp_left{
+    width:0px;
+    height:0px;
+    overflow:hidden;
+}
+#rp_loginOut{
+    position:absolute;
+    right:20px;
+    top:15px;
+    height:40px;
+    width:40px;
+}
+    #rp_loginOut>img{
+        width:40px;
+    }
+
+.rp_clear
+{
+    clear:both;
+    float:none;
+}
+
+.rp_blue
+{
+    color:#4CA1FF;
+}
+
+.blockui
+{
+   position:absolute;
+   top:20%;
+   left:50%;
+   width:32px;
+   height:32px;
+   z-index:498;
+ }
+.page
+{
+    position:relative;
+}
+#login_page
+{
+}
+#rp_loginHint
+{
+    color:black;
+    font-size:30px;
+    text-align:center;
+    margin-top:130px;
+}
+#rp_loginbtn
+{
+    margin-top:140px;
+    font-size:36px;
+    text-align:center;
+    width:60%;
+    margin:20%;
+    background-color:#008272;
+    height:110px;
+    border-radius:8px;
+}
+#rp_loginbtn span
+{
+    color:white;
+    line-height:110px;
+}
+
+.rp_tableTitle
+{
+    font-size:20px;
+    color:#888888;
+    border-bottom: 1px solid #888888;
+}
+/*incident page*/
+#incidentpage
+{
+    display:none;
+    position:relative;
+    background-color:#F2F2F2;
+}
+#incidentpage>table
+{
+    width:100%;
+}
+#incidentpage>table tr
+{
+    width:100%;
+    min-height:677px;
+}
+
+#incidentpage>table td.rp_middle
+,#incidentpage>table td.rp_right
+{
+    width:66%;
+}
+
+/*incident page left panel*/
+#incidentpage>table td.rp_left
+{
+    width:34%;
+    background-color:white;
+    box-shadow: 2px 0px 0px 0px rgba(0, 0, 0, 0.3);
+    
+}
+#incidentpage>table td.rp_left .rp_list
+{
+    width:100%;
+}
+    #incidentpage>table td.rp_left .rp_list ul>li
+    {
+        border-bottom: 1px solid #888888;
+        padding-top:8px;
+    }
+        #incidentpage>table td.rp_left .rp_list ul>li>.rp_leftitem
+        {
+            float:left;
+            width:19%;
+            text-align:center;
+            border-right: 1px solid #888888;
+        }
+        #incidentpage>table td.rp_left .rp_list ul>li>.rp_leftitem>img
+        {
+            width:19px;
+            height:19px;
+        }
+        #incidentpage>table td.rp_left .rp_list ul>li>.rp_rightitem
+        {
+            float:left;
+            padding-left:8%;
+            width:72%;
+    
+        }
+            #incidentpage>table td.rp_left .rp_list ul>li>.rp_rightitem>span
+            {
+                font-size:12px;
+                line-height:20px;
+            }
+
+#incidentpage>table td.rp_left>div
+{
+    margin:10px 2px 0px 7%;
+}
+#incidentpage>table td.rp_left .rp_bottom
+{
+    margin-top:20px;
+}
+#rp_inspectionDetail .rp_bottom
+{
+    margin-bottom:20px;
+}
+#rp_propertyDetailImage
+{
+    height:220px;
+    position:relative;
+    overflow:hidden;
+}
+    #rp_propertyDetailImage .rp_address
+    {
+        position:absolute;
+        bottom:0px;
+        width:100%;
+        line-height:38px;
+        text-align:center;
+        background-color:black;
+        filter:alpha(opacity=60);
+        opacity:0.6;
+        color:white;
+        font-size:17px;
+
+    }
+    #rp_propertyDetailImage>img
+    {
+        width:100%;
+        height:220px;
+    }
+
+#rp_inspectionDetail
+{
+    display:none;
+    margin:0px 2px 10px 7%;
+}
+
+#rp_finalizeBtn
+{
+    width:100%;
+    height:33px;
+    background-image:url(../images/finalize_repair.png);
+    background-attachment:scroll;
+    background-repeat:no-repeat;
+    background-size:100% 33px;
+}
+    #rp_finalizeBtn span{
+        display:none
+    }
+#incidentpage .rp_backBtn
+{
+    display:none;
+    position:absolute;
+    width:15px;
+    height:71px;
+    top:270px;
+    background-image:url(../images/before.png);
+    background-attachment:scroll;
+    background-repeat:no-repeat;
+    background-size:15px 71px;
+}
+/*incident page middle panel*/
+#incidentpage>table td.rp_middle>.rp_top,
+#incidentpage>table td.rp_right>.rp_top
+{
+    margin: 10px 2% 10px 2%;
+    overflow:hidden;
+}
+#rp_incidentslist>ul
+{
+    width:100%;
+}
+    #rp_incidentslist>ul>li
+    {
+        float:left;
+        width:100%;
+        height:159px;
+        background-color:#fff;
+        border-bottom:1px solid #888888;
+    }
+        #rp_incidentslist>ul>li>.rp_leftitem
+        {
+            float:left;
+            margin-left:2%;
+            margin-top:10px;
+            margin-bottom:9px;
+            width:27%;
+            max-height:140px;
+            text-align:center;
+        }
+        #rp_incidentslist>ul>li>.rp_leftitem>img
+        {
+            width:100%;
+            max-height:140px;
+        }
+
+        #rp_incidentslist>ul>li>.rp_rightitem
+        {
+            float:left;
+            margin-top:19px;
+            margin-left:4%;
+            width:67%;
+        }
+        #rp_incidentslist>ul>li>.rp_rightitem>div
+        {
+            margin-top:31px;
+            font-size:12px;
+            color:#000;
+        }
+        #rp_incidentslist>ul>li>.rp_rightitem>div:first-child
+        {
+            margin-top:0px;
+        }
+            #rp_incidentslist>ul>li>.rp_rightitem>div>.rp_left,
+            #rp_incidentslist>ul>li>.rp_rightitem>div>.rp_right
+            {
+                width:50%;
+                float:left;
+            }
+            #rp_incidentslist>ul>li>.rp_rightitem>div>.rp_line
+            {
+                width:100%
+            }
+
+/*incident page right panel*/
+#incidentpage>table td.rp_right
+{
+    display:none;
+}
+
+#rp_incidentsdetail>.rp_top
+{
+    width:100%;
+    height:50px;
+    background-color:#868686;
+    margin-bottom:25px;
+}
+#rp_incidentsdetail>.rp_top>span
+{
+    display:inline-block;
+    color:#fff;
+    font-size: 20px;
+    line-height:50px;
+    margin-left:10px;
+}
+#rp_incidentsdetail>.rp_middle
+{
+    width:100%;
+    height:64px;
+    background-image:url(../images/incident_detailtab.png);
+    background-attachment:scroll;
+    background-repeat:no-repeat;
+    background-size:100% 64px;
+    overflow:hidden;
+}
+#rp_incidentsdetail>.rp_middle>div
+{
+    width:33%;
+    float:left;
+    height:64px;
+    background-color:transparent;
+}
+#rp_incidentsdetail>.rp_middle>div.rp_clear
+{
+    width:0px;
+    display:none;
+}
+#rp_incidentsdetail>.rp_bottom>div
+{
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+#rp_incidentsdetail>.rp_bottom .rp_content
+{
+    background-color:#fff;
+    margin-top:10px;
+    width:100%;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+#rp_dispactherComments .rp_content
+{
+    height:400px;
+}
+    #rp_dispactherComments .rp_content>div
+    {
+        margin:10px 10px;
+        font-size:14px;
+        color:#888888;
+    }
+#rp_incidentsdetail>.rp_bottom .rp_tableTitle
+{
+    font-size:30px;
+    border-bottom:none;
+}
+
+#rp_incidentsdetail>.rp_bottom  .rp_middle
+{
+    min-height:136px;
+}
+
+.rp_collectionview
+{
+    margin:10px 10px;
+    width:100%;
+    min-height:116px;
+}
+    .rp_collectionview>li
+    {
+        float:left;
+        margin-right:10px;
+        margin-bottom:10px;
+    }
+    .rp_collectionview>li:last-child
+    {
+        margin-right:0px;
+    }
+        .rp_collectionview>li>img
+        {
+            height:116px;
+            width:116px;
+
+        }
+
+#rp_inspectorComments .rp_bottom
+{
+    height:281px;
+}
+    #rp_inspectorComments .rp_bottom>div
+    {
+        margin:10px 10px;
+        font-size:14px;
+        color:#888888;
+    }
+
+
+
+#rp_addComments .rp_middle>div:first-child
+{
+    margin-top:10px;
+    float:left;
+    width:15%;
+    text-align:center;
+
+}
+#rp_addComments .rp_middle>.rp_content
+{
+    float:left;
+    width:85%
+}
+#rp_cameraBtn>img
+{
+    margin-top:44px;
+    width:58%;
+    height:47px;
+}
+
+
+#rp_addComments .rp_aboveBottom
+{
+    height:241px;
+}
+    #rp_addComments .rp_aboveBottom>div
+    {
+        margin:10px 10px;
+    }
+
+#rp_addComments .rp_aboveBottom textarea
+{
+    width:100%;
+    height:221px;
+}
+#rp_addComments .rp_bottom
+{
+    margin-top:10px;
+    float:right;
+    height:50px;
+    width:17%;
+    text-align:center;
+    background-color:#6499D1;
+    border-radius:5px;
+}
+    #rp_addComments .rp_bottom>span
+    {
+        line-height:50px;
+        font-size:18px;
+        color:#fff;
+    }
+
+#rp_background{
+    position:absolute;
+    top:0px;
+    overflow:hidden;
+    opacity:0.5;
+    background-color:#000;
+    width:100%;
+    z-index:99;
+    display:none;
+}
+
+#rp_largeimage{
+    position:absolute;
+    top:61px;
+    width:90%;
+    margin-left:5%;
+    z-index:100;
+    overflow:hidden;
+    text-align:center;
+}
+#rp_largeimage>img{
+    display:inline-block;
+}
+#rp_largeimage>img:first-child{
+        max-width:90%;
+        margin-top:20px;
+}
+#rp_largeimage>img:last-child{
+    max-width:10%;
+}
+
+#rp_cameraHint
+{
+    position:absolute;
+    top:220px;
+    width:40%;
+    z-index:101;
+    margin-left:30%;
+    background-color:#F2F2F2;
+    border:1px solid #888888;
+    border-radius:8px;
+    display:none;
+    
+}
+#rp_cameraHint>div{
+    margin:30px 30px;
+    
+}
+#rp_cameraHint .rp_bottom{
+    margin-top:20px;
+}
+#rp_cameraHint .rp_bottom,
+#rp_cameraHint .rp_top
+{
+    background-color:#888888;
+    border:1px solid #888888;
+    text-align:center;
+    border-radius:8px;
+}
+#rp_cameraHint span{
+    font-size:18px;
+    line-height:35px;
+    color:#fff;
+}

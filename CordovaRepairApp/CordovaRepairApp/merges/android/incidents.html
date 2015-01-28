@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+
+    <title>CordovaRepairApp</title>
+
+    <!-- CordovaRepairApp references -->
+    <link href="css/incidents.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="page">
+        <div class="rp_header">
+            <div class="rp_backBtn rp_left"><img src="images/before.png"></div>
+            <div class="rp_middle"><img src="images/cpm_logo.png"></div>
+            <div class="rp_right"><span>Contoso Property Management</span></div>
+            <div class="rp_clear"></div>
+        </div>
+
+        <div id="login_page">
+            <div class="rp_content">
+                <div id="rp_loginHint">Sign in to access repair orders</div>
+                <div id="rp_loginbtn"><span>Sign In</span></div>
+            </div>
+        </div>
+
+        <div id="incidentpage">
+            <table border="0" cellspacing="0">
+                <tr>
+                    <td class="rp_left" valign="top">
+                        <div id="rp_propertyDetailTable" class="rp_top">
+                            <div class="rp_top">
+                                <div class="rp_tableTitle">
+                                    PROPERTY DETAILS
+                                </div>
+                                <div class="rp_list">
+                                    <ul>
+                                        <li>
+                                            <div class="rp_leftitem">
+                                                <img src="images/home.png" />
+                                            </div>
+                                            <div class="rp_rightitem">
+                                                <span data-bind="text: Title"></span>
+                                            </div>
+                                            <div class="rp_clear">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="rp_leftitem">
+                                                <img src="images/man.png" />
+                                            </div>
+                                            <div class="rp_rightitem">
+                                                <span data-bind="text: Owner"></span>
+                                            </div>
+                                            <div class="rp_clear">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div id="rp_propertyDetailImage">
+                                                <img data-bind="attr: { src: ImageUrl }" />
+                                                <div class="rp_address">
+                                                    <span data-bind="text: Address"></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="rp_bottom">
+                                <div class="rp_top">
+                                    <div class="rp_tableTitle">
+                                        CONTACT OWNER
+                                    </div>
+                                    <div class="rp_list">
+                                        <ul>
+                                            <li data-bind="click:ContactOwnerClick">
+                                                <div class="rp_leftitem">
+                                                    <img src="images/email.png" />
+                                                </div>
+                                                <div class="rp_rightitem rp_blue">
+                                                    <span data-bind="text: ContactOwner"></span>
+                                                </div>
+                                                <div class="rp_clear">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="rp_bottom">
+                                    <div class="rp_tableTitle">
+                                        CONTACT OFFICE
+                                    </div>
+                                    <div class="rp_list">
+                                        <ul>
+                                            <li data-bind="click:ContactOfficeClick">
+                                                <div class="rp_leftitem">
+                                                    <img src="images/email.png" />
+                                                </div>
+                                                <div class="rp_rightitem rp_blue">
+                                                    <span data-bind="text: ContactOffice"></span>
+                                                </div>
+                                                <div class="rp_clear">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rp_inspectionDetail" class="rp_bottom">
+                            <div class="rp_top">
+                                <div class="rp_tableTitle">
+                                    INSPECTION DETAILS
+                                </div>
+                                <div class="rp_list">
+                                    <ul data-bind="foreach: inspectionDetailArray">
+                                        <li data-bind="click: $parent.inspectionDetailClick.bind($data,$index())">
+                                            <div class="rp_leftitem">
+                                                <img data-bind="attr: { src: ImageUrl }" />
+                                            </div>
+                                            <div class="rp_rightitem">
+                                                <span data-bind="text: Detail,css: { rp_blue: $index() == 1 }"></span>
+                                            </div>
+                                            <div class="rp_clear">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="rp_bottom">
+                                <div id="rp_finalizeBtn" data-bind="style: { display: completedDate() == null ? 'block' : 'none' },click: finalizeBtnClick"><span>Finalize Repair</span></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="rp_middle" valign="top">
+                        <div id="rp_incidentslist" class="rp_top">
+                            <div class="rp_tableTitle">
+                                INCIDENTS
+                            </div>
+                            <ul data-bind="foreach: incidentList">
+                                <li data-bind="click: $parent.IncidentItemClick.bind($data,$index())">
+                                    <div class="rp_leftitem">
+                                        <img data-bind="attr: { src: ImageUrl }">
+                                    </div>
+                                    <div class="rp_rightitem">
+                                        <div>
+                                            <div class="rp_left"><span>Room: </span><span data-bind="text: RoomTitle"></span></div>
+                                            <div class="rp_right"><span>Repair Date: </span><span data-bind="text: RepairDate"></span></div>
+                                            <div class="rp_clear"></div>
+                                        </div>
+                                        <div>
+                                            <div class="rp_line"><span>Incident: </span><span data-bind="text: IncidentTitle"></span></div>
+                                        </div>
+                                        <div>
+                                            <div class="rp_left"><span>Inspection Date: </span><span data-bind="text: InspectionDate"></span></div>
+                                            <div class="rp_right"><span>Approved: </span><span data-bind="text: Approved"></span></div>
+                                            <div class="rp_clear"></div>
+                                        </div>
+                                    </div>
+                                    <div class="rp_clear">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="blockui" id="listloadingui" style="display:none">
+                            <img src="images/ajax-loader.gif">
+                        </div>
+                    </td>
+                    <td class="rp_right" valign="top">
+                        <div id="rp_incidentsdetail" class="rp_top">
+                            <div class="rp_top">
+                                <span data-bind="text: detailTitle"></span>
+                            </div>
+                            <div class="rp_middle">
+                                <div data-bind="click:dispatcherBtnClick">
+                                    <div class="rp_top"><div><img src="images/dispatcher.png"></div></div>
+                                    <div class="rp_bottom"><span>Dispatcher comments</span></div>
+                                </div>
+                                <div data-bind="click:inspectorComentsBtnClick">
+                                    <div class="rp_top"><div><img src="images/inspector.png"></div></div>
+                                    <div class="rp_bottom"><span>Inspector comments & photos</span></div>
+                                </div>
+                                <div data-bind="click:addComentsBtnClick">
+                                    <div class="rp_top"><div><img src="images/addnew.png"></div></div>
+                                    <div class="rp_bottom"><span>Add comments & photos</span></div>
+                                </div>
+                                <div class="rp_clear"></div>
+                            </div>
+                            <div class="rp_bottom">
+                                <div id="rp_dispactherComments" data-bind="style: { display: selectButonIndex() == 0 ? 'block' : 'none' }">
+                                    <div class="rp_tableTitle">DISPATCHER COMMENTS</div>
+                                    <div class="rp_content">
+                                        <div data-bind="html: DispatcherComments"></div>
+                                    </div>
+                                </div>
+                                <div id="rp_inspectorComments" data-bind="style: { display: selectButonIndex() == 1 ? 'block' : 'none' }">
+                                    <div class="rp_tableTitle">INSPECTOR COMMENTS & PHOTOS</div>
+                                    <div class="rp_content rp_middle">
+                                        <ul class="rp_collectionview" data-bind="foreach: InspectorRoomPhotosList">
+                                            <li data-bind="click:$parent.InpectorRoomPhotoClick.bind($data,$index())">
+                                                <img data-bind="attr: { src: $data}">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="rp_content rp_bottom">
+                                        <div data-bind="html: InspectorIncidentComments"></div>
+                                    </div>
+                                </div>
+                                <div id="rp_addComments" data-bind="style: { display: selectButonIndex() == 2 ? 'block' : 'none' }">
+                                    <div class="rp_tableTitle">ADD REPAIR COMMENTS & PHOTOS</div>
+                                    <div class="rp_middle">
+                                        <div id="rp_cameraBtn">
+                                            <img data-bind="click:cameraBtnClick" src="images/camera_gray.png" />
+                                        </div>
+                                        <div class="rp_content">
+                                            <ul class="rp_collectionview" data-bind="foreach: NewPhotosList">
+                                                <li data-bind="click:$parent.NewRepairPhotoClick.bind($data,$index())">
+                                                    <img data-bind="attr: { src: $data}">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="rp_clear"></div>
+                                    </div>
+                                    <div class="rp_content rp_aboveBottom">
+                                        <div>
+                                            <textarea data-bind="value: RepairComments, enable: RepairCommentsEnable"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="rp_bottom" data-bind="style: { display: DoneBtnHidden() ? 'none' : 'block' }, click:DoneBtnClick">
+                                        <span>Done</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blockui" id="detailloadingui" style="display:none">
+                            <img src="images/ajax-loader.gif">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="rp_backBtn"></div>
+        </div>
+
+
+        <div id="rp_background">
+        </div>
+        <div id="rp_largeimage" data-bind="style: { display: bshow() == true ? 'block' : 'none' }">
+                <img data-bind=" attr: { src:imageBase64Data}" valign="top">
+                <img src="images/close.png" data-bind="click:closeLargeImage" valign=" top">
+        </div>
+        <div id="rp_cameraHint" data-bind="style: { display: bshow() == true ? 'block' : 'none' }">
+            <div>
+                <div class="rp_top" data-bind="click:selectPhotoClick"><span>Select Photo</span></div>
+                <div class="rp_bottom" data-bind="click:takeNewPhotoClick"><span>New Photo</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cordova reference, this is added to your app when it's built. -->
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="scripts/jquery-2.1.1.js"></script>
+    <script src="services/office365/settings/settings.js"></script>
+    <script src="services/office365/scripts/InAppBrowserOverride.js"></script>
+    <script src="services/office365/scripts/utility.js"></script>
+    <script src="services/office365/scripts/o365auth.js"></script>
+    <script src="services/office365/scripts/aadgraph.js"></script>
+
+    <script src="scripts/knockout-3.2.0.js"></script>
+
+    <script src="scripts/app/rpUtil.js"></script>
+    <script src="scripts/app/rpDevice.js"></script>
+    <script src="scripts/app/listClient.js"></script>
+    <script src="scripts/app/viewModel.js"></script>
+    <script src="scripts/app/incidentCtrl.js"></script>
+    <script src="scripts/app/incidents.js"></script>
+</body>
+</html>
