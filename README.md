@@ -78,14 +78,16 @@ The sections below provide more information about these components and how to ge
 To set up and configure the demo first download the Property Manager My App and open it in Visual Studio 2013.
 
 **Important Note:**  Save the PropertyManagerMyApp directory to the root of one of your drives to ensure all Nuget functionality will work and your file paths will not become too long.
+Minimum requirement is Visual Studio 2013 Update 4 with Microsoft Office 365 API Tools extension.
 
 **Register the Property Manager My App with your Azure Active Directory**
 
 To register the Property Manager My App with your Azure Active Directory follow these steps.
 
-1. Right click the **PropertyManagerMyApp project** and select **Add -> Connected Service**.
-2. Authenticate with the administrator credentials associated with your tenancy.
-3. Use the wizard to configure the appropriate O365 permissions.
+1. Right click on the  **PropertyManagerMyApp project** and select **Build**
+2. Right click the **PropertyManagerMyApp project** and select **Add -> Connected Service**.
+3. Authenticate with the administrator credentials associated with your tenancy.
+4. Use the wizard to configure the appropriate O365 permissions.
   
 	The following images demonstrate how your app settings and api permissions should be configured for the Property Manager My App to work.
 	
@@ -109,7 +111,7 @@ To register the Property Manager My App with your Azure Active Directory follow 
 	
 	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 App Settings.jpg)
 
-4. Click **OK** in the Add Connected Services wizard to commit the changes.  
+5. Click **OK** in the Add Connected Services wizard to commit the changes.  
 
 At this point VS will add the appropriate O365 Nuget packages to the Visual Studio Solution.
 
