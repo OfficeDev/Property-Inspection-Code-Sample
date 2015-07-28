@@ -4,16 +4,16 @@
 
 - [Overview](#overview)
 - [Web app Installation](#web-app-installation)
-- [iOS Apps Installation](#install-ios)
-- [Android App Installation](#install-android)
-- [Cordova App Installation](#install-cordova)
-- [Xamarin App Installation](#install-xamarin)
-- [Office Add-in for Outlook Installation](#install-officeaddin)
-- [Installing the web app on an Azure Web Site](#azure)
-- [Running the sample end to end](#running)
-- [API Notes](#apis)
-- [Mail App for Office Notes](#mailafo)
-- [Links that open native iOS Apps Notes](#deeplinks)
+- [iOS Apps Installation](#ios-apps-installation)
+- [Android App Installation](#android-app-installation)
+- [Cordova App Installation](#cordova-app-installation)
+- [Xamarin App Installation](#xamarin-app-installation)
+- [Office Add-in for Outlook Installation](#office-add---in-for-outlook-installation)
+- [Installing the web app on an Azure Web Site](#installing-the-web-app-on-an-Azure-Web-Site)
+- [Running the sample end to end](#running-the-sample-end-to-end)
+- [API Notes](#api-notes)
+- [Mail Add-in for Office Notes](#mail-add---in-for-Office-Notes)
+- [Links that open native iOS Apps Notes](#deep-links)
 - [License](#license)
 
 ## Overview
@@ -375,13 +375,13 @@ This is what the dashboard looks like.
 
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard%203.jpg)
 
-## Install-iOS
+## iOS Apps Installation
 
 The demo relies upon the iOS inspection mobile app and any version of the repair mobile app to function end to end.  The repair mobile app is written in iOS, Android, Cordova, and Xamarin.  You may use any version of the repair mobile app that you like.  
 
 Some configuration is required to enable the iOS Apps to work with an O365 environment.  See the [Install iOS README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-iOS.md) for complete instructions.
 
-## Install-android
+## Android App Installation
 
 The mobile Repair App in the demo may also be run on Android in addition to the iOS version. The Android version of the Repair App is written in Java, the native language for an Android device.  
 
@@ -389,7 +389,7 @@ Some configuration is required to enable the Android Repair App to work with an 
 
 Some configuration is required to enable the Android repair apps to work with an O365 environment.  See the [Install Android README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Android.md) for complete instructions.
 
-## Install-Cordova
+## Cordova App Installation
 
 The mobile Repair App in the demo may also be run on Cordova in addition to the iOS version. The Cordova version of the Repair App is written in HTML, JavaScript and CSS.  It uses the Knockout.js framework for data binding.
 
@@ -397,17 +397,17 @@ The Cordova Repair App supports iOS, Android, and Windows devices.
 
 Some configuration is required to enable the Cordova Repair App to work with an O365 environment.  See the [Install Cordova README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Cordova.md) for complete instructions.
 
-## Install-xamarin
+## Xamarin App Installation
 
 The mobile Repair App in the demo has also been built for Android devices with Xamarin.  The Xamarin version of the Repair App is written in .NET.
 
 Some configuration is required to enable the Cordova Repair App to work with an O365 environment.  See the [Install Xamarin README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Xamarin.md) for complete instructions.
 
-## Install-officeaddin
+## Office Add-in for Outlook Installation
 
 Some configuration is required to enable the Office Add-in for Outlook to work with an Office 365 environment.  See the [Install Office Add-in README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Mail.md) for complete instructions and a detailed technical description of how the Office Add-in works.
     
-## Azure
+## Installing the web app on an Azure Web Site
 In addition to your localhost development environment, the web app may also run on an Azure Web Site.
 
 If you wish to publish the web app to an Azure Web Site it is recommended that you create another AAD application for your Azure Web Site.  This ensures that the registration for the App in the My Apps list in O365 has the appropriate Sign-On URL.
@@ -416,7 +416,7 @@ The following article describes how to use Visual Studio Publishing Profiles to 
 
 [Managing Multiple Windows Azure Web Site Environments using Visual Studio Publishing Profiles](http://www.bradygaster.com/post/managing-multiple-windows-azure-web-site-environments-using-visual-studio-publishing-profiles)
 
-## Running
+## Running the sample end to end
 The [PowerPoint slide deck](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo%20Script.pptx) describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.  This is an another excellent resource to see what this demo really does and how the scenario in it unfolds.
 
 ## Resetting
@@ -469,15 +469,15 @@ To re-provision (reset) the entire information architecture and demo data to the
 
 6.	In this document, go to the Provision Site Collection and information architecture sub section in the Install-WebApp section and re-execute all the steps up to the Mail setup section.
 
-## APIs
+## API Notes
 When this demo was built the O365 SDKs for ASP.Net and iOS were in the alpha/beta stages.  Consequently, some of the code in the demo uses REST based approaches to perform operations with O365 services like SharePoint.  The following parts of the sample use REST based approaches to access O365 Services.
 
 * Working with files in the web app and mobile apps.  See [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** to see how this is done.
 
-## Mail Add-In
+## Mail Add-in for Office Notes
 The Office Add-in for Outlook included in the demo renders properly in PC web browsers but it does not render in iOS devices in Safari, the OWA app, or the native iOS email client.  At this time they are not supported in Safari, the OWA app, or the native iOS email client.
 
-## Deeplinks
+## Deep links
 The links in the workflow emails which open the native iOS apps on an iOS device work when using the native iOS email client.  At this time they are not supported in Safari or the OWA app.
 
 ## License
