@@ -11,6 +11,7 @@
 - [Office Add-in for Outlook Installation](#office-add-in-for-outlook-installation)
 - [Installing the web app on an Azure Web Site](#installing-the-web-app-on-an-azure-web-site)
 - [Running the sample end to end](#running-the-sample-end-to-end)
+- [Resetting the demo environment](#resetting-the-demo-environment)
 - [API Notes](#api-notes)
 - [Mail Add-in for Office Notes](#mail-add-in-for-office-notes)
 - [Links that open native iOS Apps Notes](#deep-links)
@@ -419,7 +420,7 @@ The following article describes how to use Visual Studio Publishing Profiles to 
 ## Running the sample end to end
 The [PowerPoint slide deck](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo%20Script.pptx) describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.  This is an another excellent resource to see what this demo really does and how the scenario in it unfolds.
 
-## Resetting
+## Resetting the demo environment
 There are two different ways you can reset the demo so you can run it multiple times with the pre-populated demo data.
 
 - Re-provisioning demo data only
