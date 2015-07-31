@@ -1,0 +1,57 @@
+﻿@using SuiteLevelWebApp.Models
+@using Newtonsoft.Json.Linq
+@model  Incident
+@{
+    Layout = null;
+    var inspectionPhotos = ViewBag.InspectionPhotos as IEnumerable<FileContent>;
+    var incidentVideos = ViewBag.IncidentVideos as IEnumerable<Video>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Incident[@Model.Id]</title>
+    <meta name="created" content="@DateTime.Now.ToString("o")" />
+</head>
+<body>
+    <h2>Property</h2>
+    <p><b>Property Name:</b> @Model.sl_propertyID.Title</p>
+    <p><b>Property Address:</b></p>
+    <p>@Model.sl_propertyID.sl_address1</p>
+    <p>@Model.sl_propertyID.sl_address2</p>
+    <h2>Inspection</h2>
+    <p><b>Inspection Date:</b> @Date(Model.sl_inspectionID.sl_datetime)</p>
+    <p><b>Incident Type:</b> @Model.sl_type</p>
+    <p><b>Room:</b> @Model.sl_roomID.Title</p>
+    <p><b>Comments from the inspector:</b></p>
+    <p>@Model.sl_inspectorIncidentComments</p>   
+    <p><b>Incident reported:</b> @Date(Model.sl_date)</p>
+    <h3>Inspection Photos</h3>
+    @if (!inspectionPhotos.Any())
+    {
+        <p style="color:gray"><i>(No photo)</i></p>
+    }
+    @foreach (var photo in inspectionPhotos)
+    {
+        <img alt="@photo.Name" src="name:@photo.Id" />
+    }
+    <h3>Incident Videos</h3>
+    @if (!incidentVideos.Any())
+    {
+        <p style="color:gray"><i>(No Video)</i></p>
+    }
+    @foreach (var video in incidentVideos)
+    {
+        <p>
+            <a href="@video.YammerObjectUrl" target="_blank">@video.Title</a>
+        </p>
+    }
+</body>
+</html>
+
+@helper Date(DateTime? dateTime)
+{
+    if (dateTime.HasValue)
+    {
+        @dateTime.Value.ToString("MM/dd/yyyy")
+    }
+}

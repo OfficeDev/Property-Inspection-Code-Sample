@@ -1,0 +1,232 @@
+﻿@model DashboardInspectionDetailsViewModel
+@{
+    Layout = "~/Views/Shared/_DemoLayout.cshtml";
+    ViewBag.Title = "Inspection Details";
+}
+
+<div class="container body-content">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-gray-light">
+        <div class="row">
+            <ul>
+                <li class="left-panel col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="details">
+                        <h1>Inspection Details</h1>
+                        <div class="details-block">
+                            <div class="details-img">
+                                <a href="/Dashboard/Property/@Model.inspection.sl_propertyID.Id">
+                                    <img src="@Model.PropertyDetail.propertyImgUrl" />
+                                </a>
+                            </div>
+                            <div class="content-block">
+                                <div class="content-row">
+                                    <h2>@Model.inspection.sl_propertyID.Title</h2>
+                                </div>
+                                <div class="content-row fs-smaller">
+                                    <span>
+                                        @Model.inspection.sl_propertyID.sl_address1
+                                        @Model.inspection.sl_propertyID.sl_address2
+                                    </span>
+                                </div>
+                                <div class="content-row fs-smaller">
+                                    <span>Owned by</span>
+                                    <span>@Model.inspection.sl_propertyID.sl_owner</span>
+                                </div>
+                            </div>
+                            <div class="content-block">
+                                <div class="content-row">
+                                    <h2>Inspector: @Model.inspection.sl_inspector</h2>
+                                </div>
+                                <div class="content-row">
+                                    <span>
+                                        <a class="fs-smaller" href="mailto:@Model.inspection.sl_emailaddress">@Model.inspection.sl_emailaddress</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="content-block">
+                                <div class="content-row">
+                                    <h2>Property Members</h2>
+                                </div>
+                                @foreach (var item in Model.members)
+                                {
+                                    <div class="content-row fs-smaller profiles">
+                                        <img class="profile-img" src="@Url.Action("UserPhoto", "Photo", new { userId = item.mail })" />
+                                        <span>@item.displayName</span>
+                                    </div>
+                                }
+                                <div class="content-row fs-smaller profiles trending-docs" style="padding:0 0 0 0;">
+                                    <a style="padding-left:0;" href="@string.Format("{0}owa/#path=/group/{1}/people", SuiteLevelWebApp.Utils.AADAppSettings.OutlookResourceId, Model.UnifiedGroupEmail)" target="_blank">See More</a>
+                                </div>
+                                <div class="bg-white trending-docs">
+                                    <h2>Conversations</h2>
+                                    @HyperLinkLists(Model.conversations, "")
+                                    <a href="@string.Format("{0}owa/#path=/group/{1}/mail", SuiteLevelWebApp.Utils.AADAppSettings.OutlookResourceId, Model.UnifiedGroupEmail)" target="_blank">See More</a>
+                                    <h2>Recent Documents</h2>
+                                    @HyperLinkLists(Model.recentDocuments, "")
+                                    <a href="@string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=Documents", SuiteLevelWebApp.Utils.AppSettings.DemoSiteServiceResourceId, Model.UnifiedGroupId)" target="_blank">See More</a>
+                                    @*@HyperLinkLists(Model.tasks, "Tasks")*@
+                                    <h2>Notes</h2>
+                                    @HyperLinkLists(Model.oneNotePages, "")
+                                    @if (!string.IsNullOrEmpty(Model.oneNoteUrl))
+                                    {
+                                        <a href="@Model.oneNoteUrl" target=" _blank">See More</a>
+                                    }
+                                    else
+                                    {
+                                        <span>See More</span>
+                                    }
+                                    <h2>Dispatcher Email</h2>
+                                    @HyperLinkLists(Model.DispatcherMails, "")
+                                    <a href="@string.Format("{0}owa/#path=/group/{1}/mail", SuiteLevelWebApp.Utils.AADAppSettings.OutlookResourceId, Model.UnifiedGroupEmail)" target="_blank">See More</a>
+                                    <h2>Property Files</h2>
+                                    @HyperLinkLists(Model.files, "")
+                                    <a href="@string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=Documents", SuiteLevelWebApp.Utils.AppSettings.DemoSiteServiceResourceId, Model.UnifiedGroupId)" target="_blank">See More</a>
+                                    <div class="upload-file-block" style="margin-top:15px">
+                                        @using (Html.BeginForm("UploadFile", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.Hidden("PropertyTitle", Model.incident.sl_propertyID.Title)
+                                            @Html.Hidden("IncidentId", Model.incidentId)
+                                            <div class="form-button">
+                                                <input style="width:220px" type="file" name="File" />
+                                                <br />
+                                                <button>Upload</button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="right-panel col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <div>
+                        @if (!string.IsNullOrEmpty(Model.viewName))
+                        {
+                            @Html.Partial(Model.viewName, Model)
+                        }
+                        @*@if (Model.viewName == "ScheduleRepair")
+                            {
+                                var createTaskViewModel = ViewBag.CreateTaskViewModel as CreateTaskViewModel
+                                    ?? new CreateTaskViewModel { InspectionId = Model.incidentId };
+                                @Html.Partial("CreateTask", createTaskViewModel)
+                            }*@
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="popup-window" style="display:none">
+    <div class="content-area">
+        <span class="popup-window-fork"></span>
+        <!--Incident begin -->
+        <div class="incident-window">
+            <h3>Incident</h3>
+            <div class="content-row clear">
+                <label>Incident Comments</label>
+                <div>
+                    <div>
+                        @Html.TextAreaFor(m => m.incident.sl_inspectorIncidentComments, new { @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="content-row clear">
+                <label>Incident Type</label>
+                <div>
+                    @Html.TextBoxFor(m => m.incident.sl_type, new { @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="content-row clear img">
+                <label>Photos</label>
+                @if (Model.roomInspectionPhotos != null && Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId).Count() > 0)
+                {
+                    <img src="@Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId).FirstOrDefault().sl_roomID.imgUrl" />
+                }
+            </div>
+            <div class="content-row clear">
+                <label>Videos</label>
+                <div class="video-lists" style="padding-left:0px">
+                    <ul style="padding:0px">
+                        @foreach (var item in Model.videos)
+                        {
+                            <li style="margin:0; padding:0; list-style:none">
+                                <a href="@item.YammerObjectUrl" target="_blank">
+                                    <img style="width:500px; height:300px; margin-bottom:10px" src="@item.ThumbnailUrl" />
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--Incident end -->
+        <!--Inspection Comments begin-->
+        <div class="inspection-comments-window">
+            <h3>Inspection Comment</h3>
+            <div class="content-row clear">
+                @Html.TextAreaFor(m => m.inspectionComment.Title, new { @readonly = "readonly" })
+            </div>
+            <h4>Photos</h4>
+            <div class="content-row">
+                <p class="imgs">
+                    @foreach (var item in Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId))
+                    {
+                        <img src="@item.sl_roomID.imgUrl" />
+                    }
+                </p>
+            </div>
+
+        </div>
+        <!--Inspector Comments end -->
+        @if (Model.viewName == "RepairComplete" || Model.viewName == "RepairApproved")
+        {
+        <!--Repair Comments begin-->
+            <div class="repair-comments-window">
+                <h3>Repair Comment</h3>
+                <div class="content-row clear">
+                    @Html.TextAreaFor(m => m.incident.sl_repairComments, new { @readonly = "readonly" })
+                </div>
+                <h4>Photos</h4>
+                <div class="content-row">
+                    <p class="imgs">
+                        @foreach (var item in Model.repairPhotos)
+                        {
+                            <img src="@item.imgUrl" />
+                        }
+                    </p>
+                </div>
+            </div>
+        <!--Repair Comments end -->
+        }
+    </div>
+</div>
+
+@helper HyperLinkLists(IEnumerable<HyperLink> links, string title)
+{
+    <h3>@title</h3>
+    <div class="details-block">
+        @foreach (var link in links)
+        {
+            <div class="content-row">
+                @if (string.IsNullOrEmpty(link.WebUrl) || link.WebUrl == "#")
+                {
+                    <span>@link.Title</span>
+                }
+                else
+                {
+                    <a href="@link.WebUrl" target="_blank">@link.Title</a>
+                }
+            </div>
+        }
+    </div>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(function () {
+            $('.popup-window-fork').click(function () {
+                $('.popup-window, .popup-window .content-area > div').hide();
+            });
+        });
+    </script>
+}
