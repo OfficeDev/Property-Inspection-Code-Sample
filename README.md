@@ -3,68 +3,107 @@
 **Table of Contents**
 
 - [Overview](#overview)
-- [My App Installation](#install-myapp)
-- [iOS Apps Installation](#install-ios)
-- [Android, Cordova and Xamarin Repair Apps AAD Application](#RepairApp-AAD-Application)
-- [Android App Installation](#install-android)
-- [Cordova App Installation](#install-cordova)
-- [Xamarin App Installation](#install-xamarin)
-- [Mail App for Office Installation](#install-mailapp)
-- [Installing the MyApp on an Azure Web Site](#azure)
-- [Running the sample end to end](#running)
-- [API Notes](#apis)
-- [Mail App for Office Notes](#mailafo)
-- [Links that open native iOS Apps Notes](#deeplinks)
+- [Web app Installation](#web-app-installation)
+- [iOS, Android, Cordova, and Xamarin Mobile Applications](#ios-android-cordova-and-xamarin-mobile-applications)
+- [iOS Apps Installation](#ios-apps-installation)
+- [Android App Installation](#android-app-installation)
+- [Cordova App Installation](#cordova-app-installation)
+- [Xamarin App Installation](#xamarin-app-installation)
+- [Office Add-in for Outlook Installation](#office-add-in-for-outlook-installation)
+- [Installing the web app on an Azure Web Site](#installing-the-web-app-on-an-azure-web-site)
+- [Running the sample end to end](#running-the-sample-end-to-end)
+- [Resetting the demo environment](#resetting-the-demo-environment)
+- [API Notes](#api-notes)
+- [Mail Add-in for Office Notes](#mail-add-in-for-office-notes)
+- [Deep Links](#deep-links)
 - [License](#license)
 
 ## Overview
-The Property Inspection Code Sample demonstrates how to create a line of business system with O365 and mobile technologies.
+The Property Inspection Code Sample demonstrates how to create a line of business system with Office 365 and mobile technologies.
 
-You can see the demo in action in the [Office 365 Developer Kick Off session] (http://channel9.msdn.com/events/TechEd/Europe/2014/DEV-B207) from TechEd Europe 2014.
+You can watch an entire end to end demo of the sample in the following video.  If you are looking to see everything this code sample does and all the pieces of the Office 365 platform it uses then this is the video you want to watch.
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/demo_video_thumb.png)
+[![Property Manager Demo Walkthrough](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo Walk Through Video.png)](https://youtu.be/0q7vjEegGkk "Click to see the code sample from end to end.")
 
-The [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** is used to integrate the iOS Apps with several O365 services.
+> Speaker: [Todd Baginski](http://channel9.msdn.com/Events/Speakers/Todd-Baginski)
+
+You can also see the demo in action in the **Office Development Matters, and Here's Why...** session from Ignite 2015.
+
+[![Office Development Matters, and Here's Why...](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/office_dev_matters.png)](http://channel9.msdn.com/events/Ignite/2015/FND2202 "Click to see the sample in action.")
+
+> Speakers: [Tristan Davis](http://channel9.msdn.com/Events/Speakers/tristan-davis), [Rob Lefferts](http://channel9.msdn.com/Events/Speakers/robert-lefferts), [Jeremy Thake](http://channel9.msdn.com/Events/Speakers/Jeremy-Thake)
+
+> Jeremy provides a tour of the Property Manager web app and the pieces of Office 365 it is built on.
+
+You can see the demo in action and learn more about the code in the following sessions from //build 2015.
+
+[![Integrating Web Apps with Office 365](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/integrating-web-apps-with-office-365.png)](http://channel9.msdn.com/events/Build/2015/3-728 "Click to see the sample in action.")
+
+> Speakers: [Todd Baginski](http://channel9.msdn.com/Events/Speakers/Todd-Baginski), [Dorrene Brown](http://channel9.msdn.com/Events/Speakers/dorrene-brown)
+
+> Todd and Dorrene show how to make an Office 365 web app from the ground up and explain the fundamental concepts.  Then, Todd demonstrates the web app portion of the Property Management code sample and dives deep into the code to show how the ASP.NET MVC web site is built and how it uses Office 365 and the Office 365 Unified API to integrate with the Office 365 platform and services.  
+
+[![iOS, Cordova, and Android Apps with Office 365](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/ios-cordova-android-apps-with-office-365.png)](http://channel9.msdn.com/events/Build/2015/3-722 "Click to see the sample in action.")
+
+> Speakers: [Todd Baginski](http://channel9.msdn.com/Events/Speakers/Todd-Baginski), [Joshua Gavant](http://channel9.msdn.com/Events/Speakers/joshua-gavant)
+
+> Todd demonstrates the iOS repair app at the end of this session and shows how it may be used to take a picture and upload it to a private site collection in O365.
+
+The [MS Open Tech](http://msopentech.com)'s open source SDKs are used to integrate the iOS and Android apps with several Office 365 services.
+
+- [Microsoft Services SDKs for iOS](https://github.com/OfficeDev/Office-365-SDK-for-iOS/)
+- [Microsoft Services SDKs for Android](https://github.com/OfficeDev/Office-365-SDK-for-android/)
 
 **Where can I find things in this repo?**
 
-- The iOS Repair App is located in the iOSInspectionApp folder.
-- The iOS Inspection App is located in the iOSRepairApp folder.
-- The Property Manager My App is located in the PropertyManagerMyApp folder.
-- The Mail App for Office is located in the MailApp folder.
+- Web application
+	+ The Property Management web app is located in the PropertyManagerMyApp folder.
+- Mobile applications
+	+ The iOS Inspection App is located in the iOSRepairApp folder.
+	+ The iOS Repair App is located in the iOSInspectionApp folder.
+	+ The Android Repair App is located in the AndroidRepairApp folder.
+	+ The Cordova Repair App is located in the CordovaRepairApp folder.
+	+ The Xamarin Repair App is located in the XamarinRepairApp folder.
+- Office Add in
+	+ The Office Add-in for Outlook is located in the MailApp folder.
 
-**Property Management My App - A Line Of Business Application**
+**Property Management web app - A Line Of Business Application**
 
-The Property Manager My App demonstrates many different patterns used in real world scenarios.  At a high level, the Property Manager My App does the following things.
+The Property Manager web app demonstrates many different patterns used in real world scenarios.  At a high level, the Property Manager web app does the following things.
 
-- Provisions the Site Collection used by the Property Manager My App
+- Provisions the Site Collection used by the Property Manager web app
 - Provisions information architecture and supporting components into the new Site Collection
 - Provisions content into the new Site Collection
+- Provisions Azure Active Directory groups and users
+- Assigns Office 365 licenses to Azure Active Directory users
+- Provisions Office 365 unified groups
+- Adds Azure Active Directory users to Office 365 unified groups
+- Provisions videos to the Office 365 Video Portal
 - Serves as a line of business application
 
-This Property Manager My App provides a dashboard application used in a property management scenario.
+This Property Manager web app provides a dashboard application used in a property management scenario.
 This dashboard is used by dispatchers at the property management company's home office to coordinate inspections and repairs.
-The dashboard uses O365 APIs and the SharePoint REST APIs to read and write information in Exchange and SharePoint.
+The dashboard uses O365 APIs, the SharePoint REST APIs, and the Office 365 Unified API to read and write information in Exchange and SharePoint.
 
 The sections below provide more information about these patterns and how to get up and running.
 
-**iOS Applications**
+**iOS, Android, Cordova, and Xamarin Applications**
 
-The iOS Apps demonstrate many different patterns used in real world scenarios.  At a high level, the iOS Apps do the following things.
+The iOS, Android, Cordova, and Xamarin mobile apps demonstrate many different patterns used in real world scenarios.  At a high level, the mobile apps do the following things.
 
 - Provide property inspectors and repair people information about properties they are scheduled to inspect and repair.
 - Allow property inspectors and repair people to submit photos and comments about inspections, incidents, and repairs.
 
-The sections below provide more information about these iOS Apps and how to get up and running.
+The sections below provide more information about these mobile apps and how to get up and running.
 
-**Mail App for Office**
+**Office Add-in for Outlook (previously known as a Mail App for Office)**
 
-The Mail App for Office uses Outlook and Outlook Web Access to display data from Office 365 SharePoint lists.  The Mail App for Office is implemented with two main components.
+The Office Add-in for Outlook and Outlook Web Access displays data from Office 365 SharePoint lists.  The Mail App for Office is implemented with two main components.
 
-- Mail App for Office – xml file installed on the O365 tenancy as an Exchange App
-- Web pages – Part of the Property Manager My App running on ASP.NET MVC
+- Office Add-in – xml file installed on the O365 tenancy as an Exchange App
+- Web pages – Part of the Property Manager web app running on ASP.NET MVC
 
-These files contain the code which implements the Mail App for Office:
+These files contain the code which implements the Office Add-in for Outlook:
 
 - /Controllers/MailAFOController.cs
 - /Views/MailAFO/Redir.cshmtl
@@ -74,52 +113,156 @@ These files contain the code which implements the Mail App for Office:
 
 The sections below provide more information about these components and how to get up and running.
 
-## Install-MyApp
-To set up and configure the demo first download the Property Manager My App and open it in Visual Studio 2013.
+## Web app installation
 
-**Important Note:**  Save the PropertyManagerMyApp directory to the root of one of your drives to ensure all Nuget functionality will work and your file paths will not become too long.
-Minimum requirement is Visual Studio 2013 Update 4 with Microsoft Office 365 API Tools extension.
+**Prerequisites**
 
-**Register the Property Manager My App with your Azure Active Directory**
+- Office 365 Subscription
+- Microsoft Azure Subscription
+- Visual Studio 2013 Update 4
+- [Microsoft Office Developer Tools for Visual Studio 2013 - November 2014 Update](http://download.microsoft.com/download/A/D/0/AD077416-F349-4214-81C6-6650E2AF1AF2/enu/cba_bundle.exe)
+- Office 365 Video Portal
+	+ Before you start the installation process, ensure the Office 365 video portal is provisioned in your tenancy.  Follow the steps below to enable, provision and verify the Office 365 Video Portal is available in your tenancy.
+	
+1. In your web browser, open the **Tenant Settings page** for your Office 365 tenancy.  The URL to the Tenant Settings page is shown below.
 
-To register the Property Manager My App with your Azure Active Directory follow these steps.
+	```
+	https://<TENANCY>-admin.sharepoint.com/_layouts/15/online/TenantSettings.aspx
 
-1. Right click on the  **PropertyManagerMyApp project** and select **Build**
-2. Right click the **PropertyManagerMyApp project** and select **Add -> Connected Service**.
-3. Authenticate with the administrator credentials associated with your tenancy.
-4. Use the wizard to configure the appropriate O365 permissions.
+	Example: https://contoso-admin.sharepoint.com/_layouts/15/online/TenantSettings.aspx
+	```
+
+2. In the Streaming Video Service section, select **Enable streaming video through Azure Media Services and enable the Video Portal** (shown below).
+ 
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/streaming-video-service.png)
+
+3. Click **OK**.
+
+4.	In your web browser, open the page that lists the site collections in your Office 365 tenancy. The URL for the site collections list page is shown below.
+
+	```
+	https://<TENANCY>-admin.sharepoint.com/_layouts/15/online/SiteCollections.aspx
+
+	Example: https://contoso-admin.sharepoint.com/_layouts/15/online/SiteCollections.aspx
+	```
+
+5.	Look for the Office 365 Video Portal site collection in the list of site collections in your Office 365 tenancy.
+	+ The URL to the Office 365 Video portal follows this format:
+	
+		```
+		https://<TENANCY>.sharepoint.com/portals/hub
+		```
+
+6. If the Office 365 Video Portal site collection is in the list, open it in a web browser to verify it works.
+
+7. If the Office 365 Video Portal is not provisioned in your tenancy you can provision it by appending **/_layouts/15/videoredirect.aspx** to your tenancy's base URL and opening the page in the web browser, like this.
+
+	```	
+	https://<TENANCY>.sharepoint.com/_layouts/15/videoredirect.aspx
+
+	Example: https://contoso.sharepoint.com/_layouts/15/videoredirect.aspx
+	```
+
+Important Notes
+---------------  
+
+- Use Internet Explorer or Google Chrome to install and execute the web app portion of the code sample.  The Edge browser is not yet supported.
+- The *Microsoft Office Developer Tools for Visual Studio 2013 - April 2015 Update* breaks the Add Connected Service wizard.  If you have it installed, first uninstall it and then install the [Microsoft Office Developer Tools for Visual Studio 2013 - November 2014 Update](http://download.microsoft.com/download/A/D/0/AD077416-F349-4214-81C6-6650E2AF1AF2/enu/cba_bundle.exe).  A fix for this issue is coming shortly in a new update.
+- The Add Connected Service wizard is currently broken is Visual Studio 2015 as well.  A fix for this issue is coming shortly in a new update.
+- When you save the PropertyManagerMyApp directory to your local machine, save it to the root of one of your drives to ensure all Nuget functionality will work and your file paths will not become too long.
+
+To set up and configure the demo first download the Property Manager web app source code and open it in Visual Studio 2013.
+
+**Restore the Nuget packages the web app depends on**
+
+1. Right click on the  **PropertyManagerMyApp project** and select **Build**.
+
+	> **Note:**  You will get build errors after this step, they are to be expected. 
+
+**Register the Property Manager web app with your Azure Active Directory**
+
+To register the Property Manager web app with your Azure Active Directory follow these steps.
+
+1. Right click the **PropertyManagerMyApp project** and select **Add -> Connected Service**.
+2. Click **Register your app** and authenticate with the global administrator credentials associated with your tenancy.
+3. Use the wizard to configure the appropriate Office 365 permissions.
   
-	The following images demonstrate how your app settings and api permissions should be configured for the Property Manager My App to work.
+	The following images demonstrate how your app settings and api permissions should be configured for the Property Manager web app to work.
 	
 	O365 API Calendar Permissions
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Calendar Permissions.jpg)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Calendar Permissions-2.png)
 	
 	O365 API Mail Permissions
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Mail Permissions.jpg)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Mail Permissions-2.png)
 	
 	O365 API Sites Permissions
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Sites Permissions.jpg)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Sites Permissions-2.png)
 	
-	O365 API AD Permissions
+	O365 API Users and Groups Permissions
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API AD Permissions.jpg)
-	
-	O365 App Settings
-	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 App Settings.jpg)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API AD Permissions-2.png)	
 
-5. Click **OK** in the Add Connected Services wizard to commit the changes.  
+4. Click **OK** in the Add Connected Services wizard to commit the changes.  
 
-At this point VS will add the appropriate O365 Nuget packages to the Visual Studio Solution.
+At this point Visual Studio will add the appropriate Office 365 Nuget packages to the Visual Studio Solution.
+
+**Add Office 365 unified API (preview) permissions to the PropertyManagerMyApp AAD app**
+
+1.	In your web browser, open https://portal.office.com and sign in with a global administrator account.
+2.	Click the **Admin tile**.
+3.	Expand the **ADMIN** menu item.
+4.	Click **Azure AD**.
+2.	In the left menu, click **Active Directory**
+3.	Click your Azure Active Directory
+4.	Click **Applications**
+5.	In the Show dropdown list, select **Applications my company owns**.
+6.	Click the **checkmark** button.
+5.	Ensure the **PropertyManagerMyApp.Office365App** application exists, then click it.
+6.	Click **Configure** 
+7.	Scroll down to **Permissions to other applications** and click **Add application**
+8.	Mouse over Office 365 unified API (preview) and click the **+ button**
+9.	Click the **checkmark button** on the bottom right
+10.	Open the **Delegated Permissions dropdown list** for the Office 365 unified API (preview) item you just added
+11.	Select the following permissions:
+	- Have full access to user calendars
+	- Read and write directory data
+	- Read and write all groups (preview)
+	- Enable sign-in and read user profile
+	- Read and write all user's full profiles
+
+	> **Note:** There is a permission named **Read all users' full profiles** that looks very similar to the **Read and write all user's full profiles** permission.  Make sure you select the **Read and write all user's full profiles** permission.
+	
+12.	Click **Save**
+
+**Add OneNote permissions to the PropertyManagerMyApp AAD app**
+
+In order to make the OneNote Azure Active Directory Application permission available, you must first provision the default OneNote Online notebook in your tenancy and access it.  To do this, follow these steps.
+
+1. In your web browser, open [](https://login.microsoftonline.com/) and sign in with an account that has an Office 365 license assigned to it that includes OneNote Online.
+2. Click the **OneNote Online** tile.
+3. Click a **OneNote notebook** in the list to open it.
+4.	In your web browser, open [](https://manage.windowsazure.com) and sign in with a subscription administrator account.
+5.	In the left menu, select **Active Directory**
+6.	Select your Azure Active Directory
+7.	Click **Applications**
+8.	Click the **PropertyManagerMyApp** application.
+9.	Click **Configure** 
+10.	Scroll down to **Permissions to other applications** and click **Add application**
+11.	Mouse over OneNote and click the **+ button**
+12.	Click the **checkmark button** on the bottom right
+13.	Open the **Delegated Permissions dropdown list** for the Office 365 unified API (preview) item you just added
+14.	Select **all the permissions**.	
+15.	Click **Save**
 
 **Edit web.config**
-The Property Manager My App stores configuration settings in the web.config file.  These settings must be configured for your environment in order for the Property Manager My App to work.  The Add Connected Service wizard creates some of these settings in the web.config file when it registers you app with Azure Active Directory.  These settings the Add Connected Service wizard creates include:
+
+The Property Manager web app stores configuration settings in the web.config file.  These settings must be configured for your environment in order for the Property Manager web app to work.  The Add Connected Service wizard creates some of these settings in the web.config file when it registers you app with Azure Active Directory.  These settings the Add Connected Service wizard creates include:
 
 - ida:ClientID
-- ida:Password
+- ida:ClientSecret (Microsoft Office Developer Tools for Visual Studio 2013 - November 2014 Update) or ida:Password (Microsoft Office Developer Tools for Visual Studio 2013 - April 2015 Update
 - ida:AuthorizationUri
 
 In addition to the settings above, other settings exist that you must configure to match your tenancy.  These settings include:
@@ -127,16 +270,11 @@ In addition to the settings above, other settings exist that you must configure 
 - **ServiceResourceId** Url for the O365 tenant admin site 
 
     Example: https://contoso-admin.sharepoint.com
-- **DashboardServiceResourceId** Url for the root Site Collection in the O365 Tenancy 
 
-    Example: https://contoso.sharepoint.com
-- **DashboardServiceEndpointUri** Api Endpoint for the Site Collection used by the Property Manager My App 
-
-    Example: https://contoso.sharepoint.com/sites/SuiteLevelAppDemo/_api/
 - **DemoSiteServiceResourceId** Url for the root Site Collection in the O365 Tenancy 
 
     Example: https://contoso.sharepoint.com
-- **DemoSiteCollectionUrl** Url used to create the Site Collection used by Property Manager My App 
+- **DemoSiteCollectionUrl** Url used to create the Site Collection used by Property Manager web app 
 
     Example: https://contoso.sharepoint.com/sites/SuiteLevelAppDemo
 
@@ -150,30 +288,60 @@ In addition to the settings above, other settings exist that you must configure 
 
     Example: katiej@contoso.onmicrosoft.com
 
+- **VideoPortalEndpointUri** Api Endpoint for the Video Portal which comes with your O365 tenancy  
+
+    Example: https://contoso.sharepoint.com/portals/hub
+
 1. Configure these settings in the web.config file to match your O365 / Azure Tenancy by **replacing the TENANCY placeholders in the web.config** with your tenancy name.  In the examples above, the TENANCY placeholder was replaced with contoso.
-2. Edit the **DemoSiteCollectionOwner setting** in the web.config file to match your O365 / Azure Tenancy global administrator account.
+2. Edit the **DemoSiteCollectionOwner setting** in the web.config file to match your O365 global administrator account.
 3. Right click the **PropertyManagerMyApp project** and select **Manage Nuget Packages**.
 4. Click the **Updates tab** and select **nuget.org**.
 5. Click **Update All**.
+6. Click **I Accept**.
+7. Click **Close**.
+8. In the web.config file **locate the bindingRedirect elements for the Microsoft.OData.Client, Microsoft.OData.Edm, and Microsoft.OData.Core assemblies and edit them to redirect to the latest version of the NuGet packages you downloaded**.  You can find the latest version of these assemblies in the packages.config file.
+
+	In this example the packages.config file looks like this:
+
+		<package id="Microsoft.OData.Client" version="6.13.0" targetFramework="net45" />
+	  	<package id="Microsoft.OData.Core" version="6.13.0" targetFramework="net45" />
+	  	<package id="Microsoft.OData.Edm" version="6.13.0" targetFramework="net45" />
+
+	Therefore, the bindingRedirect attributes look like this.  Notice the 6.13.0 value used in the oldVersion and newVersion attributes matches the version in the packages.config snippet above.
+
+		<dependentAssembly>
+	        <assemblyIdentity name="Microsoft.OData.Client" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+	        <bindingRedirect oldVersion="0.0.0.0-6.13.0.0" newVersion="6.13.0.0" />
+	    </dependentAssembly>
+	    <dependentAssembly>
+	        <assemblyIdentity name="Microsoft.OData.Edm" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+	        <bindingRedirect oldVersion="0.0.0.0-6.13.0.0" newVersion="6.13.0.0" />
+	    </dependentAssembly>
+	    <dependentAssembly>
+	        <assemblyIdentity name="Microsoft.OData.Core" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+	        <bindingRedirect oldVersion="0.0.0.0-6.13.0.0" newVersion="6.13.0.0" />
+	    </dependentAssembly>
+
+9. **Save** the web.config file.
 
 **Configure Trusted Sites**
 
-1. Add **http://localhost** to the Trusted Sites list in Internet Explorer.
+1. Add **https://localhost** and **http://localhost** to the Trusted Sites list in Internet Explorer.
 
 **Site Collection Provisioning**
 
-The O365SiteProvisingController is used to create the Site Collection used to store data and facilitate workflow for the Property Manager My App.
+The O365SiteProvisingController is used to create the Site Collection used to store data and facilitate workflows for the Property Manager web app.
 
 First, this controller retrieves an access token for the tenancy admin Site Collection.
-Then it uses the access token to authenticate the call to determine if the Site Collection exists.
+Then it uses the access token to authenticate the call to determine if the demo Site Collection exists.
 
-If the Site Collection exists this controller then redirects to the DashboardController.
+If the demo Site Collection exists this controller then redirects to the DashboardController.
 
 If the Site Collection does not exist then the controller creates the Site Collection.
 
-After the Site Collection is created the controller signs out from O365 and retrieves an access token for the new Site Collection.
+After the Site Collection is created the controller  retrieves an access token to interact with the new demo Site Collection.
 
-Then it uses the access token to authenticate the calls to create the information architecture and supporting components in the new Site Collection.
+Then controller uses the access token to authenticate the calls to create the information architecture and supporting components in the new Site Collection.
 
 Finally, the controller creates content in the new site collection to support the demo and redirects to the DashboardController.
 
@@ -182,18 +350,17 @@ These files contain the code which implements the Site Collection provisioning f
 - /Controllers/O365SiteProvisioningController.cs
 - /Util/csomUtil.cs
 - /Util/SiteProvisioning.cs
-- /Views/O365SiteProvisioning/CreateSiteCollection.cshmtl
 - /Views/O365SiteProvisioning/Index.cshtml
-- /Views/O365SiteProvisioning/ProvisioningSiteComponents.cshmtl
+- /Views/O365SiteProvisioning/ProvisioningDemoData.cshmtl
 - /Content/SampleData.xml
 
 After you have performed the configuration steps described above, provision the Site Collection and content.
 
 1. In Visual Studio, **press F5** to run the project.   
 
-	**When you are prompted to log in you must use your O365 admin account.**  This allows you to grant consent to the Azure Active Directory application so the demo users will be able to use it.  
+	> **When you are prompted to log in you must use your O365 admin account.**  This allows you to grant consent to the Azure Active Directory application so the demo users will be able to use it.  
 
-5. When prompted, click the **Accept** button. 
+2. When prompted, click the **Accept** button. 
 
 	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/grant consent.jpg)
 	
@@ -201,25 +368,12 @@ After you have performed the configuration steps described above, provision the 
 	 
 **Provision Site Collection and information architecture**
 
-6. In your web browser, navigate to **http://localhost:44312/O365SiteProvisioning** to invoke the O365SiteProvisioning controller and create the Site Collection and information architecture.
+3. In your web browser, navigate to **http://localhost:44312/O365SiteProvisioning** 
+4. Click **Create Demo Site Collection** to invoke the the O365SiteProvisioning controller and create the Site Collection, information architecture, and workflows.
 
-	**Note:**  This process can take up to 20 minutes to complete.  Do not refresh the page during this process.  The page will refresh every minute and display the current time to let you know it is still running.  When the process completes you will see this screen:
+	> **Note:**  This process can take up to 20 minutes to complete.  Do not refresh the page during this process.  The page will refresh every minute and display the current time to let you know it is still running.  When the process completes you will see this screen:
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/sc provision success.jpg)
-
-**Provision Workflow**
-
-7. Next, click the **Provision Workflow** link in the top menu.  Then, click the **Populate** button.
-
-	When the process completes you will see this screen:
-	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/workflow provision success.jpg)
-	
-	If you navigate to the Site Contents page in the Site Collection you will see the new Workflow History and Workflow Tasks lists.
-	
-	Use this URL to access the Site Contents page:
-	
-	https://**&lt;Your Tenancy&gt;**.sharepoint.com/sites/SuiteLevelAppDemo/_layouts/15/viewlsts.aspx
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/sc provision success-2.png)
 
 **Provision Azure Active Directory Groups, Users, and demo data**
 
@@ -231,23 +385,26 @@ Finally, you will create the Azure Active Directory Groups, Users, and demo data
 - Inspectors
 
 **Users**
-- Inspector: Rob Barker alias: robb
-- Dispatcher: Katie Jordan alias: katiej
-- Repair Person: Ron Gabel alias: rong
-- Property Owner: Margaret Au alias: marga
-- Inspector: Alisa Lawyer alias: alisal
-- Repair Person: Chris Gray alias: chrisg
-- Property Owner: Steven Wright alias: stevenw
+- Inspector: Rob Barker - alias: robb
+- Dispatcher: Katie Jordan - alias: katiej
+- Repair Person: Ron Gabel - alias: rong
+- Property Owner: Margaret Au - alias: marga
+- Inspector: Alisa Lawyer - alias: alisal
+- Repair Person: Chris Gray - alias: chrisg
+- Property Owner: Steven Wright - alias: stevenw
+- Property Owner: Dan Jump - alias: danj
+- Property Owner: Chris Johnson - alias: chrisj
+- Property Owner: Carol Troup - alias: carolt
 
 	**Running Demo With A Single User Account** 
 
-	If your tenancy does not support multiple users because you do not have 7 licenses available you can run the demo with a single user account.  In this case, the account must meet the following requirements:
+	If your tenancy does not support multiple users because you do not have 10 licenses available you can run the demo with a single user account.  In this case, the account must meet the following requirements:
 	
 	- User is a global tenant admin
-	- User is is granted the licenses necessary to support the scenario (See the Grant Licenses section below for more details)
+	- User is is granted the licenses necessary to support the scenario
 	- User is added to the Inspectors and Repair People Azure Active Directory Groups
 	
-	Additionally, in a single user scenario, the accounts set in the web.config file for the My App, as well as all the configuration variables for all the mobile apps should use the single user account. 
+	Additionally, in a single user scenario, the accounts set in the web.config file for the web app, as well as all the configuration variables for all the mobile apps should use the single user account. 
 
 8. Next, click the **Create Sample Data** link in the top menu.  Then, click the **Populate** button.
 
@@ -255,7 +412,7 @@ Finally, you will create the Azure Active Directory Groups, Users, and demo data
 
 	When the process completes you will see this screen:
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/demo data provision success.jpg)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/demo data provision success-2.png)
 	
 	If you navigate to the Site Contents page in the Site Collection you will see the lists and libraries which indicate they just had sample data added to them.
 	
@@ -265,513 +422,187 @@ Finally, you will create the Azure Active Directory Groups, Users, and demo data
 	
 	If you open the Admin app and browse to your active directory you will see the groups and users are created.  
 
-**Add Users to Groups**
-Currently, an issue has been discovered when trying to add users to groups via ADAL.  While we resolve this issue you will need to manually add some users to the Azure Active Directory Groups.
-
-1. Open the O365 Admin app.
-2. Add the following users to the Inspectors Azure Active Directory Group:
-	- Rob Barker alias: robb
-	- Alisa Lawyer alias: alisal
-3. Add the following users to the Repair People Azure Active Directory Group:
-	- Ron Gabel alias: rong
-	- Chris Gray alias: chrisg
-
 **Passwords**
 
 The initial password for all the users is **TempP@ssw0rd!**
 
 You will need to specify a new password for each user the first time you log in with them. 
 
-**Grant Licenses**
-
-Next, you must grant licenses to the Active Directory User Accounts.  This must be done manually because currently no APIs exist to automate this process.
-
-1. Open the O365 admin app.
-2. Expand the **USERS** menu and select **Active Users**.
-3. For each user in the list below, perform the following actions.
-4. Select the user by clicking the **checkbox** next to the user's Name.
-5. Click the **edit** link in the **Assigned license** section on the right portion of the page.
-6. Select a license for the user by clicking the **checkbox** next to the available license.
-7. Expand the license to show the different capabilities the license offers.
-8. Select the **Office Online**, **Office 365 Business**, **Exchange Online**, and **SharePoint Online** checkboxes.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/licenses.jpg)
-
-9. Click **SAVE**.
-
-**List of users to grant licenses to**
-
-- Rob Barker alias: robb
-- Katie Jordan alias: katiej
-- Ron Gabel alias: rong
-- Margaret Au alias: marga
-- Alisa Lawyer alias: alisal
-- Chris Gray alias: chrisg
-- Steven Wright alias: stevenw
-
-**Grant Member Access To Site Collection**
-Next you must grant access member to the Inspector, Dispatcher, and Repair People accounts.
-
-1. Log into the site collection with you O365 Global Administrator account.
-2. Navigate to the **Site Settings** Page.
-3. In the **Users and Permissions** section, click the **People and Groups** link.
-4. Select the **member** group.
-5. Add the following users to the members group.
-
-- Inspector: Rob Barker alias: robb
-- Dispatcher: Katie Jordan alias: katiej
-- Repair Person: Ron Gabel alias: rong
-- Inspector: Alisa Lawyer alias: alisal
-- Repair Person: Chris Gray alias: chrisg
+> **IMPORTANT NOTE!  READ THIS!**  
+> 
+> When users and groups are created with the Unified API there is some lag time associated with provisioning all of the associated O365 functionality.  You may have to wait up to 24 hours for the groups to become fully functional with all Office 365 services.
+> Items specifically related to this code sample include:
+> 
+> Users:
+> 
+> 1. It may take 15 minutes for files, messages, and events are available for use for each user.  This includes OneDrive, Email, and Calendar functionality.
+> 
+> Groups:
+> 
+> 1. The ability to list the group conversations in the web app
+> 2. The ability to list the group files in the web app
+> 3. The ability to upload files from the web app to groups
+> 
+> See the [Office 365 REST API release notes for April 2015](https://msdn.microsoft.com/en-us/office/office365/howto/office-365-rest-api-release-notes) for more details.
+> 
 
 **Mailbox setup**
 
 1. Next, log in with each user to your tenancy and access Outlook to set up their email.
 
-**Note:** It may take up to 24 hours for the O365 infrastructure to create an Exchange Mailbox and Calendar.  Usually, it takes 10 seconds.
+	> **Note:** It may take up to 24 hours for the O365 infrastructure to create an Exchange Mailbox and Calendar.  Usually, it takes 10 seconds.
 
-**Property Manager My App Configuration**
-This step is optional.  If you wish to add a custom logo to your Property Manager My App you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  
+**Property Manager web app Configuration**
+This step is optional.  If you wish to add a custom logo to your Property Manager web app you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  
 
 1. To do this, access the AAD App in the Azure Management Portal and use the image file you can find in the PropertyManagementMyApp Visual Studio Solution.  **/Content/Images/AADAppLogos/logo-prop-man.jpg**
 
-**Property Manager My App Installation Complete!**
+**Associate pictures with unified groups**
+This step is optional.  If you wish to add pictures tot he unified groups associated with each property in the demo data you can manually upload the pictures to the unified groups.  Currently, this capability is not supported via the API. 
 
-1. Access the Property Manager My App dashboard landing page by clicking the **Dashboard** link in the top menu.  You can also access the dashboard by navigating to **http://localhost:44312/Dashboard** in your web browser.  
+1. Go to https://outlook.office365.com
 
-This is what the dashboard looks like.  In this screenshot, the Need Repair tab is selected.
+	For each unified group, perform these steps:
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard 2.jpg)
+2. Click a **unified group** you created in the Groups section.
+3. Click the **edit icon button**, which is found in the default group photo.
+4. Click **edit icon** in the edit group section.
+5. Upload the **image** for the unified group.  The images for the unified groups are located in the \content\images\properties directory in the PropertyManagementMyApp project.
+6. Click **Save**.
 
-## Install-iOS
+**Property Manager web app Installation Complete!**
 
-The demo also relies upon iOS Apps to function end to end.  Some configuration is required to enable the iOS Apps to work with an O365 environment.  Read on to learn about the configuration process.
+**Important Authentication Note**  
+The web app uses  REST APIs to return list item data and pictures from the SharePoint site collection and video metadata from the Office 365 Video Portal.  The REST APIs use a different token to authenticate than the token used to authenticate to Exchange in Office 365.  
 
-**Azure Active Directory Apps**
-The iOS Apps use O365 APIs and SharePoint REST APIs to interact with an O365 / Azure tenancy.  The Azure Active Directory Applications are used to authorize the iOS Apps.  To register the iOS Apps with an Azure Active Directory follow these instructions.
+Signing into Office 365 and viewing the web app does not obtain the token used to authenticate to the SharePoint site.  
 
-**Create Azure Active Directory App for the iPad Apps**
+***Since this is the case you must first log into the SharePoint site collection before you try to access the web app.***
 
-1. Open the Azure Management Portal
-2. Select **Active Directory**
-3. Click on your AAD
-4. Click **Applications**
-5. Click **Add**
-6. Click **Add an application my organization is developing**
-7. In the Name textbox enter **PropertyManagementiOSiPadApp**
-8. For Type, select **NATIVE CLIENT APPLICATION**
-9. Click the **Arrow button**
-10. In the Redirect URI textbox enter **http://PropertyManagementiOSiPadApp**
-11. Click the **Checkmark button**
-12. Expand the update your code section and **copy** the Redirect URI and Client ID values and **paste** them into a text file.  You will use these values when you configure the iPad app on your iPad.
-13. Click **Configure**
-14. In the permissions to other applications section, click the dropdown list next to Windows Azure Active Directory and select the following permissions.
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App AAD Perms.png)
-15. Configure the permissions to Exchange, use the screenshot below for reference.    
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App Exchange Perms.png)
-16. Configure the permissions to SharePoint, use the screenshot below for reference.    
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App SP Perms.png)
-17. Click **Save**
+In future releases the Unified API will include the ability to query SharePoint list items and document libraries and the Video Portal.  Once the Unified API includes this functionality the web app will be updated to use the Unified API.  After the web app has been converted to use the Unified API the separate token needed to access the  REST APIs is no longer needed and there will be no need to log into the SharePoint site collection before accessing the web app.
 
-**iOS App Installation**
+**Access the property management web app dashboard**
 
-Now you are ready to install the iOS Apps.  
+1. Access the Property Manager web app dashboard landing page by clicking the **Dashboard** link in the top menu.  You can also access the dashboard by navigating to **http://localhost:44312/Dashboard** in your web browser.  
 
-In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample code for iOS Apps.
+This is what the dashboard looks like.
 
-1. On a Mac machine, clone the GitHub repository.  
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard%203.jpg)
 
-The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.  To use Cocoapods to add the SDKs to the workspaces perform these steps for both the Inspection and Repair iOS Apps.
+## iOS Android Cordova and Xamarin Mobile Applications
 
-1. Open Terminal.
-2. Navigate to inside the project's folder.
-3. Run `pod install`.
-4. Run `open iOSInspectionApp.xcworkspace` or `open iOSRepairApp.xcworkspace` to open the workspace with all projects and dependencies loaded appropriately.
+The iOS, Android, Cordova, and Xamarin mobile apps demonstrate many different patterns used in real world scenarios.  At a high level, the mobile apps do the following things.
 
-> For more info on Cocoapods setup see the Office 365 SDK for iOS [wiki](https://github.com/OfficeDev/Office-365-SDK-for-iOS/wiki/Cocoapods-Setup) and [their site](http://cocoapods.org).
+- Provide property inspectors and repair people information about properties they are scheduled to inspect and repair.
+- Allow property inspectors and repair people to submit photos and comments about inspections, incidents, and repairs.
 
-**iOS App Configuration**
-After the iOS Apps are deployed, you need to configure them to work with an O365 / Azure Tenancy and the Azure Active Directory Applications you created.  This section describes how to do it.
+The sections below provide more information about these mobile apps and how to get up and running.
 
-**Configure iPad Apps settings**
+## iOS Apps Installation
 
-To configure the iPad Apps settings follow these instructions.  You need to perform these same steps for both the Inspection and Repair iOS apps.
+The demo relies upon the iOS inspection mobile app and any version of the repair mobile app to function end to end.  The repair mobile app is written in iOS, Android, Cordova, and Xamarin.  You may use any version of the repair mobile app that you like.  
 
-1. In XCode, run the **iPad App**.
-2. Tap the **iPad App** on the iPad to open it.
-3. After the iPad App is loaded and the Sign In screen is displayed, push the **home button** two times and close/terminate the running instance of the application.
-4. Next, open the **native iOS Settings App**.
-5. In the left column, tap the **name of the app**.
-6. Enter the values which correspond to the Azure Active Directory application you created for the iPad Apps.
-7. Enter the URL to the Site Collection created by the Property Manager My App.
-8. Enter the email address for the Dispatcher. (katiej&#64;&lt;Your Tenancy&gt;.onmicrosoft.com)
+Some configuration is required to enable the iOS Apps to work with an O365 environment.  See the [Install iOS README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-iOS.md) for complete instructions.
 
-These are the values that must be configured.
-
-- **clientID** This is the value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the iOSiPadApp Azure Active Directory Application in the Azure Management Portal.
-- **redirectUriString** This is the value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the iOSiPadApp Azure Active Directory Application in the Azure Management Portal.
-- **authority** This value is partially displayed in the VIEW ENDPOINTS popup page for the Azure Active Directory Application in the Azure Management Portal.  Use the domain associated with the OAUTH 2.0 TOKEN ENDPOINT.  If you are running on production O365 this value is https://login.windows.net.
-- **resourceId** This value is partially displayed in the VIEW ENDPOINTS popup page for the Azure Active Directory Application in the Azure Management Portal.  Use the domain associated with the OAUTH 2.0 TOKEN ENDPOINT and append /common to it.  If you are running on production O365 this value is https://login.windows.net/common.
-- **demoSiteCollectionUrl** Url for the Site Collection created by the Property Manager My App.  Use the same value you configured in the web.config for the Property Manager My App for the DemoSiteCollectionUrl app setting.
-- **dispatcherEmail** Email address for the dispatcher account you created.
-
-**iOS Apps Installation Complete!**
-
-## RepairApp-AAD-Application
-
-**Azure Active Directory Apps**
-The Android, Cordova, and Xamarin Repair Apps use O365 APIs and SharePoint REST APIs to interact with an O365 / Azure tenancy.  The Azure Active Directory Applications are used to authorize the Android Repair Apps.  To register the Android Repair Apps with an Azure Active Directory follow these instructions.
-
-**Create Azure Active Directory App for the Android, Crodova, and Xamarin Repair Apps**
-
-1. Open the Azure Management Portal
-2. Select **Active Directory**
-3. Click on your AAD
-4. Click **Applications**
-5. Click **Add**
-6. Click **Add an application my organization is developing**
-7. In the Name textbox enter **PropertyManagementRepairApp**
-8. For Type, select **NATIVE CLIENT APPLICATION**
-9. Click the **Arrow button**
-10. In the Redirect URI textbox enter **http://PropertyManagementRepairApp**
-11. Click the **Checkmark button**
-12. Expand the update your code section and **copy** the Redirect URI and Client ID values and **paste** them into a text file.  You will use these values when you configure the Android Repair App in Android Studio.
-13. Click **Configure**
-14. In the permissions to other applications section, click the dropdown list next to Windows Azure Active Directory and select the following permissions.
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App AAD Perms.png)
-15. Configure the permissions to Exchange, use the screenshot below for reference.    
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App Exchange Perms.png)
-16. Configure the permissions to SharePoint, use the screenshot below for reference.    
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/iOS App SP Perms.png)
-17. Click **Save**
-
-## Install-android
+## Android App Installation
 
 The mobile Repair App in the demo may also be run on Android in addition to the iOS version. The Android version of the Repair App is written in Java, the native language for an Android device.  
 
-Some configuration is required to enable the Android Repair App to work with an O365 environment.  Read on to learn about the configuration process.
+Some configuration is required to enable the Android Repair App to work with an O365 environment.
 
-**Android Repair App Installation**
+Some configuration is required to enable the Android repair apps to work with an O365 environment.  See the [Install Android README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Android.md) for complete instructions.
 
-Now you are ready to install the Android App.  
-
-In the AndroidRepairApp folder you will find runnable sample code for Android Repair App.
-
-1. On a PC or Mac machine, clone the GitHub repository.  
-
-**Configure Android Repair App settings**
-
-To configure the Android Repair App follow these instructions.
-
-1. Open **Android Studio**.
-2. In the Quick Start menu, select **Import Non-Android Studio project**.
-3. Select the **AndroidRepairApp\RepairApp** directory you cloned from the GitHub repository.
-4. Click **OK**.
-5. Open the **\app\java\com.canviz.repairapp\Constants.java** file.
-6. Edit the **SHAREPOINT_URL** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
-
-	**SHAREPOINT_URL** is the URL for the Site Collection created by the Property Manager My App.  Use the same value you configured in the web.config for the Property Manager My App for the DemoSiteCollectionUrl app setting.
-
-    Example: contoso.onmicrosoft.com
-
-7. Edit the **DISPATCHEREMAIL** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
-
-	**DISPATCHEREMAIL** is the email address for the dispatcher account you created.
-
-    Example: katiej@contoso.onmicrosoft.com
-
-8. Edit the **AAD_CLIENT_ID** variable.  This is the Client ID value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
-
-9. Edit the **AAD_REDIRECT_URL** variable.  This is the Redirect URI value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
-
-**Set Up Android Virtual Device**
-The Android Repair App targets the Nexus 9 device.  These steps describe how to configure an Android Virtual Device that replicates the Nexus 9.
-
-1. In Android Studio, click the **Tools** menu, select **Android**, and click **AVD Manager** to open the Android Virtual Device Manager.
-2. Use the Android Virtual Device Manager to configure the Nexus 9 device.  Refer to the image below.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Nexus 9 AVD Settings.png)
-
-3. In the Android Virtual Device Manager, start the Nexus 9 Android Virtual Device.
-
-	**Note:** When the device is starting you can see if HAXM is enabled on your system and if the emulator is taking advantage of it.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Starting Nexus 9 AVD.png)
-
-4. Wait for the device to boot, unlock it, and click the OK button.  
-
-	**Note:** This can take a long time, even up to 20 minutes if you have a slow computer or if you are using the ARM version of the device.
-
-**Run the Repair App on the Nexus 9 Android Virtual Device**
-
-1. In Android Studio, click the **Run** menu and select **Run app**.
-2. Select the **Nexus 9 Android Virtual Device** you already started
-3. Click **OK**.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Select Nexus 9 AVD.png)
-
-The Sign in screen will appear and you can now use the Android Repair App during the demo.
-
-**Android Repair App Installation Complete!**
-
-## Install-Cordova
+## Cordova App Installation
 
 The mobile Repair App in the demo may also be run on Cordova in addition to the iOS version. The Cordova version of the Repair App is written in HTML, JavaScript and CSS.  It uses the Knockout.js framework for data binding.
 
 The Cordova Repair App supports iOS, Android, and Windows devices.
 
-Some configuration is required to enable the Cordova Repair App to work with an O365 environment.  Read on to learn about the configuration process.
+Some configuration is required to enable the Cordova Repair App to work with an O365 environment.  See the [Install Cordova README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Cordova.md) for complete instructions.
 
-**Cordova Repair App Installation**
-
-Now you are ready to install the Cordova App.  
-
-In the CordovaRepairApp folder you will find runnable sample code for Cordova Repair App.
-
-1. On a PC, clone the GitHub repository.  
-
-**Configure Cordova Repair App settings**
-
-To configure the Cordova Repair App follow these instructions.
-
-1. Open Visual Studio 2013 Studio.
-2. Open the **CordovaRepairApp.sln** Visual Studio 2013 Solution you cloned from the GitHub repository.
-
-	**Note:**  There are three different settings files which allow you to configure each version of the Cordova App separately.  This is helpful when your emulator redirect URIs are not all the same and also when you wish to use different Azure Active Directory applications when testing the applications in a larger development and testing team in separate environments.
-
-3. To configure the iOS version of the Cordova Repair App, open the **\CordovaRepairApp\services\office365\settings\settings.js** file.
-4. To configure the Android version of the Cordova Repair App, open the **\CordovaRepairApp\merges\android\services\office365\settings\settings.js** file.
-5. To configure the Cordova version of the Cordova Repair App, open the **\CordovaRepairApp\merges\windows\services\office365\settings\settings.js** file.
-
-	In each file make the following edits and corresponding Azure Active Directory App modifications. 
-
-6. Edit the **Settings.sitecollectionUrl** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
-
-	**Settings.sitecollectionUrl** is the URL for the Site Collection created by the Property Manager My App.  Use the same value you configured in the web.config for the Property Manager My App for the DemoSiteCollectionUrl app setting.
-
-    Example: https://contoso.sharepoint.com/sites/SuiteLevelAppDemo
-
-7. Edit the **Settings.dispatcherEmail** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
-
-	**Settings.dispatcherEmail** is the email address for the dispatcher account you created.
-
-    Example: katiej@contoso.onmicrosoft.com
-
-8. Edit the **Settings.resourceId** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
-
-	**Settings.resourceId** is the URL for the root site collection in your O365 tenancy.
-
-    Example: https://contoso.sharepoint.com/
-
-9. Edit the **Settings.clientId** variable.  This is the Client ID value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
-
-10. Copy the **Settings.redirectUri** variable.  In the Windows Azure Management Portal, open the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
-11. Paste the copied **Settings.redirectUri** value into the Redirect URIs section.
-12. **Save** the PropertyManagementRepairApp Azure Active Directory Application.
-
-**Run the Repair App on the Windows Simulator**
-
-The Cordova Windows Repair App targets the Windows Surface Pro device.  This is the easiest emulator to set up.
-
-1. In Visual Studio, right click the **CordovaRepairApp solution** and select **Clean**.
-2. In Visual Studio, select the **Windows-AnyCPU Configuration** and the **Simulator**.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Cordova - Windows Simulator.png)
-
-3. Click the **green arrow** to run the application.
-
-The Sign in screen will appear and you can now use the Cordova Windows Repair App during the demo.
-
-**Set Up Android Virtual Device**
-The Cordova Android Repair App targets the Nexus 9 device.  These steps describe how to configure an Android Virtual Device that replicates the Nexus 9.
-
-1. In Visual Studio, click the **Tools** menu, select **Android**, and click **Open Android Emulator Manager** to open the Android Virtual Device Manager.
-2. Use the Android Virtual Device Manager to configure the Nexus 9 device.  Refer to the image below.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Nexus 9 AVD Settings.png)
-
-3. In the Android Virtual Device Manager, start the Nexus 9 Android Virtual Device.
-
-	**Note:** When the device is starting you can see if HAXM is enabled on your system and if the emulator is taking advantage of it.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Starting Nexus 9 AVD.png)
-
-4. Wait for the device to boot, unlock it, and click the OK button.  
-
-	**Note:** This can take a long time, even up to 20 minutes if you have a slow computer or if you are using the ARM version of the device.
-
-**Run the Repair App on the Nexus 9 Android Virtual Device**
-
-1. In Visual Studio, right click the **CordovaRepairApp solution** and select **Clean**.
-2. In Visual Studio, select the **Android Configuration** and the **Android Emulator**.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Cordova - Android Simulator.png)
-
-3. Click the **green arrow** to run the application.
-
-The Sign in screen will appear and you can now use the Cordova Android Repair App during the demo.
-
-**Run the Repair App on the iOS Simulator**
-
-The Cordova iOS Repair App targets the iPad Air device.  Using the iOS Sumlator for iPad requires a Mac in addition to your PC.  Follow the steps in the following MSDN articles to configure your PC and Mac to enable you to build the Cordova iOS Repair App on your PC and run it in the iOS Simulator on your Mac.
-
-- Installing: http://msdn.microsoft.com/en-us/library/dn757054.aspx
-- Configuring: http://msdn.microsoft.com/en-us/library/dn771551.aspx
-- Running: http://msdn.microsoft.com/en-us/library/dn757056.aspx
-
-1. In Visual Studio, right click the **CordovaRepairApp solution** and select **Clean**.
-2. In Visual Studio, select the **iOS Configuration** and the **Simulator - iPad Air**.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Cordova - iOS Simulator.png)
-
-3. Click the **green arrow** to run the application.
-
-The Sign in screen will appear and you can now use the Cordova Windows Repair App during the demo.
-
-**Cordova Repair App Installation Complete!**
-
-## Install-xamarin
+## Xamarin App Installation
 
 The mobile Repair App in the demo has also been built for Android devices with Xamarin.  The Xamarin version of the Repair App is written in .NET.
 
-Some configuration is required to enable the Cordova Repair App to work with an O365 environment.  Read on to learn about the configuration process.
+Some configuration is required to enable the Xamarin Repair App to work with an O365 environment.  See the [Install Xamarin README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Xamarin.md) for complete instructions.
 
-**Xamarin Android Repair App Installation**
+## Office Add-in for Outlook Installation
 
-Now you are ready to install the Xamarin Android App.  
-
-In the XamarinRepairApp folder you will find runnable sample code for Xamarin Android Repair App.
-
-1. On a PC, clone the GitHub repository.  
-
-**Configure Xamarin Android Repair App settings**
-
-To configure the Xamarin Android Repair App follow these instructions.
-
-1. In Visual Studio, right click the **XamarinRepairApp solution** and select **Clean**.
-2. Open Visual Studio 2013 Studio.
-3. Open the **XamarinRepairApp.sln** Visual Studio 2013 Solution you cloned from the GitHub repository.
-4. In the **XamarinRepairApp project**, open the **Constants.cs** file.
-5. Edit the **SHAREPOINT_URL** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
-
-	**SHAREPOINT_URL** is the URL for the Site Collection created by the Property Manager My App.  Use the same value you configured in the web.config for the Property Manager My App for the DemoSiteCollectionUrl app setting.
-
-    Example: contoso.onmicrosoft.com
-
-6. Edit the **DISPATCHEREMAIL** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
-
-	**DISPATCHEREMAIL** is the email address for the dispatcher account you created.
-
-    Example: katiej@contoso.onmicrosoft.com
-
-7. Edit the **AAD_CLIENT_ID** variable.  This is the Client ID value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
-
-8. Edit the **AAD_REDIRECT_URL** variable.  This is the Redirect URI value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
-
-**Set Up Android Virtual Device**
-The Android Repair App targets the Nexus 9 device.  These steps describe how to configure an Android Virtual Device that replicates the Nexus 9.
-
-1. In Visual Studio, click the **Tools** menu, select **Android**, and click **Open Android Emulator Manager** to open the Android Virtual Device Manager.
-2. Use the Android Virtual Device Manager to configure the Nexus 9 device.  Refer to the image below.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Nexus 9 AVD Settings.png)
-
-3. In the Android Virtual Device Manager, start the Nexus 9 Android Virtual Device.
-
-	**Note:** When the device is starting you can see if HAXM is enabled on your system and if the emulator is taking advantage of it.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Starting Nexus 9 AVD.png)
-
-4. Wait for the device to boot, unlock it, and click the OK button.  
-
-	**Note:** This can take a long time, even up to 20 minutes if you have a slow computer or if you are using the ARM version of the device.
-
-**Run the Xamarin Android Repair App on the Nexus 9 Android Virtual Device**
-
-1. In Visual Studio, select the **Any CPU Configuration** and the **Nexus_9** emulator.
-
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Xamarin Nexus 9 Simulator.png)
-
-2. Click the **green arrow** to run the application.
-
-The Sign in screen will appear and you can now use the Cordova Windows Repair App during the demo.
-
-**Xamarin Android Repair App Installation Complete!**
-
-## Install-MailApp
-
-Some configuration is required to enable the Mail App for Office to work with an O365 environment.  Read on to learn about the configuration process.
+Some configuration is required to enable the Office Add-in for Outlook to work with an Office 365 environment.  See the [Install Office Add-in README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Mail.md) for complete instructions and a detailed technical description of how the Office Add-in works.
     
-**Mail App for Office**
+## Installing the web app on an Azure Web Site
+In addition to your localhost development environment, the web app may also run on an Azure Web Site.
 
-The Mail App for Office runs on an ASP.NET Web site.  You must configure the Mail App for Office to use the web site where you deployed the Property Manager My App.  To configure the Mail App for Office to use your web site follow these instructions.
-
-**Modify Manifest**
-
-1. Open the **MailApp Visual Studio Solution**
-2. In the MailApp project, open the **MailApp.xml** file
-3. Replace the **SourceLocation endpoints** in the DesktopSettings, TabletSettings, and PhoneSettings nodes with the URL to your Property Manager My App ASP.NET web site
-
-	Use the following template for the SoureLocation URL:
-	**https://&lt;Your Web Site&gt;.azurewebsites.net/Mailafo/redir**
-
-	**Note:** You must use an HTTPS URL for Mail Apps for Office.
-4. Save **MailApp.xml**
-5. Right click the MailApp project and select **Publish**
-6. Click **Package the app**        
-   
-**Mail App for Office Installation**
-
-1. Log into your O365 Tenancy with your admin account</li>
-2. Click the **waffle** button, then click the **Admin app**
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Mail AFO - Admin.png)
-3. In the left menu, click **Exchange**
-4. Under organization, click **apps**
-5. Click the **+ icon** to add a new app
-6. Select **Add from file**
-7. In the dialog select the **MailAppManifest.xml file** you created when you published the MailApp project
-8. Click **next**
-9. After the Mail App is uploaded, select it in the list.  It is named **Property Details**.
-10. Click the **Edit** button in the toolbar
-11. In the **Specify user defaults** section, select the **Optional, enabled by default** radio button
-12. Click **save**
- 
-**Mail App for Office Installation Complete!**
-
-When demo users open an email with the string **Incident ID: &lt;number&gt;** in the email body they can view the Incident details in the Mail App for Office by clicking the Property Details link.
-
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Mail AFO - Link.png)
-
-When the Mail App for Office loads, users are taken to a redirect page which uses office.js to extract the Incident ID from the email body.  This page includes the text **Redir** so you can see it happening in the demo.  In a production scenario you might display loading text or leave this page blank.
-
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Mail AFO - Redir.png)
-
-The redirect page then uses JavaScript to redirect to another controller (index.cshtml) and passes the IncidentId on the query string.  The second controller uses the IncidentId passed to it to invoke the server side O365 ASP.NET APIs to retrieve the data from SP.
-
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Mail AFO - Incident Details.png)
-
-## Azure
-In addition to your localhost development environment, the MyApp may also run on an Azure Web Site.
-
-If you wish to publish the MyApp to an Azure Web Site it is recommended that you create another AAD application for your Azure Web Site.  This ensures that the registration for the App in the My Apps list in O365 has the appropriate Sign-On URL.
+If you wish to publish the web app to an Azure Web Site it is recommended that you create another AAD application for your Azure Web Site.  This ensures that the registration for the App in the My Apps list in O365 has the appropriate Sign-On URL.
 
 The following article describes how to use Visual Studio Publishing Profiles to set up publishing to an Azure Web Site and how to create separate a web.config file for your Azure Web Site.  
 
-http://www.bradygaster.com/post/managing-multiple-windows-azure-web-site-environments-using-visual-studio-publishing-profiles
+[Managing Multiple Windows Azure Web Site Environments using Visual Studio Publishing Profiles](http://www.bradygaster.com/post/managing-multiple-windows-azure-web-site-environments-using-visual-studio-publishing-profiles)
 
-## Running
-The [PowerPoint slide deck] (https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo%20Script.pptx) describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.  This is an excellent place to see what this demo really does and how the scenario in it unfolds.
+## Running the sample end to end
+The [PowerPoint slide deck](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/Documents/Demo%20Script.pptx) describes how to prep your environment with sample data and execute the sample scenario end to end.  It also describes all of the different places where data is created or updated throughout the entire scenario.  This is an another excellent resource to see what this demo really does and how the scenario in it unfolds.
 
-## APIs
-When this demo was built the O365 SDKs for ASP.Net and iOS were in the alpha/beta stages.  Consequently, some of the code in the demo uses REST based approaches to perform operations with O365 services like SharePoint and Exchange.  The following parts of the sample use REST based approaches to access O365 Services.
+## Resetting the demo environment
+There are two different ways you can reset the demo so you can run it multiple times with the pre-populated demo data.
 
-* Working with Files in the iOS Apps and My Apps.  See [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** to see how this is done.
-* Sending Email with attachments in the Property Manager My App.  See the Office 365 SDK for ASP.NET to see how this is done.  The sample sends email from the Property Manager My App, but no attachments are included.
+- Re-provisioning demo data only
+- Re-provisioning the entire information architecture and demo data
 
-## MailAFO
-The Mail App for Office included in the demo renders properly in PC web browsers but it does not render in iOS devices in Safari, the OWA app, or the native iOS email client.  At this time they are not supported in Safari, the OWA app, or the native iOS email client.
+> **IMPORTANT NOTE:** If you wish to delete all the users and user groups and run the entire provisioning process again you must ensure you follow these steps to ensure the user accounts are recreated successfully and all their Office 365 components work properly.
 
-## Deeplinks
+For each user, do the following.
+
+1. Remove all the SharePoint site permissions for each user.  Make sure you remove their permissions from ***all*** SharePoint site collections so they are not granted access to any SharePoint sites.
+2. Open the Office 365 Admin add-in and delete all of the users.
+3. Wait 48 hours for all the Office 365 timer jobs to completely remove all traces of the user account.
+4. Follow the steps in this README to re-provision the users and all demo components.
+
+How to re-provision the demo data only
+-------------------------------------
+To re-provision (reset) the demo data to the original state it was in after you run through the setup process follow these steps:
+
+> **Note:** This procedure deletes list items and documents and re-creates them.
+
+1.	In your web browser, navigate to http://localhost:44312/O365SiteProvisioning/ProvisionDemoData
+2.	Log in with the tenant administrator credentials for your tenancy.
+2.	Enter the **date** when you plan to execute the demo, then click the **Populate** button.
+3.	When the process completes, the demo data is re-provisioned.
+
+How to re-provision the entire information architecture and demo data
+---------------------------------------------------------------------
+To re-provision (reset) the entire information architecture and demo data to the original state it was in after you run through the setup process follow these steps:
+
+> **Note:** This procedure deletes site columns, content types, lists, workflows, list items and documents and re-creates them.
+
+1.	In your web browser, navigate to https://**<Your Tenancy>**-admin.spoppe.com/_layouts/15/online/SiteCollections.aspx
+2.	Log in with the tenant administrator credentials for your tenancy.
+3.	Delete the demo site collection you previously created.
+
+	> **Note:** The site collection will go to the recycle bin after you delete it. Office 365 does not currently support manually deleting the site collection from recycle bin, so you have to execute PowerShell script to do it. 
+
+4.	Refer to [Set up the SharePoint Online Management Shell environment (Office 365 support article)](https://support.office.com/en-za/article/Set-up-the-SharePoint-Online-Management-Shell-environment-7b931221-63e2-45cc-9ebc-30e042f17e2c) to set up the SharePoint Online Management Shell.
+
+5.	Open the SharePoint Online Management Shell, and then execute the following PowerShell scripts to delete the demo site collection from the recycle bin.
+
+	```
+	$msolcred = get-credential <Your O365 admin account>
+	connect-msolservice -credential $msolcred
+	Remove-SPODeletedSite –Identity "<Your Demo Site URL>"
+	```
+
+6.	In this document, go to the Provision Site Collection and information architecture sub section in the [Web app Installation](#web-app-installation) section and re-execute all the steps up to the [Office Add-in for Outlook Installation](#office-add-in-for-outlook-installation) section.
+
+## API Notes
+When this demo was built the Office 365 SDKs for ASP.Net and iOS were in the alpha/beta stages.  Consequently, some of the code in the demo uses REST based approaches to perform operations with Office 365 services like SharePoint.  The following parts of the sample use REST based approaches to access Office 365 Services.
+
+* Working with SharePoint files in the web app and mobile apps.  
+
+	> See [MS Open Tech](http://msopentech.com)'s open source project **Office 365 SDK for iOS** to see how this is done.
+
+## Mail Add-in for Office Notes
+The Office Add-in for Outlook included in the demo renders properly in PC web browsers but it does not render in iOS devices in Safari, the OWA app, or the native iOS email client.  At this time they are not supported in Safari, the OWA app, or the native iOS email client.
+
+## Deep links
 The links in the workflow emails which open the native iOS apps on an iOS device work when using the native iOS email client.  At this time they are not supported in Safari or the OWA app.
 
 ## License
