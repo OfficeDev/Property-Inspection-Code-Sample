@@ -1,0 +1,13 @@
+source 'https://github.com/Cocoapods/Specs.git'
+platform :ios, '8.0'
+
+xcodeproj 'iOSInspectionApp'
+
+#OLD APIS - only works on PROD
+#pod 'ADALiOS', '~> 1.0.0'   # 1.0.0 < ver < 1.1.0
+#pod 'Office365/Outlook', '~>0.5.0'
+
+#NEW APIS
+pod 'ADALiOS', '=1.2.2'
+pod 'Office365/Outlook', '=0.9.0'
+pod 'Office365/Graph', '=0.9.0'

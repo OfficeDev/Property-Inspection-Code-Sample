@@ -1,0 +1,555 @@
+﻿menu, ol, ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    border: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin:0px 0px;
+    padding:0px 0px;
+}
+td{
+    padding:0px 0px;
+    margin:0px 0px;
+}
+.rp_clear
+{
+    clear:both;
+    float:none;
+}
+.blockui
+{
+   position:absolute;
+   top:20%;
+   left:50%;
+   width:32px;
+   height:32px;
+   z-index:498;
+ }
+.page
+{
+    position:relative;
+}
+.rp_tableTitle
+{
+    font-size:20px;
+    line-height:64px;
+    color:#000;
+    background-color:#fff;
+    padding-left:0px;
+}
+    .rp_tableTitle>span{
+        display:inline-block;
+        margin-left:20px;
+    }
+.rp_header
+{
+    height:71px;
+    width:100%;
+    background-color:#4CA1FF;
+}
+    .rp_header>.rp_left,
+    .rp_header>.rp_middle,
+    .rp_header>.rp_right{
+        overflow:hidden;
+        margin-left:20px;
+        float:left;
+    }
+        .rp_header>.rp_left{
+            width:40px;
+            margin-top:15px;
+            display:none;
+        }
+            .rp_header>.rp_left>img{
+                width:40px;
+                height:40px;
+            }
+        .rp_header>.rp_middle,
+        .rp_header>.rp_right{
+            text-align:center;
+            height:71px;
+            line-height:71px;
+        }
+       .rp_header>.rp_middle>img{
+           height:71px;
+        }
+        .rp_header>.rp_right{
+            display:none;
+            font-size:20px;
+            color:#fff;
+        }
+
+#rp_loginHint
+{
+    color:black;
+    font-size:30px;
+    text-align:center;
+    margin-top:130px;
+}
+#rp_loginbtn
+{
+    margin-top:140px;
+    font-size:36px;
+    text-align:center;
+    width:60%;
+    margin:20%;
+    background-color:#008272;
+    height:110px;
+    border-radius:8px;
+}
+#rp_loginbtn span
+{
+    color:white;
+    line-height:110px;
+}
+
+/*incident page*/
+#incidentpage
+{
+    display:none;
+    position:relative;
+    background-color:#F2F2F2;
+}
+#incidentpage .rp_backBtn{
+    display:none;
+    width:0px;
+    height:0px;
+    overflow:hidden;
+}
+#incidentpage>table
+{
+    width:100%;
+}
+#incidentpage>table tr
+{
+    width:100%;
+    min-height:677px;
+}
+
+#incidentpage>table td.rp_middle
+,#incidentpage>table td.rp_right
+{
+    width:66%;
+}
+
+/*incident page left panel*/
+#incidentpage>table td.rp_left
+{
+    width:34%;
+    background:#333333;
+}
+    #incidentpage>table td.rp_left>div
+    {
+        margin:0px 0px;
+    }
+#incidentpage>table td.rp_left .rp_list
+{
+    width:100%;
+}
+    #incidentpage>table td.rp_left .rp_list ul>li
+    {
+        background-color:#333333;
+        height:53px;
+        padding-left:20px;
+        padding-right:20px;
+        overflow:hidden;
+    }
+        #incidentpage>table td.rp_left .rp_list ul>li>.rp_leftitem
+        {
+            float:left;
+            margin-top:17px;
+            margin-right:20px;
+        }
+        #incidentpage>table td.rp_left .rp_list ul>li>.rp_leftitem>img
+        {
+            height:19px;
+        }
+        #incidentpage>table td.rp_left .rp_list ul>li>.rp_rightitem
+        {
+            float:left;
+            line-height:53px;
+        }
+            #incidentpage>table td.rp_left .rp_list ul>li>.rp_rightitem>span
+            {
+                font-size:14px;
+                color:#fff;
+            }
+#rp_propertyDetailTable>.rp_top>.rp_list>ul>li:last-child
+{
+    height:220px;
+    padding-left:0px;
+    padding-right:0px;
+}
+    #rp_propertyDetailImage
+    {
+        height:220px;
+        position:relative;
+        overflow:hidden;
+    }
+        #rp_propertyDetailImage .rp_address
+        {
+            position:absolute;
+            bottom:0px;
+            width:100%;
+            line-height:38px;
+            text-align:center;
+            background-color:black;
+            filter:alpha(opacity=60);
+            opacity:0.6;
+            color:#fff;
+            font-size:17px;
+
+        }
+        #rp_propertyDetailImage>img
+        {
+            width:100%;
+            height:220px;
+        }
+
+#rp_inspectionDetail
+{
+    display:none;
+    padding-bottom:20px;
+}
+
+#rp_finalizeBtn
+{
+    width:92%;
+    margin-left:4%;
+    height:36px;
+    line-height:36px;
+    margin-top:20px;
+    background-color:#008272;
+    text-align:center;
+}
+    #rp_finalizeBtn>span{
+        color:#fff;
+        font-size:17px;
+    }
+/*incident page middle panel*/
+#incidentpage>table td.rp_middle{
+    background-color:#7F7E7E;
+}
+#incidentpage>table td.rp_middle>.rp_top,
+#incidentpage>table td.rp_right>.rp_top
+{
+    margin-bottom:20px;
+    overflow:hidden;
+}
+#rp_incidentslist>.rp_list{
+    margin-left:20px;
+    margin-right:20px;
+}
+
+#rp_incidentslist>.rp_list>ul
+{
+    width:100%;
+}
+    #rp_incidentslist>.rp_list>ul>li
+    {
+        float:left;
+        width:50%;
+        margin-left:0;
+        margin-top:20px;
+        height:400px;
+        background-color:#eeeeee;
+        padding-right:10px;
+        padding-left:20px;
+        box-sizing:border-box;
+    }
+    #rp_incidentslist>.rp_list>ul>li.rp_odd{
+        padding-left:10px;
+        padding-right:20px;
+    }
+    #rp_incidentslist>.rp_list>ul>li>div{
+            margin-top:10px;
+            font-size:14px;
+            color:#000;
+        }
+            #rp_incidentslist>.rp_list>ul>li>div>.rp_left{
+                float:left;
+                width:50%;
+            }
+            #rp_incidentslist>.rp_list>ul>li>div>.rp_right{
+                float:left;
+                width:50%;
+                text-align:right;
+            }
+                #rp_incidentslist>.rp_list>ul>li>div>.rp_right .approved{
+                    color:#008272;
+                }
+                #rp_incidentslist>.rp_list>ul>li>div>.rp_right .notApproved{
+                    color:#d20d0d;
+                }
+        #rp_incidentslist>.rp_list>ul>li>.rp_image
+        {
+            height:239px;
+        }
+        #rp_incidentslist>.rp_list>ul>li>.rp_image>img
+        {
+            width:100%;
+            height:239px;
+        }
+
+/*incident page right panel*/
+#incidentpage>table td.rp_right
+{
+    display:none;
+    position:relative;
+}
+
+#rp_incidentsdetail>.rp_top
+{
+    margin-bottom:20px;
+}
+
+#rp_incidentsdetail>.rp_middle
+{
+    margin:10px 16%;
+    height:142px;
+    overflow:hidden;
+}
+    #rp_incidentsdetail>.rp_middle>div
+    {
+        width:28%;
+        float:left;
+        height:142px;
+        margin-left:8%;
+        background-color:#7f7e7e;
+    }
+        
+        #rp_incidentsdetail>.rp_middle>div:last-child,
+        #rp_incidentsdetail>.rp_middle>div:first-child
+        {
+            margin-left:0px;
+        }
+        #rp_incidentsdetail>.rp_middle>div.rp_clear
+        {
+            width:0px;
+            display:none;
+        }
+        #rp_incidentsdetail>.rp_middle>div>.rp_top{
+            margin-top:35px;
+            text-align:center;
+        }
+        #rp_incidentsdetail>.rp_middle>div>.rp_top>img{
+            height:35px;
+        }
+        #rp_incidentsdetail>.rp_middle>div>.rp_bottom{
+            margin-top:20px;
+            margin-left:10px;
+            margin-right:10px;
+            text-align:center;
+        }
+        #rp_incidentsdetail>.rp_middle>div>.rp_bottom>span{
+            font-size:12px;
+            color:#fff;
+            display:block;
+        }
+
+#rp_incidentsdetail>.rp_bottom>div
+{
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.rp_content
+{
+    background-color:#fff;
+    margin-top:5px;
+    margin-left:1px;
+    margin-right:1px;
+    border-radius:10px;
+    overflow:hidden;
+
+}
+    #rp_incidentsdetail>.rp_bottom .rp_tableTitle{
+        right:0px;
+        width:100%;
+        position:absolute;
+        top:246px;
+    }
+#rp_dispactherComments>.rp_content
+{
+    height:400px;
+    margin-top:104px;
+}
+    #rp_dispactherComments .rp_content>div
+    {
+        margin:10px 20px;
+        font-size:14px;
+        color:#888888;
+    }
+
+#rp_incidentsdetail>.rp_bottom  .rp_middle
+{
+    min-height:136px;
+}
+
+.rp_collectionview
+{
+    margin:10px 10px;
+    width:100%;
+    min-height:116px;
+}
+    .rp_collectionview>li
+    {
+        float:left;
+        margin-right:10px;
+        margin-bottom:10px;
+    }
+    .rp_collectionview>li:last-child
+    {
+        margin-right:0px;
+    }
+        .rp_collectionview>li>img
+        {
+            height:116px;
+            width:116px;
+
+        }
+#rp_inspectorComments>.rp_middle.rp_content{
+    margin-top:104px;
+}
+#rp_inspectorComments .rp_bottom
+{
+    height:281px;
+}
+    #rp_inspectorComments .rp_bottom>div
+    {
+        margin:10px 20px;
+        font-size:14px;
+        color:#888888;
+    }
+
+
+#rp_addComments>.rp_middle{
+    margin-top:104px;
+    padding-right:20px;
+    padding-left:20px;
+}
+#rp_addComments .rp_middle>div:first-child
+{
+    margin-top:10px;
+    float:left;
+    width:15%;
+}
+#rp_addComments .rp_middle>.rp_content
+{
+    float:left;
+    width:85%;
+    margin-left:0px;
+    margin-right:0px;
+}
+#rp_cameraBtn>img
+{
+    margin-top:44px;
+    width:58%;
+    height:47px;
+}
+
+
+#rp_addComments .rp_aboveBottom
+{
+    height:241px;
+}
+
+#rp_addComments .rp_aboveBottom textarea
+{
+    width:100%;
+    height:241px;
+    border:none;
+    padding:20px 20px;
+    box-sizing:border-box;
+    border-radius:10px;
+    background-color:#fff;
+}
+#rp_addComments .rp_bottom
+{
+    margin-top:10px;
+    margin-left:2%;
+    margin-right:2%;
+    height:50px;
+    width:96%;
+    text-align:center;
+    background-color:#6499D1;
+    border-radius:5px;
+}
+    #rp_addComments .rp_bottom>span
+    {
+        line-height:50px;
+        font-size:18px;
+        color:#fff;
+    }
+
+#incidentpage .rp_blue{
+    color:#4CA1FF;
+}
+
+#rp_background{
+    position:absolute;
+    top:0px;
+    overflow:hidden;
+    opacity:0.5;
+    background-color:#000;
+    width:100%;
+    z-index:99;
+    display:none;
+}
+
+#rp_largeimage{
+    position:absolute;
+    top:61px;
+    width:90%;
+    margin-left:5%;
+    z-index:100;
+    overflow:hidden;
+    text-align:center;
+}
+#rp_largeimage>img{
+    display:inline-block;
+}
+#rp_largeimage>img:first-child{
+        max-width:90%;
+        margin-top:20px;
+}
+#rp_largeimage>img:last-child{
+    max-width:10%;
+}
+
+#rp_cameraHint
+{
+    position:absolute;
+    top:220px;
+    width:40%;
+    z-index:101;
+    margin-left:30%;
+    background-color:#F2F2F2;
+    border:1px solid #888888;
+    border-radius:8px;
+    display:none;
+}
+#rp_cameraHint>div{
+    margin:30px 30px;
+    
+}
+#rp_cameraHint .rp_bottom{
+    margin-top:20px;
+}
+#rp_cameraHint .rp_bottom,
+#rp_cameraHint .rp_top
+{
+    background-color:#888888;
+    border:1px solid #888888;
+    text-align:center;
+    border-radius:8px;
+}
+#rp_cameraHint span{
+    font-size:18px;
+    line-height:35px;
+    color:#fff;
+}

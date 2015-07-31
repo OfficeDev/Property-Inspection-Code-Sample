@@ -1,0 +1,36 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.canviz.repairapp"
+        minSdkVersion 22
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    packagingOptions{
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.microsoft.aad:adal:1.1.3'
+    compile 'com.microsoft.services:odata-engine-android-impl:0.13.0@aar'
+    compile 'com.microsoft.services:outlook-services:0.13.0'
+    compile 'com.microsoft.services:directory-services:0.13.0'
+    compile 'com.microsoft.services:file-services:0.13.0'
+    compile 'com.microsoft.services:sharepoint-services:0.13.0'
+    compile 'com.microsoft.services:graph-services:0.1.0'
+}
