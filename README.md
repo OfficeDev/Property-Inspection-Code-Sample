@@ -1,4 +1,4 @@
-# Property Inspection Code Sample
+# Property Manager Code Sample
 
 **Table of Contents**
 
