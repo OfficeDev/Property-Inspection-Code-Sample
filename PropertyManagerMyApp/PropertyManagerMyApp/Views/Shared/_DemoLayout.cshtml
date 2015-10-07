@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Property Manager My App</title>
+    @Styles.Render("~/Content/Office365-Icons")
+    @Styles.Render("~/Content/contoso")
+    <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/themes/smoothness/jquery-ui.css" />
+    @Scripts.Render("~/bundles/jquery")
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <header id="layout-header" class="group">
+        <div id="header" class="container-fluid bg-gray-dark office-banner">
+            <a>
+                <img class="office-logo" src="~/Content/Images/logo_office.png" alt="Office Logo" />
+            </a>
+        </div>
+        <div class="bg-teal">
+            <div class="container site-branding">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <a href="/Dashboard/Index">
+                            <img class="contoso-logo" src="/Content/Images/contoso-logo.png" alt="Contoso Logo" />
+                        </a>
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <div class="login-area">
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+</body>
+</html>
