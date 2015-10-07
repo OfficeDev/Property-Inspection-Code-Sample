@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Repair</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_loading">Loading...</string>
+    <string name="logo_desc">Logo</string>
+    <string name="signin_title">Sign in to access repair orders</string>
+    <string name="signin_btntxt">Sign In</string>
+    <string name="incident_propertytitle">PROPERTY DETAILS</string>
+    <string name="incident_owner">CONTACT OWNER</string>
+    <string name="incident_office">CONTACT OFFICE</string>
+    <string name="incident_title">INCIDENTS</string>
+    <string name="title_activity_incident">IncidentActivity</string>
+    <string name="detail_inspection">INSPECTION DETAILS</string>
+    <string name="finalize_btntext">Finalize Repair</string>
+    <string name="dispatcher">DISPATCHER COMMENTS</string>
+    <string name="inspection">INSPECTION COMMENTS &amp; PHOTOS</string>
+    <string name="add_repair_comments">REPAIR COMMENTS, PHOTOS &amp; VIDEOS</string>
+    <string name="title_activity_incident_detail">IncidentDetailActivity</string>
+    <string name="detail_btnDoneText">Done</string>
+    <string name="group_members">PROPERTY MEMBERS</string>
+    <string name="group_conversations">CONVERSATIONS</string>
+    <string name="group_recent_document">RECENT DOCUMENTS</string>
+    <string name="group_notes">NOTES</string>
+    <string name="dispatcher_email">EMAIL DISPATCHER</string>
+    <string name="group_files">PROPERTY FILES</string>
+    <string name="incident_details">INCIDENT DETAILS</string>
+    <string name="all_property_information">ALL PROPERTY INFORMATION</string>
+    <string name="view_all">View All</string>
+</resources>

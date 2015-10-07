@@ -1,0 +1,41 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.canviz.repairapp"
+        minSdkVersion 19
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    packagingOptions{
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.microsoft.aad:adal:1.1.3'
+    compile 'com.microsoft.services:odata-engine-android-impl:0.13.0@aar'
+    compile 'com.microsoft.services:outlook-services:1.0.0'
+    compile 'com.microsoft.services:directory-services:0.13.0'
+    compile 'com.microsoft.services:file-services:1.0.0'
+    compile 'com.microsoft.services:sharepoint-services:1.0.0'
+    compile 'com.microsoft.services:graph-services:0.2.5'
+    compile 'com.microsoft.services:onenote-services:0.15.0'
+    compile 'com.microsoft.services:discovery-services:1.0.0'
+    compile 'com.microsoft.orc:live-auth:0.14.2'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    //compile(group: 'com.microsoft.orc', name: 'live-auth', version: '0.14.2', ext: 'aar', changing: true)
+}

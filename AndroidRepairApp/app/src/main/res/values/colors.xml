@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue">#4ca1ff</color>
+    <color name="blue2">#008272</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#747474</color>
+    <color name="gray2">#4c4c4c</color>
+    <color name="textColor">#4b4b4b</color>
+    <color name="leftColor">#313131</color>
+    <color name="leftBg">#eed8d8d8</color>
+    <color name="gray3">#b4747474</color>
+    <color name="tr">#00000000</color>
+    <color name="memberbg">#eeeeee</color>
+    <color name="selected">#333333</color>
+</resources>
