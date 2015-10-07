@@ -1,0 +1,1010 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0E54E1891BA6AFFB0065B960 /* video@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E54E1871BA6AFFB0065B960 /* video@2x~ipad.png */; };
+		0E54E18A1BA6AFFB0065B960 /* video~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E54E1881BA6AFFB0065B960 /* video~ipad.png */; };
+		0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
+		0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
+		0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
+		0EC85AEC1A2ED8FD009A1593 /* libPods-ADALiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC85AE91A2ED8FD009A1593 /* libPods-ADALiOS.a */; };
+		0EC85AED1A2ED8FD009A1593 /* libPods-Office365.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC85AEA1A2ED8FD009A1593 /* libPods-Office365.a */; };
+		0EC85AEE1A2ED8FD009A1593 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC85AEB1A2ED8FD009A1593 /* libPods.a */; };
+		0EDF68CE1BA2A7B100437628 /* PropertyMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDF68CC1BA2A7B100437628 /* PropertyMembersCell.m */; };
+		0EDF68CF1BA2A7B100437628 /* PropertyMembersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF68CD1BA2A7B100437628 /* PropertyMembersCell.xib */; };
+		0EDF68D21BA2AD4B00437628 /* EKNPPcommonTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDF68D11BA2AD4B00437628 /* EKNPPcommonTableView.m */; };
+		0EDF68D51BA2B5A700437628 /* MSGraphConversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDF68D41BA2B5A700437628 /* MSGraphConversation.m */; };
+		0EDF698D1BA2D7F900437628 /* ico_excel@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF69871BA2D7F900437628 /* ico_excel@2x~ipad.png */; };
+		0EDF698E1BA2D7F900437628 /* ico_excel~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF69881BA2D7F900437628 /* ico_excel~ipad.png */; };
+		0EDF698F1BA2D7F900437628 /* ico_powerpoint@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF69891BA2D7F900437628 /* ico_powerpoint@2x~ipad.png */; };
+		0EDF69901BA2D7F900437628 /* ico_powerpoint~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF698A1BA2D7F900437628 /* ico_powerpoint~ipad.png */; };
+		0EDF69911BA2D7F900437628 /* ico_word@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF698B1BA2D7F900437628 /* ico_word@2x~ipad.png */; };
+		0EDF69921BA2D7F900437628 /* ico_word~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF698C1BA2D7F900437628 /* ico_word~ipad.png */; };
+		0EDF69961BA2D81D00437628 /* PropertyFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDF69941BA2D81D00437628 /* PropertyFileCell.m */; };
+		0EDF69971BA2D81D00437628 /* PropertyFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EDF69951BA2D81D00437628 /* PropertyFileCell.xib */; };
+		0EE17A1F1BA153CF00AD70D9 /* OneNoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE17A1D1BA153CF00AD70D9 /* OneNoteCell.m */; };
+		0EE17A201BA153CF00AD70D9 /* OneNoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EE17A1E1BA153CF00AD70D9 /* OneNoteCell.xib */; };
+		0EE17A251BA1571600AD70D9 /* oneNoteList@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE17A211BA1571600AD70D9 /* oneNoteList@2x~ipad.png */; };
+		0EE17A261BA1571600AD70D9 /* oneNoteList~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE17A221BA1571600AD70D9 /* oneNoteList~ipad.png */; };
+		0EE17A271BA1571600AD70D9 /* open_onenote@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE17A231BA1571600AD70D9 /* open_onenote@2x~ipad.png */; };
+		0EE17A281BA1571600AD70D9 /* open_onenote~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE17A241BA1571600AD70D9 /* open_onenote~ipad.png */; };
+		0EE17A2B1BA15ADB00AD70D9 /* oneNoteListSelect@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE17A291BA15ADB00AD70D9 /* oneNoteListSelect@2x~ipad.png */; };
+		0EE17A2C1BA15ADB00AD70D9 /* oneNoteListSelect~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE17A2A1BA15ADB00AD70D9 /* oneNoteListSelect~ipad.png */; };
+		0EE466FC1B9C306E0051904E /* EKNIncidentDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE466FB1B9C306E0051904E /* EKNIncidentDetailView.m */; };
+		0EE467001B9E6F9B0051904E /* EKNGraphService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE466FF1B9E6F9B0051904E /* EKNGraphService.m */; };
+		0EE467031B9E702C0051904E /* EKNOneNoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE467021B9E702C0051904E /* EKNOneNoteService.m */; };
+		0EE467071B9E8B680051904E /* IncidentMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE467051B9E8B680051904E /* IncidentMenuCell.m */; };
+		0EE467081B9E8B680051904E /* IncidentMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467061B9E8B680051904E /* IncidentMenuCell.xib */; };
+		0EE467251B9EC0E90051904E /* left_nav_selected1@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467091B9EC0E90051904E /* left_nav_selected1@2x~ipad.png */; };
+		0EE467261B9EC0E90051904E /* left_nav_selected1~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4670A1B9EC0E90051904E /* left_nav_selected1~ipad.png */; };
+		0EE467271B9EC0E90051904E /* left_nav_selected2@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4670B1B9EC0E90051904E /* left_nav_selected2@2x~ipad.png */; };
+		0EE467281B9EC0E90051904E /* left_nav_selected2~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4670C1B9EC0E90051904E /* left_nav_selected2~ipad.png */; };
+		0EE467291B9EC0E90051904E /* left_nav_selected3@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4670D1B9EC0E90051904E /* left_nav_selected3@2x~ipad.png */; };
+		0EE4672A1B9EC0E90051904E /* left_nav_selected3~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4670E1B9EC0E90051904E /* left_nav_selected3~ipad.png */; };
+		0EE4672B1B9EC0E90051904E /* left_nav_selected4@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4670F1B9EC0E90051904E /* left_nav_selected4@2x~ipad.png */; };
+		0EE4672C1B9EC0E90051904E /* left_nav_selected4~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467101B9EC0E90051904E /* left_nav_selected4~ipad.png */; };
+		0EE4672D1B9EC0E90051904E /* left_nav_selected5@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467111B9EC0E90051904E /* left_nav_selected5@2x~ipad.png */; };
+		0EE4672E1B9EC0E90051904E /* left_nav_selected5~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467121B9EC0E90051904E /* left_nav_selected5~ipad.png */; };
+		0EE4672F1B9EC0E90051904E /* left_nav_selected6@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467131B9EC0E90051904E /* left_nav_selected6@2x~ipad.png */; };
+		0EE467301B9EC0E90051904E /* left_nav_selected6~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467141B9EC0E90051904E /* left_nav_selected6~ipad.png */; };
+		0EE467311B9EC0E90051904E /* left_nav_selected7@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467151B9EC0E90051904E /* left_nav_selected7@2x~ipad.png */; };
+		0EE467321B9EC0E90051904E /* left_nav_selected7~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467161B9EC0E90051904E /* left_nav_selected7~ipad.png */; };
+		0EE467331B9EC0E90051904E /* left_nav1@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467171B9EC0E90051904E /* left_nav1@2x~ipad.png */; };
+		0EE467341B9EC0E90051904E /* left_nav1~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467181B9EC0E90051904E /* left_nav1~ipad.png */; };
+		0EE467351B9EC0E90051904E /* left_nav2@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467191B9EC0E90051904E /* left_nav2@2x~ipad.png */; };
+		0EE467361B9EC0E90051904E /* left_nav2~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4671A1B9EC0E90051904E /* left_nav2~ipad.png */; };
+		0EE467371B9EC0E90051904E /* left_nav3@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4671B1B9EC0E90051904E /* left_nav3@2x~ipad.png */; };
+		0EE467381B9EC0E90051904E /* left_nav3~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4671C1B9EC0E90051904E /* left_nav3~ipad.png */; };
+		0EE467391B9EC0E90051904E /* left_nav4@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4671D1B9EC0E90051904E /* left_nav4@2x~ipad.png */; };
+		0EE4673A1B9EC0E90051904E /* left_nav4~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4671E1B9EC0E90051904E /* left_nav4~ipad.png */; };
+		0EE4673B1B9EC0E90051904E /* left_nav5@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4671F1B9EC0E90051904E /* left_nav5@2x~ipad.png */; };
+		0EE4673C1B9EC0E90051904E /* left_nav5~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467201B9EC0E90051904E /* left_nav5~ipad.png */; };
+		0EE4673D1B9EC0E90051904E /* left_nav6@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467211B9EC0E90051904E /* left_nav6@2x~ipad.png */; };
+		0EE4673E1B9EC0E90051904E /* left_nav6~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467221B9EC0E90051904E /* left_nav6~ipad.png */; };
+		0EE4673F1B9EC0E90051904E /* left_nav7@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467231B9EC0E90051904E /* left_nav7@2x~ipad.png */; };
+		0EE467401B9EC0E90051904E /* left_nav7~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE467241B9EC0E90051904E /* left_nav7~ipad.png */; };
+		0EED14271BA26396008A1C8C /* ConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED14251BA26396008A1C8C /* ConversationCell.m */; };
+		0EED14281BA26396008A1C8C /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EED14261BA26396008A1C8C /* ConversationCell.xib */; };
+		2FA9615F1BA1A2BE0069C9B9 /* SPVideoChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA961581BA1A2BE0069C9B9 /* SPVideoChannel.m */; };
+		2FA961601BA1A2BE0069C9B9 /* SPVideoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA9615A1BA1A2BE0069C9B9 /* SPVideoItem.m */; };
+		2FA961611BA1A2BE0069C9B9 /* SPVideoItemOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA9615C1BA1A2BE0069C9B9 /* SPVideoItemOperations.m */; };
+		2FA961621BA1A2BE0069C9B9 /* EKNVideoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA9615E1BA1A2BE0069C9B9 /* EKNVideoService.m */; };
+		F31EFD9719FF895A005B04BD /* BaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31EFD9619FF895A005B04BD /* BaseController.m */; };
+		F37943E819FA2B5E00FDD9A3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F37943E719FA2B5E00FDD9A3 /* Settings.bundle */; };
+		F37943F019FA2B7100FDD9A3 /* ADAL_iPad_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F37943E919FA2B7100FDD9A3 /* ADAL_iPad_Storyboard.storyboard */; };
+		F37943F119FA2B7100FDD9A3 /* ADAL_iPhone_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F37943EA19FA2B7100FDD9A3 /* ADAL_iPhone_Storyboard.storyboard */; };
+		F37943F219FA2B7100FDD9A3 /* ADALiOSBundle-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F37943EB19FA2B7100FDD9A3 /* ADALiOSBundle-Info.plist */; };
+		F37943F619FA2C0F00FDD9A3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F37943F419FA2C0F00FDD9A3 /* InfoPlist.strings */; };
+		F37943FD19FA2C6200FDD9A3 /* IncidentListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F37943F819FA2C6200FDD9A3 /* IncidentListItemCell.m */; };
+		F37943FE19FA2C6200FDD9A3 /* IncidentListItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F37943F919FA2C6200FDD9A3 /* IncidentListItemCell.xib */; };
+		F379440719FA2CA000FDD9A3 /* PropertyDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F379440219FA2CA000FDD9A3 /* PropertyDetailsCell.m */; };
+		F379440819FA2CA000FDD9A3 /* PropertyDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F379440319FA2CA000FDD9A3 /* PropertyDetailsCell.xib */; };
+		F379440919FA2CA000FDD9A3 /* PropertyDetailsImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F379440519FA2CA000FDD9A3 /* PropertyDetailsImage.m */; };
+		F379440A19FA2CA000FDD9A3 /* PropertyDetailsImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = F379440619FA2CA000FDD9A3 /* PropertyDetailsImage.xib */; };
+		F379440E19FA2CB300FDD9A3 /* EKNCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F379440C19FA2CB300FDD9A3 /* EKNCollectionViewCell.m */; };
+		F379440F19FA2CB300FDD9A3 /* EKNCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F379440D19FA2CB300FDD9A3 /* EKNCollectionViewCell.xib */; };
+		F379441319FA2CE000FDD9A3 /* ContactOwnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F379441119FA2CE000FDD9A3 /* ContactOwnerCell.m */; };
+		F379441419FA2CE000FDD9A3 /* ContactOwnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F379441219FA2CE000FDD9A3 /* ContactOwnerCell.xib */; };
+		F379441719FA2D4700FDD9A3 /* EKNIncidentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F379441619FA2D4700FDD9A3 /* EKNIncidentViewController.m */; };
+		F379441E19FA2D7900FDD9A3 /* EKN+NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F379441919FA2D7900FDD9A3 /* EKN+NavigationController.m */; };
+		F379441F19FA2D7900FDD9A3 /* EKN+UIImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F379441B19FA2D7900FDD9A3 /* EKN+UIImagePickerController.m */; };
+		F379442019FA2D7900FDD9A3 /* EKN+UIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F379441D19FA2D7900FDD9A3 /* EKN+UIViewController.m */; };
+		F379442519FA2D8E00FDD9A3 /* EKNListClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F379442219FA2D8E00FDD9A3 /* EKNListClient.m */; };
+		F379442619FA2D8E00FDD9A3 /* EKNListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F379442419FA2D8E00FDD9A3 /* EKNListItem.m */; };
+		F379442D19FA2DAA00FDD9A3 /* EKNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F379442819FA2DAA00FDD9A3 /* EKNAppDelegate.m */; };
+		F379442E19FA2DAA00FDD9A3 /* EKNEKNGlobalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F379442A19FA2DAA00FDD9A3 /* EKNEKNGlobalInfo.m */; };
+		F379442F19FA2DAA00FDD9A3 /* EKNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F379442C19FA2DAA00FDD9A3 /* EKNLoginViewController.m */; };
+		F379443119FA2DCC00FDD9A3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F379443019FA2DCC00FDD9A3 /* Images.xcassets */; };
+		F379446A19FA2DF200FDD9A3 /* before@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443319FA2DF200FDD9A3 /* before@2x~ipad.png */; };
+		F379446B19FA2DF200FDD9A3 /* before~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443419FA2DF200FDD9A3 /* before~ipad.png */; };
+		F379446E19FA2DF200FDD9A3 /* calendar@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443719FA2DF200FDD9A3 /* calendar@2x~ipad.png */; };
+		F379446F19FA2DF200FDD9A3 /* calendar~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443819FA2DF200FDD9A3 /* calendar~ipad.png */; };
+		F379447019FA2DF200FDD9A3 /* camera@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443919FA2DF200FDD9A3 /* camera@2x~ipad.png */; };
+		F379447119FA2DF200FDD9A3 /* camera_gray@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443A19FA2DF200FDD9A3 /* camera_gray@2x~ipad.png */; };
+		F379447219FA2DF200FDD9A3 /* camera_gray~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443B19FA2DF200FDD9A3 /* camera_gray~ipad.png */; };
+		F379447319FA2DF200FDD9A3 /* camera~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443C19FA2DF200FDD9A3 /* camera~ipad.png */; };
+		F379447419FA2DF200FDD9A3 /* close@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443D19FA2DF200FDD9A3 /* close@2x~ipad.png */; };
+		F379447519FA2DF200FDD9A3 /* close~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443E19FA2DF200FDD9A3 /* close~ipad.png */; };
+		F379447619FA2DF200FDD9A3 /* default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379443F19FA2DF200FDD9A3 /* default~ipad.png */; };
+		F379448219FA2DF200FDD9A3 /* detailsepartorline.png in Resources */ = {isa = PBXBuildFile; fileRef = F379444B19FA2DF200FDD9A3 /* detailsepartorline.png */; };
+		F379448519FA2DF200FDD9A3 /* email@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379444E19FA2DF200FDD9A3 /* email@2x~ipad.png */; };
+		F379448619FA2DF200FDD9A3 /* email~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379444F19FA2DF200FDD9A3 /* email~ipad.png */; };
+		F379448719FA2DF200FDD9A3 /* finalize_repair@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445019FA2DF200FDD9A3 /* finalize_repair@2x~ipad.png */; };
+		F379448819FA2DF200FDD9A3 /* finalize_repair~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445119FA2DF200FDD9A3 /* finalize_repair~ipad.png */; };
+		F379448B19FA2DF200FDD9A3 /* home@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445419FA2DF200FDD9A3 /* home@2x~ipad.png */; };
+		F379448C19FA2DF200FDD9A3 /* home~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445519FA2DF200FDD9A3 /* home~ipad.png */; };
+		F379448D19FA2DF200FDD9A3 /* incident_detailtab@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445619FA2DF200FDD9A3 /* incident_detailtab@2x~ipad.png */; };
+		F379448E19FA2DF200FDD9A3 /* incident_detailtab~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445719FA2DF200FDD9A3 /* incident_detailtab~ipad.png */; };
+		F379448F19FA2DF200FDD9A3 /* man@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445819FA2DF200FDD9A3 /* man@2x~ipad.png */; };
+		F379449019FA2DF200FDD9A3 /* man~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445919FA2DF200FDD9A3 /* man~ipad.png */; };
+		F379449119FA2DF200FDD9A3 /* navigation_background@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445A19FA2DF200FDD9A3 /* navigation_background@2x~ipad.png */; };
+		F379449219FA2DF200FDD9A3 /* navigation_background~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379445B19FA2DF200FDD9A3 /* navigation_background~ipad.png */; };
+		F379449D19FA2DF200FDD9A3 /* sepratorline@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379446619FA2DF200FDD9A3 /* sepratorline@2x~ipad.png */; };
+		F379449E19FA2DF200FDD9A3 /* sepratorline~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379446719FA2DF200FDD9A3 /* sepratorline~ipad.png */; };
+		F379449F19FA2DF200FDD9A3 /* setting@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379446819FA2DF200FDD9A3 /* setting@2x~ipad.png */; };
+		F37944A019FA2DF200FDD9A3 /* setting~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F379446919FA2DF200FDD9A3 /* setting~ipad.png */; };
+		F37944A519FA2E0900FDD9A3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F37944A319FA2E0900FDD9A3 /* main.m */; };
+		F37944A819FA2E3100FDD9A3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F37944A619FA2E3100FDD9A3 /* InfoPlist.strings */; };
+		F37944AD19FA32C500FDD9A3 /* EKNMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = F37944AC19FA32C500FDD9A3 /* EKNMetadata.m */; };
+		F37944B319FA3AC300FDD9A3 /* NSString+NSStringExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F37944B119FA3AC300FDD9A3 /* NSString+NSStringExtensions.m */; };
+		F37944B619FA3DCA00FDD9A3 /* icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F37944B419FA3DCA00FDD9A3 /* icon@2x~ipad.png */; };
+		F37944B719FA3DCA00FDD9A3 /* icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F37944B519FA3DCA00FDD9A3 /* icon~ipad.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0E54E1871BA6AFFB0065B960 /* video@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@2x~ipad.png"; sourceTree = "<group>"; };
+		0E54E1881BA6AFFB0065B960 /* video~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video~ipad.png"; sourceTree = "<group>"; };
+		0EC4F5B619CFF2C600BEF583 /* iOSRepairApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSRepairApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0EC85AE91A2ED8FD009A1593 /* libPods-ADALiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-ADALiOS.a"; path = "Pods/build/Debug-iphoneos/libPods-ADALiOS.a"; sourceTree = "<group>"; };
+		0EC85AEA1A2ED8FD009A1593 /* libPods-Office365.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Office365.a"; path = "Pods/build/Debug-iphoneos/libPods-Office365.a"; sourceTree = "<group>"; };
+		0EC85AEB1A2ED8FD009A1593 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		0EDF68CB1BA2A7B100437628 /* PropertyMembersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyMembersCell.h; path = iOSRepairApp/PropertyMembersCell.h; sourceTree = SOURCE_ROOT; };
+		0EDF68CC1BA2A7B100437628 /* PropertyMembersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PropertyMembersCell.m; path = iOSRepairApp/PropertyMembersCell.m; sourceTree = SOURCE_ROOT; };
+		0EDF68CD1BA2A7B100437628 /* PropertyMembersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PropertyMembersCell.xib; path = iOSRepairApp/PropertyMembersCell.xib; sourceTree = SOURCE_ROOT; };
+		0EDF68D01BA2AD4B00437628 /* EKNPPcommonTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNPPcommonTableView.h; path = iOSRepairApp/EKNPPcommonTableView.h; sourceTree = SOURCE_ROOT; };
+		0EDF68D11BA2AD4B00437628 /* EKNPPcommonTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNPPcommonTableView.m; path = iOSRepairApp/EKNPPcommonTableView.m; sourceTree = SOURCE_ROOT; };
+		0EDF68D31BA2B5A700437628 /* MSGraphConversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSGraphConversation.h; path = iOSRepairApp/MSGraphConversation.h; sourceTree = SOURCE_ROOT; };
+		0EDF68D41BA2B5A700437628 /* MSGraphConversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSGraphConversation.m; path = iOSRepairApp/MSGraphConversation.m; sourceTree = SOURCE_ROOT; };
+		0EDF69871BA2D7F900437628 /* ico_excel@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_excel@2x~ipad.png"; sourceTree = "<group>"; };
+		0EDF69881BA2D7F900437628 /* ico_excel~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_excel~ipad.png"; sourceTree = "<group>"; };
+		0EDF69891BA2D7F900437628 /* ico_powerpoint@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_powerpoint@2x~ipad.png"; sourceTree = "<group>"; };
+		0EDF698A1BA2D7F900437628 /* ico_powerpoint~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_powerpoint~ipad.png"; sourceTree = "<group>"; };
+		0EDF698B1BA2D7F900437628 /* ico_word@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_word@2x~ipad.png"; sourceTree = "<group>"; };
+		0EDF698C1BA2D7F900437628 /* ico_word~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_word~ipad.png"; sourceTree = "<group>"; };
+		0EDF69931BA2D81D00437628 /* PropertyFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyFileCell.h; path = iOSRepairApp/PropertyFileCell.h; sourceTree = SOURCE_ROOT; };
+		0EDF69941BA2D81D00437628 /* PropertyFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PropertyFileCell.m; path = iOSRepairApp/PropertyFileCell.m; sourceTree = SOURCE_ROOT; };
+		0EDF69951BA2D81D00437628 /* PropertyFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PropertyFileCell.xib; path = iOSRepairApp/PropertyFileCell.xib; sourceTree = SOURCE_ROOT; };
+		0EE17A1C1BA153CF00AD70D9 /* OneNoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneNoteCell.h; path = iOSRepairApp/OneNoteCell.h; sourceTree = SOURCE_ROOT; };
+		0EE17A1D1BA153CF00AD70D9 /* OneNoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneNoteCell.m; path = iOSRepairApp/OneNoteCell.m; sourceTree = SOURCE_ROOT; };
+		0EE17A1E1BA153CF00AD70D9 /* OneNoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OneNoteCell.xib; path = iOSRepairApp/OneNoteCell.xib; sourceTree = SOURCE_ROOT; };
+		0EE17A211BA1571600AD70D9 /* oneNoteList@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneNoteList@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE17A221BA1571600AD70D9 /* oneNoteList~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneNoteList~ipad.png"; sourceTree = "<group>"; };
+		0EE17A231BA1571600AD70D9 /* open_onenote@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "open_onenote@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE17A241BA1571600AD70D9 /* open_onenote~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "open_onenote~ipad.png"; sourceTree = "<group>"; };
+		0EE17A291BA15ADB00AD70D9 /* oneNoteListSelect@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneNoteListSelect@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE17A2A1BA15ADB00AD70D9 /* oneNoteListSelect~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneNoteListSelect~ipad.png"; sourceTree = "<group>"; };
+		0EE466FA1B9C305C0051904E /* EKNIncidentDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNIncidentDetailView.h; path = iOSRepairApp/EKNIncidentDetailView.h; sourceTree = SOURCE_ROOT; };
+		0EE466FB1B9C306E0051904E /* EKNIncidentDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNIncidentDetailView.m; path = iOSRepairApp/EKNIncidentDetailView.m; sourceTree = SOURCE_ROOT; };
+		0EE466FE1B9E6F9B0051904E /* EKNGraphService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNGraphService.h; path = iOSRepairApp/EKNGraphService.h; sourceTree = SOURCE_ROOT; };
+		0EE466FF1B9E6F9B0051904E /* EKNGraphService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNGraphService.m; path = iOSRepairApp/EKNGraphService.m; sourceTree = SOURCE_ROOT; };
+		0EE467011B9E702C0051904E /* EKNOneNoteService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNOneNoteService.h; path = iOSRepairApp/EKNOneNoteService.h; sourceTree = SOURCE_ROOT; };
+		0EE467021B9E702C0051904E /* EKNOneNoteService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNOneNoteService.m; path = iOSRepairApp/EKNOneNoteService.m; sourceTree = SOURCE_ROOT; };
+		0EE467041B9E8B680051904E /* IncidentMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IncidentMenuCell.h; path = iOSRepairApp/IncidentMenuCell.h; sourceTree = SOURCE_ROOT; };
+		0EE467051B9E8B680051904E /* IncidentMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IncidentMenuCell.m; path = iOSRepairApp/IncidentMenuCell.m; sourceTree = SOURCE_ROOT; };
+		0EE467061B9E8B680051904E /* IncidentMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IncidentMenuCell.xib; path = iOSRepairApp/IncidentMenuCell.xib; sourceTree = SOURCE_ROOT; };
+		0EE467091B9EC0E90051904E /* left_nav_selected1@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected1@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE4670A1B9EC0E90051904E /* left_nav_selected1~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected1~ipad.png"; sourceTree = "<group>"; };
+		0EE4670B1B9EC0E90051904E /* left_nav_selected2@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected2@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE4670C1B9EC0E90051904E /* left_nav_selected2~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected2~ipad.png"; sourceTree = "<group>"; };
+		0EE4670D1B9EC0E90051904E /* left_nav_selected3@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected3@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE4670E1B9EC0E90051904E /* left_nav_selected3~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected3~ipad.png"; sourceTree = "<group>"; };
+		0EE4670F1B9EC0E90051904E /* left_nav_selected4@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected4@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE467101B9EC0E90051904E /* left_nav_selected4~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected4~ipad.png"; sourceTree = "<group>"; };
+		0EE467111B9EC0E90051904E /* left_nav_selected5@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected5@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE467121B9EC0E90051904E /* left_nav_selected5~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected5~ipad.png"; sourceTree = "<group>"; };
+		0EE467131B9EC0E90051904E /* left_nav_selected6@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected6@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE467141B9EC0E90051904E /* left_nav_selected6~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected6~ipad.png"; sourceTree = "<group>"; };
+		0EE467151B9EC0E90051904E /* left_nav_selected7@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected7@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE467161B9EC0E90051904E /* left_nav_selected7~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav_selected7~ipad.png"; sourceTree = "<group>"; };
+		0EE467171B9EC0E90051904E /* left_nav1@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav1@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE467181B9EC0E90051904E /* left_nav1~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav1~ipad.png"; sourceTree = "<group>"; };
+		0EE467191B9EC0E90051904E /* left_nav2@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav2@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE4671A1B9EC0E90051904E /* left_nav2~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav2~ipad.png"; sourceTree = "<group>"; };
+		0EE4671B1B9EC0E90051904E /* left_nav3@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav3@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE4671C1B9EC0E90051904E /* left_nav3~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav3~ipad.png"; sourceTree = "<group>"; };
+		0EE4671D1B9EC0E90051904E /* left_nav4@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav4@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE4671E1B9EC0E90051904E /* left_nav4~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav4~ipad.png"; sourceTree = "<group>"; };
+		0EE4671F1B9EC0E90051904E /* left_nav5@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav5@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE467201B9EC0E90051904E /* left_nav5~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav5~ipad.png"; sourceTree = "<group>"; };
+		0EE467211B9EC0E90051904E /* left_nav6@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav6@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE467221B9EC0E90051904E /* left_nav6~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav6~ipad.png"; sourceTree = "<group>"; };
+		0EE467231B9EC0E90051904E /* left_nav7@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav7@2x~ipad.png"; sourceTree = "<group>"; };
+		0EE467241B9EC0E90051904E /* left_nav7~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_nav7~ipad.png"; sourceTree = "<group>"; };
+		0EE9C8801BA7C08F00E34BCB /* iOSRepairApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = iOSRepairApp.entitlements; path = iOSRepairApp/iOSRepairApp.entitlements; sourceTree = SOURCE_ROOT; };
+		0EED14241BA26396008A1C8C /* ConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationCell.h; path = iOSRepairApp/ConversationCell.h; sourceTree = SOURCE_ROOT; };
+		0EED14251BA26396008A1C8C /* ConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationCell.m; path = iOSRepairApp/ConversationCell.m; sourceTree = SOURCE_ROOT; };
+		0EED14261BA26396008A1C8C /* ConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationCell.xib; path = iOSRepairApp/ConversationCell.xib; sourceTree = SOURCE_ROOT; };
+		240C36C39ECF3AAD30CC417B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2FA961571BA1A2BE0069C9B9 /* SPVideoChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPVideoChannel.h; path = iOSRepairApp/SPVideoChannel.h; sourceTree = SOURCE_ROOT; };
+		2FA961581BA1A2BE0069C9B9 /* SPVideoChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPVideoChannel.m; path = iOSRepairApp/SPVideoChannel.m; sourceTree = SOURCE_ROOT; };
+		2FA961591BA1A2BE0069C9B9 /* SPVideoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPVideoItem.h; path = iOSRepairApp/SPVideoItem.h; sourceTree = SOURCE_ROOT; };
+		2FA9615A1BA1A2BE0069C9B9 /* SPVideoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPVideoItem.m; path = iOSRepairApp/SPVideoItem.m; sourceTree = SOURCE_ROOT; };
+		2FA9615B1BA1A2BE0069C9B9 /* SPVideoItemOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPVideoItemOperations.h; path = iOSRepairApp/SPVideoItemOperations.h; sourceTree = SOURCE_ROOT; };
+		2FA9615C1BA1A2BE0069C9B9 /* SPVideoItemOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPVideoItemOperations.m; path = iOSRepairApp/SPVideoItemOperations.m; sourceTree = SOURCE_ROOT; };
+		2FA9615D1BA1A2BE0069C9B9 /* EKNVideoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNVideoService.h; path = iOSRepairApp/EKNVideoService.h; sourceTree = SOURCE_ROOT; };
+		2FA9615E1BA1A2BE0069C9B9 /* EKNVideoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNVideoService.m; path = iOSRepairApp/EKNVideoService.m; sourceTree = SOURCE_ROOT; };
+		481833CFFB1FA410AE17FCD2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		4FDDCC949506D0ED88D9A210 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F31EFD9519FF895A005B04BD /* BaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseController.h; path = iOSRepairApp/BaseController.h; sourceTree = SOURCE_ROOT; };
+		F31EFD9619FF895A005B04BD /* BaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseController.m; path = iOSRepairApp/BaseController.m; sourceTree = SOURCE_ROOT; };
+		F37943E719FA2B5E00FDD9A3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = iOSRepairApp/Settings.bundle; sourceTree = "<group>"; };
+		F37943E919FA2B7100FDD9A3 /* ADAL_iPad_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ADAL_iPad_Storyboard.storyboard; path = iOSRepairApp/ADALiOSBundle/ADAL_iPad_Storyboard.storyboard; sourceTree = SOURCE_ROOT; };
+		F37943EA19FA2B7100FDD9A3 /* ADAL_iPhone_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ADAL_iPhone_Storyboard.storyboard; path = iOSRepairApp/ADALiOSBundle/ADAL_iPhone_Storyboard.storyboard; sourceTree = SOURCE_ROOT; };
+		F37943EB19FA2B7100FDD9A3 /* ADALiOSBundle-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ADALiOSBundle-Info.plist"; path = "iOSRepairApp/ADALiOSBundle/ADALiOSBundle-Info.plist"; sourceTree = SOURCE_ROOT; };
+		F37943EC19FA2B7100FDD9A3 /* ADALiOSBundle-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ADALiOSBundle-Prefix.pch"; path = "iOSRepairApp/ADALiOSBundle/ADALiOSBundle-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		F37943F519FA2C0F00FDD9A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = iOSRepairApp/ADALiOSBundle/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		F37943F719FA2C6200FDD9A3 /* IncidentListItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IncidentListItemCell.h; path = iOSRepairApp/IncidentListItemCell.h; sourceTree = SOURCE_ROOT; };
+		F37943F819FA2C6200FDD9A3 /* IncidentListItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IncidentListItemCell.m; path = iOSRepairApp/IncidentListItemCell.m; sourceTree = SOURCE_ROOT; };
+		F37943F919FA2C6200FDD9A3 /* IncidentListItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IncidentListItemCell.xib; path = iOSRepairApp/IncidentListItemCell.xib; sourceTree = SOURCE_ROOT; };
+		F379440119FA2CA000FDD9A3 /* PropertyDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyDetailsCell.h; path = iOSRepairApp/PropertyDetailsCell.h; sourceTree = SOURCE_ROOT; };
+		F379440219FA2CA000FDD9A3 /* PropertyDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PropertyDetailsCell.m; path = iOSRepairApp/PropertyDetailsCell.m; sourceTree = SOURCE_ROOT; };
+		F379440319FA2CA000FDD9A3 /* PropertyDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PropertyDetailsCell.xib; path = iOSRepairApp/PropertyDetailsCell.xib; sourceTree = SOURCE_ROOT; };
+		F379440419FA2CA000FDD9A3 /* PropertyDetailsImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyDetailsImage.h; path = iOSRepairApp/PropertyDetailsImage.h; sourceTree = SOURCE_ROOT; };
+		F379440519FA2CA000FDD9A3 /* PropertyDetailsImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PropertyDetailsImage.m; path = iOSRepairApp/PropertyDetailsImage.m; sourceTree = SOURCE_ROOT; };
+		F379440619FA2CA000FDD9A3 /* PropertyDetailsImage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PropertyDetailsImage.xib; path = iOSRepairApp/PropertyDetailsImage.xib; sourceTree = SOURCE_ROOT; };
+		F379440B19FA2CB300FDD9A3 /* EKNCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNCollectionViewCell.h; path = iOSRepairApp/EKNCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
+		F379440C19FA2CB300FDD9A3 /* EKNCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNCollectionViewCell.m; path = iOSRepairApp/EKNCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
+		F379440D19FA2CB300FDD9A3 /* EKNCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EKNCollectionViewCell.xib; path = iOSRepairApp/EKNCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
+		F379441019FA2CE000FDD9A3 /* ContactOwnerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactOwnerCell.h; path = iOSRepairApp/ContactOwnerCell.h; sourceTree = SOURCE_ROOT; };
+		F379441119FA2CE000FDD9A3 /* ContactOwnerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactOwnerCell.m; path = iOSRepairApp/ContactOwnerCell.m; sourceTree = SOURCE_ROOT; };
+		F379441219FA2CE000FDD9A3 /* ContactOwnerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactOwnerCell.xib; path = iOSRepairApp/ContactOwnerCell.xib; sourceTree = SOURCE_ROOT; };
+		F379441519FA2D4700FDD9A3 /* EKNIncidentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNIncidentViewController.h; path = iOSRepairApp/EKNIncidentViewController.h; sourceTree = SOURCE_ROOT; };
+		F379441619FA2D4700FDD9A3 /* EKNIncidentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNIncidentViewController.m; path = iOSRepairApp/EKNIncidentViewController.m; sourceTree = SOURCE_ROOT; };
+		F379441819FA2D7900FDD9A3 /* EKN+NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EKN+NavigationController.h"; path = "iOSRepairApp/EKN+NavigationController.h"; sourceTree = SOURCE_ROOT; };
+		F379441919FA2D7900FDD9A3 /* EKN+NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EKN+NavigationController.m"; path = "iOSRepairApp/EKN+NavigationController.m"; sourceTree = SOURCE_ROOT; };
+		F379441A19FA2D7900FDD9A3 /* EKN+UIImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EKN+UIImagePickerController.h"; path = "iOSRepairApp/EKN+UIImagePickerController.h"; sourceTree = SOURCE_ROOT; };
+		F379441B19FA2D7900FDD9A3 /* EKN+UIImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EKN+UIImagePickerController.m"; path = "iOSRepairApp/EKN+UIImagePickerController.m"; sourceTree = SOURCE_ROOT; };
+		F379441C19FA2D7900FDD9A3 /* EKN+UIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EKN+UIViewController.h"; path = "iOSRepairApp/EKN+UIViewController.h"; sourceTree = SOURCE_ROOT; };
+		F379441D19FA2D7900FDD9A3 /* EKN+UIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EKN+UIViewController.m"; path = "iOSRepairApp/EKN+UIViewController.m"; sourceTree = SOURCE_ROOT; };
+		F379442119FA2D8E00FDD9A3 /* EKNListClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNListClient.h; path = iOSRepairApp/EKNListClient.h; sourceTree = SOURCE_ROOT; };
+		F379442219FA2D8E00FDD9A3 /* EKNListClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNListClient.m; path = iOSRepairApp/EKNListClient.m; sourceTree = SOURCE_ROOT; };
+		F379442319FA2D8E00FDD9A3 /* EKNListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNListItem.h; path = iOSRepairApp/EKNListItem.h; sourceTree = SOURCE_ROOT; };
+		F379442419FA2D8E00FDD9A3 /* EKNListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNListItem.m; path = iOSRepairApp/EKNListItem.m; sourceTree = SOURCE_ROOT; };
+		F379442719FA2DAA00FDD9A3 /* EKNAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNAppDelegate.h; path = iOSRepairApp/EKNAppDelegate.h; sourceTree = SOURCE_ROOT; };
+		F379442819FA2DAA00FDD9A3 /* EKNAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNAppDelegate.m; path = iOSRepairApp/EKNAppDelegate.m; sourceTree = SOURCE_ROOT; };
+		F379442919FA2DAA00FDD9A3 /* EKNEKNGlobalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNEKNGlobalInfo.h; path = iOSRepairApp/EKNEKNGlobalInfo.h; sourceTree = SOURCE_ROOT; };
+		F379442A19FA2DAA00FDD9A3 /* EKNEKNGlobalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNEKNGlobalInfo.m; path = iOSRepairApp/EKNEKNGlobalInfo.m; sourceTree = SOURCE_ROOT; };
+		F379442B19FA2DAA00FDD9A3 /* EKNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNLoginViewController.h; path = iOSRepairApp/EKNLoginViewController.h; sourceTree = SOURCE_ROOT; };
+		F379442C19FA2DAA00FDD9A3 /* EKNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNLoginViewController.m; path = iOSRepairApp/EKNLoginViewController.m; sourceTree = SOURCE_ROOT; };
+		F379443019FA2DCC00FDD9A3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOSRepairApp/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		F379443319FA2DF200FDD9A3 /* before@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before@2x~ipad.png"; sourceTree = "<group>"; };
+		F379443419FA2DF200FDD9A3 /* before~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "before~ipad.png"; sourceTree = "<group>"; };
+		F379443719FA2DF200FDD9A3 /* calendar@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar@2x~ipad.png"; sourceTree = "<group>"; };
+		F379443819FA2DF200FDD9A3 /* calendar~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar~ipad.png"; sourceTree = "<group>"; };
+		F379443919FA2DF200FDD9A3 /* camera@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x~ipad.png"; sourceTree = "<group>"; };
+		F379443A19FA2DF200FDD9A3 /* camera_gray@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_gray@2x~ipad.png"; sourceTree = "<group>"; };
+		F379443B19FA2DF200FDD9A3 /* camera_gray~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_gray~ipad.png"; sourceTree = "<group>"; };
+		F379443C19FA2DF200FDD9A3 /* camera~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera~ipad.png"; sourceTree = "<group>"; };
+		F379443D19FA2DF200FDD9A3 /* close@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x~ipad.png"; sourceTree = "<group>"; };
+		F379443E19FA2DF200FDD9A3 /* close~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close~ipad.png"; sourceTree = "<group>"; };
+		F379443F19FA2DF200FDD9A3 /* default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default~ipad.png"; sourceTree = "<group>"; };
+		F379444B19FA2DF200FDD9A3 /* detailsepartorline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detailsepartorline.png; sourceTree = "<group>"; };
+		F379444E19FA2DF200FDD9A3 /* email@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "email@2x~ipad.png"; sourceTree = "<group>"; };
+		F379444F19FA2DF200FDD9A3 /* email~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "email~ipad.png"; sourceTree = "<group>"; };
+		F379445019FA2DF200FDD9A3 /* finalize_repair@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "finalize_repair@2x~ipad.png"; sourceTree = "<group>"; };
+		F379445119FA2DF200FDD9A3 /* finalize_repair~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "finalize_repair~ipad.png"; sourceTree = "<group>"; };
+		F379445419FA2DF200FDD9A3 /* home@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home@2x~ipad.png"; sourceTree = "<group>"; };
+		F379445519FA2DF200FDD9A3 /* home~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home~ipad.png"; sourceTree = "<group>"; };
+		F379445619FA2DF200FDD9A3 /* incident_detailtab@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "incident_detailtab@2x~ipad.png"; sourceTree = "<group>"; };
+		F379445719FA2DF200FDD9A3 /* incident_detailtab~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "incident_detailtab~ipad.png"; sourceTree = "<group>"; };
+		F379445819FA2DF200FDD9A3 /* man@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "man@2x~ipad.png"; sourceTree = "<group>"; };
+		F379445919FA2DF200FDD9A3 /* man~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "man~ipad.png"; sourceTree = "<group>"; };
+		F379445A19FA2DF200FDD9A3 /* navigation_background@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_background@2x~ipad.png"; sourceTree = "<group>"; };
+		F379445B19FA2DF200FDD9A3 /* navigation_background~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_background~ipad.png"; sourceTree = "<group>"; };
+		F379446619FA2DF200FDD9A3 /* sepratorline@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sepratorline@2x~ipad.png"; sourceTree = "<group>"; };
+		F379446719FA2DF200FDD9A3 /* sepratorline~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sepratorline~ipad.png"; sourceTree = "<group>"; };
+		F379446819FA2DF200FDD9A3 /* setting@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@2x~ipad.png"; sourceTree = "<group>"; };
+		F379446919FA2DF200FDD9A3 /* setting~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting~ipad.png"; sourceTree = "<group>"; };
+		F37944A119FA2E0900FDD9A3 /* iOSRepairApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "iOSRepairApp-Info.plist"; path = "iOSRepairApp/iOSRepairApp-Info.plist"; sourceTree = SOURCE_ROOT; };
+		F37944A219FA2E0900FDD9A3 /* iOSRepairApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "iOSRepairApp-Prefix.pch"; path = "iOSRepairApp/iOSRepairApp-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		F37944A319FA2E0900FDD9A3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOSRepairApp/main.m; sourceTree = SOURCE_ROOT; };
+		F37944A719FA2E3100FDD9A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = iOSRepairApp/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		F37944AB19FA32C500FDD9A3 /* EKNMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNMetadata.h; path = iOSRepairApp/EKNMetadata.h; sourceTree = SOURCE_ROOT; };
+		F37944AC19FA32C500FDD9A3 /* EKNMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNMetadata.m; path = iOSRepairApp/EKNMetadata.m; sourceTree = SOURCE_ROOT; };
+		F37944B119FA3AC300FDD9A3 /* NSString+NSStringExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+NSStringExtensions.m"; path = "iOSRepairApp/NSString+NSStringExtensions.m"; sourceTree = SOURCE_ROOT; };
+		F37944B219FA3AC300FDD9A3 /* NSString+NSStringExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+NSStringExtensions.h"; path = "iOSRepairApp/NSString+NSStringExtensions.h"; sourceTree = SOURCE_ROOT; };
+		F37944B419FA3DCA00FDD9A3 /* icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x~ipad.png"; sourceTree = "<group>"; };
+		F37944B519FA3DCA00FDD9A3 /* icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon~ipad.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0EC4F5B319CFF2C600BEF583 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EC85AEC1A2ED8FD009A1593 /* libPods-ADALiOS.a in Frameworks */,
+				0EC85AED1A2ED8FD009A1593 /* libPods-Office365.a in Frameworks */,
+				0EC85AEE1A2ED8FD009A1593 /* libPods.a in Frameworks */,
+				0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */,
+				0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */,
+				0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0EA20B1719E549BD007EBF6A /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				F37944AB19FA32C500FDD9A3 /* EKNMetadata.h */,
+				F37944AC19FA32C500FDD9A3 /* EKNMetadata.m */,
+				F379442119FA2D8E00FDD9A3 /* EKNListClient.h */,
+				F379442219FA2D8E00FDD9A3 /* EKNListClient.m */,
+				F379442319FA2D8E00FDD9A3 /* EKNListItem.h */,
+				F379442419FA2D8E00FDD9A3 /* EKNListItem.m */,
+			);
+			name = Lists;
+			sourceTree = "<group>";
+		};
+		0EA2D9F219D8094400465DA2 /* ADALiOSBundle */ = {
+			isa = PBXGroup;
+			children = (
+				F37943F419FA2C0F00FDD9A3 /* InfoPlist.strings */,
+				F37943E919FA2B7100FDD9A3 /* ADAL_iPad_Storyboard.storyboard */,
+				F37943EA19FA2B7100FDD9A3 /* ADAL_iPhone_Storyboard.storyboard */,
+				F37943EB19FA2B7100FDD9A3 /* ADALiOSBundle-Info.plist */,
+				F37943EC19FA2B7100FDD9A3 /* ADALiOSBundle-Prefix.pch */,
+			);
+			name = ADALiOSBundle;
+			path = EdKeyNote/ADALiOSBundle;
+			sourceTree = "<group>";
+		};
+		0EADF95519E7C48600E1DE77 /* UIViewControllerEX */ = {
+			isa = PBXGroup;
+			children = (
+				F37944B119FA3AC300FDD9A3 /* NSString+NSStringExtensions.m */,
+				F37944B219FA3AC300FDD9A3 /* NSString+NSStringExtensions.h */,
+				F379441819FA2D7900FDD9A3 /* EKN+NavigationController.h */,
+				F379441919FA2D7900FDD9A3 /* EKN+NavigationController.m */,
+				F379441A19FA2D7900FDD9A3 /* EKN+UIImagePickerController.h */,
+				F379441B19FA2D7900FDD9A3 /* EKN+UIImagePickerController.m */,
+				F379441C19FA2D7900FDD9A3 /* EKN+UIViewController.h */,
+				F379441D19FA2D7900FDD9A3 /* EKN+UIViewController.m */,
+			);
+			name = UIViewControllerEX;
+			sourceTree = "<group>";
+		};
+		0EC4F5AD19CFF2C600BEF583 = {
+			isa = PBXGroup;
+			children = (
+				F37943E719FA2B5E00FDD9A3 /* Settings.bundle */,
+				0EA2D9F219D8094400465DA2 /* ADALiOSBundle */,
+				0EC4F5BF19CFF2C600BEF583 /* iOSRepairApp */,
+				0EC4F5B819CFF2C600BEF583 /* Frameworks */,
+				0EC4F5B719CFF2C600BEF583 /* Products */,
+				C91E61786CFC154A0EC3C523 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		0EC4F5B719CFF2C600BEF583 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0EC4F5B619CFF2C600BEF583 /* iOSRepairApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0EC4F5B819CFF2C600BEF583 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0EC85AE91A2ED8FD009A1593 /* libPods-ADALiOS.a */,
+				0EC85AEA1A2ED8FD009A1593 /* libPods-Office365.a */,
+				0EC85AEB1A2ED8FD009A1593 /* libPods.a */,
+				0EC4F5B919CFF2C600BEF583 /* Foundation.framework */,
+				0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */,
+				0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */,
+				4FDDCC949506D0ED88D9A210 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0EC4F5BF19CFF2C600BEF583 /* iOSRepairApp */ = {
+			isa = PBXGroup;
+			children = (
+				0EE9C8801BA7C08F00E34BCB /* iOSRepairApp.entitlements */,
+				2FFD5E351B049B240050C8FA /* Service */,
+				F379443019FA2DCC00FDD9A3 /* Images.xcassets */,
+				F379442719FA2DAA00FDD9A3 /* EKNAppDelegate.h */,
+				F379442819FA2DAA00FDD9A3 /* EKNAppDelegate.m */,
+				F379442919FA2DAA00FDD9A3 /* EKNEKNGlobalInfo.h */,
+				F379442A19FA2DAA00FDD9A3 /* EKNEKNGlobalInfo.m */,
+				F31EFD9519FF895A005B04BD /* BaseController.h */,
+				F31EFD9619FF895A005B04BD /* BaseController.m */,
+				F379442B19FA2DAA00FDD9A3 /* EKNLoginViewController.h */,
+				F379442C19FA2DAA00FDD9A3 /* EKNLoginViewController.m */,
+				F3673A6A19ED2D1700C02B44 /* Incident Page */,
+				0EADF95519E7C48600E1DE77 /* UIViewControllerEX */,
+				0EA20B1719E549BD007EBF6A /* Lists */,
+				0EC4F5C019CFF2C600BEF583 /* Supporting Files */,
+			);
+			name = iOSRepairApp;
+			path = EdKeyNote;
+			sourceTree = "<group>";
+		};
+		0EC4F5C019CFF2C600BEF583 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F37944A619FA2E3100FDD9A3 /* InfoPlist.strings */,
+				F37944A119FA2E0900FDD9A3 /* iOSRepairApp-Info.plist */,
+				F37944A219FA2E0900FDD9A3 /* iOSRepairApp-Prefix.pch */,
+				F37944A319FA2E0900FDD9A3 /* main.m */,
+				F379443219FA2DF200FDD9A3 /* Images */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0EE466FD1B9C30C70051904E /* IncidentSubView */ = {
+			isa = PBXGroup;
+			children = (
+				0EDF68D01BA2AD4B00437628 /* EKNPPcommonTableView.h */,
+				0EDF68D11BA2AD4B00437628 /* EKNPPcommonTableView.m */,
+				0EE466FA1B9C305C0051904E /* EKNIncidentDetailView.h */,
+				0EE466FB1B9C306E0051904E /* EKNIncidentDetailView.m */,
+			);
+			name = IncidentSubView;
+			sourceTree = "<group>";
+		};
+		2FFD5E351B049B240050C8FA /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0EDF68D31BA2B5A700437628 /* MSGraphConversation.h */,
+				0EDF68D41BA2B5A700437628 /* MSGraphConversation.m */,
+				2FA961571BA1A2BE0069C9B9 /* SPVideoChannel.h */,
+				2FA961581BA1A2BE0069C9B9 /* SPVideoChannel.m */,
+				2FA961591BA1A2BE0069C9B9 /* SPVideoItem.h */,
+				2FA9615A1BA1A2BE0069C9B9 /* SPVideoItem.m */,
+				2FA9615B1BA1A2BE0069C9B9 /* SPVideoItemOperations.h */,
+				2FA9615C1BA1A2BE0069C9B9 /* SPVideoItemOperations.m */,
+				0EE467011B9E702C0051904E /* EKNOneNoteService.h */,
+				0EE467021B9E702C0051904E /* EKNOneNoteService.m */,
+				0EE466FE1B9E6F9B0051904E /* EKNGraphService.h */,
+				0EE466FF1B9E6F9B0051904E /* EKNGraphService.m */,
+				2FA9615D1BA1A2BE0069C9B9 /* EKNVideoService.h */,
+				2FA9615E1BA1A2BE0069C9B9 /* EKNVideoService.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		C91E61786CFC154A0EC3C523 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				481833CFFB1FA410AE17FCD2 /* Pods.debug.xcconfig */,
+				240C36C39ECF3AAD30CC417B /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F3673A6A19ED2D1700C02B44 /* Incident Page */ = {
+			isa = PBXGroup;
+			children = (
+				F379441519FA2D4700FDD9A3 /* EKNIncidentViewController.h */,
+				F379441619FA2D4700FDD9A3 /* EKNIncidentViewController.m */,
+				0EE466FD1B9C30C70051904E /* IncidentSubView */,
+				F3673A6F19ED2ED400C02B44 /* IncidentCell */,
+			);
+			name = "Incident Page";
+			sourceTree = "<group>";
+		};
+		F3673A6F19ED2ED400C02B44 /* IncidentCell */ = {
+			isa = PBXGroup;
+			children = (
+				0EDF69931BA2D81D00437628 /* PropertyFileCell.h */,
+				0EDF69941BA2D81D00437628 /* PropertyFileCell.m */,
+				0EDF69951BA2D81D00437628 /* PropertyFileCell.xib */,
+				0EDF68CB1BA2A7B100437628 /* PropertyMembersCell.h */,
+				0EDF68CC1BA2A7B100437628 /* PropertyMembersCell.m */,
+				0EDF68CD1BA2A7B100437628 /* PropertyMembersCell.xib */,
+				0EED14241BA26396008A1C8C /* ConversationCell.h */,
+				0EED14251BA26396008A1C8C /* ConversationCell.m */,
+				0EED14261BA26396008A1C8C /* ConversationCell.xib */,
+				0EE17A1C1BA153CF00AD70D9 /* OneNoteCell.h */,
+				0EE17A1D1BA153CF00AD70D9 /* OneNoteCell.m */,
+				0EE17A1E1BA153CF00AD70D9 /* OneNoteCell.xib */,
+				0EE467041B9E8B680051904E /* IncidentMenuCell.h */,
+				0EE467051B9E8B680051904E /* IncidentMenuCell.m */,
+				0EE467061B9E8B680051904E /* IncidentMenuCell.xib */,
+				F379441019FA2CE000FDD9A3 /* ContactOwnerCell.h */,
+				F379441119FA2CE000FDD9A3 /* ContactOwnerCell.m */,
+				F379441219FA2CE000FDD9A3 /* ContactOwnerCell.xib */,
+				F379440B19FA2CB300FDD9A3 /* EKNCollectionViewCell.h */,
+				F379440C19FA2CB300FDD9A3 /* EKNCollectionViewCell.m */,
+				F379440D19FA2CB300FDD9A3 /* EKNCollectionViewCell.xib */,
+				F379440119FA2CA000FDD9A3 /* PropertyDetailsCell.h */,
+				F379440219FA2CA000FDD9A3 /* PropertyDetailsCell.m */,
+				F379440319FA2CA000FDD9A3 /* PropertyDetailsCell.xib */,
+				F379440419FA2CA000FDD9A3 /* PropertyDetailsImage.h */,
+				F379440519FA2CA000FDD9A3 /* PropertyDetailsImage.m */,
+				F379440619FA2CA000FDD9A3 /* PropertyDetailsImage.xib */,
+				F37943F719FA2C6200FDD9A3 /* IncidentListItemCell.h */,
+				F37943F819FA2C6200FDD9A3 /* IncidentListItemCell.m */,
+				F37943F919FA2C6200FDD9A3 /* IncidentListItemCell.xib */,
+			);
+			name = IncidentCell;
+			sourceTree = "<group>";
+		};
+		F379443219FA2DF200FDD9A3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				0E54E1871BA6AFFB0065B960 /* video@2x~ipad.png */,
+				0E54E1881BA6AFFB0065B960 /* video~ipad.png */,
+				0EDF69871BA2D7F900437628 /* ico_excel@2x~ipad.png */,
+				0EDF69881BA2D7F900437628 /* ico_excel~ipad.png */,
+				0EDF69891BA2D7F900437628 /* ico_powerpoint@2x~ipad.png */,
+				0EDF698A1BA2D7F900437628 /* ico_powerpoint~ipad.png */,
+				0EDF698B1BA2D7F900437628 /* ico_word@2x~ipad.png */,
+				0EDF698C1BA2D7F900437628 /* ico_word~ipad.png */,
+				0EE17A291BA15ADB00AD70D9 /* oneNoteListSelect@2x~ipad.png */,
+				0EE17A2A1BA15ADB00AD70D9 /* oneNoteListSelect~ipad.png */,
+				0EE17A211BA1571600AD70D9 /* oneNoteList@2x~ipad.png */,
+				0EE17A221BA1571600AD70D9 /* oneNoteList~ipad.png */,
+				0EE17A231BA1571600AD70D9 /* open_onenote@2x~ipad.png */,
+				0EE17A241BA1571600AD70D9 /* open_onenote~ipad.png */,
+				0EE467091B9EC0E90051904E /* left_nav_selected1@2x~ipad.png */,
+				0EE4670A1B9EC0E90051904E /* left_nav_selected1~ipad.png */,
+				0EE4670B1B9EC0E90051904E /* left_nav_selected2@2x~ipad.png */,
+				0EE4670C1B9EC0E90051904E /* left_nav_selected2~ipad.png */,
+				0EE4670D1B9EC0E90051904E /* left_nav_selected3@2x~ipad.png */,
+				0EE4670E1B9EC0E90051904E /* left_nav_selected3~ipad.png */,
+				0EE4670F1B9EC0E90051904E /* left_nav_selected4@2x~ipad.png */,
+				0EE467101B9EC0E90051904E /* left_nav_selected4~ipad.png */,
+				0EE467111B9EC0E90051904E /* left_nav_selected5@2x~ipad.png */,
+				0EE467121B9EC0E90051904E /* left_nav_selected5~ipad.png */,
+				0EE467131B9EC0E90051904E /* left_nav_selected6@2x~ipad.png */,
+				0EE467141B9EC0E90051904E /* left_nav_selected6~ipad.png */,
+				0EE467151B9EC0E90051904E /* left_nav_selected7@2x~ipad.png */,
+				0EE467161B9EC0E90051904E /* left_nav_selected7~ipad.png */,
+				0EE467171B9EC0E90051904E /* left_nav1@2x~ipad.png */,
+				0EE467181B9EC0E90051904E /* left_nav1~ipad.png */,
+				0EE467191B9EC0E90051904E /* left_nav2@2x~ipad.png */,
+				0EE4671A1B9EC0E90051904E /* left_nav2~ipad.png */,
+				0EE4671B1B9EC0E90051904E /* left_nav3@2x~ipad.png */,
+				0EE4671C1B9EC0E90051904E /* left_nav3~ipad.png */,
+				0EE4671D1B9EC0E90051904E /* left_nav4@2x~ipad.png */,
+				0EE4671E1B9EC0E90051904E /* left_nav4~ipad.png */,
+				0EE4671F1B9EC0E90051904E /* left_nav5@2x~ipad.png */,
+				0EE467201B9EC0E90051904E /* left_nav5~ipad.png */,
+				0EE467211B9EC0E90051904E /* left_nav6@2x~ipad.png */,
+				0EE467221B9EC0E90051904E /* left_nav6~ipad.png */,
+				0EE467231B9EC0E90051904E /* left_nav7@2x~ipad.png */,
+				0EE467241B9EC0E90051904E /* left_nav7~ipad.png */,
+				F37944B419FA3DCA00FDD9A3 /* icon@2x~ipad.png */,
+				F37944B519FA3DCA00FDD9A3 /* icon~ipad.png */,
+				F379443319FA2DF200FDD9A3 /* before@2x~ipad.png */,
+				F379443419FA2DF200FDD9A3 /* before~ipad.png */,
+				F379443719FA2DF200FDD9A3 /* calendar@2x~ipad.png */,
+				F379443819FA2DF200FDD9A3 /* calendar~ipad.png */,
+				F379443919FA2DF200FDD9A3 /* camera@2x~ipad.png */,
+				F379443A19FA2DF200FDD9A3 /* camera_gray@2x~ipad.png */,
+				F379443B19FA2DF200FDD9A3 /* camera_gray~ipad.png */,
+				F379443C19FA2DF200FDD9A3 /* camera~ipad.png */,
+				F379443D19FA2DF200FDD9A3 /* close@2x~ipad.png */,
+				F379443E19FA2DF200FDD9A3 /* close~ipad.png */,
+				F379443F19FA2DF200FDD9A3 /* default~ipad.png */,
+				F379444B19FA2DF200FDD9A3 /* detailsepartorline.png */,
+				F379444E19FA2DF200FDD9A3 /* email@2x~ipad.png */,
+				F379444F19FA2DF200FDD9A3 /* email~ipad.png */,
+				F379445019FA2DF200FDD9A3 /* finalize_repair@2x~ipad.png */,
+				F379445119FA2DF200FDD9A3 /* finalize_repair~ipad.png */,
+				F379445419FA2DF200FDD9A3 /* home@2x~ipad.png */,
+				F379445519FA2DF200FDD9A3 /* home~ipad.png */,
+				F379445619FA2DF200FDD9A3 /* incident_detailtab@2x~ipad.png */,
+				F379445719FA2DF200FDD9A3 /* incident_detailtab~ipad.png */,
+				F379445819FA2DF200FDD9A3 /* man@2x~ipad.png */,
+				F379445919FA2DF200FDD9A3 /* man~ipad.png */,
+				F379445A19FA2DF200FDD9A3 /* navigation_background@2x~ipad.png */,
+				F379445B19FA2DF200FDD9A3 /* navigation_background~ipad.png */,
+				F379446619FA2DF200FDD9A3 /* sepratorline@2x~ipad.png */,
+				F379446719FA2DF200FDD9A3 /* sepratorline~ipad.png */,
+				F379446819FA2DF200FDD9A3 /* setting@2x~ipad.png */,
+				F379446919FA2DF200FDD9A3 /* setting~ipad.png */,
+			);
+			name = Images;
+			path = iOSRepairApp/Images;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0EC4F5B519CFF2C600BEF583 /* iOSRepairApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0EC4F5E219CFF2C600BEF583 /* Build configuration list for PBXNativeTarget "iOSRepairApp" */;
+			buildPhases = (
+				81B15AFD244ACD3DAD6DC8B9 /* Check Pods Manifest.lock */,
+				0EC4F5B219CFF2C600BEF583 /* Sources */,
+				0EC4F5B319CFF2C600BEF583 /* Frameworks */,
+				0EC4F5B419CFF2C600BEF583 /* Resources */,
+				D80BE777C1BD92D1FC1384DC /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOSRepairApp;
+			productName = EdKeyNote;
+			productReference = 0EC4F5B619CFF2C600BEF583 /* iOSRepairApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0EC4F5AE19CFF2C600BEF583 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = EKN;
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = canviz;
+				TargetAttributes = {
+					0EC4F5B519CFF2C600BEF583 = {
+						DevelopmentTeam = 259SG943ZS;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 0EC4F5B119CFF2C600BEF583 /* Build configuration list for PBXProject "iOSRepairApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0EC4F5AD19CFF2C600BEF583;
+			productRefGroup = 0EC4F5B719CFF2C600BEF583 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0EC4F5B519CFF2C600BEF583 /* iOSRepairApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0EC4F5B419CFF2C600BEF583 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EE467331B9EC0E90051904E /* left_nav1@2x~ipad.png in Resources */,
+				0EE467301B9EC0E90051904E /* left_nav_selected6~ipad.png in Resources */,
+				0EE467261B9EC0E90051904E /* left_nav_selected1~ipad.png in Resources */,
+				0EE4673C1B9EC0E90051904E /* left_nav5~ipad.png in Resources */,
+				0EE467291B9EC0E90051904E /* left_nav_selected3@2x~ipad.png in Resources */,
+				0EE17A251BA1571600AD70D9 /* oneNoteList@2x~ipad.png in Resources */,
+				F37943E819FA2B5E00FDD9A3 /* Settings.bundle in Resources */,
+				0EE4672D1B9EC0E90051904E /* left_nav_selected5@2x~ipad.png in Resources */,
+				F37944A819FA2E3100FDD9A3 /* InfoPlist.strings in Resources */,
+				0EE4672B1B9EC0E90051904E /* left_nav_selected4@2x~ipad.png in Resources */,
+				0EE467281B9EC0E90051904E /* left_nav_selected2~ipad.png in Resources */,
+				0EDF698F1BA2D7F900437628 /* ico_powerpoint@2x~ipad.png in Resources */,
+				F37943F219FA2B7100FDD9A3 /* ADALiOSBundle-Info.plist in Resources */,
+				F379448E19FA2DF200FDD9A3 /* incident_detailtab~ipad.png in Resources */,
+				F37944A019FA2DF200FDD9A3 /* setting~ipad.png in Resources */,
+				F379447019FA2DF200FDD9A3 /* camera@2x~ipad.png in Resources */,
+				0EE17A2B1BA15ADB00AD70D9 /* oneNoteListSelect@2x~ipad.png in Resources */,
+				F379447519FA2DF200FDD9A3 /* close~ipad.png in Resources */,
+				0EE467401B9EC0E90051904E /* left_nav7~ipad.png in Resources */,
+				0EE467311B9EC0E90051904E /* left_nav_selected7@2x~ipad.png in Resources */,
+				0EE4673F1B9EC0E90051904E /* left_nav7@2x~ipad.png in Resources */,
+				0EE467351B9EC0E90051904E /* left_nav2@2x~ipad.png in Resources */,
+				F379447119FA2DF200FDD9A3 /* camera_gray@2x~ipad.png in Resources */,
+				0EED14281BA26396008A1C8C /* ConversationCell.xib in Resources */,
+				0EE467391B9EC0E90051904E /* left_nav4@2x~ipad.png in Resources */,
+				0EDF68CF1BA2A7B100437628 /* PropertyMembersCell.xib in Resources */,
+				F379440F19FA2CB300FDD9A3 /* EKNCollectionViewCell.xib in Resources */,
+				0EE4673E1B9EC0E90051904E /* left_nav6~ipad.png in Resources */,
+				0EDF69921BA2D7F900437628 /* ico_word~ipad.png in Resources */,
+				F379446B19FA2DF200FDD9A3 /* before~ipad.png in Resources */,
+				F379440819FA2CA000FDD9A3 /* PropertyDetailsCell.xib in Resources */,
+				F379447319FA2DF200FDD9A3 /* camera~ipad.png in Resources */,
+				F37943F619FA2C0F00FDD9A3 /* InfoPlist.strings in Resources */,
+				F379448F19FA2DF200FDD9A3 /* man@2x~ipad.png in Resources */,
+				F379448B19FA2DF200FDD9A3 /* home@2x~ipad.png in Resources */,
+				0EE4672A1B9EC0E90051904E /* left_nav_selected3~ipad.png in Resources */,
+				0EE4672E1B9EC0E90051904E /* left_nav_selected5~ipad.png in Resources */,
+				F379440A19FA2CA000FDD9A3 /* PropertyDetailsImage.xib in Resources */,
+				0EE17A201BA153CF00AD70D9 /* OneNoteCell.xib in Resources */,
+				F37943FE19FA2C6200FDD9A3 /* IncidentListItemCell.xib in Resources */,
+				F379447219FA2DF200FDD9A3 /* camera_gray~ipad.png in Resources */,
+				0EE4673B1B9EC0E90051904E /* left_nav5@2x~ipad.png in Resources */,
+				0EE17A281BA1571600AD70D9 /* open_onenote~ipad.png in Resources */,
+				0EE467321B9EC0E90051904E /* left_nav_selected7~ipad.png in Resources */,
+				F379447619FA2DF200FDD9A3 /* default~ipad.png in Resources */,
+				F37944B719FA3DCA00FDD9A3 /* icon~ipad.png in Resources */,
+				0EDF698E1BA2D7F900437628 /* ico_excel~ipad.png in Resources */,
+				0EE467381B9EC0E90051904E /* left_nav3~ipad.png in Resources */,
+				F37943F119FA2B7100FDD9A3 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
+				0EE4672F1B9EC0E90051904E /* left_nav_selected6@2x~ipad.png in Resources */,
+				0EE467271B9EC0E90051904E /* left_nav_selected2@2x~ipad.png in Resources */,
+				F379449219FA2DF200FDD9A3 /* navigation_background~ipad.png in Resources */,
+				0EDF69971BA2D81D00437628 /* PropertyFileCell.xib in Resources */,
+				F379448519FA2DF200FDD9A3 /* email@2x~ipad.png in Resources */,
+				F379449D19FA2DF200FDD9A3 /* sepratorline@2x~ipad.png in Resources */,
+				0EE17A261BA1571600AD70D9 /* oneNoteList~ipad.png in Resources */,
+				F379449F19FA2DF200FDD9A3 /* setting@2x~ipad.png in Resources */,
+				0EDF69901BA2D7F900437628 /* ico_powerpoint~ipad.png in Resources */,
+				0EE467361B9EC0E90051904E /* left_nav2~ipad.png in Resources */,
+				F379446F19FA2DF200FDD9A3 /* calendar~ipad.png in Resources */,
+				F379448D19FA2DF200FDD9A3 /* incident_detailtab@2x~ipad.png in Resources */,
+				0EE467371B9EC0E90051904E /* left_nav3@2x~ipad.png in Resources */,
+				0EE17A2C1BA15ADB00AD70D9 /* oneNoteListSelect~ipad.png in Resources */,
+				0EE4672C1B9EC0E90051904E /* left_nav_selected4~ipad.png in Resources */,
+				F379448219FA2DF200FDD9A3 /* detailsepartorline.png in Resources */,
+				0E54E1891BA6AFFB0065B960 /* video@2x~ipad.png in Resources */,
+				F379449019FA2DF200FDD9A3 /* man~ipad.png in Resources */,
+				F379446A19FA2DF200FDD9A3 /* before@2x~ipad.png in Resources */,
+				0EE4673D1B9EC0E90051904E /* left_nav6@2x~ipad.png in Resources */,
+				0EE467341B9EC0E90051904E /* left_nav1~ipad.png in Resources */,
+				F379449119FA2DF200FDD9A3 /* navigation_background@2x~ipad.png in Resources */,
+				F379447419FA2DF200FDD9A3 /* close@2x~ipad.png in Resources */,
+				F379443119FA2DCC00FDD9A3 /* Images.xcassets in Resources */,
+				F379449E19FA2DF200FDD9A3 /* sepratorline~ipad.png in Resources */,
+				F379448C19FA2DF200FDD9A3 /* home~ipad.png in Resources */,
+				0EE17A271BA1571600AD70D9 /* open_onenote@2x~ipad.png in Resources */,
+				F379448819FA2DF200FDD9A3 /* finalize_repair~ipad.png in Resources */,
+				F37944B619FA3DCA00FDD9A3 /* icon@2x~ipad.png in Resources */,
+				F379448719FA2DF200FDD9A3 /* finalize_repair@2x~ipad.png in Resources */,
+				F379446E19FA2DF200FDD9A3 /* calendar@2x~ipad.png in Resources */,
+				0EDF698D1BA2D7F900437628 /* ico_excel@2x~ipad.png in Resources */,
+				0EE467251B9EC0E90051904E /* left_nav_selected1@2x~ipad.png in Resources */,
+				F379441419FA2CE000FDD9A3 /* ContactOwnerCell.xib in Resources */,
+				0EDF69911BA2D7F900437628 /* ico_word@2x~ipad.png in Resources */,
+				0EE467081B9E8B680051904E /* IncidentMenuCell.xib in Resources */,
+				F379448619FA2DF200FDD9A3 /* email~ipad.png in Resources */,
+				0E54E18A1BA6AFFB0065B960 /* video~ipad.png in Resources */,
+				0EE4673A1B9EC0E90051904E /* left_nav4~ipad.png in Resources */,
+				F37943F019FA2B7100FDD9A3 /* ADAL_iPad_Storyboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		81B15AFD244ACD3DAD6DC8B9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D80BE777C1BD92D1FC1384DC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0EC4F5B219CFF2C600BEF583 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EDF68CE1BA2A7B100437628 /* PropertyMembersCell.m in Sources */,
+				0EE466FC1B9C306E0051904E /* EKNIncidentDetailView.m in Sources */,
+				0EE467031B9E702C0051904E /* EKNOneNoteService.m in Sources */,
+				F379441719FA2D4700FDD9A3 /* EKNIncidentViewController.m in Sources */,
+				0EDF69961BA2D81D00437628 /* PropertyFileCell.m in Sources */,
+				F379441E19FA2D7900FDD9A3 /* EKN+NavigationController.m in Sources */,
+				F379442519FA2D8E00FDD9A3 /* EKNListClient.m in Sources */,
+				F379441319FA2CE000FDD9A3 /* ContactOwnerCell.m in Sources */,
+				F379442D19FA2DAA00FDD9A3 /* EKNAppDelegate.m in Sources */,
+				2FA9615F1BA1A2BE0069C9B9 /* SPVideoChannel.m in Sources */,
+				0EDF68D21BA2AD4B00437628 /* EKNPPcommonTableView.m in Sources */,
+				F379440E19FA2CB300FDD9A3 /* EKNCollectionViewCell.m in Sources */,
+				F37944AD19FA32C500FDD9A3 /* EKNMetadata.m in Sources */,
+				F37944A519FA2E0900FDD9A3 /* main.m in Sources */,
+				F379440919FA2CA000FDD9A3 /* PropertyDetailsImage.m in Sources */,
+				F37944B319FA3AC300FDD9A3 /* NSString+NSStringExtensions.m in Sources */,
+				F31EFD9719FF895A005B04BD /* BaseController.m in Sources */,
+				0EED14271BA26396008A1C8C /* ConversationCell.m in Sources */,
+				F379442619FA2D8E00FDD9A3 /* EKNListItem.m in Sources */,
+				F379440719FA2CA000FDD9A3 /* PropertyDetailsCell.m in Sources */,
+				2FA961611BA1A2BE0069C9B9 /* SPVideoItemOperations.m in Sources */,
+				F379442019FA2D7900FDD9A3 /* EKN+UIViewController.m in Sources */,
+				2FA961621BA1A2BE0069C9B9 /* EKNVideoService.m in Sources */,
+				0EE17A1F1BA153CF00AD70D9 /* OneNoteCell.m in Sources */,
+				0EDF68D51BA2B5A700437628 /* MSGraphConversation.m in Sources */,
+				F37943FD19FA2C6200FDD9A3 /* IncidentListItemCell.m in Sources */,
+				F379442E19FA2DAA00FDD9A3 /* EKNEKNGlobalInfo.m in Sources */,
+				F379442F19FA2DAA00FDD9A3 /* EKNLoginViewController.m in Sources */,
+				F379441F19FA2D7900FDD9A3 /* EKN+UIImagePickerController.m in Sources */,
+				0EE467071B9E8B680051904E /* IncidentMenuCell.m in Sources */,
+				0EE467001B9E6F9B0051904E /* EKNGraphService.m in Sources */,
+				2FA961601BA1A2BE0069C9B9 /* SPVideoItem.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F37943F419FA2C0F00FDD9A3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F37943F519FA2C0F00FDD9A3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F37944A619FA2E3100FDD9A3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F37944A719FA2E3100FDD9A3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0EC4F5E019CFF2C600BEF583 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_X86_VECTOR_INSTRUCTIONS = avx2;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		0EC4F5E119CFF2C600BEF583 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_X86_VECTOR_INSTRUCTIONS = avx2;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0EC4F5E319CFF2C600BEF583 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 481833CFFB1FA410AE17FCD2 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = iOSRepairApp/iOSRepairApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOSRepairApp/iOSRepairApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/iOSRepairApp/iOSRepairApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/build/Debug-iphoneos";
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_NAME = iOSRepairApp;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0EC4F5E419CFF2C600BEF583 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 240C36C39ECF3AAD30CC417B /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = iOSRepairApp/iOSRepairApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOSRepairApp/iOSRepairApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/iOSRepairApp/iOSRepairApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Pods/build/Debug-iphoneos";
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_NAME = iOSRepairApp;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0EC4F5B119CFF2C600BEF583 /* Build configuration list for PBXProject "iOSRepairApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0EC4F5E019CFF2C600BEF583 /* Debug */,
+				0EC4F5E119CFF2C600BEF583 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0EC4F5E219CFF2C600BEF583 /* Build configuration list for PBXNativeTarget "iOSRepairApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0EC4F5E319CFF2C600BEF583 /* Debug */,
+				0EC4F5E419CFF2C600BEF583 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0EC4F5AE19CFF2C600BEF583 /* Project object */;
+}
