@@ -27,13 +27,15 @@ Create Azure Active Directory App for the iPad Apps
 12. Expand the update your code section and **copy** the Redirect URI and Client ID values and **paste** them into a text file.  You will use these values when you configure the iPad app on your iPad.
 13. Click **CONFIGURE**
 14.	In the permissions to other applications section, click the **Add application** button.
-15.	Click the + button next to **Office 365 SharePoint Online** and **Office 365 unified API (preview)**.
+15.	Click the + button next to **Office 365 SharePoint Online**, **Office 365 unified API (preview)**, and **OneNote**.
 16.	Click the **Checkmark button**
 17.	Configure the permission to Office 365 unified API (preview), use the screenshot below for reference.
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 Unified API AD Permissions.jpg)
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 Unified API AAD Permissions.jpg)
 18.	Configure the permission to Microsoft Office 365 SharePoint, use the screenshot below for reference.
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 SP AAD App Permissions.jpg)
-19. Click **Save**
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 SP AAD App Permissions 2.jpg)
+19.	Configure the permission to OneNote, use the screenshot below for reference.
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 OneNote AAD App Permissions 2.jpg)
+20. Click **Save**
 
 iOS Apps Installation
 ---------------------
@@ -62,6 +64,18 @@ iOS Apps Configuration
 
 After the Coacoa Pods are registered, you need to configure the apps to work with the O365 / Azure Tenancy and the Azure Active Directory Application you created.  This section describes how to do it.
 
+Items that you need a real iOS device to run
+------------------------------------------------
+
+Some of the functionality int he app will not work in the iOS Simulator.  You must run the app on a real device to use the following functionality.
+
+1. Taking a picture.
+2. Recording a video.
+2. Uploading a video to the Office 365 Video Portal.
+2. Opening Word, Excel, and PowerPoint documents in the native Android Office applications via Deep Links. 
+
+See the [iOS Simulator Guide](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/iOS_Simulator_Guide/iOS_Simulator_Guide.pdf) for more information.
+
 Configure iPad Apps settings
 ----------------------------
 
@@ -85,6 +99,28 @@ These are the values that must be configured.
 - **demoSiteServiceResourceId** Url for the root Site Collection in the O365 Tenancy. Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteServiceResourceId app setting.
 - **demoSiteCollectionUrl** Url for the Site Collection created by the Property Manager web app.  Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteCollectionUrl app setting.
 - **dispatcherEmail** Email address for the dispatcher account you created.
+- **VideoPortalEndpointUri** Api Endpoint for the Video Portal which comes with your O365 tenancy.
+
+Enable Keychain Sharing
+-----------------------
+
+You must enable Keychain Sharing to make the ADAL library work on a real iOS device.  This step is not required if you are running in the iOS Simulator.
+
+If you do not enable Keychain Sharing for the app it will throw the following error when you run it on a real iOS device.
+
+ERROR: Error raised: 11. Additional Information: Domain: ADAuthenticationErrorDomain ProtocolCode:(null) Details:Cannot add a new item in the keychain. Error code: -25243.
+
+You might also receive an error that will prevent you from deploying it to a real iOS device.
+
+You can learn more about this error here:
+
+http://stackoverflow.com/questions/30876085/adalioscannot-add-a-new-item-in-the-keychain-o365-ios-connect-swift
+
+To enable Keychain Sharing, follow the steps in the Configuring Keychain Sharing section in this article.
+
+https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AddingCapabilities/AddingCapabilities.html
+
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Enable Keychain Sharing.png)
 
 **iOS Apps Installation Complete!**
 

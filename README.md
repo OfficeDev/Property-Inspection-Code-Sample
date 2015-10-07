@@ -1,4 +1,4 @@
-# Property Manager Code Sample
+# Property Inspection Code Sample
 
 **Table of Contents**
 
@@ -427,6 +427,17 @@ Finally, you will create the Azure Active Directory Groups, Users, and demo data
 The initial password for all the users is **TempP@ssw0rd!**
 
 You will need to specify a new password for each user the first time you log in with them. 
+
+**Office 365 Video Portal Permissions**
+You must grant the repair person's account the permission to upload videos to Office 365 Video Portal so the repair person can upload a video from the Repair mobile app. To do this, follow these steps:
+
+1. In your web browser, open [](https://<TENANCY>.sharepoint.com/portals/hub) and sign in with the Global Administrator account for your tenancy.
+2. Click the **Channels** link.
+3. Click the **Incidents** link.
+4. Click the **Channel Settings** link.
+5. Click the **Permissions** link.
+6. Add Ron Gabel to the **Editors** group.
+7. Click **Save**.
 
 > **IMPORTANT NOTE!  READ THIS!**  
 > 

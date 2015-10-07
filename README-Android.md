@@ -12,7 +12,7 @@ The mobile Repair App in the demo may also be run on Android in addition to the 
 
 Some configuration is required to enable the Android Repair App to work with an O365 environment.  Read on to learn about the configuration process.
 
-> This sample was tested with version 1.2.1.1 of Android Studio.
+> This sample was tested with  Android Studio version 1.3.1.
 
 Android Repair App Installation
 -------------------------------
@@ -52,6 +52,14 @@ To configure the Android Repair App follow these instructions.
 
 9. Edit the **AAD_REDIRECT_URL** variable.  This is the Redirect URI value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
 
+Items that you need a real Android device to run
+------------------------------------------------
+
+Some of the functionality int he app will not work in the Android emulator.  You must run the app on a real device to use the following functionality.
+
+1. Uploading a video to the Office 365 Video Portal.
+2. Opening Word, Excel, and PowerPoint documents in the native Android Office applications via Deep Links. 
+
 Set Up Android Virtual Device
 -----------------------------
 
@@ -86,6 +94,28 @@ The Android Repair App targets the Nexus 9 device.  These steps describe how to 
 
 	> **Note:** This can take a long time, up to 20 minutes if you have a slow computer or if you are using the ARM version of the device.
 
+Install the OneNote native Android application
+----------------------------------------------
+
+The repair app uses deep links to automatically open the native Android OneNote application.  To enable this functionality in an emulator follow these steps.
+
+> **Note:** You can only install the OneNote native Android application in an ARM emulator, it will not work with the Intel HAXM emulators.
+
+> **Note:** We have had limited success with this approach.  It works on some computers and not on others.  If this doe snot work for you then install the native Android OneNote app on a real Android device and run the repair app ont he real Android device.
+
+1. Copy the OneNote.apk file to the Android SDK platform-tools folder on your machine.
+2. Open a command prompt as an administrator.
+3. Change to the Android SDK platform-tools folder.
+4. Execute the following command:
+
+	`adb install OneNote.apk
+	`
+5. Wait for the installation to complete. The image below shows what a successful installation looks like in the command prompt.
+
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Install OneNote In Android Emulator.png)
+
+	> **Note:** You must access OneDrive or OneNote in the web browser to provision the OneDrive and Notebook first.  If you do not do this then the OneNote client app will fail to load even outside the context of launching it from the repair app.
+ 
 Run the Repair App on the Nexus 9 Android Virtual Device
 --------------------------------------------------------
 
