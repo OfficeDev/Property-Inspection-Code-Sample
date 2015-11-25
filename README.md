@@ -61,7 +61,7 @@ The dashboard uses the ***Microsoft Graph API, Office 365 APIs, the SharePoint R
 The README files linked below provide more information about these patterns and how to get up and running.
 
 ## Training
-See the [Training README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/) for more training resources.
+See the [Training README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-Training.md) for more training resources.
 
 ## Web Application Installation
 
@@ -82,9 +82,9 @@ The demo relies upon the iOS inspection mobile app and any version of the repair
 
 Some configuration is required to enable the iOS Apps to work with an Office 365 environment.  
 
-See the [iOS Inspection App README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/iOSInspectionApp/README.md) for iOS Inspection App installation instructions.
+See the [iOS Inspection App README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/iOSInspectionApp/README-iOS.md) for iOS Inspection App installation instructions.
 
-See the [iOS Repair App README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/iOSRepairApp/README.md) for iOS Repair App installation instructions.
+See the [iOS Repair App README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/iOSRepairApp/README-iOS.md) for iOS Repair App installation instructions.
 
 ## Android App Installation
 
