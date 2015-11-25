@@ -6,6 +6,7 @@ Mobile Repair App Azure Active Directory Application Installation
 =================================================================
 
 The Android, Cordova, and Xamarin Repair Apps use Office 365 APIs and SharePoint REST APIs to interact with an Office 365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the Android, Cordova, and Xamarin Repair Apps.  To register the Android, Cordova, and Xamarin Repair Apps with an Azure Active Directory see the [Mobile Repair App Azure Active Directory Application Installation README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-RepairAppAAD.md) for complete instructions.
+
 Cordova Repair App
 ------------------
 
@@ -14,6 +15,11 @@ The mobile Repair App in the demo may also be run on Cordova in addition to the 
 The Cordova Repair App supports iOS, Android, and Windows devices.
 
 Some configuration is required to enable the Cordova Repair App to work with an Office 365 environment.  Read on to learn about the configuration process.
+
+Pre-requisites
+--------------
+Visual Studio 2013 Update 5
+[Visual Studio Tools for Apache Cordova CTP3.2](https://www.microsoft.com/en-us/download/details.aspx?id=42675)
 
 Cordova Repair App Installation
 -------------------------------
