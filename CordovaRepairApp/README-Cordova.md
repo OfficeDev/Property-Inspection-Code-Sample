@@ -19,6 +19,7 @@ Some configuration is required to enable the Cordova Repair App to work with an 
 Pre-requisites
 --------------
 Visual Studio 2013 Update 5
+
 [Visual Studio Tools for Apache Cordova CTP3.2](https://www.microsoft.com/en-us/download/details.aspx?id=42675)
 
 Cordova Repair App Installation
