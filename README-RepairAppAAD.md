@@ -1,9 +1,9 @@
-# Property Inspection Code Sample
+# Property Management Code Sample
 
 Mobile Repair App Azure Active Directory Application Installation
 =================================================================
 
-The Android, Cordova, and Xamarin Repair Apps use O365 APIs and SharePoint REST APIs to interact with an O365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the Android, Cordova, and Xamarin Repair Apps.  To register the Android, Cordova, and Xamarin Repair Apps with an Azure Active Directory follow these instructions.
+The Android, Cordova, and Xamarin Repair Apps use Office 365 APIs and SharePoint REST APIs to interact with an Office 365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the Android, Cordova, and Xamarin Repair Apps.  To register the Android, Cordova, and Xamarin Repair Apps with an Azure Active Directory follow these instructions.
 
 Create Azure Active Directory Application for the Android, Cordova, and Xamarin Repair Apps
 -------------------------------------------------------------------------------------------

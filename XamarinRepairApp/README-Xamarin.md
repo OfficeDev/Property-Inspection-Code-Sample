@@ -1,16 +1,18 @@
-# Property Inspection Code Sample
+# Property Management Code Sample
+
+> **IMPORTANT NOTE:** You must install the Web Application before the Xamarin app will work.  During the Web application installation process all of the components and sample data which support the demo are provisioned.  See the [Install Web Application README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/PropertyManagerMyApp/README.md) for complete instructions.
 
 Mobile Repair App Azure Active Directory Application Installation
 =================================================================
 
-The Android, Cordova, and Xamarin Repair Apps use O365 APIs and SharePoint REST APIs to interact with an O365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the Android, Cordova, and Xamarin Repair Apps.  To register the Android, Cordova, and Xamarin Repair Apps with an Azure Active Directory see the [Mobile Repair App Azure Active Directory Application Installation README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-RepairAppAAD.md) for complete instructions.
+The Android, Cordova, and Xamarin Repair Apps use Office 365 APIs and SharePoint REST APIs to interact with an Office 365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the Android, Cordova, and Xamarin Repair Apps.  To register the Android, Cordova, and Xamarin Repair Apps with an Azure Active Directory see the [Mobile Repair App Azure Active Directory Application Installation README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-RepairAppAAD.md) for complete instructions.
 
 Xamarin Repair App
 ------------------
 
 The mobile Repair App in the demo has also been built for Android devices with Xamarin.  The Xamarin version of the Repair App is written in .NET.
 
-Some configuration is required to enable the Cordova Repair App to work with an O365 environment.  Read on to learn about the configuration process.
+Some configuration is required to enable the Cordova Repair App to work with an Office 365 environment.  Read on to learn about the configuration process.
 
 Xamarin Android Repair App Installation
 ---------------------------------------
@@ -30,13 +32,13 @@ To configure the Xamarin Android Repair App follow these instructions.
 2. Open Visual Studio 2013 Studio.
 3. Open the **XamarinRepairApp.sln** Visual Studio 2013 Solution you cloned from the GitHub repository.
 4. In the **XamarinRepairApp project**, open the **Constants.cs** file.
-5. Edit the **SHAREPOINT_URL** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
+5. Edit the **SHAREPOINT_URL** variable to match your Office 365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
 
 	**SHAREPOINT_URL** is the URL for the Site Collection created by the Property Manager web app.  Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteCollectionUrl app setting.
 
     Example: contoso.sharepoint.com
 
-6. Edit the **DISPATCHEREMAIL** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
+6. Edit the **DISPATCHEREMAIL** variable to match your Office 365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
 
 	**DISPATCHEREMAIL** is the email address for the dispatcher account you created.
 

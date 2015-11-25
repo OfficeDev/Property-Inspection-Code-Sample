@@ -1,11 +1,14 @@
-# Property Inspection Code Sample
+# Property Management Code Sample
+
+> **IMPORTANT NOTE:** You must install the Web Application before the Office Add-in will work.  During the Web application installation process all of the components and sample data which support the demo are provisioned.  See the [Install Web Application README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/PropertyManagerMyApp/README.md) for complete instructions.
 
 Office Add-in for Outlook (previously known as a Mail App for Office)
 =====================================================================
 
 The Office Add-in for Outlook and Outlook Web Access displays data from Office 365 SharePoint lists.  The Mail App for Office is implemented with two main components.
 
-- Office Add-in – xml file installed on the O365 tenancy as an Exchange App
+- Office Add-in – xml file installed on the 
+-  tenancy as an Exchange App
 - Web pages – Part of the Property Manager web app running on ASP.NET MVC
 
 These files contain the code which implements the Office Add-in for Outlook:
@@ -41,7 +44,7 @@ Modify Manifest
 Office Add-in for Outlook Installation
 --------------------------------------
 
-1. Log into your O365 Tenancy with your admin account</li>
+1. Log into your Office 365 Tenancy with your admin account</li>
 2. Click the **app launcher** button, then click the **Admin app**
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Mail AFO - Admin.png)
 3. In the left menu, click **Exchange**
@@ -78,7 +81,7 @@ When the Office Add-in for Outlook loads, users are taken to a redirect page whi
 
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Mail AFO - Redir.png)
 
-The redirect page then uses JavaScript to redirect to another controller (index.cshtml) and passes the IncidentId on the query string.  The second controller uses the IncidentId passed to it to invoke the server side O365 ASP.NET APIs to retrieve the data from SharePoint.
+The redirect page then uses JavaScript to redirect to another controller (index.cshtml) and passes the IncidentId on the query string.  The second controller uses the IncidentId passed to it to invoke the server side Office 365 ASP.NET APIs to retrieve the data from SharePoint.
 
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Mail AFO - Incident Details.png)
 

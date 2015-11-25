@@ -1,14 +1,16 @@
-# Property Inspection Code Sample
+# Property Management Code Sample
+
+> **IMPORTANT NOTE:** You must install the Web Application before the iOS apps will work.  During the Web application installation process all of the components and sample data which support the demo are provisioned.  See the [Install Web Application README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/PropertyManagerMyApp/README.md) for complete instructions.
 
 Install iOS Apps
 ================
 
-The demo relies upon the iOS inspection app to function end to end.  Some configuration is required to enable the iOS Apps to work with an O365 environment.  Read on to learn about the configuration process.
+The demo relies upon the iOS inspection app to function end to end.  Some configuration is required to enable the iOS Apps to work with an Office 365 environment.  Read on to learn about the configuration process.
 
 Azure Active Directory Application
 ----------------------------------
 
-The iOS Apps use O365 APIs and SharePoint REST APIs to interact with an O365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the iOS Apps.  To register the iOS Apps with an Azure Active Directory follow these instructions.
+The iOS Apps use Office 365 APIs and SharePoint REST APIs to interact with an Office 365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the iOS Apps.  To register the iOS Apps with an Azure Active Directory follow these instructions.
 
 Create Azure Active Directory App for the iPad Apps
 ---------------------------------------------------
@@ -62,7 +64,7 @@ See the screenshot of these commands being run in the terminal below for referen
 iOS Apps Configuration
 ----------------------
 
-After the Coacoa Pods are registered, you need to configure the apps to work with the O365 / Azure Tenancy and the Azure Active Directory Application you created.  This section describes how to do it.
+After the Coacoa Pods are registered, you need to configure the apps to work with the Office 365 / Azure Tenancy and the Azure Active Directory Application you created.  This section describes how to do it.
 
 Items that you need a real iOS device to run
 ------------------------------------------------
@@ -96,10 +98,10 @@ These are the values that must be configured.
 
 - **clientID** This is the value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the iOSiPadApp Azure Active Directory Application in the Azure Management Portal.
 - **redirectUriString** This is the value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the iOSiPadApp Azure Active Directory Application in the Azure Management Portal.
-- **demoSiteServiceResourceId** Url for the root Site Collection in the O365 Tenancy. Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteServiceResourceId app setting.
+- **demoSiteServiceResourceId** Url for the root Site Collection in the Office 365 Tenancy. Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteServiceResourceId app setting.
 - **demoSiteCollectionUrl** Url for the Site Collection created by the Property Manager web app.  Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteCollectionUrl app setting.
 - **dispatcherEmail** Email address for the dispatcher account you created.
-- **VideoPortalEndpointUri** Api Endpoint for the Video Portal which comes with your O365 tenancy.
+- **VideoPortalEndpointUri** Api Endpoint for the Video Portal which comes with your Office 365 tenancy.
 
 Enable Keychain Sharing
 -----------------------

@@ -1,9 +1,11 @@
-# Property Inspection Code Sample
+# Property Management Code Sample
+
+> **IMPORTANT NOTE:** You must install the Web Application before the Cordova app will work.  During the Web application installation process all of the components and sample data which support the demo are provisioned.  See the [Install Web Application README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/PropertyManagerMyApp/README.md) for complete instructions.
 
 Mobile Repair App Azure Active Directory Application Installation
 =================================================================
 
-The Android, Cordova, and Xamarin Repair Apps use O365 APIs and SharePoint REST APIs to interact with an O365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the Android, Cordova, and Xamarin Repair Apps.  To register the Android, Cordova, and Xamarin Repair Apps with an Azure Active Directory see the [Mobile Repair App Azure Active Directory Application Installation README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-RepairAppAAD.md) for complete instructions.
+The Android, Cordova, and Xamarin Repair Apps use Office 365 APIs and SharePoint REST APIs to interact with an Office 365 / Azure tenancy.  The Azure Active Directory Application is used to authorize the Android, Cordova, and Xamarin Repair Apps.  To register the Android, Cordova, and Xamarin Repair Apps with an Azure Active Directory see the [Mobile Repair App Azure Active Directory Application Installation README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/README-RepairAppAAD.md) for complete instructions.
 Cordova Repair App
 ------------------
 
@@ -11,7 +13,7 @@ The mobile Repair App in the demo may also be run on Cordova in addition to the 
 
 The Cordova Repair App supports iOS, Android, and Windows devices.
 
-Some configuration is required to enable the Cordova Repair App to work with an O365 environment.  Read on to learn about the configuration process.
+Some configuration is required to enable the Cordova Repair App to work with an Office 365 environment.  Read on to learn about the configuration process.
 
 Cordova Repair App Installation
 -------------------------------
@@ -38,21 +40,21 @@ To configure the Cordova Repair App follow these instructions.
 
 	In each file make the following edits and corresponding Azure Active Directory App modifications. 
 
-6. Edit the **Settings.sitecollectionUrl** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
+6. Edit the **Settings.sitecollectionUrl** variable to match your Office 365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
 
 	**Settings.sitecollectionUrl** is the URL for the Site Collection created by the Property Manager web app.  Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteCollectionUrl app setting.
 
     Example: https://contoso.sharepoint.com/sites/SuiteLevelAppDemo
 
-7. Edit the **Settings.dispatcherEmail** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
+7. Edit the **Settings.dispatcherEmail** variable to match your Office 365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
 
 	**Settings.dispatcherEmail** is the email address for the dispatcher account you created.
 
     Example: katiej@contoso.onmicrosoft.com
 
-8. Edit the **Settings.resourceId** variable to match your O365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
+8. Edit the **Settings.resourceId** variable to match your Office 365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
 
-	**Settings.resourceId** is the URL for the root site collection in your O365 tenancy.
+	**Settings.resourceId** is the URL for the root site collection in your Office 365 tenancy.
 
     Example: https://contoso.sharepoint.com/
 
