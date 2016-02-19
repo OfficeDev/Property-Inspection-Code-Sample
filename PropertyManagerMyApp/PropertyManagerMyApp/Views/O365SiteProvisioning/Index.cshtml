@@ -35,7 +35,7 @@
             }
 
             function checkSiteProvisioningStatus() {
-                $.getJSON("/O365SiteProvisioning/GetSiteProvisioningStatus")
+                $.getJSON("/O365SiteProvisioning/GetSiteProvisioningStatus?timestamp=" + (new Date()).getTime())
                 .done(function (data) {
                     if (data.phase == "provision site collection" && counter++ > 50) {
                         location.reload();

@@ -8,8 +8,6 @@
 
 #import "EKNGraph.h"
 #import "EKNEKNGlobalInfo.h"
-#import <office365_odata_base/office365_odata_base.h>
-#import <office365_graph_sdk/office365_graph_sdk.h>
 @import Foundation;
 
 @implementation EKNGraph
@@ -22,12 +20,15 @@
     NSString *body = [sendDataDic objectForKey:@"body"];
     NSString *loginUser = [sendDataDic objectForKey:@"LogInUser"];
    
-    MSGraphServiceMessage *message = [MSGraphServiceMessage alloc];
-    message.Subject = subject;
-    message.ToRecipients = [self getRecipients:to];
-    message.CcRecipients = [self getRecipients:cc];
-    message.Body = [[MSGraphServiceItemBody alloc] init];
-    message.Body.Content = body;
+    MSGraphServiceMessage *message = [[MSGraphServiceMessage alloc] init];
+    message.subject = subject;
+    message.toRecipients = [self getRecipients:to];
+    message.ccRecipients = [self getRecipients:cc];
+    
+    MSGraphServiceItemBody *itembody =[[MSGraphServiceItemBody alloc] init];
+    [itembody setContent:body];
+    
+    message.body = itembody;
         
     ADAuthenticationError *error;
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
@@ -43,23 +44,20 @@
     ADALDependencyResolver *resolver = [[ADALDependencyResolver alloc] initWithContext:context resourceId:graphResourceId clientId: clientId redirectUri:redirectUri];
     MSGraphServiceClient *client = [[MSGraphServiceClient alloc] initWithUrl:[graphResourceUrl stringByAppendingString:clientId] dependencyResolver:resolver];
     
-    MSGraphServiceUserFetcher *me = [[client getusers] getById:loginUser];
-    NSURLSessionTask *task = [me.operations sendMailWithMessage:message saveToSentItems:true callback:^(int returnValue, MSODataException *exception) {
-        
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Message sent!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil ];
-        [alert show];
+    MSGraphServiceUserFetcher *me = [[client users] getById:loginUser];
+    
+    [[me operations] sendMailWithMessage:message saveToSentItems:true callback:^(int returnValue, MSOrcError *error) {
+        callback(0,error);
     }];
-    [task resume];
     return;
 }
-
--(NSMutableArray<MSGraphServiceRecipient>*)getRecipients : (NSString*)text{
-    NSMutableArray<MSGraphServiceRecipient>* result = (NSMutableArray<MSGraphServiceRecipient>*)[NSMutableArray array];
+-(NSMutableArray*)getRecipients : (NSString*)text{
+    NSMutableArray* result = (NSMutableArray*)[NSMutableArray array];
     NSArray* recipients = [text componentsSeparatedByString:@","];
     for (NSString* r in recipients) {
         MSGraphServiceRecipient* recipient = [[MSGraphServiceRecipient alloc] init];
-        recipient.EmailAddress = [MSGraphServiceEmailAddress alloc];
-        recipient.EmailAddress.Address = [r stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        recipient.emailAddress = [MSGraphServiceEmailAddress alloc];
+        [recipient.emailAddress setAddress:[r stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
         [result addObject: recipient];
     }
     return result;

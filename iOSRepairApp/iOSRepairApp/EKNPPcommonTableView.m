@@ -25,7 +25,7 @@
     self.bRecentDocument = bRecent;
     
 }
--(void)getPPcommonTableService{
+-(void)getPPcommonTableService:(NSString *)incidentId{
     switch (self.tag) {
         case RpsPropertyMembersViewTag:
             [self getPropertyMembersService];
@@ -34,7 +34,7 @@
             [self getConversationsService];
             break;
         case RpsOneNoteViewTag:
-            [self getOneNoteService];
+            [self getOneNoteService:incidentId];
             break;
         case RpsPropertyFilesViewTag:
             [self getPropertyFilesService];
@@ -84,16 +84,16 @@
             }
             else
             {
-                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error code %ld,error message: %@",error.code, error.localizedDescription]];
+                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error code %d,error message: %@",error.code, error.localizedDescription]];
             }
         });
     }];
 }
--(void)getOneNoteService{
+-(void)getOneNoteService:(NSString *)incidentId{
     [self.actiondelegate showLoading];
     
     EKNGraphService *graph = [[EKNGraphService alloc] init];
-    [graph getGroupNotes:self.groupId callback:^(NSMutableDictionary *listDict, NSError *error){
+    [graph getGroupNotes:self.groupId incidentId:incidentId  callback:^(NSMutableDictionary *listDict, NSError *error){
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.actiondelegate hideLoading];
             
@@ -105,7 +105,7 @@
             }
             else
             {
-                 [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find OneNote item. Error code %ld,error message: %@",error.code, error.localizedDescription]];
+                 [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find OneNote item. Error code %d,error message: %@",error.code, error.localizedDescription]];
             }
         });
     }];

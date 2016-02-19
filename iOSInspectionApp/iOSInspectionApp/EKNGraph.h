@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <ADALiOS/ADAuthenticationContext.h>
-#import <ADALiOS/ADAuthenticationParameters.h>
-#import <ADALiOS/ADAuthenticationSettings.h>
-#import <ADALiOS/ADLogger.h>
-#import <ADALiOS/ADInstanceDiscovery.h>
+#import <ADALiOS/ADAL.h>
+#import <impl/impl.h>
+#import <MSGraph-SDK-iOS/MSGraphService.h>
+
 
 @interface EKNGraph : NSObject
 -(void)sendMail:(NSDictionary *)sendDataDic callback:(void (^)(int returnValue, NSError *error))callback;

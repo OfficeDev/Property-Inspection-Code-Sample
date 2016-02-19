@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
+using System.Json;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -327,73 +328,204 @@ namespace XamarinRepairApp
             }
         }
 
-		async Task SendEmailAfterRepairCompleted()
-		{
-			var recipient = new Recipient {
-				EmailAddress = new EmailAddress {
-					Address = CurrentIncident.GetProperty ().GetEmail ()
-				}
-			};
-			var dispatcherRecipient = new Recipient {
-				EmailAddress = new EmailAddress {
-					Address = Constants.DISPATCHEREMAIL
-				}
-			};
-			var subject = string.Format ("Repair Report - {0} - {1:MM/dd/yyyy}", CurrentIncident.GetProperty ().GetTitle (), DateTime.Now);
-			var body = string.Format ("The incident found during a recent inspection on you property has been repaired. Photographs taken during the inspection and after the repair are attached to this email." +
-			           "<br/>" +
-			           "<br/><b>Property Name:</b> {0}" +
-			           "<br/><b>Property Address:</b> {1}" +
-			           "<br/>" +
-			           "<br/><b>Inspection Date:</b> {2}" +
-			           "<br/><b>Incident Type:</b> {3}" +
-			           "<br/><b>Room:</b> {4}" +
-			           "<br/><b>Comments from the inspector:</b><br/>{5}" +
-			           "<br/><br/><b>Incident reported:</b> {6}" +
-			           "<br/>" +
-			           "<br/><b>Repair Date:</b> {7:MM/dd/yyyy}" +
-			           "<br/><b>Comments from repair person:</b><br/>{8}" +
-			           "<br/>" +
-			           "<br/><b>Attachments:</b>(Inspection & Repair Photos) - Email attachments are not supported at this time in Xamarin app, therefore no files are attached." +
-			           "<br/>" +
-			           "<p>Incident ID: <span id='x_IncidentID'>{9}</span></p>" +
-			           "<p>Property ID: <span id='x_PropertyID'>{10}</span></p>",
-				           CurrentIncident.GetProperty ().GetTitle (),
-				           CurrentIncident.GetProperty ().GetAddress1 (),
-				           CurrentIncident.GetInspection ().GetDateTime (),
-				           CurrentIncident.GetType (),
-				           CurrentIncident.GetRoom ().GetTitle (),
-				           CurrentIncident.GetInspectorIncidentComments (),
-				           CurrentIncident.GetDate (),
-				           DateTime.Now,
-				           CurrentIncident.GetRepairComments (),
-				           CurrentIncident.GetId (),
-				           CurrentIncident.GetProperty ().GetId ()
-			           );
+        async Task SendEmailAfterRepairCompleted()
+        {
+			var graphToken = await AuthenticationHelper.GetGraphAccessTokenAsync(this);
+            var recipient = CurrentIncident.GetProperty().GetEmail();
+            var dispatcherRecipient = Constants.DISPATCHEREMAIL;
+            var subject = string.Format("Repair Report - {0} - {1:MM/dd/yyyy}", CurrentIncident.GetProperty().GetTitle(), DateTime.Now);
+            var body = string.Format("The incident found during a recent inspection on you property has been repaired. Photographs taken during the inspection and after the repair are attached to this email." +
+                       "<br/>" +
+                       "<br/><b>Property Name:</b> {0}" +
+                       "<br/><b>Property Address:</b> {1}" +
+                       "<br/>" +
+                       "<br/><b>Inspection Date:</b> {2}" +
+                       "<br/><b>Incident Type:</b> {3}" +
+                       "<br/><b>Room:</b> {4}" +
+                       "<br/><b>Comments from the inspector:</b><br/>{5}" +
+                       "<br/><br/><b>Incident reported:</b> {6}" +
+                       "<br/>" +
+                       "<br/><b>Repair Date:</b> {7:MM/dd/yyyy}" +
+                       "<br/><b>Comments from repair person:</b><br/>{8}" +
+                       "<br/>" +
+                       "<br/><b>Attachments:</b>(Inspection & Repair Photos) - Email attachments are not supported at this time in Xamarin app, therefore no files are attached." +
+                       "<br/>" +
+                       "<p>Incident ID: <span id='x_IncidentID'>{9}</span></p>" +
+                       "<p>Property ID: <span id='x_PropertyID'>{10}</span></p>",
+                           CurrentIncident.GetProperty().GetTitle(),
+                           CurrentIncident.GetProperty().GetAddress1(),
+                           CurrentIncident.GetInspection().GetDateTime(),
+                           CurrentIncident.GetType(),
+                           CurrentIncident.GetRoom().GetTitle(),
+                           CurrentIncident.GetInspectorIncidentComments(),
+                           CurrentIncident.GetDate(),
+                           DateTime.Now,
+                           CurrentIncident.GetRepairComments(),
+                           CurrentIncident.GetId(),
+                           CurrentIncident.GetProperty().GetId()
+                       );
 
-			var message = new Microsoft.Graph.Message {
-				ToRecipients = new []{ recipient },
-				CcRecipients = new []{ dispatcherRecipient },
-				Subject = subject,
-				Body = new ItemBody{
-					Content = body,
-					ContentType = BodyType.HTML
-				}
-			};
+            var message = @"{
+                'Message': {
+                    'Subject': '" + subject + @"',
+                    'Body': {
+                        'ContentType': 'HTML',
+                        'Content': """ + body + @"""
+                    },
+                    'ToRecipients': [{
+                        'EmailAddress': {
+                            'Address': '" + dispatcherRecipient + @"'
+                        }
+                    }],
+                    'CcRecipients': [{
+                        'EmailAddress': {
+                            'Address': '" + recipient + @"'
+                        }
+                    }]
+                },
+                'SaveToSentItems': 'true'
+             }";
+
+            string requestUrl = string.Format("{0}me/Microsoft.Graph.sendMail", Constants.GraphResourceUrl);
+
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.Headers.Add("Authorization", "Bearer " + graphToken);
+            byte[] btBodys = Encoding.UTF8.GetBytes(message);
+            request.GetRequestStream().Write(btBodys, 0, btBodys.Length);
 
             process = ProgressDialog.Show(this, "Processing", "Sending email...");
-          
-            //Currently, the following 2 lines of code must be executed before the SendMailAsync
-            //method is called.  If the call the return the user's photo is not executed
-            //the SendMailAsync method will not successfully send the email.  This is a known
-            //issue and this sample will be adjusted accordingly once this issue is resolved.
-			var photo = await App.GraphService.Me.UserPhoto.ExecuteAsync();
-			var pid = photo.Id.ToString();
 
-			await App.GraphService.Me.SendMailAsync(message, true);
+            using (HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse)
+            {}
 
             process.Dismiss();
-		}
+        }
+
+        async Task UpdateTasks()
+        {
+            var graphToken = AuthenticationHelper.GetGraphAccessTokenAsync(this);
+
+            var tasks = await GetTasks(await graphToken);
+
+            if (tasks.Count == 0)
+                return;
+
+            byte[] btBodys = Encoding.UTF8.GetBytes("{'percentComplete': 100}");
+
+            foreach (var task in tasks)
+            {
+                var requestUrl = string.Format("{0}Tasks/{1}", Constants.GraphResourceUrl, task.TaskID);
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
+                request.Method = "PATCH";
+                request.Accept = "application/json";
+                request.ContentType = "application/json";
+                request.Headers.Add("Authorization", "Bearer " + await graphToken);
+                request.Headers.Add("If-Match", task.Etag);
+                request.GetRequestStream().Write(btBodys, 0, btBodys.Length);
+                using (HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse)
+                {
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        //update successfully
+                    }
+                }
+            }
+        }
+
+        async Task<List<TaskModel>> GetTasks(string graphToken)
+        {
+            var results = new List<TaskModel>();
+            var IncidentId = CurrentIncident.GetId();
+            var planID = GetPlanId(graphToken, CurrentIncident.GetProperty().GetGroupID());
+            var bucketId = GetBucketId(graphToken, await planID, string.Format("Incident [{0}]", IncidentId));
+
+            if (await bucketId == string.Empty) return results;
+
+            var requestUrl = string.Format("{0}buckets/{1}/Tasks", Constants.GraphResourceUrl, await bucketId);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
+            request.Method = "GET";
+            request.Accept = "application/json";
+            request.Headers.Add("Authorization", "Bearer " + graphToken);
+
+            using (HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse)
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                    {
+                        string content = await stream.ReadToEndAsync();
+                        JsonValue jsonValue = JsonValue.Parse(content);
+                        for (int i = 0; i < jsonValue["value"].Count; i++)
+                        {
+                            results.Add(new TaskModel
+                            {
+                                TaskID = Helper.GetString(jsonValue["value"][i]["id"]),
+                                Etag = Helper.GetString(jsonValue["value"][i]["@odata.etag"]).Replace(@"\", "") + "\""
+                            });
+                        }
+                    }
+                }
+            }
+
+            return results;
+        }
+
+        async Task<string> GetPlanId(string graphToken, string groupId)
+        {
+            var requestUrl = string.Format("{0}groups/{1}/plans", Constants.GraphResourceUrl, groupId);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
+            request.Method = "GET";
+            request.Accept = "application/json";
+            request.Headers.Add("Authorization", "Bearer " + graphToken);
+
+            using (HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse)
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                    {
+                        string content = await stream.ReadToEndAsync();
+                        var jsonValue = JsonValue.Parse(content);
+                        return Helper.GetString(jsonValue["value"][0]["id"]);
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
+        async Task<string> GetBucketId(string graphToken, string planId, string BucketName)
+        {
+            var requestUrl = string.Format("{0}plans/{1}/Buckets", Constants.GraphResourceUrl, planId);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
+            request.Method = "GET";
+            request.Accept = "application/json";
+            request.Headers.Add("Authorization", "Bearer " + graphToken);
+
+            using (HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse)
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                    {
+                        string content = await stream.ReadToEndAsync();
+                        var jsonValue = JsonValue.Parse(content);
+
+                        for (int i = 0; i < jsonValue["value"].Count; i++)
+                        {
+                            if (Helper.GetString(jsonValue["value"][i]["name"]) == BucketName)
+                            {
+                                return Helper.GetString(jsonValue["value"][i]["id"]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
 
         #endregion
 
@@ -456,7 +588,7 @@ namespace XamarinRepairApp
             StartActivityForResult(intent, 200);
         }
 
-		async void FinalizeRepairSuccess()
+        async void FinalizeRepairSuccess()
         {
             process.Dismiss();
             App.SelectedIncidet.HasChanged = true;
@@ -464,8 +596,9 @@ namespace XamarinRepairApp
             App.SelectedIncidet.SetRepairCompleted(DateTime.Now.ToString("MM/dd/yyyy"));
             SetBtnStatus(false);
             finalizeBtn.Visibility = ViewStates.Gone;
+            await UpdateTasks();
             Toast.MakeText(this, "Finalized repair successfully.", ToastLength.Long).Show();
-			await SendEmailAfterRepairCompleted();
+            await SendEmailAfterRepairCompleted();
         }
 
         private void FinalizeRepairFailed()

@@ -5,19 +5,19 @@
     <item DisplayName="Inspectors" Description="Inspectors Group" MailNickname="Inspectors"/>
   </List>
   <List name="AD Users">
-    <item DisplayName="Rob Barker" PrincipalName="robb" Password="TempP@ssw0rd!" GroupsDisplayName="Inspectors"/>
-    <item DisplayName="Katie Jordan" PrincipalName="katiej" Password="TempP@ssw0rd!" GroupsDisplayName=""/>
-    <item DisplayName="Ron Gabel" PrincipalName="rong" Password="TempP@ssw0rd!" GroupsDisplayName="Repair People"/>
-    <item DisplayName="Margaret Au" PrincipalName="marga" Password="TempP@ssw0rd!" GroupsDisplayName=""/>
-    <item DisplayName="Alisa Lawyer" PrincipalName="alisal" Password="TempP@ssw0rd!" GroupsDisplayName="Inspectors"/>
-    <item DisplayName="Chris Gray" PrincipalName="chrisg" Password="TempP@ssw0rd!" GroupsDisplayName="Repair People"/>
-    <item DisplayName="Steven Wright" PrincipalName="stevenw" Password="TempP@ssw0rd!" GroupsDisplayName=""/>
-    <item DisplayName="Dan Jump" PrincipalName="danj" Password="TempP@ssw0rd!" GroupsDisplayName=""/>
-    <item DisplayName="Chris Johnson" PrincipalName="chrisj" Password="TempP@ssw0rd!" GroupsDisplayName=""/>
-    <item DisplayName="Carol Troup" PrincipalName="carolt" Password="TempP@ssw0rd!" GroupsDisplayName=""/>
+    <item DisplayName="Rob Barker" PrincipalName="robb" Password="TempP@ssw0rd!" GroupsDisplayName="Inspectors" path="Content\Images\people\Rob Barker.jpg" JobTitle="Inspector" CompanyName="Contoso" OfficeLocation="Field" MobilePhone="555.111.1000" BusinessPhone="555.111.2000"/>
+    <item DisplayName="Katie Jordan" PrincipalName="katiej" Password="TempP@ssw0rd!" GroupsDisplayName="" path="Content\Images\people\Katie Jordan.jpg" JobTitle="Dispatcher" CompanyName="Contoso" OfficeLocation="Contoso HQ" MobilePhone="555.111.1001" BusinessPhone="555.111.2001"/>
+    <item DisplayName="Ron Gabel" PrincipalName="rong" Password="TempP@ssw0rd!" GroupsDisplayName="Repair People" path="Content\Images\people\Ron Gabel.jpg" JobTitle="Repair Person" CompanyName="Contoso" OfficeLocation="Field" MobilePhone="555.111.1002" BusinessPhone="555.111.2002"/>
+    <item DisplayName="Margaret Au" PrincipalName="marga" Password="TempP@ssw0rd!" GroupsDisplayName="" path="Content\Images\people\Margaret Au.jpg" JobTitle="Property Owner" CompanyName="Au Residence" OfficeLocation="2002 Nob Hill Ave N" MobilePhone="555.222.5000" BusinessPhone="555.222.5000"/>
+    <item DisplayName="Alisa Lawyer" PrincipalName="alisal" Password="TempP@ssw0rd!" GroupsDisplayName="Inspectors" path="Content\Images\people\Alisa Lawyer.jpg" JobTitle="Inspector" CompanyName="Contoso" OfficeLocation="Field" MobilePhone="555.111.1003" BusinessPhone="555.111.2003"/>
+    <item DisplayName="Chris Gray" PrincipalName="chrisg" Password="TempP@ssw0rd!" GroupsDisplayName="Repair People" path="Content\Images\people\Chris Gray.jpg" JobTitle="Repair Person" CompanyName="Contoso" OfficeLocation="Field" MobilePhone="555.111.1004" BusinessPhone="555.111.2004"/>
+    <item DisplayName="Steven Wright" PrincipalName="stevenw" Password="TempP@ssw0rd!" GroupsDisplayName="" path="Content\Images\people\Steven Wright.jpg" JobTitle="Property Owner" CompanyName="Wright Residence" OfficeLocation="2450 4th Ave W" MobilePhone="555.222.5001" BusinessPhone="555.222.5001"/>
+    <item DisplayName="Dan Jump" PrincipalName="danj" Password="TempP@ssw0rd!" GroupsDisplayName="" JobTitle="Property Owner" CompanyName="Jump Residence" OfficeLocation="3301 8th Ave W" MobilePhone="555.222.5002" BusinessPhone="555.222.5002"/>
+    <item DisplayName="Chris Johnson" PrincipalName="chrisj" Password="TempP@ssw0rd!" GroupsDisplayName="" JobTitle="Property Owner" CompanyName="Johnson Residence" OfficeLocation="4560 W Cramer St" MobilePhone="555.222.5003" BusinessPhone="555.222.5003"/>
+    <item DisplayName="Carol Troup" PrincipalName="carolt" Password="TempP@ssw0rd!" GroupsDisplayName="" JobTitle="Property Owner" CompanyName="Troup Residence" OfficeLocation="4733 W Bertona St" MobilePhone="555.222.5004" BusinessPhone="555.222.5004"/>
   </List>
   <List name="Properties">
-    <item>
+    <item path="Content\Images\properties\house1.jpg">
       <column name="Id"></column>
       <column name="Title">Au Residence</column>
       <column name="sl_owner">Margaret Au</column>
@@ -30,7 +30,7 @@
       <column name="sl_latitude">47.636701</column>
       <column name="sl_longitude">-122.350490</column>
     </item>
-    <item>
+    <item path="Content\Images\properties\house2.jpg">
       <column name="Id"></column>
       <column name="Title">Wright Residence</column>
       <column name="sl_owner">Steven Wright</column>
@@ -43,7 +43,7 @@
       <column name="sl_latitude">47.641079</column>
       <column name="sl_longitude">-122.361961</column>
     </item>
-    <item>
+    <item path="Content\Images\properties\house3.jpg">
       <column name="Id"></column>
       <column name="Title">Jump Residence</column>
       <column name="sl_owner">Dan Jump</column>
@@ -56,7 +56,7 @@
       <column name="sl_latitude">47.649310</column>
       <column name="sl_longitude">-122.367827</column>
     </item>
-    <item>
+    <item path="Content\Images\properties\house4.jpg">
       <column name="Id"></column>
       <column name="Title">Johnson Residence</column>
       <column name="sl_owner">Chris Johnson</column>
@@ -69,7 +69,7 @@
       <column name="sl_latitude">47.670199</column>
       <column name="sl_longitude">-122.415486</column>
     </item>
-    <item>
+    <item path="Content\Images\properties\house5.jpg">
       <column name="Id"></column>
       <column name="Title">Troup Residence</column>
       <column name="sl_owner">Carol Troup</column>
@@ -379,7 +379,6 @@
       <column name="sl_inspector">Rob Barker</column>
       <column name="sl_emailaddress">robb@(tenancy)</column>
       <column name="sl_propertyID" Type="Lookup" Source="Properties">1</column>
-      <column name="sl_finalized">5/30/2014</column>
     </item>
     <item>
       <column name="Id"></column>
@@ -387,7 +386,6 @@
       <column name="sl_inspector">Rob Barker</column>
       <column name="sl_emailaddress">robb@(tenancy)</column>
       <column name="sl_propertyID" Type="Lookup" Source="Properties">2</column>
-      <column name="sl_finalized">5/30/2014</column>
     </item>
     <item>
       <column name="Id"></column>
@@ -395,7 +393,6 @@
       <column name="sl_inspector">Rob Barker</column>
       <column name="sl_emailaddress">robb@(tenancy)</column>
       <column name="sl_propertyID" Type="Lookup" Source="Properties">3</column>
-      <column name="sl_finalized">5/30/2014</column>
     </item>
     <item>
       <column name="Id"></column>

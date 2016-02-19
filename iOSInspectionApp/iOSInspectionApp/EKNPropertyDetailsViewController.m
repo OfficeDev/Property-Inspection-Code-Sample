@@ -36,6 +36,7 @@
     self.mailController = nil;
     
     self.propertyDic = [[NSMutableDictionary alloc] init];
+    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -676,10 +677,10 @@
     return TRUE;
 }
 #pragma mark - get action
--(ListClient*)getClient{
+-(EKNListClient*)getClient{
     NSString *url =[EKNEKNGlobalInfo getObjectFromDefault:@"demoSiteCollectionUrl"];
     
-    return [[ListClient alloc] initWithUrl:url
+    return [[EKNListClient alloc] initWithUrl:url
                                token: self.token];
 }
 
@@ -820,7 +821,7 @@
 }
 -(NSDictionary *)getProperyListItemDicByIndexPath:(NSIndexPath *)indexPath
 {
-    ListItem *inspectionItem = nil;
+    EKNListItem *inspectionItem = nil;
     if(indexPath.section == 0)
     {
         NSArray *toparray=[self.rightPropertyListDic objectForKey:@"top"];
@@ -851,7 +852,7 @@
     {
         NSMutableArray *inspectionslistTemp = [[NSMutableArray alloc] init];
         
-        for (ListItem* tempitem in self.inspectionsListArray) {
+        for (EKNListItem* tempitem in self.inspectionsListArray) {
             NSString *inspectionId = [NSString stringWithFormat:@"%@",[tempitem getData:@"ID"]];
             
             NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
@@ -1285,7 +1286,7 @@
                 NSMutableArray *currentList = [[NSMutableArray alloc] init];
                 self.inspectionsListArray =listItems;
                 
-                for(ListItem* tempitem in listItems)
+                for(EKNListItem* tempitem in listItems)
                 {
                     BOOL bAdded = NO;
                     NSDictionary * pdic = (NSDictionary *)[tempitem getData:@"sl_propertyID"];
@@ -1297,7 +1298,7 @@
                         if([pid intValue] == [self.selectRightPropertyItemId intValue])
                         {
                             BOOL bexist =NO;
-                            for (ListItem * tt in currentList) {
+                            for (EKNListItem * tt in currentList) {
                                 NSDictionary * pp = (NSDictionary *)[tt getData:@"sl_propertyID"];
                                 if ([pp objectForKey:@"Id"] == [pdic objectForKey:@"Id"]) {
                                     bexist = YES;
@@ -1315,7 +1316,7 @@
                             if([inspectiondatetime compare:[NSDate date]] == NSOrderedDescending)
                             {
                                 BOOL bexist =NO;
-                                for (ListItem * tt in upcomingList) {
+                                for (EKNListItem * tt in upcomingList) {
                                     NSDictionary * pp = (NSDictionary *)[tt getData:@"sl_propertyID"];
                                     if ([pp objectForKey:@"Id"] == [pdic objectForKey:@"Id"]) {
                                         bexist = YES;
@@ -1357,7 +1358,7 @@
                                                  {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
                                                          if (error==nil) {
-                                                             for (ListItem *listitem in listItems) {
+                                                             for (EKNListItem *listitem in listItems) {
                                                                  NSString *pidStr = [NSString stringWithFormat:@"%@",[listitem getData:@"sl_propertyIDId"]];
                                                                  if (pidStr != (NSString *)[NSNull null]&& [self.propertyDic objectForKey:pidStr]!=nil) {
                                                                      NSMutableDictionary *roomDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",[listitem getData:@"Id"]],@"Id",[listitem getData:@"Title"],@"Title", nil];
@@ -1389,7 +1390,7 @@
                                                                  
                                                                  if(listItems!=nil && [listItems count]>0)
                                                                  {
-                                                                     ListItem *tempitem = [listItems objectAtIndex:0];
+                                                                     EKNListItem *tempitem = [listItems objectAtIndex:0];
                                                                      NSString *propertyId =[NSString stringWithFormat:@"%@",[tempitem getData:@"sl_propertyIDId"]];
                                                                      NSString *propertyImageId =[NSString stringWithFormat:@"%@",[tempitem getData:@"ID"]];
                                                                      
@@ -1458,7 +1459,7 @@
     [self.listClient getListItemsByFilter:@"Incidents" filter:@"$select=sl_propertyIDId,sl_inspectionIDId,sl_roomIDId,Id"  callback:^(NSMutableArray *        listItems, NSError *error)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                for (ListItem* tempitem in listItems) {
+                for (EKNListItem* tempitem in listItems) {
                     if ([tempitem getData:@"sl_propertyIDId"] == [NSNull null]
                         ||[tempitem getData:@"sl_inspectionIDId"] ==[NSNull null]) {
                         continue;
@@ -1563,13 +1564,13 @@
     [self startPropertyViewSpiner:CGRectMake(135,460,50,50)];
    // ((UIButton *)[self.view viewWithTag:LeftBackButtonViewTag]).enabled = NO;
     
-    ListClient* client = self.listClient;
+    EKNListClient* client = self.listClient;
     self.roomsOfInspectionDic = [[NSMutableDictionary alloc] init];
     [client getListItemsByFilter:@"Room Inspection Photos" filter:@"$select=Id,sl_inspectionIDId,sl_roomIDId"
                                                      callback:^(NSMutableArray *listItems, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                for (ListItem *temp in listItems) {
+                for (EKNListItem *temp in listItems) {
                     if([temp getData:@"sl_inspectionIDId"] == [NSNull null] || [temp getData:@"sl_roomIDId"] == [NSNull null] )
                     {
                         continue;
@@ -1971,9 +1972,15 @@
                               dispatch_async(dispatch_get_main_queue(), ^{
                               if (success) {
                                   [self sendEmail: proId incidentId:incidentId type:type comment:comment];
-                                  [self showHintAlertView:@"Hint" message:@"Create incident item and upload images successfully."];
-                                  [self stopCommentViewSpiner];
-                                  [self cancelButtonClicked];
+                                  
+                                  EKNVedioService *videoService =[[EKNVedioService alloc] init];
+                                  [videoService uploadDemoVideoForIncident:incidentId callback:^(MSOrcError *error) {
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          [self showHintAlertView:@"Hint" message:@"Create incident item and upload images successfully."];
+                                          [self stopCommentViewSpiner];
+                                          [self cancelButtonClicked];
+                                      });
+                                  }];
                               }
                               else
                               {
@@ -1988,10 +1995,15 @@
                      {
                          dispatch_async(dispatch_get_main_queue(), ^{
                              [self sendEmail: proId incidentId:incidentId type:type comment:comment];
-                             [self showHintAlertView:@"Hint" message:@"Create incident item successfully."];
-                             [self stopCommentViewSpiner];
-                             [self cancelButtonClicked];
                              
+                             EKNVedioService *videoService =[[EKNVedioService alloc] init];
+                             [videoService uploadDemoVideoForIncident:incidentId callback:^(MSOrcError *error) {
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     [self showHintAlertView:@"Hint" message:@"Create incident item successfully."];
+                                     [self stopCommentViewSpiner];
+                                     [self cancelButtonClicked];
+                                 });
+                             }];
                          });
                      }
                  }
@@ -2039,9 +2051,9 @@
                      else
                      {
                          dispatch_async(dispatch_get_main_queue(), ^{
-                         [self showHintAlertView:@"Hint" message:@"Update incident item successfully."];
-                         [self stopCommentViewSpiner];
-                         [self cancelButtonClicked];
+                             [self showHintAlertView:@"Hint" message:@"Update incident item successfully."];
+                             [self stopCommentViewSpiner];
+                             [self cancelButtonClicked];
                          });
                      }
                  }
@@ -2764,7 +2776,7 @@
 -(void)updateRightPropertyTableCellImage:(NSString *)proid image:(UIImage *)image
 {
    // BOOL found =  false;
-    ListItem *inspectionitem = nil;
+    EKNListItem *inspectionitem = nil;
     if([[self.rightPropertyListDic objectForKey:@"top"] count]>0)
     {
         inspectionitem = [[self.rightPropertyListDic objectForKey:@"top"] objectAtIndex:0];
@@ -2789,7 +2801,7 @@
     {
         for(NSInteger i = 0; i< [bottomarray count]; i++)
         {
-            ListItem *tp = [bottomarray objectAtIndex:i];
+            EKNListItem *tp = [bottomarray objectAtIndex:i];
                 
             NSDictionary *pro = (NSDictionary *)[tp getData:@"sl_propertyID"];
             if(pro!=nil)
@@ -2834,7 +2846,7 @@
 {
     self.selectRightPropertyTableIndexPath = indexpath;
     
-    ListItem *inspectionitem = nil;
+    EKNListItem *inspectionitem = nil;
     if(self.selectRightPropertyTableIndexPath.section == 0)
     {
         inspectionitem = [[self.rightPropertyListDic objectForKey:@"top"] objectAtIndex:0];
@@ -3169,7 +3181,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if(listItems != nil && [listItems count] >0)
             {
-                ListItem *item = listItems[0];
+                EKNListItem *item = listItems[0];
                 self.selectRightPropertyItemId = (NSString*)[item getData:@"ID"];
             }
         });

@@ -81,9 +81,9 @@ namespace SuiteLevelWebApp.Models
             return viewModel;
         }
 
-        public async Task<DashboardInspectionDetailsViewModel> GetDashboardInspectionDetailsViewModelAsync(Graph.GraphService graphService, OneNoteServiceFactory oneNoteServiceFactory, int incidentId, string CurrentUser)
+        public async Task<DashboardInspectionDetailsViewModel> GetDashboardInspectionDetailsViewModelAsync(GraphService graphService, int incidentId, string CurrentUser)
         {
-            Task<Graph.IUser[]> getRepairPeople = null;
+            Graph.Iuser[] getRepairPeople = null;
             Task<RepairPhoto[]> getRepairPhotos = null;
 
             var videos = GetVideosAsync(AppSettings.VideoPortalIncidentsChannelName, incidentId);
@@ -100,28 +100,26 @@ namespace SuiteLevelWebApp.Models
 
             var incidentStatus = incident.sl_status;
             if (incidentStatus == "Pending Assignment")
-                getRepairPeople = graphService.GetGroupMembersAsync("Repair People");
+                getRepairPeople = await graphService.GetGroupMembersAsync("Repair People");
+
             if (incidentStatus == "Repair Pending Approval" || incidentStatus == "Repair Approved")
                 getRepairPhotos = GetRepairPhotosAsync(incidentId);
 
             var unifiedGroupFetcher = graphService.groups.GetById(property.sl_group);
             var unifiedGroup = unifiedGroupFetcher.ExecuteAsync();
-            var groupFiles = GetGroupFilesAsync(unifiedGroupFetcher, (await unifiedGroup).mailNickname);
+            var groupFiles = GetGroupFilesAsync(unifiedGroupFetcher);
             var groupConversations = GetConversationsAsync(unifiedGroupFetcher, (await unifiedGroup).mail);
 
-            var notebookName = (await unifiedGroup).displayName + " Notebook"; ;
-            var oneNoteService = oneNoteServiceFactory.CreateOneNoteServiceForUnifiedGroup(await unifiedGroup);
-            var notebook = GetOrCreateNoteBook(await oneNoteService, notebookName);
-            var pages = (await notebook) != null
-                ? GetOneNotePagesAsync(await oneNoteService, (await notebook).Id, property.Title, incidentId)
+            var notebookName = (await unifiedGroup).displayName + " Notebook";
+            var notebook = OneNoteService.GetNoteBookAsync(unifiedGroupFetcher, notebookName);
+            var oneNotePages = (await notebook) != null
+                ? GetOneNotePagesAsync(graphService, await unifiedGroup)
                 : Task.FromResult(new HyperLink[0]);
 
-            // Repair people are included in property group.
-            // Before we get members of a group, we must make sure that repair people have been retrieved.
-            // Otherwise, we'll get an error: 
-            //         The context is already tracking a different entity with the same resource Uri.
-            if (getRepairPeople != null) await getRepairPeople;
             var groupMembers = graphService.GetGroupMembersAsync(unifiedGroupFetcher);
+
+            var plan = PlanService.GetPlanAsync(await unifiedGroup);
+            var tasks = GetO365TasksAsync(graphService, await plan);
 
             var recentEarliestDateTime = new DateTimeOffset(DateTime.UtcNow).AddDays(-7);
             var recentDocuments = (await groupFiles)
@@ -132,7 +130,6 @@ namespace SuiteLevelWebApp.Models
 
             var isCurrentUserDispatcher = CurrentUser == AppSettings.DispatcherEmail;
 
-
             var viewModel = new DashboardInspectionDetailsViewModel
             {
                 viewName = IncidentStatusViewMappings[incidentStatus],
@@ -140,26 +137,27 @@ namespace SuiteLevelWebApp.Models
                 incidentId = incidentId,
                 incident = incident,
                 UnifiedGroupNickName = (await unifiedGroup).mailNickname,
-                UnifiedGroupId = (await unifiedGroup).objectId,
+                UnifiedGroupId = (await unifiedGroup).id,
                 UnifiedGroupEmail = (await unifiedGroup).mail,
                 inspection = await inspection,
                 videos = await videos,
                 files = (await groupFiles)
-                    .Select(i => HyperLink.Create(i.name, i.webUrl))
+                    .Select(i => HyperLink.Create(i.name, i.webUrl, i.id))
                     .ToArray(),
                 recentDocuments = recentDocuments
-                    .Select(i => HyperLink.Create(i.name, i.webUrl))
+                    .Select(i => HyperLink.Create(i.name, i.webUrl, i.id))
                     .ToArray(),
                 members = await groupMembers,
                 roomInspectionPhotos = await getInspectionPhotos,
                 inspectionComment = await GetInspectionCommentAsync(inspectionID, incident.sl_roomID.Id),
-                //tasks = await GetTaskHyperLinksAsync(unifiedGroup)
-                repairPeople = getRepairPeople != null ? await getRepairPeople : new Graph.IUser[0],
+                tasks = (await tasks).ToArray(),
+                repairPeople = getRepairPeople != null ? getRepairPeople : new Graph.Iuser[0],
                 repairPhotos = getRepairPhotos != null ? await getRepairPhotos : new RepairPhoto[0],
                 DispatcherMails = isCurrentUserDispatcher ? await GetMailsForDispatcherAsync(graphService, CurrentUser) : new HyperLink[0],
-                oneNoteUrl = (await notebook) != null ? (await notebook).Url : "",
-                oneNotePages = await pages,
-                conversations = await groupConversations
+                oneNotePages = await oneNotePages,
+                oneNoteUrl = (await notebook) != null ? (await notebook).links.oneNoteWebUrl.ToString() : "",
+                conversations = await groupConversations,
+                PlanId = (await plan).id
             };
             return viewModel;
         }
@@ -174,7 +172,7 @@ namespace SuiteLevelWebApp.Models
             await SuiteLevelWebApp.Utils.RestHelper.PostRestDataToDemoSiteAsync("/_api/lists/GetByTitle('Incidents')/Items(" + model.IncidentId + ")", JsonConvert.SerializeObject(updateJson), _token);
         }
 
-        public async Task<Graph.Event> ScheduleRepairAsync(GraphService graphService, ScheduleRepairModel model)
+        public async Task ScheduleRepairAsync(GraphService graphService, ScheduleRepairModel model)
         {
             var incident = await GetIncidentByIdAsync(model.IncidentId);
             var repairPeople = await GetRepairPeopleByEmailAddressAsync(model.RepairPeopleSelectedValue);
@@ -184,38 +182,108 @@ namespace SuiteLevelWebApp.Models
                     incident.Id,
                     incident.sl_propertyID.Id
                 );
-            var attendee = new Graph.Attendee
+
+            var attendee = new Graph.attendee
             {
-                EmailAddress = new Graph.EmailAddress
+                emailAddress = new emailAddress
                 {
-                    Address = repairPeople.sl_emailaddress,
-                    Name = repairPeople.Title
+                    address = repairPeople.sl_emailaddress,
+                    name = repairPeople.Title
                 },
-                Type = Graph.AttendeeType.Required
+                type = attendeeType.required,
+                status = new responseStatus()
             };
+
             var newEvent = new Graph.Event
             {
-                Subject = "Repair Event",
-                Body = new Graph.ItemBody
+                subject = "Repair Event",
+                body = new itemBody
                 {
-                    Content = body,
-                    ContentType = Graph.BodyType.HTML
+                    content = body,
+                    contentType = bodyType.html
                 },
-                ShowAs = Graph.FreeBusyStatus.Busy,
-                Start = model.TimeSlotsSelectedValue.ToUniversalTime(),
-                End = (model.TimeSlotsSelectedValue.AddHours(1)).ToUniversalTime(),
-                Location = new Graph.Location
+                showAs = freeBusyStatus.busy,
+                start = new dateTimeTimeZone
                 {
-                    DisplayName = incident.sl_roomID.Title
+                    dateTime = model.TimeSlotsSelectedValue.ToUniversalTime().ToString(),
+                    timeZone = "UTC"
                 },
-                Attendees = new Graph.Attendee[] { attendee }
-            };
-            await graphService.Me.Events.AddEventAsync(newEvent);
+                end = new dateTimeTimeZone
+                {
+                    dateTime = (model.TimeSlotsSelectedValue.AddHours(1)).ToUniversalTime().ToString(),
+                    timeZone = "UTC"
+                },
+                location = new location
+                {
+                    address = new physicalAddress(),
+                    coordinates = new outlookGeoCoordinates(),
+                    displayName = incident.sl_roomID.Title,
 
-            return newEvent;
+                },
+                attendees = new attendee[] { attendee }
+            };
+
+            try
+            {
+                await graphService.me.events.AddeventAsync(newEvent);
+            }
+            catch
+            { }
         }
 
-        public async Task<Graph.Event> CreateGroupRepairEventAsync(GraphService graphService, ScheduleRepairModel model)
+        public async Task CreateO365TaskAsync(GraphService graphService, ScheduleRepairModel model)
+        {
+            var incident = await GetIncidentByIdAsync(model.IncidentId);
+            var repairPeopleMail = (await GetRepairPeopleByEmailAddressAsync(model.RepairPeopleSelectedValue)).sl_emailaddress;
+            var repairPeople = GraphServiceExtension.GetFirstUserAsync(graphService, i => i.mail == repairPeopleMail);
+            var me = graphService.me.ExecuteAsync();
+            var property = incident.sl_propertyID;
+            var unifiedGroup = graphService.groups.GetById(property.sl_group).ExecuteAsync();
+
+
+            var plan = PlanService.GetPlanAsync(await unifiedGroup);
+
+            var incidentBucket = PlanService.CreateBucketAsync(new bucket
+            {
+                name = string.Format("Incident [{0}]", incident.Id),
+                planId = (await plan).id
+            });
+
+            await PlanService.CreateTaskAsync(new task
+            {
+                title = "Clean up work site",
+                assignedTo = (await repairPeople).id,
+                assignedBy = (await me).id,
+                percentComplete = 0,
+                planId = (await incidentBucket).planId,
+                bucketId = (await incidentBucket).id,
+                dueDateTime = new DateTimeOffset(model.TimeSlotsSelectedValue)
+            });
+
+            await PlanService.CreateTaskAsync(new task
+            {
+                title = "Have property owner sign repair completion document",
+                assignedTo = (await repairPeople).id,
+                assignedBy = (await me).id,
+                percentComplete = 0,
+                planId = (await incidentBucket).planId,
+                bucketId = (await incidentBucket).id,
+                dueDateTime = new DateTimeOffset(model.TimeSlotsSelectedValue)
+            });
+
+            await PlanService.CreateTaskAsync(new task
+            {
+                title = "Call property owner to confirm repair appointment",
+                assignedTo = (await repairPeople).id,
+                assignedBy = (await me).id,
+                percentComplete = 0,
+                planId = (await incidentBucket).planId,
+                bucketId = (await incidentBucket).id,
+                dueDateTime = new DateTimeOffset(model.TimeSlotsSelectedValue)
+            });
+        }
+
+        public async Task CreateGroupRepairEventAsync(GraphService graphService, ScheduleRepairModel model)
         {
             var incident = await GetIncidentByIdAsync(model.IncidentId);
             var property = incident.sl_propertyID;
@@ -228,24 +296,38 @@ namespace SuiteLevelWebApp.Models
 
             var newEvent = new Graph.Event
             {
-                Subject = "Repair Event",
-                Body = new Graph.ItemBody
+                subject = "Repair Event",
+                body = new itemBody
                 {
-                    Content = body,
-                    ContentType = Graph.BodyType.HTML
+                    content = body,
+                    contentType = bodyType.html
                 },
-                ShowAs = Graph.FreeBusyStatus.Busy,
-                Start = model.TimeSlotsSelectedValue.ToUniversalTime(),
-                End = (model.TimeSlotsSelectedValue.AddHours(1)).ToUniversalTime(),
-                Location = new Graph.Location
+                showAs = freeBusyStatus.busy,
+                start = new dateTimeTimeZone
                 {
-                    DisplayName = incident.sl_roomID.Title
+                    dateTime = model.TimeSlotsSelectedValue.ToUniversalTime().ToString(),
+                    timeZone = "UTC"
                 },
-                Reminder = 60 * 24
+                end = new dateTimeTimeZone
+                {
+                    dateTime = (model.TimeSlotsSelectedValue.AddHours(1)).ToUniversalTime().ToString(),
+                    timeZone = "UTC"
+                },
+                location = new location
+                {
+                    displayName = incident.sl_roomID.Title,
+                    address = new physicalAddress(),
+                    coordinates = new outlookGeoCoordinates()
+                },
+                reminderMinutesBeforeStart = 60 * 24
             };
-            await unifiedGroupFetcher.Events.AddEventAsync(newEvent);
 
-            return newEvent;
+            try
+            {
+                await unifiedGroupFetcher.events.AddeventAsync(newEvent);
+            }
+            catch
+            { }
         }
 
         public async Task ApproveRepairAsync(int incidentId)
@@ -256,26 +338,7 @@ namespace SuiteLevelWebApp.Models
             await SuiteLevelWebApp.Utils.RestHelper.PostRestDataToDemoSiteAsync("/_api/lists/GetByTitle('Incidents')/Items(" + incidentId + ")", JsonConvert.SerializeObject(updateJson), _token);
         }
 
-        //public async Task CreateTaskAsync(Graph.GraphService graphService, CreateTaskViewModel model)
-        //{
-        //    var inspection = await GetInspectionById(model.InspectionId);
-        //    var property = inspection.sl_propertyID;
-
-        //    var unifiedGroupFetcher = graphService.groups.GetById(property.sl_group);
-        //    var unifiedGroup = await unifiedGroupFetcher.ExecuteAsync();
-
-        //    var task = new Graph.Task
-        //    {
-        //        title = model.Title,
-        //        percentComplete = 0,
-        //        startDate = inspection.sl_datetime,
-        //        dueDate = inspection.sl_datetime,
-        //        // TODO: description = model.Description,
-        //    };
-        //    await unifiedGroupFetcher.tasks.AddTaskAsync(task);
-        //}
-
-        public async Task<string> AnnotateImagesAsync(Graph.GraphService graphService, OneNoteServiceFactory oneNoteServiceFactory, string siteRootDirectory, int incidentId)
+        public async Task<string> AnnotateImagesAsync(GraphService graphService, string siteRootDirectory, int incidentId)
         {
             var getIncident = GetIncidentByIdAsync(incidentId);
             var incidentVideos = GetVideosAsync(AppSettings.VideoPortalIncidentsChannelName, incidentId);
@@ -286,44 +349,40 @@ namespace SuiteLevelWebApp.Models
             var unifiedGroupFetcher = graphService.groups.GetById(property.sl_group);
             var unifiedGroup = unifiedGroupFetcher.ExecuteAsync();
 
-            var oneNoteService = await oneNoteServiceFactory.CreateOneNoteServiceForUnifiedGroup(await unifiedGroup);
-
             var notebookName = (await unifiedGroup).displayName + " Notebook";
-            var sectionId = await GetOrCreateNoteBook(oneNoteService, notebookName)
+            var section = await OneNoteService.GetNoteBookAsync(unifiedGroupFetcher, notebookName)
                 .ContinueWith(async task =>
                 {
-                    var _notebookId = task.Result.Id;
-                    var _sectionId = await oneNoteService.GetSectionIdAsync(_notebookId, property.Title);
-                    if (_sectionId == null)
-                        _sectionId = await oneNoteService.CreateSectionAsync(_notebookId, property.Title);
-                    return _sectionId;
+                    var notebookFetcher = unifiedGroupFetcher.notes.notebooks.GetById(task.Result.id);
+
+                    return await OneNoteService.GetOrCreateSectionIdAsync(notebookFetcher, property.Title);
                 });
 
             var inspectionPhotos = GetInspectionOrRepairPhotosAsync("Room Inspection Photos", incident.sl_inspectionIDId.Value, incident.sl_roomID.Id);
 
-            var pageUrl = await oneNoteService.CreatePageForIncidentAsync(siteRootDirectory, await sectionId, incident, await inspectionPhotos, await incidentVideos);
+            var pageUrl = await OneNoteService.CreatePageForIncidentAsync(graphService, siteRootDirectory, await unifiedGroup, await section, incident, await inspectionPhotos, await incidentVideos);
 
             return pageUrl;
         }
 
-        public async Task<bool> UploadFileAsync(Graph.GraphService graphService, UploadFileModel model)
+        public async Task<bool> UploadFileAsync(GraphService graphService, UploadFileModel model)
         {
             var graphToken = AuthenticationHelper.GetGraphAccessTokenAsync();
             var propertyGroup = await graphService.GetGroupByDisplayNameAsync(model.PropertyTitle);
 
             if (propertyGroup == null) return false;
 
-            string id = string.Empty;
-            string requestUri = string.Format("{0}{1}/groups/{2}/files",
+            string fileName = string.Empty;
+            string requestUri = string.Format("{0}/groups('{1}')/drive/root/children",
                 AADAppSettings.GraphResourceUrl,
-                AppSettings.DemoSiteCollectionOwner.Split('@')[1], propertyGroup.objectId);
+                propertyGroup.id);
 
             //create placeholder
             HttpWebRequest reqCreatePlaceholder = (HttpWebRequest)HttpWebRequest.Create(requestUri);
             reqCreatePlaceholder.Method = "POST";
             reqCreatePlaceholder.Headers.Add("Authorization", await graphToken);
             reqCreatePlaceholder.ContentType = "application/json";
-            string content = string.Format("{{type:'File',name:'{0}'}}", model.File.FileName);
+            string content = string.Format("{{'file': {{}},'name': '{0}'}}", model.File.FileName);
             byte[] contentBody = System.Text.ASCIIEncoding.UTF8.GetBytes(content);
 
             using (Stream dataStream = reqCreatePlaceholder.GetRequestStream())
@@ -338,7 +397,7 @@ namespace SuiteLevelWebApp.Models
                     if (response.StatusCode == HttpStatusCode.Created)
                     {
                         string responseString = (new StreamReader(response.GetResponseStream())).ReadToEnd();
-                        id = Newtonsoft.Json.Linq.JObject.Parse(responseString)["id"].ToString();
+                        fileName = Newtonsoft.Json.Linq.JObject.Parse(responseString)["name"].ToString();
                     }
                 }
             }
@@ -347,12 +406,16 @@ namespace SuiteLevelWebApp.Models
                 throw;
             }
 
-            if (string.IsNullOrEmpty(id)) return false;
-
             //upload file
-            HttpWebRequest req_uploadFile = (HttpWebRequest)HttpWebRequest.Create(string.Format("{0}/{1}/uploadContent", requestUri, id));
-            req_uploadFile.Method = "POST";
+
+            requestUri = string.Format("{0}/groups('{1}')/drive/root/children/{2}/content",
+                AADAppSettings.GraphResourceUrl,
+                propertyGroup.id,
+                fileName);
+            HttpWebRequest req_uploadFile = (HttpWebRequest)HttpWebRequest.Create(requestUri);
+            req_uploadFile.Method = "PUT";
             req_uploadFile.Headers.Add("Authorization", await graphToken);
+            req_uploadFile.ContentType = "application/octet-stream";
 
             using (var dataStream = req_uploadFile.GetRequestStream())
                 await model.File.InputStream.CopyToAsync(dataStream);
@@ -497,18 +560,18 @@ namespace SuiteLevelWebApp.Models
         {
             List<HyperLink> result = new List<HyperLink>();
 
-            var messages = await (await graphService.users.GetById(CurrentUser).Messages.ExecuteAsync()).GetAllAsnyc();
+            var messages = await (await graphService.users.GetById(CurrentUser).messages.ExecuteAsync()).GetAllAsnyc();
 
             var propertyOwners = await GetPropertyOwnersAsync(graphService);
 
-            foreach (Graph.IMessage message in messages)
+            foreach (Graph.Imessage message in messages)
             {
-                if (message.ToRecipients.Any(i => propertyOwners.Contains(i.EmailAddress.Address)))
+                if (message.toRecipients.Any(i => propertyOwners.Contains(i.emailAddress.address)))
                 {
                     result.Add(new HyperLink
                     {
-                        Title = message.Subject,
-                        WebUrl = message.WebLink
+                        Title = message.subject,
+                        WebUrl = message.webLink
                     });
                     break;
                 }
@@ -520,7 +583,7 @@ namespace SuiteLevelWebApp.Models
         private async Task<RepairPeople> GetRepairPeopleByEmailAddressAsync(string userPrincipalName)
         {
             Graph.GraphService graphService = await AuthenticationHelper.GetGraphServiceAsync();
-            Microsoft.Graph.IUser repairPeople = await GraphServiceExtension.GetFirstUserAsync(graphService, i => i.mail == userPrincipalName);
+            Microsoft.Graph.Iuser repairPeople = await GraphServiceExtension.GetFirstUserAsync(graphService, i => i.mail == userPrincipalName);
 
             if (repairPeople == null) return null;
 
@@ -555,24 +618,15 @@ namespace SuiteLevelWebApp.Models
             }).ToArray();
         }
 
-        private async Task<List<File>> GetGroupFilesAsync(Microsoft.Graph.IGroupFetcher groupFetcher, string groupMailNickname)
-        {
-            return await GetGroupFilesAsync(groupFetcher, groupMailNickname, null);
-        }
-
-        private async Task<List<File>> GetGroupFilesAsync(Microsoft.Graph.IGroupFetcher groupFetcher, string groupMailNickname, Expression<Func<Microsoft.Graph.IItem, bool>> predicate)
+        private async Task<List<File>> GetGroupFilesAsync(IgroupFetcher groupFetcher)
         {
             var list = new List<File>();
 
-            Graph.IItem[] files = null;
+            Graph.IdriveItem[] files = null;
 
             try
             {
-                var pagedCollection = predicate == null
-                    ? await groupFetcher.files.ExecuteAsync()
-                    : await groupFetcher.files.Where(predicate).ExecuteAsync();
-
-                files = await pagedCollection.GetAllAsnyc();
+                files = await (await groupFetcher.drive.root.children.ExecuteAsync()).GetAllAsnyc();
             }
             catch
             {
@@ -593,32 +647,39 @@ namespace SuiteLevelWebApp.Models
                     url = file.webUrl;
                 }
 
-                list.Add(new File
+                if (file.folder == null)
                 {
-                    name = file.name,
-                    webUrl = url,
-                    dateTimeLastModified = file.dateTimeLastModified
-                });
+                    list.Add(new File
+                    {
+                        id = file.id,
+                        name = file.name,
+                        webUrl = url,
+                        dateTimeLastModified = file.lastModifiedDateTime.HasValue ? file.lastModifiedDateTime.Value : new DateTimeOffset()
+                    });
+                }
             }
             return list;
         }
 
-        //private async Task<List<HyperLink>> GetTaskHyperLinksAsync(Microsoft.Graph.IGroup group)
-        //{
-        //    var tasks = await group.tasks.GetAll();
+        private async Task<List<O365Task>> GetO365TasksAsync(GraphService graphService, Iplan plan)
+        {
+            var tasks = await PlanService.GetTasksAsync(plan);
 
-        //    var result = new List<HyperLink>(tasks.Length);
-        //    foreach (var item in tasks)
-        //    {
-        //        var link = new HyperLink
-        //        {
-        //            Title = item.title,
-        //            WebUrl = "#" // TODO: Get the web url of a task
-        //        };
-        //        result.Add(link);
-        //    }
-        //    return result;
-        //}
+            var result = new List<O365Task>();
+
+            foreach (var item in tasks)
+            {
+                var task = new O365Task
+                {
+                    Title = item.title,
+                    AssignedTo = !string.IsNullOrEmpty(item.assignedTo) ? (await graphService.users.GetById(item.assignedTo).ExecuteAsync()).displayName : "",
+                    AssignedBy = !string.IsNullOrEmpty(item.assignedBy) ? (await graphService.users.GetById(item.assignedBy).ExecuteAsync()).displayName : "",
+                    AssignedDate = item.assignedDateTime.HasValue ? item.assignedDateTime.Value.DateTime.ToLocalTime().ToString() : ""
+                };
+                result.Add(task);
+            }
+            return result;
+        }
 
         private async Task<FileContent[]> GetInspectionOrRepairPhotosAsync(string listName, int inspectionId, int roomId)
         {
@@ -649,38 +710,34 @@ namespace SuiteLevelWebApp.Models
             return attachments;
         }
 
-        private async Task<OneNoteService.NoteBook> GetOrCreateNoteBook(OneNoteService service, string name)
+        private async Task<HyperLink[]> GetConversationsAsync(IgroupFetcher groupFethcer, string groupMail)
         {
-            var notebook = await service.GetNoteBookAsync(name);
-            if (notebook == null)
-            {
-                try
-                {
-                    notebook = await service.CreateNoteBookAsync(name);
-                }
-                catch { }
-            }
-            return notebook;
-        }
-
-        private async Task<HyperLink[]> GetOneNotePagesAsync(OneNoteService service, string notebookId, string propertyName, int incidentId)
-        {
-            var sectionId = await service.GetSectionIdAsync(notebookId, propertyName);
-            if (string.IsNullOrEmpty(sectionId)) return new HyperLink[0];
-            return await service.GetPagesAsync(sectionId, incidentId);
-        }
-
-        private async Task<HyperLink[]> GetConversationsAsync(Graph.IGroupFetcher groupFethcer, string groupMail)
-        {
-            var conversations = await groupFethcer.Conversations.ExecuteAsync();
-            var webUrl = string.Format("{0}owa/#path=/group/{1}/mail", AADAppSettings.OutlookResourceId, groupMail);
+            var conversations = await groupFethcer.conversations.ExecuteAsync();
+            var webUrl = string.Format("{0}owa/#path=/group/{1}/mail", AADAppSettings.OutlookUrl, groupMail);
 
             return (await conversations.GetAllAsnyc())
                 .Select(i => new HyperLink
                 {
-                    Title = i.Topic,
+                    Title = i.topic,
                     WebUrl = webUrl
                 }).ToArray();
+        }
+
+        private async Task<HyperLink[]> GetOneNotePagesAsync(Graph.GraphService graphService, Igroup group)
+        {
+            var links = new List<HyperLink>();
+            var pages = await Services.OneNoteService.GetOneNotePagesAsync(graphService, group);
+
+            foreach (var page in pages)
+            {
+                links.Add(new HyperLink
+                {
+                    Title = page.title,
+                    WebUrl = page.links.oneNoteWebUrl.href
+                });
+            }
+
+            return links.ToArray();
         }
 
         #endregion
@@ -700,7 +757,7 @@ namespace SuiteLevelWebApp.Models
         public int incidentId { get; set; }
         public Inspection inspection { get; set; }
         public Incident incident { get; set; }
-        public Graph.IUser[] repairPeople { get; set; }
+        public Iuser[] repairPeople { get; set; }
         public string viewName { get; set; }
         public RoomInspectionPhoto[] roomInspectionPhotos { get; set; }
         public InspectionComment inspectionComment { get; set; }
@@ -708,7 +765,8 @@ namespace SuiteLevelWebApp.Models
         public TimeSlot[] timeSlots { get; set; }
         public Video[] videos { get; set; }
         public HyperLink[] files { get; set; }
-        public Graph.IUser[] members { get; set; }
+        public Iuser[] members { get; set; }
+        public O365Task[] tasks { get; set; }
         public HyperLink[] recentDocuments { get; set; }
         public HyperLink[] conversations { get; set; }
         public HyperLink[] oneNotePages { get; set; }
@@ -717,12 +775,14 @@ namespace SuiteLevelWebApp.Models
         public string UnifiedGroupId { get; set; }
         public string UnifiedGroupEmail { get; set; }
         public string oneNoteUrl { get; set; }
+        public string PlanId { get; set; }
     }
     #endregion
 
     #region models
     public class File
     {
+        public string id { get; set; }
         public string name { get; set; }
         public string webUrl { get; set; }
         public DateTimeOffset dateTimeLastModified { get; set; }
@@ -848,13 +908,20 @@ namespace SuiteLevelWebApp.Models
 
     public class HyperLink
     {
+        public string Id { get; set; }
         public string Title { get; set; }
         public string WebUrl { get; set; }
 
         public static HyperLink Create(string title, string webUrl)
         {
+            return Create(title, webUrl, "");
+        }
+
+        public static HyperLink Create(string title, string webUrl, string Id)
+        {
             return new HyperLink
             {
+                Id = Id,
                 Title = title,
                 WebUrl = webUrl
             };
@@ -866,6 +933,14 @@ namespace SuiteLevelWebApp.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public byte[] Bytes { get; set; }
+    }
+
+    public class O365Task
+    {
+        public string Title { get; set; }
+        public string AssignedTo { get; set; }
+        public string AssignedBy { get; set; }
+        public string AssignedDate { get; set; }
     }
 
     #endregion

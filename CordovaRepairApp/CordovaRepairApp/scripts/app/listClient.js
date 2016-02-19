@@ -1,6 +1,6 @@
 ﻿var listClient = {
     accessToken: '',
-    emailaccessToken: '',
+    graphaccessToken: '',
     authContext: null,
     setToken: function (tk) {
         this.accessToken = tk;
@@ -8,11 +8,11 @@
     getToken: function () {
         return this.accessToken;
     },
-    setEmailToken: function (tk) {
-        this.emailaccessToken = tk;
+    setGraphToken: function (tk) {
+        this.graphaccessToken = tk;
     },
-    getEmailToken: function () {
-        return this.emailaccessToken;
+    getGraphToken: function () {
+        return this.graphaccessToken;
     },
     getAccessToken: function (successCallBack, rejectCallBack) {
         //authenticate to Office 365
@@ -38,14 +38,14 @@
             rejectCallBack(reason)
         });
     },
-    getEmailAccessToken: function (successCallBack, rejectCallBack) {
+    getGraphAccessToken: function (successCallBack, rejectCallBack) {
         //authenticate to Office 365
         if (this.authContext == null) {
             this.authContext = new O365Auth.Context();
         }
-        this.authContext.getAccessToken("https://graph.microsoft.com/").then(
+        this.authContext.getAccessToken(O365Auth.Settings.graphResourceId).then(
             (function (token) {
-                this.setEmailToken(token);
+                this.setGraphToken(token);
                 successCallBack();
             }).bind(this),
             function (reason) {

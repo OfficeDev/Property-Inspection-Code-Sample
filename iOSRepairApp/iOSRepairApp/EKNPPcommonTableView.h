@@ -24,7 +24,7 @@
 @property (nonatomic) BOOL bRecentDocument;
 - (void)initPPcommonTableView:(NSString *)groupId brecent:(BOOL)bRecent;
 -(void)loadPPcommonTableView:(NSMutableDictionary *)listDict;
--(void)getPPcommonTableService;
+-(void)getPPcommonTableService:(NSString *)incidentId;
 @end
 
 

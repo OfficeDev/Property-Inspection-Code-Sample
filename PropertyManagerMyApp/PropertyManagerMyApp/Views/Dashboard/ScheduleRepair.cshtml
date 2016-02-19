@@ -42,27 +42,6 @@
                 <button class="pull-right button-large" id="btn_scheduleRepair">Schedule Repair</button>
             </div>
         </div>
-
-        <!--TODO - Make tasks work-->
-        @*<div class="create-task">
-            <h1>Create task</h1>
-            <div class="content-row">
-                <label>
-                    Title
-                </label>
-                <textarea></textarea>
-                </div>
-            <div class="content-row">
-                <label>
-                    Description
-                </label>
-                <textarea></textarea>
-            </div>
-            <div class="content-row with-button">
-                <button class="pull-right button-large" id="btn_scheduleRepair">Create task</button>
-            </div>
-        </div>*@
-
     </form>
     <script>
         $(function () {
@@ -110,13 +89,13 @@
             $("#repairPeopleList").TFOiconSelectImg({
                 create: function (event, ui) {
                     var widget = $(this).TFOiconSelectImg("widget"); var $SpanTxt = widget.children(":last");
-                    $span = $('<img class="TFOSizeImgSelected TFOOptlstFiltreImg"> ').prependTo($SpanTxt);
+                    $span = $('<span></span>').prependTo($SpanTxt);
                     $span.attr("style", $(this).children(":first").data("style"));
                     $('#repairPeopleSelectedValue').val($('#repairPeopleList').val());
                 },
                 change: function (event, ui) {
                     var widget = $(this).TFOiconSelectImg("widget"); var $SpanTxt = widget.children(":last");
-                    $span = $('<img class="TFOSizeImgSelected TFOOptlstFiltreImg"> ').prependTo($SpanTxt);
+                    $span = $('<span></span>').prependTo($SpanTxt);
                     $span.attr("style", ui.item.element.data("style"));
                     $('#repairPeopleSelectedValue').val($('#repairPeopleList').val());
                 }

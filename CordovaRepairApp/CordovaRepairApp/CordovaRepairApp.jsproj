@@ -135,7 +135,6 @@
     <Content Include="merges\android\images\cpm_logo.png" />
     <Content Include="merges\android\images\incident_detailtab.png" />
     <Content Include="merges\android\incidents.html" />
-    <Content Include="merges\android\services\office365\settings\settings.js" />
     <Content Include="merges\windows\css\incidents.css" />
     <Content Include="merges\windows\images\before.png" />
     <Content Include="merges\windows\images\calendar.png" />
@@ -146,7 +145,6 @@
     <Content Include="merges\windows\incidents.html" />
     <Content Include="merges\windows\scripts\app\rpDevice.js" />
     <Content Include="merges\windows\services\office365\scripts\InAppBrowserOverride.js" />
-    <Content Include="merges\windows\services\office365\settings\settings.js" />
     <Content Include="plugins\de.appplant.cordova.plugin.email-composer\plugin.xml" />
     <Content Include="plugins\de.appplant.cordova.plugin.email-composer\src\android\EmailComposer.java" />
     <Content Include="plugins\de.appplant.cordova.plugin.email-composer\src\ios\APPEmailComposer.h" />

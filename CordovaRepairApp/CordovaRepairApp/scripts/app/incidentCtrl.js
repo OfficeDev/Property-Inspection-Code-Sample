@@ -34,7 +34,7 @@
     loadPropertySuccess: function (listitems) {
         if (listitems.length > 0) {
             this.selectPropertyId = (listitems[0])["sl_propertyIDId"];
-            var url = O365Auth.Settings.sitecollectionUrl + "/_api/lists/GetByTitle('Incidents')/Items?$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_repairApproved,sl_date,sl_repairCompleted,sl_inspectionIDId,sl_roomIDId,sl_taskId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_inspectionID/sl_inspector,sl_inspectionID/sl_emailaddress,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$filter=sl_propertyIDId eq " + this.selectPropertyId + " and sl_inspectionIDId gt 0 and sl_roomIDId gt 0&$orderby=sl_date desc";
+            var url = O365Auth.Settings.sitecollectionUrl + "/_api/lists/GetByTitle('Incidents')/Items?$select=ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_repairApproved,sl_date,sl_repairCompleted,sl_inspectionIDId,sl_roomIDId,sl_taskId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_inspectionID/sl_inspector,sl_inspectionID/sl_emailaddress,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_propertyID/sl_group,sl_roomID/ID,sl_roomID/Title&$expand=sl_inspectionID,sl_propertyID,sl_roomID&$filter=sl_propertyIDId eq " + this.selectPropertyId + " and sl_inspectionIDId gt 0 and sl_roomIDId gt 0&$orderby=sl_date desc";
             listClient.getListItems(url, (this.loadIncidentsDataSuccess).bind(this), (this.loadListFail).bind(this));
         } else {
             this.displayMessageAlert("Incident not found");
@@ -192,8 +192,7 @@
                 //complete
                 this.unBlockLoadingUI("#detailloadingui");
                 this.displayMessageAlert("Finalized repair successfully.");
-                //send email by REST
-                this.sendEmailUsingREST(incidentItem);
+                this.acquireTokenAsync(incidentItem);
             } else {
                 this.updateIncidentWorkflowTask(taskId, incidentItem);
             }
@@ -210,8 +209,7 @@
             //complete
             this.unBlockLoadingUI("#detailloadingui");
             this.displayMessageAlert("Finalized repair successfully.");
-            //send email by REST
-            this.sendEmailUsingREST(incidentItem);
+            this.acquireTokenAsync(incidentItem);
         }).bind(this), (function () {
             this.unBlockLoadingUI("#detailloadingui");
             this.displayMessageAlert("Update Incident Workflow task failed.")
@@ -243,12 +241,13 @@
         }
         return found;
     },
-    sendEmailUsingREST: function (incidentItem) {
-        if (listClient.getEmailToken().length > 0) {
+    acquireTokenAsync: function (incidentItem) {
+        if (listClient.getGraphToken().length > 0) {
             this.sendEmailNow(incidentItem);
         } else {
-            listClient.getEmailAccessToken((function () {
+            listClient.getGraphAccessToken((function () {
                 this.sendEmailNow(incidentItem);
+                this.updateTask(incidentItem);
             }).bind(this), (function () {
                 this.displayMessageAlert("Acquiring outlook token failed.");
             }).bind(this));
@@ -299,7 +298,7 @@
             },
             "SaveToSentItems": "true"
         }
-        var url = "https://graph.microsoft.com/beta/me/sendmail";
+        var url = O365Auth.Settings.graphResourceUrl + "me/Microsoft.Graph.sendMail";
         $.ajax({
             type: "POST",
             async: true,
@@ -307,7 +306,7 @@
             contentType: "application/json",
             data: JSON.stringify(postdata),
             headers: {
-                "Authorization": "Bearer " + listClient.getEmailToken(),
+                "Authorization": "Bearer " + listClient.getGraphToken(),
                 "accept": "application/json"
             },
         }).done(
@@ -316,6 +315,77 @@
             }).bind(this)).fail((function () {
                 this.displayMessageAlert("Sending email failed.");
             }).bind(this));
+    },
+    updateTask: function (incidentItem) {
+        var groupId = incidentItem.sl_propertyID.sl_group;
+        var incidentId = incidentItem.Id;
+        var authorizationHeaderValue = "Bearer " + listClient.getGraphToken();
+
+        var getPlanIdAsync = function(){
+            return $.ajax({
+                type: "GET",
+                url: O365Auth.Settings.graphResourceUrl + "groups/" + groupId + "/plans",
+                headers: {
+                    "Authorization": authorizationHeaderValue,
+                    "accept": "application/json"
+                }
+            });
+        };
+
+        var getBucketAsync = function(data){
+            var planId = data.value[0].id;
+            return $.ajax({
+                type: "GET",
+                url: O365Auth.Settings.graphResourceUrl + "plans/" + planId + "/buckets",
+                headers: {
+                    "Authorization": authorizationHeaderValue,
+                    "accept": "application/json"
+                }
+            }); 
+        };
+
+        var getTasksAsync = function (data) {
+            var buckets = data.value;
+            var targetBucketId;
+
+            for (var i = 0; i < buckets.length; i++) {
+                if (buckets[i].name == "Incident [" + incidentId + "]")
+                {
+                    targetBucketId = buckets[i].id;
+                    break;
+                }
+            }
+
+            return $.ajax({
+                type: "GET",
+                url: O365Auth.Settings.graphResourceUrl + "buckets/" + targetBucketId + "/tasks",
+                headers: {
+                    "Authorization": authorizationHeaderValue,
+                    "accept": "application/json"
+                }
+            });
+        };
+
+        getPlanIdAsync().then(getBucketAsync).then(getTasksAsync).done(function (data) {
+            var tasks = data.value;
+            for (var i = 0; i < tasks.length; i++) {
+                var task = tasks[i];
+                var postdata = {
+                    percentComplete : 100
+                };
+                $.ajax({
+                    type: "PATCH",
+                    contentType: "application/json",
+                    url: O365Auth.Settings.graphResourceUrl + "tasks/" + task.id,
+                    headers: {
+                        "Authorization": authorizationHeaderValue,
+                        "accept": "application/json",
+                        "If-Match": task["@odata.etag"]
+                    },
+                    data: JSON.stringify(postdata),
+                }).done();
+            }
+        });
     },
     //image is base64 string data:image/jpeg;base64,
     uploadImage: function (incidentId, image) {

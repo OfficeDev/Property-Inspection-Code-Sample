@@ -28,5 +28,11 @@ namespace XamarinRepairApp
 				new PlatformParameters(activity));
 			return (await aresult).AccessToken;
 		}
+
+		public static async Task<string> GetGraphAccessTokenAsync(Activity activity)
+		{
+			var accessToken = GetAccessTokenAsync (activity, Constants.GraphResourceId);
+			return await accessToken;
+		}
 	}
 }

@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Xml;
 
 namespace SuiteLevelWebApp.Utils
@@ -305,7 +304,7 @@ namespace SuiteLevelWebApp.Utils
             }
         }
 
-        public static void AddDocumentLibItems(ClientContext clientContext, string listTitle, XmlDocument sampleData)
+        public static void AddDocumentLibItems(ClientContext clientContext, string listTitle, XmlDocument sampleData, string BaseFolderPath)
         {
             XmlNode items = sampleData.SelectSingleNode("//List[@name='" + listTitle + "']");
             List list = clientContext.Web.Lists.GetByTitle(listTitle);
@@ -327,7 +326,7 @@ namespace SuiteLevelWebApp.Utils
 
             foreach (XmlNode item in items)
             {
-                var filePath = HttpContext.Current.Server.MapPath("../") + item.Attributes["path"].Value;
+                var filePath = BaseFolderPath + item.Attributes["path"].Value;
 
                 using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {

@@ -15,14 +15,8 @@ namespace SuiteLevelWebApp.Controllers
         [OutputCache(Duration = 600, VaryByParam = "*")]
         public async Task<ActionResult> UserPhoto(string userId)
         {
-            //Graph rest API
-            //this is a known bug, once the bug gets fixed we will replace the Outlook API code with the Graph API code 
-            //var token = AuthenticationHelper.GetGraphAccessTokenAsync();
-            //var uri = string.Format("{0}{1}/users/{2}/UserPhotos/48X48/$Value", AADAppSettings.GraphResourceUrl, AppSettings.DemoSiteCollectionOwner.Split('@')[1], userId);
-
-            //Outlook rest API
-            var token = AuthenticationHelper.GetAccessTokenAsync(AADAppSettings.OutlookResourceId);
-            var uri = string.Format("{0}api/beta/Users('{1}')/UserPhotos('48X48')/$Value", AADAppSettings.OutlookResourceId, userId);
+            var token = AuthenticationHelper.GetGraphAccessTokenAsync();
+            var uri = string.Format("{0}Users/{1}/photos/48X48/$value", AADAppSettings.GraphResourceUrl, userId);
 
             var request = (HttpWebRequest)HttpWebRequest.Create(uri);
 
@@ -38,6 +32,30 @@ namespace SuiteLevelWebApp.Controllers
             catch { }
 
             return File(Server.MapPath("/Content/images/DefaultUserPhoto.jpg"), "image/jpeg");
+        }
+
+        [OutputCache(Duration = 600, VaryByParam = "*")]
+        public async Task<ActionResult> DriveItemThumbnail(string groupId, string fileId)
+        {
+            try
+            {
+                var graphService = await AuthenticationHelper.GetGraphServiceAsync();
+                var thumbnails = await graphService.groups.GetById(groupId).drive.items.GetById(fileId).thumbnails.GetById("0").ExecuteAsync();
+                var uri = thumbnails.medium.url;
+                var token = AuthenticationHelper.GetAccessTokenAsync(AppSettings.DemoSiteServiceResourceId);
+                var request = (HttpWebRequest)HttpWebRequest.Create(uri);
+
+                request.Method = "GET";
+                request.Headers.Add("Authorization", "Bearer " + await token);
+
+
+                var response = (HttpWebResponse)(await request.GetResponseAsync());
+                if (response.StatusCode == HttpStatusCode.OK)
+                    return File(response.GetResponseStream(), response.ContentType);
+            }
+            catch { }
+
+            throw new HttpException(404, "File not found");
         }
 
         [OutputCache(Duration = 600, VaryByParam = "*")]
@@ -69,7 +87,6 @@ namespace SuiteLevelWebApp.Controllers
             { }
 
             throw new HttpException(404, "File not found");
-
         }
     }
 }

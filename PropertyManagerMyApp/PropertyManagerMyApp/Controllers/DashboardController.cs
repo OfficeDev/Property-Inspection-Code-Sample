@@ -1,5 +1,4 @@
 ﻿using SuiteLevelWebApp.Models;
-using SuiteLevelWebApp.Service;
 using SuiteLevelWebApp.Services;
 using SuiteLevelWebApp.Utils;
 using System.Threading.Tasks;
@@ -30,15 +29,10 @@ namespace SuiteLevelWebApp.Controllers
 
         public async Task<ActionResult> InspectionDetails(int id)
         {
-            var outlookToken = await AuthenticationHelper.GetAccessTokenAsync(AADAppSettings.OutlookResourceId);
-            var sharePointToken = AuthenticationHelper.GetAccessTokenAsync(AppSettings.DemoSiteServiceResourceId);
+            var sharePointToken = await AuthenticationHelper.GetAccessTokenAsync(AppSettings.DemoSiteServiceResourceId);
             var graphService = AuthenticationHelper.GetGraphServiceAsync();
-
-            var oneNoteToken = AuthenticationHelper.GetOneNoteAccessTokenAsync();
-            var oneNoteServiceFactory = new OneNoteServiceFactory(AADAppSettings.OneNoteResourceUrl, await oneNoteToken);
-
-            Dashboard dashboardModel = new Dashboard(await sharePointToken);
-            var model = await dashboardModel.GetDashboardInspectionDetailsViewModelAsync(await graphService, oneNoteServiceFactory, id, User.Identity.Name);
+            Dashboard dashboardModel = new Dashboard(sharePointToken);
+            var model = await dashboardModel.GetDashboardInspectionDetailsViewModelAsync(await graphService, id, User.Identity.Name);
             if (model == null) return HttpNotFound();
 
             return View(model);
@@ -58,6 +52,7 @@ namespace SuiteLevelWebApp.Controllers
 
             await dashboardModel.ScheduleRepairAsync(await graphService, model);
             await dashboardModel.CreateGroupRepairEventAsync(await graphService, model);
+            await dashboardModel.CreateO365TaskAsync(await graphService, model);
 
             return RedirectToAction("Index");
         }
@@ -77,34 +72,14 @@ namespace SuiteLevelWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> CreateTask(CreateTaskViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        ViewBag.CreateTaskViewModel = model;
-        //        return await InspectionDetails(model.InspectionId);
-        //    }
-
-        //    var sharePointToken = await AuthenticationHelper.GetAccessToken(ServiceResources.DemoSite);
-        //    var dashboardService = new Dashboard(sharePointToken);
-        //    var graphService = AuthenticationHelper.GetGraphService();
-
-        //    await dashboardService.CreateTaskAsync(graphService, model);
-        //    return RedirectToAction("InspectionDetails", new { id = model.InspectionId });
-        //}
-
         [HttpPost]
         public async Task<ActionResult> AnnotateImages(int incidentId)
         {
             var sharePointToken = AuthenticationHelper.GetAccessTokenAsync(AppSettings.DemoSiteServiceResourceId);
-            var oneNoteToken = AuthenticationHelper.GetOneNoteAccessTokenAsync();
-
             var graphService = AuthenticationHelper.GetGraphServiceAsync();
             var dashboardService = new Dashboard(await sharePointToken);
 
-            var oneNoteServiceFactory = new OneNoteServiceFactory(AADAppSettings.OneNoteResourceUrl, await oneNoteToken);
-            var pageUrl = await dashboardService.AnnotateImagesAsync(await graphService, oneNoteServiceFactory, Server.MapPath("/"), incidentId);
+            var pageUrl = await dashboardService.AnnotateImagesAsync(await graphService, Server.MapPath("/"), incidentId);
             return Redirect(pageUrl);
         }
 
@@ -119,6 +94,7 @@ namespace SuiteLevelWebApp.Controllers
                 var dashboardService = new Dashboard(await token);
                 await dashboardService.UploadFileAsync(await graphService, model);
             }
+
             return RedirectToAction("InspectionDetails", new { id = model.IncidentId });
         }
     }

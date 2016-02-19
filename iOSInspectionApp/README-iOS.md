@@ -29,15 +29,18 @@ Create Azure Active Directory App for the iPad Apps
 12. Expand the update your code section and **copy** the Redirect URI and Client ID values and **paste** them into a text file.  You will use these values when you configure the iPad app on your iPad.
 13. Click **CONFIGURE**
 14.	In the permissions to other applications section, click the **Add application** button.
-15.	Click the + button next to **Office 365 SharePoint Online**, **Office 365 unified API (preview)**, and **OneNote**.
+15.	Click the + button next to **Microsoft Office 365 SharePoint** and **Microsoft Graph API**.
 16.	Click the **Checkmark button**
-17.	Configure the permission to Office 365 unified API (preview), use the screenshot below for reference.
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 Unified API AAD Permissions.jpg)
-18.	Configure the permission to Microsoft Office 365 SharePoint, use the screenshot below for reference.
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 SP AAD App Permissions 2.jpg)
-19.	Configure the permission to OneNote, use the screenshot below for reference.
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 OneNote AAD App Permissions 2.jpg)
-20. Click **Save**
+17.	Open the **Delegated Permissions dropdown list** for the Microsoft Graph API item you just added
+    Select the following permissions:
+	- Read and write all groups
+	- Read and write all users' full profiles
+	- Send mail as a user
+	- Read and write user notebooks (preview)
+18.	Open the **Delegated Permissions dropdown list** for the Microsoft Office 365 SharePoint item you just added
+    Select the following permissions:
+    - Have full control of all site collections
+19. Click **Save**
 
 iOS Apps Installation
 ---------------------
@@ -57,7 +60,7 @@ The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.  To
 
 See the screenshot of these commands being run in the terminal below for reference.
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/pod install.png)
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/pod%20install.png)
 
 > For more info on Cocoapods setup see the Office 365 SDK for iOS [wiki](https://github.com/OfficeDev/Office-365-SDK-for-iOS/wiki/Cocoapods-Setup) and [their site](http://cocoapods.org).
 
@@ -101,7 +104,6 @@ These are the values that must be configured.
 - **demoSiteServiceResourceId** Url for the root Site Collection in the Office 365 Tenancy. Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteServiceResourceId app setting.
 - **demoSiteCollectionUrl** Url for the Site Collection created by the Property Manager web app.  Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteCollectionUrl app setting.
 - **dispatcherEmail** Email address for the dispatcher account you created.
-- **VideoPortalEndpointUri** Api Endpoint for the Video Portal which comes with your Office 365 tenancy.
 
 Enable Keychain Sharing
 -----------------------
@@ -122,11 +124,8 @@ To enable Keychain Sharing, follow the steps in the Configuring Keychain Sharing
 
 https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AddingCapabilities/AddingCapabilities.html
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Enable Keychain Sharing.png)
-
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Enable%20Keychain%20Sharing.png)
 **iOS Apps Installation Complete!**
 
 ## License
 Copyright (c) Microsoft, Inc. All rights reserved. Licensed under the Apache License, Version 2.0.
-
-

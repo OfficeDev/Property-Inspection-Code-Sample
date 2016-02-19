@@ -176,24 +176,6 @@ public class FileHelper {
         return 0;
     }
 
-    public static Bitmap getUserPhoto(String token,String mail) throws Exception{
-        String url = String.format("api/beta/Users('%s')/UserPhotos('48X48')/$Value", mail);
-        String getFileUrl = Constants.OUTLOOK_RESOURCE_ID + url;
-
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(getFileUrl)
-                .addHeader("Authorization ", "Bearer " + token)
-                .get()
-                .build();
-        Response response = okHttpClient.newCall(request).execute();
-        if(response.code() == 200){
-            return BitmapFactory.decodeStream(response.body().byteStream());
-        }
-
-        return null;
-    }
-
     public static String getChannelUrl(String token) throws IOException, JSONException {
         String url = Constants.VIDEO_RESOURCE_URL + "/_api/VideoService/Channels?$filter=Title%20eq%20%27" + Constants.VIDEO_CHANNEL_NAME + "%27";
         String channelUrl = null;

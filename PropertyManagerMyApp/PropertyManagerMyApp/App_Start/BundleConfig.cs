@@ -28,7 +28,6 @@ namespace SuiteLevelWebApp
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/contoso").Include(
-                      "~/Content/bootstrap.css",
                       "~/Content/contoso.css"));
 
             bundles.Add(new StyleBundle("~/Content/Office365-Icons").Include(

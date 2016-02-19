@@ -1,4 +1,4 @@
-# Property Management Code Sample
+﻿# Property Management Code Sample
 
 > **IMPORTANT NOTE:** You must install the Web Application before the Android app will work.  During the Web application installation process all of the components and sample data which support the demo are provisioned.  See the [Install Web Application README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/PropertyManagerMyApp/README.md) for complete instructions.
 
@@ -36,7 +36,7 @@ To configure the Android Repair App follow these instructions.
 4. Click **OK**.
 5. Open the **\app\src\main\java\com.canviz.repairapp\Constants.java** file (See screenshot below for reference)
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/android constants file.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/android%20constants%20file.png)
 
 6. Edit the **SHAREPOINT_URL** variable to match your Office 365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
 
@@ -50,9 +50,9 @@ To configure the Android Repair App follow these instructions.
 
     Example: katiej@contoso.onmicrosoft.com
 
-8. Edit the **AAD_CLIENT_ID** variable.  This is the Client ID value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
+8. Edit the **AAD_CLIENT_ID** variable.  This is the Client ID value you copied at step 12 in "Mobile Repair App Azure Active Directory Application Installation README".  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
 
-9. Edit the **AAD_REDIRECT_URL** variable.  This is the Redirect URI value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
+9. Edit the **AAD_REDIRECT_URL** variable.  This is the Redirect URI value you copied at step 12 in "Mobile Repair App Azure Active Directory Application Installation README".  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
 
 Items that you need a real Android device to run
 ------------------------------------------------
@@ -70,29 +70,29 @@ The Android Repair App targets the Nexus 9 device.  These steps describe how to 
 1. In Android Studio, click the **Tools** menu, select **Android**, and click **AVD Manager** to open the Android Virtual Device Manager.
 2. Use the Android Virtual Device Manager to create the Nexus 9 device.  **Click Create Virtual Device.**  Refer to the image below.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Create AVD.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Create%20AVD.png)
 
 3. In the category list select **Tablet**, then select the **Nexus 9** device and click **Next**.  Refer to the image below.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/AVD Tablet Nexus 9.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/AVD%20Tablet%20Nexus%209.png)
 
 4. Select **Lollipop 22 x86**. (Select Lollipop 22 armeabi-v7a if you can’t install HAXM.  For example: If your Android Studio is installed on a virtual machine that does not support VT-x)  Click **Next**.  Refer to the image below.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/AVD System Image Lollipop.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/AVD%20System%20Image%20Lollipop.png)
 
 5. Ensure the Orientation is set to **Landscape** and click **Finish**.  Refer to the image below.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/AVD Nexus 9 Advanced Settings.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/AVD%20Nexus%209%20Advanced%20Settings.png)
 
-3. In the Android Virtual Device Manager, start the Nexus 9 Android Virtual Device.
+6. In the Android Virtual Device Manager, start the Nexus 9 Android Virtual Device.
 
 	> **Note:** When the device is starting you can see if HAXM is enabled on your system and if the emulator is taking advantage of it.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Select Nexus 9 AVD - 2.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Select%20Nexus%209%20AVD%20-%202.png)
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Starting Nexus 9 AVD.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Starting%20Nexus%209%20AVD.png)
 
-4. Wait for the device to boot, and unlock it.  
+7. Wait for the device to boot, and unlock it.  
 
 	> **Note:** This can take a long time, up to 20 minutes if you have a slow computer or if you are using the ARM version of the device.
 
@@ -114,7 +114,7 @@ The repair app uses deep links to automatically open the native Android OneNote 
 	`
 5. Wait for the installation to complete. The image below shows what a successful installation looks like in the command prompt.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Install OneNote In Android Emulator.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Install%20OneNote%20In%20Android%20Emulator.png)
 
 	> **Note:** You must access OneDrive or OneNote in the web browser to provision the OneDrive and Notebook first.  If you do not do this then the OneNote client app will fail to load even outside the context of launching it from the repair app.
  
@@ -131,5 +131,6 @@ The Sign in screen will appear and you can now use the Android Repair App during
 
 ## License
 Copyright (c) Microsoft, Inc. All rights reserved. Licensed under the Apache License, Version 2.0.
+
 
 

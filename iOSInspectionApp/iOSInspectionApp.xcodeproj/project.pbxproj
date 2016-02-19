@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0E32381C3FD3DF00A6F58A /* SPVideoChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0E32341C3FD3DF00A6F58A /* SPVideoChannel.m */; };
+		0E0E32391C3FD3DF00A6F58A /* SPVideoItemOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0E32371C3FD3DF00A6F58A /* SPVideoItemOperations.m */; };
+		0E0E323C1C3FD3F100A6F58A /* EKNVideoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0E323B1C3FD3F100A6F58A /* EKNVideoService.m */; };
+		0E0E323E1C3FD5B900A6F58A /* SPVideoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0E323D1C3FD5B900A6F58A /* SPVideoItem.m */; };
+		0E0E32401C3FDC3900A6F58A /* LeakyFaucet.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0E0E323F1C3FDC3900A6F58A /* LeakyFaucet.mp4 */; };
 		0E4EE25E19FA372400967D1B /* EKNGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4EE25D19FA372400967D1B /* EKNGraph.m */; };
 		0EA96D9319F8DC3B00822161 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0EA96D9219F8DC3B00822161 /* Settings.bundle */; };
 		0EA96D9519F8DC5000822161 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EA96D9419F8DC5000822161 /* Images.xcassets */; };
@@ -17,9 +22,9 @@
 		0EA96DA419F8DCC500822161 /* EKNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DA319F8DCC500822161 /* EKNAppDelegate.m */; };
 		0EA96DA919F8DCD400822161 /* EKNEKNGlobalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DA619F8DCD400822161 /* EKNEKNGlobalInfo.m */; };
 		0EA96DAA19F8DCD400822161 /* EKNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DA819F8DCD400822161 /* EKNLoginViewController.m */; };
-		0EA96DAF19F8DCEE00822161 /* ListClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DAC19F8DCEE00822161 /* ListClient.m */; };
-		0EA96DB019F8DCEE00822161 /* ListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DAE19F8DCEE00822161 /* ListItem.m */; };
-		0EA96DB319F8DD1100822161 /* Metadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DB219F8DD1100822161 /* Metadata.m */; };
+		0EA96DAF19F8DCEE00822161 /* EKNListClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DAC19F8DCEE00822161 /* EKNListClient.m */; };
+		0EA96DB019F8DCEE00822161 /* EKNListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DAE19F8DCEE00822161 /* EKNListItem.m */; };
+		0EA96DB319F8DD1100822161 /* EKNMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DB219F8DD1100822161 /* EKNMetadata.m */; };
 		0EA96DBB19F8DD5700822161 /* CommentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DB619F8DD5700822161 /* CommentCollectionViewCell.m */; };
 		0EA96DBC19F8DD5700822161 /* CommentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EA96DB719F8DD5700822161 /* CommentCollectionViewCell.xib */; };
 		0EA96DBD19F8DD5700822161 /* ContactOwnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96DB919F8DD5700822161 /* ContactOwnerCell.m */; };
@@ -77,18 +82,23 @@
 		0EA96E2A19F8DDA400822161 /* setting~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EA96E0319F8DDA400822161 /* setting~ipad.png */; };
 		0EA96E2F19F8DDED00822161 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA96E2E19F8DDED00822161 /* main.m */; };
 		0EA96E3219F8DE2500822161 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0EA96E3019F8DE2500822161 /* InfoPlist.strings */; };
-		0EA96E3719F8E37000822161 /* ADAL_iPad_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA96E3319F8E37000822161 /* ADAL_iPad_Storyboard.storyboard */; };
-		0EA96E3819F8E37000822161 /* ADAL_iPhone_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EA96E3419F8E37000822161 /* ADAL_iPhone_Storyboard.storyboard */; };
-		0EA96E3919F8E37000822161 /* ADALiOSBundle-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0EA96E3519F8E37000822161 /* ADALiOSBundle-Info.plist */; };
 		0EAA64EC19F7A5B9001936F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
 		0EAA64ED19F7A5C0001936F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
 		0EAA64EE19F7A5C8001936F9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
-		0EF6975F1A01C4C60058A223 /* libPods-ADALiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF6975E1A01C4C60058A223 /* libPods-ADALiOS.a */; };
-		0EF697611A01C4CA0058A223 /* libPods-Office365.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF697601A01C4CA0058A223 /* libPods-Office365.a */; };
-		223ADCA1E409AA849EC191B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C70BE78E30E07382CEB65C50 /* libPods.a */; };
+		0ED3D3A81C3E5DC000A5ACF3 /* NSString+NSStringExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED3D3A71C3E5DC000A5ACF3 /* NSString+NSStringExtensions.m */; };
+		7731A54C5FED9DA1092B3222 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C70BE78E30E07382CEB65C50 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E0E32331C3FD3DF00A6F58A /* SPVideoChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPVideoChannel.h; path = iOSInspectionApp/SPVideoChannel.h; sourceTree = SOURCE_ROOT; };
+		0E0E32341C3FD3DF00A6F58A /* SPVideoChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPVideoChannel.m; path = iOSInspectionApp/SPVideoChannel.m; sourceTree = SOURCE_ROOT; };
+		0E0E32351C3FD3DF00A6F58A /* SPVideoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPVideoItem.h; path = iOSInspectionApp/SPVideoItem.h; sourceTree = SOURCE_ROOT; };
+		0E0E32361C3FD3DF00A6F58A /* SPVideoItemOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPVideoItemOperations.h; path = iOSInspectionApp/SPVideoItemOperations.h; sourceTree = SOURCE_ROOT; };
+		0E0E32371C3FD3DF00A6F58A /* SPVideoItemOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPVideoItemOperations.m; path = iOSInspectionApp/SPVideoItemOperations.m; sourceTree = SOURCE_ROOT; };
+		0E0E323A1C3FD3F100A6F58A /* EKNVideoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNVideoService.h; path = iOSInspectionApp/EKNVideoService.h; sourceTree = SOURCE_ROOT; };
+		0E0E323B1C3FD3F100A6F58A /* EKNVideoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNVideoService.m; path = iOSInspectionApp/EKNVideoService.m; sourceTree = SOURCE_ROOT; };
+		0E0E323D1C3FD5B900A6F58A /* SPVideoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPVideoItem.m; path = iOSInspectionApp/SPVideoItem.m; sourceTree = SOURCE_ROOT; };
+		0E0E323F1C3FDC3900A6F58A /* LeakyFaucet.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = LeakyFaucet.mp4; path = iOSInspectionApp/Images/LeakyFaucet.mp4; sourceTree = SOURCE_ROOT; };
 		0E4EE25C19FA372400967D1B /* EKNGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNGraph.h; path = iOSInspectionApp/EKNGraph.h; sourceTree = SOURCE_ROOT; };
 		0E4EE25D19FA372400967D1B /* EKNGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNGraph.m; path = iOSInspectionApp/EKNGraph.m; sourceTree = SOURCE_ROOT; };
 		0EA96D9219F8DC3B00822161 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = iOSInspectionApp/Settings.bundle; sourceTree = "<group>"; };
@@ -107,12 +117,12 @@
 		0EA96DA619F8DCD400822161 /* EKNEKNGlobalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNEKNGlobalInfo.m; path = iOSInspectionApp/EKNEKNGlobalInfo.m; sourceTree = SOURCE_ROOT; };
 		0EA96DA719F8DCD400822161 /* EKNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNLoginViewController.h; path = iOSInspectionApp/EKNLoginViewController.h; sourceTree = SOURCE_ROOT; };
 		0EA96DA819F8DCD400822161 /* EKNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNLoginViewController.m; path = iOSInspectionApp/EKNLoginViewController.m; sourceTree = SOURCE_ROOT; };
-		0EA96DAB19F8DCEE00822161 /* ListClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListClient.h; path = iOSInspectionApp/ListClient.h; sourceTree = SOURCE_ROOT; };
-		0EA96DAC19F8DCEE00822161 /* ListClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListClient.m; path = iOSInspectionApp/ListClient.m; sourceTree = SOURCE_ROOT; };
-		0EA96DAD19F8DCEE00822161 /* ListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListItem.h; path = iOSInspectionApp/ListItem.h; sourceTree = SOURCE_ROOT; };
-		0EA96DAE19F8DCEE00822161 /* ListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListItem.m; path = iOSInspectionApp/ListItem.m; sourceTree = SOURCE_ROOT; };
-		0EA96DB119F8DD1100822161 /* Metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Metadata.h; path = iOSInspectionApp/Metadata.h; sourceTree = SOURCE_ROOT; };
-		0EA96DB219F8DD1100822161 /* Metadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Metadata.m; path = iOSInspectionApp/Metadata.m; sourceTree = SOURCE_ROOT; };
+		0EA96DAB19F8DCEE00822161 /* EKNListClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNListClient.h; path = iOSInspectionApp/EKNListClient.h; sourceTree = SOURCE_ROOT; };
+		0EA96DAC19F8DCEE00822161 /* EKNListClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNListClient.m; path = iOSInspectionApp/EKNListClient.m; sourceTree = SOURCE_ROOT; };
+		0EA96DAD19F8DCEE00822161 /* EKNListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNListItem.h; path = iOSInspectionApp/EKNListItem.h; sourceTree = SOURCE_ROOT; };
+		0EA96DAE19F8DCEE00822161 /* EKNListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNListItem.m; path = iOSInspectionApp/EKNListItem.m; sourceTree = SOURCE_ROOT; };
+		0EA96DB119F8DD1100822161 /* EKNMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNMetadata.h; path = iOSInspectionApp/EKNMetadata.h; sourceTree = SOURCE_ROOT; };
+		0EA96DB219F8DD1100822161 /* EKNMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNMetadata.m; path = iOSInspectionApp/EKNMetadata.m; sourceTree = SOURCE_ROOT; };
 		0EA96DB519F8DD5700822161 /* CommentCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCollectionViewCell.h; path = iOSInspectionApp/CommentCollectionViewCell.h; sourceTree = SOURCE_ROOT; };
 		0EA96DB619F8DD5700822161 /* CommentCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentCollectionViewCell.m; path = iOSInspectionApp/CommentCollectionViewCell.m; sourceTree = SOURCE_ROOT; };
 		0EA96DB719F8DD5700822161 /* CommentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentCollectionViewCell.xib; path = iOSInspectionApp/CommentCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -180,16 +190,13 @@
 		0EA96E2D19F8DDED00822161 /* iOSInspectionApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "iOSInspectionApp-Prefix.pch"; path = "iOSInspectionApp/iOSInspectionApp-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		0EA96E2E19F8DDED00822161 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOSInspectionApp/main.m; sourceTree = SOURCE_ROOT; };
 		0EA96E3119F8DE2500822161 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = iOSInspectionApp/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		0EA96E3319F8E37000822161 /* ADAL_iPad_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ADAL_iPad_Storyboard.storyboard; path = iOSInspectionApp/ADALiOSBundle/ADAL_iPad_Storyboard.storyboard; sourceTree = SOURCE_ROOT; };
-		0EA96E3419F8E37000822161 /* ADAL_iPhone_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ADAL_iPhone_Storyboard.storyboard; path = iOSInspectionApp/ADALiOSBundle/ADAL_iPhone_Storyboard.storyboard; sourceTree = SOURCE_ROOT; };
-		0EA96E3519F8E37000822161 /* ADALiOSBundle-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ADALiOSBundle-Info.plist"; path = "iOSInspectionApp/ADALiOSBundle/ADALiOSBundle-Info.plist"; sourceTree = SOURCE_ROOT; };
-		0EA96E3619F8E37000822161 /* ADALiOSBundle-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ADALiOSBundle-Prefix.pch"; path = "iOSInspectionApp/ADALiOSBundle/ADALiOSBundle-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		0EC4F5B619CFF2C600BEF583 /* iOSInspectionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSInspectionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		0EF6975E1A01C4C60058A223 /* libPods-ADALiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-ADALiOS.a"; path = "Pods/build/Debug-iphoneos/libPods-ADALiOS.a"; sourceTree = "<group>"; };
-		0EF697601A01C4CA0058A223 /* libPods-Office365.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Office365.a"; path = "Pods/build/Debug-iphoneos/libPods-Office365.a"; sourceTree = "<group>"; };
+		0ED3D3A61C3E5DC000A5ACF3 /* NSString+NSStringExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+NSStringExtensions.h"; path = "iOSInspectionApp/NSString+NSStringExtensions.h"; sourceTree = SOURCE_ROOT; };
+		0ED3D3A71C3E5DC000A5ACF3 /* NSString+NSStringExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+NSStringExtensions.m"; path = "iOSInspectionApp/NSString+NSStringExtensions.m"; sourceTree = SOURCE_ROOT; };
+		0EFF76741C462250007AD3D7 /* iOSInspectionApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = iOSInspectionApp.entitlements; path = iOSInspectionApp/iOSInspectionApp.entitlements; sourceTree = SOURCE_ROOT; };
 		3921687A1C78646261F0CA8D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A53292425533594B87EBF7F3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C70BE78E30E07382CEB65C50 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,12 +207,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0EF697611A01C4CA0058A223 /* libPods-Office365.a in Frameworks */,
-				0EF6975F1A01C4C60058A223 /* libPods-ADALiOS.a in Frameworks */,
-				223ADCA1E409AA849EC191B9 /* libPods.a in Frameworks */,
 				0EAA64EE19F7A5C8001936F9 /* CoreGraphics.framework in Frameworks */,
 				0EAA64ED19F7A5C0001936F9 /* UIKit.framework in Frameworks */,
 				0EAA64EC19F7A5B9001936F9 /* Foundation.framework in Frameworks */,
+				7731A54C5FED9DA1092B3222 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +226,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		0E0E32321C3FD31100A6F58A /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				0E0E323A1C3FD3F100A6F58A /* EKNVideoService.h */,
+				0E0E323B1C3FD3F100A6F58A /* EKNVideoService.m */,
+				0E0E32331C3FD3DF00A6F58A /* SPVideoChannel.h */,
+				0E0E32341C3FD3DF00A6F58A /* SPVideoChannel.m */,
+				0E0E32351C3FD3DF00A6F58A /* SPVideoItem.h */,
+				0E0E323D1C3FD5B900A6F58A /* SPVideoItem.m */,
+				0E0E32361C3FD3DF00A6F58A /* SPVideoItemOperations.h */,
+				0E0E32371C3FD3DF00A6F58A /* SPVideoItemOperations.m */,
+			);
+			name = Video;
+			sourceTree = "<group>";
+		};
 		0E68CEB219DB7A6600E29C4A /* Property Detail page */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,26 +254,14 @@
 		0EA20B1719E549BD007EBF6A /* Lists */ = {
 			isa = PBXGroup;
 			children = (
-				0EA96DB119F8DD1100822161 /* Metadata.h */,
-				0EA96DB219F8DD1100822161 /* Metadata.m */,
-				0EA96DAB19F8DCEE00822161 /* ListClient.h */,
-				0EA96DAC19F8DCEE00822161 /* ListClient.m */,
-				0EA96DAD19F8DCEE00822161 /* ListItem.h */,
-				0EA96DAE19F8DCEE00822161 /* ListItem.m */,
+				0EA96DB119F8DD1100822161 /* EKNMetadata.h */,
+				0EA96DB219F8DD1100822161 /* EKNMetadata.m */,
+				0EA96DAB19F8DCEE00822161 /* EKNListClient.h */,
+				0EA96DAC19F8DCEE00822161 /* EKNListClient.m */,
+				0EA96DAD19F8DCEE00822161 /* EKNListItem.h */,
+				0EA96DAE19F8DCEE00822161 /* EKNListItem.m */,
 			);
 			name = Lists;
-			sourceTree = "<group>";
-		};
-		0EA2D9F219D8094400465DA2 /* ADALiOSBundle */ = {
-			isa = PBXGroup;
-			children = (
-				0EA96E3319F8E37000822161 /* ADAL_iPad_Storyboard.storyboard */,
-				0EA96E3419F8E37000822161 /* ADAL_iPhone_Storyboard.storyboard */,
-				0EA96E3519F8E37000822161 /* ADALiOSBundle-Info.plist */,
-				0EA96E3619F8E37000822161 /* ADALiOSBundle-Prefix.pch */,
-			);
-			name = ADALiOSBundle;
-			path = EdKeyNote/ADALiOSBundle;
 			sourceTree = "<group>";
 		};
 		0EA96E3E19F8E6CC00822161 /* Login page */ = {
@@ -268,6 +276,7 @@
 		0EADF92B19E79F9200E1DE77 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0E0E323F1C3FDC3900A6F58A /* LeakyFaucet.mp4 */,
 				0EA96DDD19F8DDA300822161 /* before@2x~ipad.png */,
 				0EA96DDE19F8DDA300822161 /* before~ipad.png */,
 				0EA96DDF19F8DDA300822161 /* black@2x~ipad.png */,
@@ -314,6 +323,8 @@
 		0EADF95519E7C48600E1DE77 /* UIViewControllerEX */ = {
 			isa = PBXGroup;
 			children = (
+				0ED3D3A61C3E5DC000A5ACF3 /* NSString+NSStringExtensions.h */,
+				0ED3D3A71C3E5DC000A5ACF3 /* NSString+NSStringExtensions.m */,
 				0EA96D9619F8DC6E00822161 /* EKN+NavigationController.h */,
 				0EA96D9719F8DC6E00822161 /* EKN+NavigationController.m */,
 				0EA96D9819F8DC6E00822161 /* EKN+UIImagePickerController.h */,
@@ -359,7 +370,6 @@
 			isa = PBXGroup;
 			children = (
 				0EA96D9219F8DC3B00822161 /* Settings.bundle */,
-				0EA2D9F219D8094400465DA2 /* ADALiOSBundle */,
 				0EC4F5BF19CFF2C600BEF583 /* iOSInspectionApp */,
 				0EC4F5B819CFF2C600BEF583 /* Frameworks */,
 				0EC4F5B719CFF2C600BEF583 /* Products */,
@@ -378,8 +388,6 @@
 		0EC4F5B819CFF2C600BEF583 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0EF697601A01C4CA0058A223 /* libPods-Office365.a */,
-				0EF6975E1A01C4C60058A223 /* libPods-ADALiOS.a */,
 				0EC4F5B919CFF2C600BEF583 /* Foundation.framework */,
 				0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */,
 				0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */,
@@ -391,6 +399,8 @@
 		0EC4F5BF19CFF2C600BEF583 /* iOSInspectionApp */ = {
 			isa = PBXGroup;
 			children = (
+				0EFF76741C462250007AD3D7 /* iOSInspectionApp.entitlements */,
+				0E0E32321C3FD31100A6F58A /* Video */,
 				2FB515E71B0963C9004AD26A /* Graph */,
 				0EA96DA519F8DCD400822161 /* EKNEKNGlobalInfo.h */,
 				0EA96DA619F8DCD400822161 /* EKNEKNGlobalInfo.m */,
@@ -440,6 +450,7 @@
 				0EC4F5B419CFF2C600BEF583 /* Resources */,
 				0EAA64EB19F7A5AA001936F9 /* Frameworks */,
 				50C649871B399387E9A774C2 /* Copy Pods Resources */,
+				346C4CE3AE5211240CDCA7BB /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -457,8 +468,18 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = EKN;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = canviz;
+				TargetAttributes = {
+					0EC4F5B519CFF2C600BEF583 = {
+						DevelopmentTeam = 259SG943ZS;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 0EC4F5B119CFF2C600BEF583 /* Build configuration list for PBXProject "iOSInspectionApp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -487,9 +508,9 @@
 				0EA96E1619F8DDA400822161 /* home~ipad.png in Resources */,
 				0EA96DC819F8DD6C00822161 /* InspectionListCell.xib in Resources */,
 				0EA96E1519F8DDA400822161 /* home@2x~ipad.png in Resources */,
-				0EA96E3719F8E37000822161 /* ADAL_iPad_Storyboard.storyboard in Resources */,
 				0EA96E1B19F8DDA400822161 /* plus@2x~ipad.png in Resources */,
 				0EA96E2919F8DDA400822161 /* setting@2x~ipad.png in Resources */,
+				0E0E32401C3FDC3900A6F58A /* LeakyFaucet.mp4 in Resources */,
 				0EA96D9519F8DC5000822161 /* Images.xcassets in Resources */,
 				0EA96E3219F8DE2500822161 /* InfoPlist.strings in Resources */,
 				0EA96E0B19F8DDA400822161 /* dropdown_arrow@2x~ipad.png in Resources */,
@@ -506,7 +527,6 @@
 				0EA96E1119F8DDA400822161 /* green@2x~ipad.png in Resources */,
 				0EA96DBE19F8DD5700822161 /* ContactOwnerCell.xib in Resources */,
 				0EA96E0719F8DDA400822161 /* black~ipad.png in Resources */,
-				0EA96E3919F8E37000822161 /* ADALiOSBundle-Info.plist in Resources */,
 				0EA96E0A19F8DDA400822161 /* detailsepartorline.png in Resources */,
 				0EA96E2519F8DDA400822161 /* selected@2x~ipad.png in Resources */,
 				0EA96E1419F8DDA400822161 /* greenRoom~ipad.png in Resources */,
@@ -522,7 +542,6 @@
 				0EA96E1319F8DDA400822161 /* greenRoom@2x~ipad.png in Resources */,
 				0EA96DC319F8DD6000822161 /* EKNCollectionViewCell.xib in Resources */,
 				0EA96DD619F8DD7900822161 /* PropertyDetailsCell.xib in Resources */,
-				0EA96E3819F8E37000822161 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
 				0EA96E1719F8DDA400822161 /* man@2x~ipad.png in Resources */,
 				0EA96E1919F8DDA400822161 /* navigation_background@2x~ipad.png in Resources */,
 				0EA96DBC19F8DD5700822161 /* CommentCollectionViewCell.xib in Resources */,
@@ -542,6 +561,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		346C4CE3AE5211240CDCA7BB /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		50C649871B399387E9A774C2 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -581,13 +615,17 @@
 			files = (
 				0EA96D9D19F8DC6E00822161 /* EKN+UIImagePickerController.m in Sources */,
 				0EA96D9C19F8DC6E00822161 /* EKN+NavigationController.m in Sources */,
-				0EA96DB319F8DD1100822161 /* Metadata.m in Sources */,
+				0EA96DB319F8DD1100822161 /* EKNMetadata.m in Sources */,
 				0EA96DD519F8DD7900822161 /* PropertyDetailsCell.m in Sources */,
-				0EA96DAF19F8DCEE00822161 /* ListClient.m in Sources */,
+				0EA96DAF19F8DCEE00822161 /* EKNListClient.m in Sources */,
 				0EA96D9E19F8DC6E00822161 /* EKN+UIViewController.m in Sources */,
+				0E0E32381C3FD3DF00A6F58A /* SPVideoChannel.m in Sources */,
 				0EA96DA919F8DCD400822161 /* EKNEKNGlobalInfo.m in Sources */,
 				0EA96DBB19F8DD5700822161 /* CommentCollectionViewCell.m in Sources */,
+				0E0E323E1C3FD5B900A6F58A /* SPVideoItem.m in Sources */,
 				0EA96DD919F8DD7900822161 /* PropertyListCell.m in Sources */,
+				0E0E323C1C3FD3F100A6F58A /* EKNVideoService.m in Sources */,
+				0ED3D3A81C3E5DC000A5ACF3 /* NSString+NSStringExtensions.m in Sources */,
 				0E4EE25E19FA372400967D1B /* EKNGraph.m in Sources */,
 				0EA96DBD19F8DD5700822161 /* ContactOwnerCell.m in Sources */,
 				0EA96E2F19F8DDED00822161 /* main.m in Sources */,
@@ -595,7 +633,8 @@
 				0EA96DC719F8DD6C00822161 /* InspectionListCell.m in Sources */,
 				0EA96DAA19F8DCD400822161 /* EKNLoginViewController.m in Sources */,
 				0EA96DC219F8DD6000822161 /* EKNCollectionViewCell.m in Sources */,
-				0EA96DB019F8DCEE00822161 /* ListItem.m in Sources */,
+				0EA96DB019F8DCEE00822161 /* EKNListItem.m in Sources */,
+				0E0E32391C3FD3DF00A6F58A /* SPVideoItemOperations.m in Sources */,
 				0EA96DA419F8DCC500822161 /* EKNAppDelegate.m in Sources */,
 				0EA96DA119F8DC9400822161 /* EKNPropertyDetailsViewController.m in Sources */,
 				0EA96DDB19F8DD7900822161 /* RoomListCell.m in Sources */,
@@ -634,6 +673,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -694,6 +734,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = iOSInspectionApp/iOSInspectionApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -709,8 +750,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.canviz.iOSInspectionApp;
 				PRODUCT_NAME = iOSInspectionApp;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -725,6 +768,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = iOSInspectionApp/iOSInspectionApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canviz Mobile (DX2Q3M4YS3)";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -740,8 +784,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.canviz.iOSInspectionApp;
 				PRODUCT_NAME = iOSInspectionApp;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

@@ -13,7 +13,8 @@
 #import <ADALiOS/ADLogger.h>
 #import <ADALiOS/ADInstanceDiscovery.h>
 #import "SPVideoItem.h"
-#import "MSOrcError.h"
+#import <core/core.h>
+#import <impl/impl.h>
 
 @interface EKNVedioService : NSObject
 -(void)getVideos:(int)incidentId callback:(void (^)(NSArray *videoItems, MSOrcError *error))callback;

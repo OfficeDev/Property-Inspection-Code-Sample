@@ -1,38 +1,116 @@
-﻿@model SuiteLevelWebApp.Models.ProvisionDemoData
-@{
+﻿@{
     ViewBag.Title = "Provisioning Demo Data";
 }
-
 @Styles.Render("~/Content/jqueryui")
 
-@using (Html.BeginForm("CreateDemoData", "O365SiteProvisioning", FormMethod.Post))
-{
-    <div class="row">
-        <h2>Provision Demo Data</h2>
-
-        <br/>
-        <div class="contoso-demo-date">
-            @Html.LabelFor(model => model.DateDemo)
-            @Html.EditorFor(model => model.DateDemo)
-        </div>
-        <br />
-        <div class="contoso-demo-datebtn">
-            @Html.ValidationSummary(true)
-            <input class="btn btn-default" type="submit" value="Populate" />
-        </div>
+<div class="row">
+    <h2>Provision Demo Data</h2>
+    <br />
+    <div class="contoso-demo-date">
+        <label for="DateDemo">Demo Date: </label>
+        <input id="DateDemo" type="datetime">
     </div>
-
-    <div class="row">
-        <h4>@Model.Message</h4>
+    <br />
+    <div class="contoso-demo-datebtn">
+        <input id="BtnPopulate" class="btn btn-default" type="submit" value="Populate" />
     </div>
-}
+</div>
+<div class="row">
+    <h4></h4>
+</div>
+
+<div class="container" style="margin-top:2em;  display:none">
+    <div id="panel_status" style="font-size:1.5em;">
+        <span id="message">Start provisioning demo data...</span>
+        <span id="loadingbar" class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="color:#000"></span>
+    </div>
+    <div id="linkpanel" style="display:none; margin-top:2em">
+        <button>Initialize OneNote Online for each demo Office 365 Group</button>
+    </div>
+</div>
 
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryui")
     <script>
-    $(function () {
-        $("#DateDemo").datepicker({ dateFormat: 'mm/dd/yy' });
-    });
+        $(function () {
+            $("#DateDemo").datepicker({ dateFormat: 'mm/dd/yy' }).val((new Date()).toLocaleDateString());
+
+            $('#BtnPopulate').click(function () {
+                if ($.trim($("#DateDemo").val()) === '') {
+                    $('.row:eq(1) h4').text("The Demo Date:  field is required.");
+                    return;
+                }
+
+                startProvisioningDemoData();
+            });
+
+            function startProvisioningDemoData() {
+                $('.row').hide();
+                $('.container').show();
+                $.ajax({
+                    type: 'POST',
+                    url: "/O365SiteProvisioning/CreateDemoData",
+                    contentType: 'application/json; charset=utf-8',
+                    data: '{ "date": "' + $("#DateDemo").val() + '" }'
+                })
+                .done(function () {
+                    checkProvisioningDemoDataStatus();
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    $('#loadingbar').hide();
+                    $('#message').text("Request failed. " + error);
+                });
+            }
+
+            function checkProvisioningDemoDataStatus() {
+                $.getJSON("/O365SiteProvisioning/GetDemoDataProvisioningStatus?timestamp=" + (new Date()).getTime())
+                .done(function (data) {
+                    if (data.phase == "Completed") {
+                        if ($('#linkpanel a').length == 0) {
+                            $.getJSON("/O365SiteProvisioning/GetO365GroupLinks?timestamp=" + (new Date()).getTime()).done(function (data) {
+                                if (data.length == 0) return;
+                                for (var i = 0; i < data.length; i++) {
+                                    $('<a href="' + data[i].link + '" target="_blank"></a>').appendTo('#linkpanel');
+                                }
+                                $('#linkpanel button').click(function () {
+                                    var iWidth = 300;
+                                    var iHeight = 200;
+                                    var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
+                                    var iLeft = (window.screen.availWidth - 10 - iWidth) / 2
+                                    var newWin = window.open('about:blank', '', 'width=' + iWidth + ', height=' + iHeight + ',top=' + iTop + ',left=' + iLeft + ',toolbar=no,status=no,resizable=no,scrollbars=no,alwaysRaised=yes,depended=yes');
+                                    var index = 0;
+                                    setInterval((function () {
+                                        return function () {
+                                            if (index == $('#linkpanel a').length) newWin.close();
+                                            newWin.location = $('#linkpanel a').eq(index++).attr('href');
+                                        };
+                                    })(), 8000);
+                                    $(this).hide();
+                                });
+                                $('#linkpanel').show();
+                            });
+                        }
+                    }
+                    $('#message').text(data.message);
+                    if (data.status == "RanToCompletion") {
+                        $('#loadingbar').hide();
+                    }
+                    else
+                    {
+                        setTimeout(checkProvisioningDemoDataStatus, 20000);
+                    }
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    $('#loadingbar').hide();
+                    $('#message').text("Request failed. " + error);
+                });
+            };
+
+            @if (ViewBag.siteProvisioningInProgress == true)
+            {
+                @:startProvisioningDemoData();
+            }
+        });
     </script>
 }

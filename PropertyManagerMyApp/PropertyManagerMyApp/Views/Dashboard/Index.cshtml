@@ -152,8 +152,10 @@
                                                             <a href="~/Dashboard/Property/@item.sl_propertyID.Id">
                                                                 <h2>@item.sl_propertyID.Title</h2>
                                                             </a>
-
-                                                            <!--TODO - address is missing-->
+                                                            <!-- bingding Property address -->
+                                                            <div class="fs-smaller">
+                                                                <span>@item.sl_propertyID.sl_address1</span>
+                                                            </div>
                                                             <!-- bingding Owner Name -->
                                                             <div class="fs-smaller">
                                                                 <span>Property owned by @item.sl_propertyID.sl_owner</span>
@@ -162,9 +164,7 @@
                                                     </div>
                                                     <div class="pull-right bg-teal f-white">
                                                         <div class="label">Scheduled</div>
-
                                                         <!-- bingding Date -->
-                                                        <!--TODO - make short dates with week day, month, date and year to match Visual Design.-->
                                                         @if (item.sl_datetime != null && item.sl_datetime.HasValue)
                                                         {
                                                             <div class="fs-smaller">@item.sl_datetime.Value.ToShortDateString()</div>
@@ -204,9 +204,10 @@
                                                             <a href="~/Dashboard/Property/@item.sl_propertyID.Id">
                                                                 <h2 class="f-teal">@item.sl_propertyID.Title</h2>
                                                             </a>
-
-                                                            <!--TODO - address is missing-->
-
+                                                            <!-- bingding Property address -->
+                                                            <div class="fs-smaller">
+                                                                <span>@item.sl_propertyID.sl_address1</span>
+                                                            </div>
                                                             <div class="fs-smaller">
                                                                 <!-- bingding Owner Name -->
                                                                 <span>Property owned by @item.sl_propertyID.sl_owner</span>
@@ -214,10 +215,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="pull-right bg-teal f-white">
-
                                                         <div class="label">Completed</div>
                                                         <!-- bingding Inspection Date -->
-                                                        <!--TODO - make short dates with week day, month, date and year to match Visual Design.-->
                                                         @if (item.sl_datetime != null && item.sl_datetime.HasValue)
                                                         {
                                                             <div class="fs-smaller">@item.sl_datetime.Value.ToShortDateString()</div>
@@ -226,7 +225,6 @@
                                                         {
                                                             <div></div>
                                                         }
-
                                                         <div class="fs-smaller">Inspector: @item.sl_inspector</div>
                                                     </div>
                                                 </div>
@@ -236,7 +234,6 @@
                                 }
                             </ul>
                         </div>
-
                     </div>
                     <!-- Past Inspections end-->
                     <!-- Need Repair begin-->
@@ -253,7 +250,6 @@
                                             <div class="content pull-left bg-white">
                                                 <div class="content-row clear">
                                                     <div class="pull-left">
-
                                                         <!-- bingding image -->
                                                         <div class="crop">
                                                             <img src="@item.sl_propertyID.propertyImgUrl" />
@@ -263,25 +259,22 @@
                                                             <a href="~/Dashboard/Property/@item.sl_propertyID.Id">
                                                                 <h2 class="f-teal">@item.sl_propertyID.Title</h2>
                                                             </a>
-
                                                             <!-- bingding Room Name -->
                                                             <div class="fs-smaller">Room: @item.sl_roomID.Title</div>
-
-                                                            <!--TODO - address is missing-->
+                                                            <!-- bingding Property address -->
+                                                            <div class="fs-smaller">
+                                                                <span>@item.sl_propertyID.sl_address1</span>
+                                                            </div>
                                                             <!-- bingding Owner Name -->
                                                             <div class="fs-smaller">Property owned by @item.sl_propertyID.sl_owner</div>
-
                                                         </div>
                                                     </div>
                                                     @if (item.sl_repairScheduled != null && item.sl_repairScheduled.HasValue)
                                                     {
-                                                        <div class="pull-right bg-teal f-white">
+                                                        <a class="pull-right bg-teal f-white" href="/Dashboard/InspectionDetails/@item.Id">
                                                             <div class="label">Scheduled</div>
-
                                                             <!-- bingding Repair Date -->
-
                                                             <div class="fs-smaller">@item.sl_repairScheduled.Value.ToShortDateString()</div>
-
                                                             <div class="fs-smaller">
                                                                 Inspector:
                                                                 @if (item.inspection != null)
@@ -289,15 +282,12 @@
                                                                     <span>@item.inspection.sl_inspector</span>
                                                                 }
                                                             </div>
-
-                                                        </div>
+                                                        </a>
                                                     }
                                                     else
                                                     {
-                                                        <div class="pull-right bg-orange f-white">
-
-                                                            <a class="fs-smaller f-white" href="/Dashboard/InspectionDetails/@item.Id">Not Scheduled</a>
-
+                                                        <a class="pull-right bg-orange f-white" href="/Dashboard/InspectionDetails/@item.Id">
+                                                            <span class="fs-smaller f-white">Not Scheduled</span>
                                                             <div class="fs-smaller">
                                                                 Inspector:
                                                                 @if (item.inspection != null)
@@ -305,8 +295,7 @@
                                                                     <span>@item.inspection.sl_inspector</span>
                                                                 }
                                                             </div>
-
-                                                        </div>
+                                                        </a>
                                                     }
                                                 </div>
                                             </div>
@@ -336,16 +325,13 @@
                                                         <div class="crop">
                                                             <img src="@item.sl_propertyID.propertyImgUrl" />
                                                         </div>
-
                                                         <div class="text-details">
                                                             <!-- bingding Property Name -->
                                                             <a href="~/Dashboard/Property/@item.sl_propertyID.Id">
                                                                 <h2 class="f-teal">@item.sl_propertyID.Title</h2>
                                                             </a>
-
                                                             <!-- bingding Room Name -->
                                                             <div class="fs-smaller">Room: @item.sl_roomID.Title</div>
-
                                                             <!-- bingding Inspector Name -->
                                                             <div class="fs-smaller">
                                                                 @if (item.inspection != null)
@@ -355,21 +341,19 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                     <!-- bingding Approved -->
                                                     @if (item.sl_repairApproved != null && item.sl_repairApproved.HasValue)
                                                     {
-                                                        <div class="pull-right bg-teal f-white">
+                                                        <a class="pull-right bg-teal f-white" href="/Dashboard/InspectionDetails/@item.Id">
                                                             <div class="label">Approved</div>
                                                             <div class="fs-smaller">@item.sl_repairApproved.Value.ToShortDateString()</div>
-                                                        </div>
+                                                        </a>
                                                     }
                                                     else
                                                     {
-                                                        <div class="pull-right bg-orange f-white">
-                                                            <a class="fs-smaller f-white" href="/Dashboard/InspectionDetails/@item.Id">Not Approved</a>
-                                                        </div>
+                                                        <a class="pull-right bg-orange f-white" href="/Dashboard/InspectionDetails/@item.Id">
+                                                            <span class="fs-smaller f-white">Not Approved</span>
+                                                        </a>
                                                     }
                                                 </div>
                                             </div>
@@ -381,7 +365,6 @@
                     </div>
                     <!-- Repair Complete end-->
                     <!-- Pagination -->
-                    <!--TODO - Make 'previous and 'next' buttons work. Also, remove the arrows if no further pages-->
                     <section class="paging pull-right">
                         <a><div class="left-arrow"></div></a>
                         <a class="pages-num selected">1</a>

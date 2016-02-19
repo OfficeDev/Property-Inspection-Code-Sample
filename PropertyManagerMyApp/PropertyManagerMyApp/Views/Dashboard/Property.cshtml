@@ -168,7 +168,6 @@
                                                 <div class="content-row clear">
                                                     <div class="pull-left">
                                                         <i class="icon-appbartools pull-left"></i>
-
                                                         <!-- bingding Inspector Name -->
                                                         <h2 class="f-teal">
                                                             Inspector:
@@ -176,19 +175,14 @@
                                                                 @item.sl_inspector
                                                             </span>
                                                         </h2>
-                                                        
                                                         <div>
                                                             <!-- bingding Inspector Email Name -->
                                                             <span><a class="fs-smaller" href="mailto:@item.sl_emailaddress">@item.sl_emailaddress</a></span>
                                                         </div>
-
                                                     </div>
-
                                                     <div class="pull-right bg-teal f-white">
-
                                                         <div class="label">Scheduled</div>
                                                             <!-- bingding Inspection Date -->
-                                                            <!--TODO - make short dates with week day, month, date and year to match Visual Design.-->
                                                             @if (item.sl_datetime != null && item.sl_datetime.HasValue)
                                                             {
                                                                 <div class="fs-smaller">@item.sl_datetime.Value.ToShortDateString()</div>
@@ -197,7 +191,6 @@
                                                             {
                                                                 <div></div>
                                                             }
-                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,20 +216,16 @@
                                                 <div class="content-row clear">
                                                     <div class="pull-left">
                                                         <i class="icon-appbartools pull-left"></i>
-
                                                         <!-- bingding Inspector Name -->
                                                         <h2 class="f-teal">
                                                             Inspector: @item.sl_inspector
                                                         </h2>
-
                                                         <div>
                                                             <!-- bingding Inspector Email Name -->
                                                             <span><a class="fs-smaller" href="mailto:@item.sl_emailaddress">@item.sl_emailaddress</a></span>
                                                         </div>
                                                     </div>
-
                                                     <div class="pull-right bg-teal f-white">
-
                                                         <div class="label">Completed</div>
                                                             <!-- bingding Inspection Date -->
                                                             <!--TODO - make short dates with week day, month, date and year to match Visual Design.-->
@@ -248,10 +237,8 @@
                                                             {
                                                                 <div></div>
                                                             }
-                                                        
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </li>
@@ -275,11 +262,9 @@
                                                 <div class="content-row clear">
                                                     <div class="pull-left">
                                                         <i class="icon-appbartools pull-left"></i>
-
                                                         <!-- bingding Inspector Name -->
                                                         <h2 class="f-teal">
                                                             Inspector:
-
                                                             @if (item.inspection != null)
                                                             {
                                                                 <span>@item.inspection.sl_inspector</span>
@@ -289,7 +274,6 @@
                                                                 <span></span>
                                                             }
                                                         </h2>
-
                                                         <div>
                                                             <!-- bingding Inspector Email Name -->
                                                             @if (item.inspection != null)
@@ -300,30 +284,23 @@
                                                             {
                                                                 <span></span>
                                                             }
-
                                                         </div>
-
                                                     </div>
-
-                                                    
                                                     @if (item.sl_repairScheduled != null && item.sl_repairScheduled.HasValue)
                                                     {
-                                                        <div class="pull-right bg-teal f-white">
+                                                        <a class="pull-right bg-teal f-white" href="/Dashboard/InspectionDetails/@item.Id">
                                                             <div class="label">Scheduled</div>
                                                             <!-- bingding Repair Scheduled On Date -->
-                                                            <!--TODO - make short dates with week day, month, date and year to match Visual Design.-->
                                                             <div class="fs-smaller">@item.sl_repairScheduled.Value.ToShortDateString()</div>
-                                                        </div>
+                                                        </a>
                                                     }
                                                     else
                                                     {
-                                                        <div class="pull-right f-white bg-orange">
+                                                        <a class="pull-right f-white bg-orange" href="/Dashboard/InspectionDetails/@item.Id">
                                                             <!-- bingding Repair Scheduled On Date -->
-                                                            <!--TODO - make short dates with week day, month, date and year to match Visual Design.-->
-                                                            <a class="fs-smaller f-white" href="/Dashboard/InspectionDetails/@item.Id">Not Scheduled</a>
-                                                        </div>
+                                                            <span class="fs-smaller f-white">Not Scheduled</span>
+                                                        </a>
                                                     }
-
                                                 </div>
                                             </div>
                                             @if (item.sl_repairScheduled == null)
@@ -352,7 +329,6 @@
                                                 <div class="content-row clear">
                                                     <div class="pull-left">
                                                         <i class="icon-appbartools pull-left"></i>
-                                                       
                                                         <h2 class="f-teal">
                                                             Room:
                                                             <!-- bingding Room Name -->
@@ -365,7 +341,6 @@
                                                                 <span></span>
                                                             }
                                                         </h2>
-
                                                         <div>
                                                             <!-- bingding Inspector Email Name -->
                                                             @if (item.inspection != null)
@@ -377,29 +352,22 @@
                                                                 <span></span>
                                                             }
                                                         </div>
-
-                                                    </div>
-
-                                                            
+                                                    </div>       
                                                     @if (item.sl_repairApproved != null && item.sl_repairApproved.HasValue)
                                                     {
-                                                        <div class="pull-right bg-teal f-white">
+                                                        <a class="pull-right bg-teal f-white" href="/Dashboard/InspectionDetails/@item.Id">
                                                             <div class="label">Approved</div>
                                                             <!-- bingding Approved Date -->
-                                                            <!--TODO - make short dates with week day, month, date and year to match Visual Design.-->
                                                             <div class="fs-smaller">@item.sl_repairApproved.Value.ToShortDateString()</div>
-                                                        </div>
+                                                        </a>
                                                     }
                                                     else
                                                     {
-                                                        <div class="pull-right bg-orange f-white">
-                                                            <a class="fs-smaller f-white" href="/Dashboard/InspectionDetails/@item.Id">Not Approved</a>
-                                                        </div>
+                                                        <a class="pull-right bg-orange f-white" href="/Dashboard/InspectionDetails/@item.Id">
+                                                            <span class="fs-smaller f-white">Not Approved</span>
+                                                        </a>
                                                     }
-
-
                                                 </div>
-
                                             </div>
                                             @if (item.sl_repairApproved == null)
                                             {
@@ -413,7 +381,6 @@
                     </div>
                     <!-- Closed Incidents end-->
                     <!-- Pagination -->
-                    <!--TODO - Make 'previous and 'next' buttons work-->
                     <section class="paging pull-right">
                         <a><div class="left-arrow"></div></a>
                         <a class="pages-num selected">1</a>

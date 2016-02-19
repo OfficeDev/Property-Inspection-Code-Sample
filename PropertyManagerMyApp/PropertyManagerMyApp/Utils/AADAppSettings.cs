@@ -4,27 +4,19 @@ namespace SuiteLevelWebApp.Utils
 {
     public class AADAppSettings
     {
-        private static string _clientId = ConfigurationManager.AppSettings["ida:ClientId"]
-            ?? ConfigurationManager.AppSettings["ida:ClientID"];
+        private static string _clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+        private static string _appKey = ConfigurationManager.AppSettings["ida:ClientSecret"];
+        private static string _authorizationUri = ConfigurationManager.AppSettings["ida:AADInstance"];
+        private static string _authority = string.Format("{0}/common/", ConfigurationManager.AppSettings["ida:AADInstance"]);
+        private static string _tenantId = ConfigurationManager.AppSettings["ida:TenantId"];
 
-        private static string _appKey = ConfigurationManager.AppSettings["ida:AppKey"]
-            ?? ConfigurationManager.AppSettings["ida:Password"] ?? ConfigurationManager.AppSettings["ida:ClientSecret"];
-
-        private static string _authorizationUri = ConfigurationManager.AppSettings["ida:AuthorizationUri"];
-
-        private static string _authority = string.Format("{0}/common/", ConfigurationManager.AppSettings["ida:AuthorizationUri"]);
-
-        private static string _graphResourceId = "https://graph.microsoft.com/"; 
+        private static string _graphResourceId = "https://graph.microsoft.com/";
 
         private static string _graphResourceUrl = "https://graph.microsoft.com/beta/";
 
-        private static string _outlookResourceId = "https://outlook.office365.com/";
+        private static string _outlookUrl = "https://outlook.office.com/";
 
-        private static string _outlookResourceUrl = "https://outlook.office365.com/api/v1.0/"; 
-
-        private static string _oneNoteResourceId = "https://onenote.com/";
-
-        private static string _oneNoteResourceUrl = "https://www.onenote.com/api/beta/"; 
+        private static string _officeUrl = "https://tasks.office.com/";
 
         public static string ClientId
         {
@@ -46,7 +38,7 @@ namespace SuiteLevelWebApp.Utils
         {
             get
             {
-                return _authorizationUri;
+                return _authorizationUri.TrimEnd('/') + "/";
             }
         }
 
@@ -55,6 +47,14 @@ namespace SuiteLevelWebApp.Utils
             get
             {
                 return _authority;
+            }
+        }
+
+        public static string TenantId
+        {
+            get
+            {
+                return _tenantId;
             }
         }
 
@@ -74,35 +74,19 @@ namespace SuiteLevelWebApp.Utils
             }
         }
 
-        public static string OutlookResourceId
+        public static string OutlookUrl
         {
             get
             {
-                return _outlookResourceId;
+                return _outlookUrl;
             }
         }
 
-        public static string OutlookResourceUrl
+        public static string OfficeUrl
         {
             get
             {
-                return _outlookResourceUrl;
-            }
-        }
-
-        public static string OneNoteResourceId
-        {
-            get
-            {
-                return _oneNoteResourceId;
-            }
-        }
-
-        public static string OneNoteResourceUrl
-        {
-            get
-            {
-                return _oneNoteResourceUrl;
+                return _officeUrl;
             }
         }
     }

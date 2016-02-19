@@ -98,6 +98,7 @@
     <Compile Include="Utils\ListHelper.cs" />
     <Compile Include="Utils\ListItem.cs" />
     <Compile Include="Utils\AuthenticationHelper.cs" />
+    <Compile Include="Model\TaskModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

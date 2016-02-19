@@ -1,208 +1,343 @@
-﻿@model DashboardInspectionDetailsViewModel
+﻿@using SuiteLevelWebApp.Utils
+@model DashboardInspectionDetailsViewModel
 @{
     Layout = "~/Views/Shared/_DemoLayout.cshtml";
     ViewBag.Title = "Inspection Details";
 }
-
-<div class="container body-content">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-gray-light">
-        <div class="row">
-            <ul>
-                <li class="left-panel col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                    <div class="details">
-                        <h1>Inspection Details</h1>
-                        <div class="details-block">
-                            <div class="details-img">
-                                <a href="/Dashboard/Property/@Model.inspection.sl_propertyID.Id">
-                                    <img src="@Model.PropertyDetail.propertyImgUrl" />
-                                </a>
-                            </div>
-                            <div class="content-block">
-                                <div class="content-row">
-                                    <h2>@Model.inspection.sl_propertyID.Title</h2>
+@if (Model == null)
+{
+    <div style="margin:100px auto; text-align:center">
+        <img src="~/Content/Images/loading.gif" />
+    </div>
+}
+else
+{
+    <div class="container body-content">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-gray-light">
+            <div class="row">
+                <ul>
+                    <li class="left-panel col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="details">
+                            <h1>Inspection Details</h1>
+                            <div id="left-panel-wrapper" class="details-block">
+                                <input id="propertygroupid" type="hidden" value="@Model.PropertyDetail.sl_group" />
+                                <div class="details-img">
+                                    <a href="/Dashboard/Property/@Model.inspection.sl_propertyID.Id">
+                                        <img src="@Model.PropertyDetail.propertyImgUrl" />
+                                    </a>
                                 </div>
-                                <div class="content-row fs-smaller">
-                                    <span>
-                                        @Model.inspection.sl_propertyID.sl_address1
-                                        @Model.inspection.sl_propertyID.sl_address2
-                                    </span>
-                                </div>
-                                <div class="content-row fs-smaller">
-                                    <span>Owned by</span>
-                                    <span>@Model.inspection.sl_propertyID.sl_owner</span>
-                                </div>
-                            </div>
-                            <div class="content-block">
-                                <div class="content-row">
-                                    <h2>Inspector: @Model.inspection.sl_inspector</h2>
-                                </div>
-                                <div class="content-row">
-                                    <span>
-                                        <a class="fs-smaller" href="mailto:@Model.inspection.sl_emailaddress">@Model.inspection.sl_emailaddress</a>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="content-block">
-                                <div class="content-row">
-                                    <h2>Property Members</h2>
-                                </div>
-                                @foreach (var item in Model.members)
-                                {
-                                    <div class="content-row fs-smaller profiles">
-                                        <img class="profile-img" src="@Url.Action("UserPhoto", "Photo", new { userId = item.mail })" />
-                                        <span>@item.displayName</span>
+                                <div class="content-block">
+                                    <div class="content-row">
+                                        <h2>@Model.inspection.sl_propertyID.Title</h2>
                                     </div>
-                                }
-                                <div class="content-row fs-smaller profiles trending-docs" style="padding:0 0 0 0;">
-                                    <a style="padding-left:0;" href="@string.Format("{0}owa/#path=/group/{1}/people", SuiteLevelWebApp.Utils.AADAppSettings.OutlookResourceId, Model.UnifiedGroupEmail)" target="_blank">See More</a>
+                                    <div class="content-row fs-smaller">
+                                        <span>
+                                            @Model.inspection.sl_propertyID.sl_address1
+                                            @Model.inspection.sl_propertyID.sl_address2
+                                        </span>
+                                    </div>
+                                    <div class="content-row fs-smaller">
+                                        <span>Owned by</span>
+                                        <span>@Model.inspection.sl_propertyID.sl_owner</span>
+                                    </div>
                                 </div>
-                                <div class="bg-white trending-docs">
-                                    <h2>Conversations</h2>
-                                    @HyperLinkLists(Model.conversations, "")
-                                    <a href="@string.Format("{0}owa/#path=/group/{1}/mail", SuiteLevelWebApp.Utils.AADAppSettings.OutlookResourceId, Model.UnifiedGroupEmail)" target="_blank">See More</a>
-                                    <h2>Recent Documents</h2>
-                                    @HyperLinkLists(Model.recentDocuments, "")
-                                    <a href="@string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=Documents", SuiteLevelWebApp.Utils.AppSettings.DemoSiteServiceResourceId, Model.UnifiedGroupId)" target="_blank">See More</a>
-                                    @*@HyperLinkLists(Model.tasks, "Tasks")*@
-                                    <h2>Notes</h2>
-                                    @HyperLinkLists(Model.oneNotePages, "")
-                                    @if (!string.IsNullOrEmpty(Model.oneNoteUrl))
-                                    {
-                                        <a href="@Model.oneNoteUrl" target=" _blank">See More</a>
-                                    }
-                                    else
-                                    {
-                                        <span>See More</span>
-                                    }
-                                    <h2>Dispatcher Email</h2>
-                                    @HyperLinkLists(Model.DispatcherMails, "")
-                                    <a href="@string.Format("{0}owa/#path=/group/{1}/mail", SuiteLevelWebApp.Utils.AADAppSettings.OutlookResourceId, Model.UnifiedGroupEmail)" target="_blank">See More</a>
-                                    <h2>Property Files</h2>
-                                    @HyperLinkLists(Model.files, "")
-                                    <a href="@string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=Documents", SuiteLevelWebApp.Utils.AppSettings.DemoSiteServiceResourceId, Model.UnifiedGroupId)" target="_blank">See More</a>
-                                    <div class="upload-file-block" style="margin-top:15px">
-                                        @using (Html.BeginForm("UploadFile", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                <div class="content-block">
+                                    <div class="content-row">
+                                        <h2>Inspector: @Model.inspection.sl_inspector</h2>
+                                    </div>
+                                    <div class="content-row">
+                                        <span>
+                                            <a class="fs-smaller" href="mailto:@Model.inspection.sl_emailaddress">@Model.inspection.sl_emailaddress</a>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Members -->
+                                <div id="members" class="content-block">
+                                    <div class="content-row">
+                                        <h2><i class="ms-Icon ms-Icon--people" aria-hidden="true"></i>Property Members<i class="ms-Icon ms-Icon--chevronThinDown" aria-hidden="true"></i></h2>
+                                    </div>
+                                    <div class="details-block">
+                                        @foreach (var item in Model.members)
                                         {
-                                            @Html.Hidden("PropertyTitle", Model.incident.sl_propertyID.Title)
-                                            @Html.Hidden("IncidentId", Model.incidentId)
-                                            <div class="form-button">
-                                                <input style="width:220px" type="file" name="File" />
-                                                <br />
-                                                <button>Upload</button>
+                                            <div class="content-row">
+                                                <!-- Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE in the project root for license information. -->
+                                                <div class="ms-Persona ms-Persona ms-Persona--square ms-Persona--xs">
+                                                    <div class="ms-Persona-imageArea">
+                                                        <img class="ms-Persona-image" src="@Url.Action("UserPhoto", "Photo", new { userId = item.id })">
+                                                    </div>
+                                                    <div class="ms-Persona-details">
+                                                        <div class="ms-Persona-primaryText">
+                                                            @item.displayName
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ms-Persona-wrapper">
+                                                    <div>
+                                                        <div class="ms-PersonaCard ms-PersonaCard--square">
+                                                            <div class="ms-PersonaCard-persona">
+                                                                <div class="ms-Persona ms-Persona--square ms-Persona--xl">
+                                                                    <div class="ms-Persona-imageArea">
+                                                                        <i class="ms-Persona-placeholder ms-Icon ms-Icon--person"></i>
+                                                                        <img class="ms-Persona-image" src="@Url.Action("UserPhoto", "Photo", new { userId = item.id })">
+                                                                    </div>
+                                                                    <div class="ms-Persona-details">
+                                                                        <div class="ms-Persona-primaryText">@item.displayName</div>
+                                                                        <div class="ms-Persona-secondaryText">@item.jobTitle, @item.department</div>
+                                                                        <div class="ms-Persona-tertiaryText">Office: @item.officeLocation</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <ul class="ms-PersonaCard-actions">
+                                                                <li id="chat" class="ms-PersonaCard-action is-active"><i class="ms-Icon ms-Icon--chat"></i></li>
+                                                                <li id="phone" class="ms-PersonaCard-action"><i class="ms-Icon ms-Icon--phone"></i></li>
+                                                                <li id="video" class="ms-PersonaCard-action"><i class="ms-Icon ms-Icon--video"></i></li>
+                                                                <li id="mail" class="ms-PersonaCard-action"><i class="ms-Icon ms-Icon--mail"></i></li>
+                                                            </ul>
+                                                            <div class="ms-PersonaCard-actionDetailBox">
+                                                                <ul id="detailList" class="ms-PersonaCard-detailChat">
+                                                                    <li id="chat" class="ms-PersonaCard-actionDetails detail-1">
+                                                                        <div class="ms-PersonaCard-detailLine"><span class="ms-PersonaCard-detailLabel">Lync:</span> <a class="ms-Link" href="sip:@item.mail">Start Lync call</a></div>
+                                                                    </li>
+                                                                    <li id="phone" class="ms-PersonaCard-actionDetails detail-2">
+                                                                        <div class="ms-PersonaCard-detailLine"><span class="ms-PersonaCard-detailLabel">Personal:</span> @item.mobilePhone</div>
+                                                                        <div class="ms-PersonaCard-detailLine"><span class="ms-PersonaCard-detailLabel">Work:</span> @item.businessPhones.FirstOrDefault()</div>
+                                                                    </li>
+                                                                    <li id="video" class="ms-PersonaCard-actionDetails detail-3">
+                                                                        <div class="ms-PersonaCard-detailLine"><span class="ms-PersonaCard-detailLabel">Skype:</span> <a class="ms-Link" href="skype:@item.mail?call">Start Skype call</a></div>
+                                                                    </li>
+                                                                    <li id="mail" class="ms-PersonaCard-actionDetails detail-4">
+                                                                        <div class="ms-PersonaCard-detailLine"><span class="ms-PersonaCard-detailLabel">Work:</span> <a class="ms-Link" href="mailto:@item.mail">@item.mail</a></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         }
                                     </div>
+                                    <div class="content-row">
+                                        <a class="seemorelink" href="@string.Format("{0}owa/#path=/group/{1}/people", AADAppSettings.OutlookUrl, Model.UnifiedGroupEmail)" target="_blank">See More</a>
+                                    </div>
+                                </div>
+
+                                <!-- Tasks -->
+                                <div class="content-block task">
+                                    <div class="content-row">
+                                        <h2><i class="ms-Icon ms-Icon--tasks" aria-hidden="true"></i>In progress Tasks<i class="ms-Icon ms-Icon--chevronThinDown" aria-hidden="true"></i></h2>
+                                    </div>
+                                    <div class="details-block">
+                                        @foreach (var item in Model.tasks)
+                                        {
+                                            <div class="content-row">
+                                                <div class="link-see-more">
+                                                    <a data-assignedto="@item.AssignedTo" data-assignedby="@item.AssignedBy" data-assigneddate="@item.AssignedDate">@item.Title</a>
+                                                    <a><i class="ms-Icon ms-Icon--ellipsis" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="content-row">
+                                        <a class="seemorelink" href="@string.Format("{0}{1}/en-US/Home/PlanViews/{2}", AADAppSettings.OfficeUrl, AppSettings.DemoSiteCollectionOwner.Split('@')[1], Model.PlanId)" target="_blank">See More</a>
+                                    </div>
+                                </div>
+
+                                <!-- Conversations -->
+                                <div class="content-block">
+                                    <div class="content-row">
+                                        <h2><i class="ms-Icon ms-Icon--chat" aria-hidden="true"></i>Conversations<i class="ms-Icon ms-Icon--chevronThinDown" aria-hidden="true"></i></h2>
+                                    </div>
+                                    @HyperLinkLists(Model.conversations, "")
+                                    <div class="content-row">
+                                        <a class="seemorelink" href="@string.Format("{0}owa/#path=/group/{1}/mail", AADAppSettings.OutlookUrl, Model.UnifiedGroupEmail)" target="_blank">See More</a>
+                                    </div>
+                                </div>
+
+                                <!-- Recent Documents -->
+                                <div class="content-block files">
+                                    <div class="content-row">
+                                        <h2><i class="ms-Icon ms-Icon--documents" aria-hidden="true"></i>Recent Documents<i class="ms-Icon ms-Icon--chevronThinDown" aria-hidden="true"></i></h2>
+                                    </div>
+                                    @HyperLinkLists(Model.recentDocuments, "", true)
+                                    <div class="content-row">
+                                        <a class="seemorelink" href="@string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=Documents", AppSettings.DemoSiteServiceResourceId, Model.UnifiedGroupId)" target="_blank">See More</a>
+                                    </div>
+                                </div>
+
+                                <!-- Notes -->
+                                <div class="content-block">
+                                    <div class="content-row">
+                                        <h2><i class="ms-Icon ms-Icon--notebook" aria-hidden="true"></i>Notes<i class="ms-Icon ms-Icon--chevronThinDown" aria-hidden="true"></i></h2>
+                                    </div>
+                                    @HyperLinkLists(Model.oneNotePages, "")
+                                    <div class="content-row">
+                                        <a class="seemorelink" href="@string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=notebook", AppSettings.DemoSiteCollectionUrl, Model.UnifiedGroupId)" target=" _blank">See More</a>
+                                    </div>
+                                </div>
+
+                                <!-- Dispatcher Email -->
+                                <div class="content-block">
+                                    <div class="content-row">
+                                        <h2><i class="ms-Icon ms-Icon--mail" aria-hidden="true"></i>Dispatcher Email<i class="ms-Icon ms-Icon--chevronThinDown" aria-hidden="true"></i></h2>
+                                    </div>
+                                    @HyperLinkLists(Model.DispatcherMails, "")
+                                    <div class="content-row">
+                                        <a class="seemorelink" href="@string.Format("{0}owa/#path=/group/{1}/mail", AADAppSettings.OutlookUrl, Model.UnifiedGroupEmail)" target="_blank">See More</a>
+                                    </div>
+                                </div>
+
+                                <!-- Property Files< -->
+                                <div class="content-block files">
+                                    <div class="content-row">
+                                        <h2><i class="ms-Icon ms-Icon--fileDocument" aria-hidden="true"></i>Property Files<i class="ms-Icon ms-Icon--chevronThinDown" aria-hidden="true"></i></h2>
+                                    </div>
+                                    @HyperLinkLists(Model.files, "", true)
+                                    <div class="content-row">
+                                        <a class="seemorelink" href="@string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=Documents", AppSettings.DemoSiteServiceResourceId, Model.UnifiedGroupId)" target="_blank">See More</a>
+                                    </div>
+                                </div>
+
+                                <!-- Upload Files< -->
+                                <div class="content-block">
+                                    <div class="upload-file-block">
+                                        @using (Html.BeginForm("UploadFile", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                            @Html.Hidden("PropertyTitle", Model.incident.sl_propertyID.Title)
+                                            @Html.Hidden("IncidentId", Model.incidentId)
+                                            <div class="form-button">
+                                                <input type="file" name="File" />
+                                                <br />
+                                                <button>Upload</button>
+                                            </div>
+                                            }
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li class="right-panel col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    <div>
-                        @if (!string.IsNullOrEmpty(Model.viewName))
-                        {
-                            @Html.Partial(Model.viewName, Model)
-                        }
-                        @*@if (Model.viewName == "ScheduleRepair")
+                    </li>
+                    <li class="right-panel col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <div>
+                            @if (!string.IsNullOrEmpty(Model.viewName))
                             {
-                                var createTaskViewModel = ViewBag.CreateTaskViewModel as CreateTaskViewModel
-                                    ?? new CreateTaskViewModel { InspectionId = Model.incidentId };
-                                @Html.Partial("CreateTask", createTaskViewModel)
-                            }*@
-                    </div>
-                </li>
-            </ul>
+                                @Html.Partial(Model.viewName, Model)
+                            }
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-<div class="popup-window" style="display:none">
-    <div class="content-area">
-        <span class="popup-window-fork"></span>
-        <!--Incident begin -->
-        <div class="incident-window">
-            <h3>Incident</h3>
-            <div class="content-row clear">
-                <label>Incident Comments</label>
-                <div>
+    <div class="popup-window" style="display:none">
+        <div class="content-area">
+            <span class="popup-window-fork"></span>
+            <!--Incident begin -->
+            <div class="incident-window">
+                <h3>Incident</h3>
+                <div class="content-row clear">
+                    <label>Incident Comments</label>
                     <div>
-                        @Html.TextAreaFor(m => m.incident.sl_inspectorIncidentComments, new { @readonly = "readonly" })
+                        <div>
+                            @Html.TextAreaFor(m => m.incident.sl_inspectorIncidentComments, new { @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="content-row clear">
+                    <label>Incident Type</label>
+                    <div>
+                        @Html.TextBoxFor(m => m.incident.sl_type, new { @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="content-row clear img">
+                    <label>Photos</label>
+                    @if (Model.roomInspectionPhotos != null && Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId).Count() > 0)
+                    {
+                        <img src="@Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId).FirstOrDefault().sl_roomID.imgUrl" />
+                    }
+                </div>
+                <div class="content-row clear">
+                    <label>Videos</label>
+                    <div class="video-lists" style="padding-left:0px">
+                        <ul style="padding:0px">
+                            @foreach (var item in Model.videos)
+                            {
+                                <li style="margin:0; padding:0; list-style:none">
+                                    <a href="@item.YammerObjectUrl" target="_blank">
+                                        <img style="width:500px; height:300px; margin-bottom:10px" src="@item.ThumbnailUrl" />
+                                    </a>
+                                </li>
+                            }
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="content-row clear">
-                <label>Incident Type</label>
-                <div>
-                    @Html.TextBoxFor(m => m.incident.sl_type, new { @readonly = "readonly" })
-                </div>
-            </div>
-            <div class="content-row clear img">
-                <label>Photos</label>
-                @if (Model.roomInspectionPhotos != null && Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId).Count() > 0)
-                {
-                    <img src="@Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId).FirstOrDefault().sl_roomID.imgUrl" />
-                }
-            </div>
-            <div class="content-row clear">
-                <label>Videos</label>
-                <div class="video-lists" style="padding-left:0px">
-                    <ul style="padding:0px">
-                        @foreach (var item in Model.videos)
-                        {
-                            <li style="margin:0; padding:0; list-style:none">
-                                <a href="@item.YammerObjectUrl" target="_blank">
-                                    <img style="width:500px; height:300px; margin-bottom:10px" src="@item.ThumbnailUrl" />
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!--Incident end -->
-        <!--Inspection Comments begin-->
-        <div class="inspection-comments-window">
-            <h3>Inspection Comment</h3>
-            <div class="content-row clear">
-                @Html.TextAreaFor(m => m.inspectionComment.Title, new { @readonly = "readonly" })
-            </div>
-            <h4>Photos</h4>
-            <div class="content-row">
-                <p class="imgs">
-                    @foreach (var item in Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId))
-                    {
-                        <img src="@item.sl_roomID.imgUrl" />
-                    }
-                </p>
-            </div>
-
-        </div>
-        <!--Inspector Comments end -->
-        @if (Model.viewName == "RepairComplete" || Model.viewName == "RepairApproved")
-        {
-        <!--Repair Comments begin-->
-            <div class="repair-comments-window">
-                <h3>Repair Comment</h3>
+            <!--Incident end -->
+            <!--Inspection Comments begin-->
+            <div class="inspection-comments-window">
+                <h3>Inspection Comment</h3>
                 <div class="content-row clear">
-                    @Html.TextAreaFor(m => m.incident.sl_repairComments, new { @readonly = "readonly" })
+                    @Html.TextAreaFor(m => m.inspectionComment.Title, new { @readonly = "readonly" })
                 </div>
                 <h4>Photos</h4>
                 <div class="content-row">
                     <p class="imgs">
-                        @foreach (var item in Model.repairPhotos)
+                        @foreach (var item in Model.roomInspectionPhotos.Where(r => r.sl_incidentIDId != null && r.sl_incidentIDId == Model.incidentId))
                         {
-                            <img src="@item.imgUrl" />
+                            <img src="@item.sl_roomID.imgUrl" />
                         }
                     </p>
                 </div>
             </div>
+            <!--Inspector Comments end -->
+            @if (Model.viewName == "RepairComplete" || Model.viewName == "RepairApproved")
+            {
+        <!--Repair Comments begin-->
+                <div class="repair-comments-window">
+                    <h3>Repair Comment</h3>
+                    <div class="content-row clear">
+                        @Html.TextAreaFor(m => m.incident.sl_repairComments, new { @readonly = "readonly" })
+                    </div>
+                    <h4>Photos</h4>
+                    <div class="content-row">
+                        <p class="imgs">
+                            @foreach (var item in Model.repairPhotos)
+                            {
+                                <img src="@item.imgUrl" />
+                            }
+                        </p>
+                    </div>
+                </div>
         <!--Repair Comments end -->
-        }
+            }
+        </div>
     </div>
-</div>
 
-@helper HyperLinkLists(IEnumerable<HyperLink> links, string title)
+    <div id="callouttemplate" style="display:none">
+        <div class="ms-Callout ms-Callout--close ms-Callout--arrowLeft">
+            <div class="ms-Callout-main">
+                <div class="ms-Callout-header">
+                    <p class="ms-Callout-title">
+                        #Title#
+                    </p>
+                </div>
+                <div class="ms-Callout-inner">
+                    <div class="ms-Callout-content">
+                        <p class="ms-Callout-subText">
+                            #Content#
+                        </p>
+                    </div>
+                    <div class="ms-Callout-actions">
+                        <a href="#linkUrl#" target="_blank" class="ms-Callout-link ms-Link ms-Link--hero">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@helper HyperLinkLists(IEnumerable<HyperLink> links, string title, bool addEllipsis = false)
 {
-    <h3>@title</h3>
     <div class="details-block">
         @foreach (var link in links)
         {
@@ -213,19 +348,122 @@
                 }
                 else
                 {
-                    <a href="@link.WebUrl" target="_blank">@link.Title</a>
+                    if (addEllipsis == false)
+                    {
+                        <a href="@link.WebUrl" target="_blank">@link.Title</a>
+                    }
+                    else
+                    {
+                        <div class="link-see-more">
+                            <a href="@link.WebUrl" target="_blank" data-id="@link.Id">@link.Title</a>
+                            <a><i class="ms-Icon ms-Icon--ellipsis" aria-hidden="true"></i></a>
+                        </div>
+                    }
                 }
             </div>
         }
     </div>
 }
-
 @section scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
+    <script src="~/components/PersonaCard/Jquery.PersonaCard.js"></script>
+    <script>
         $(function () {
             $('.popup-window-fork').click(function () {
                 $('.popup-window, .popup-window .content-area > div').hide();
+            });
+
+            $('#left-panel-wrapper > .content-block:nth-of-type(n + 4) h2').click(function () {
+                if ($(this).find('.ms-Icon--chevronThinDown').length == 0) {
+                    $(this).find('.ms-Icon--chevronThinRight').removeClass('ms-Icon--chevronThinRight').addClass('ms-Icon--chevronThinDown');
+                    $(this).parent().find("~div").show();
+
+                }
+                else {
+                    $(this).find('.ms-Icon--chevronThinDown').removeClass('ms-Icon--chevronThinDown').addClass('ms-Icon--chevronThinRight');
+                    $(this).parent().find("~div").hide();
+                }
+            });
+
+            if ($.fn.PersonaCard) {
+                $('.ms-PersonaCard').PersonaCard();
+            }
+
+            $('#members .content-row > .ms-Persona').click(function () {
+                var $personaCard = $(this).next('.ms-Persona-wrapper');
+
+                if ($personaCard.css('display') == 'none') {
+                    $('.ms-Persona-wrapper').hide();
+                    $personaCard.show();
+                }
+                else {
+                    $('.ms-Persona-wrapper').hide();
+                }
+            });
+
+            //display file thumbnail
+            $('#left-panel-wrapper .files .link-see-more a:last-child').click(function () {
+                var tmpl = $('#callouttemplate').html(),
+                    $parent = $(this).parent(),
+                    $callout = $parent.find('.callout-wrapper');
+                if ($callout.length == 1) {
+                    if ($callout.css('display') == 'none') {
+                        $('.callout-wrapper').hide();
+                        $callout.show();
+                    }
+                    else {
+                        $('.callout-wrapper').hide();
+                    }
+                }
+                else {
+                    var $link = $parent.find('a').eq(0);
+                    var groupid = $('#propertygroupid').val();
+                    var html = [
+                        '<div class="callout-wrapper" style="display:block">',
+                        tmpl.replace('#Title#', $link.text())
+                            .replace('#Content#', '<img alt="no file thumbnail" src="/Photo/DriveItemThumbnail?groupId=' + groupid + '&fileId=' + $link.data('id') + '">')
+                            .replace('#linkUrl#', $link.attr('href')),
+                        '</div>'];
+
+                    $('.callout-wrapper').hide();
+                    $parent.append(html.join(''));
+                }
+            });
+
+            //display task basic info
+            $('#left-panel-wrapper .task .link-see-more a:last-child').click(function () {
+                var tmpl = $('#callouttemplate').html(),
+                    $parent = $(this).parent(),
+                    $callout = $parent.find('.callout-wrapper');
+                if ($callout.length == 1) {
+                    if ($callout.css('display') == 'none') {
+                        $('.callout-wrapper').hide();
+                        $callout.show();
+                    }
+                    else {
+                        $('.callout-wrapper').hide();
+                    }
+                }
+                else {
+                    var $link = $parent.find('a').eq(0);
+                    var assignedTo = $link.data('assignedto');
+                    var assignedBy = $link.data('assignedby');
+                    var assignedDate = $link.data('assigneddate');
+                    var groupid = $('#propertygroupid').val();
+                    var html = [
+                        '<div class="callout-wrapper" style="display:block">',
+                        tmpl.replace('#Title#', $link.text())
+                            .replace('#Content#', '<p><span>Assigned To:</span>' +
+                                                   assignedTo +
+                                                  '</p><p><span>Assigned By:</span>' +
+                                                   assignedBy +
+                                                  '</p><p><span>Assigned Date:</span>' +
+                                                   assignedDate +
+                                                  ' </p><p><span>Status:</span>In progress</p>'),
+                         '</div>'];
+
+                    $('.callout-wrapper').hide();
+                    $parent.append(html.join(''));
+                }
             });
         });
     </script>

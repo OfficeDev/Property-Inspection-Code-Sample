@@ -2,23 +2,9 @@ source 'https://github.com/Cocoapods/Specs.git'
 platform :ios, '8.0'
 
 xcodeproj 'iOSRepairApp'
-
-#pod 'ADALiOS', '~> 1.0.0'   # 1.0.0 < ver < 1.1.0
-#pod 'Office365/Outlook', '~>0.5.0'
-#pod 'Office365/Outlook', '=0.5.4'
-#pod 'Office365/Outlook', '=0.8.3'
-
-#first email from josh on 4-25-2015
-#pod 'Office365/Outlook', '=0.9.0'
-#pod 'ADALiOS', '=1.2.2'
-
-#second email from josh on 4-25-2015
-#pod 'ADALiOS', '=1.2.2'
-#pod 'Office365/Outlook', '=0.9.0'
-#pod 'Office365/Graph', '=0.9.0'
-
-#update by Tyler on 08-31-2015
 pod 'ADALiOS', '=1.2.4'
-pod 'Office365/outlook', :git => 'https://github.com/OfficeDev/Office-365-SDK-for-iOS', :branch => 'master'
-pod 'Office365/unified', :git => 'https://github.com/OfficeDev/Office-365-SDK-for-iOS', :branch => 'master'
-pod 'Office365/onenote', :git => 'https://github.com/OfficeDev/Office-365-SDK-for-iOS', :branch => 'master'
+pod 'orc'
+pod 'MSOutlook-SDK-iOS'
+pod 'MSOneNote-SDK-iOS'
+pod 'MSGraph-SDK-iOS'
+pod 'MSAADGraph-SDK-iOS'

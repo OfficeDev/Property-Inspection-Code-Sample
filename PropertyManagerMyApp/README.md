@@ -15,7 +15,7 @@
 - Office 365 Subscription
 - Microsoft Azure Subscription
 - Visual Studio 2013 Update 4
-- [Microsoft Office Developer Tools for Visual Studio 2013 - November 2014 Update](http://download.microsoft.com/download/A/D/0/AD077416-F349-4214-81C6-6650E2AF1AF2/enu/cba_bundle.exe)
+- [Microsoft Office Developer Tools for Visual Studio 2013 August 2015 Update](https://www.microsoft.com/web/handlers/WebPI.ashx/getinstaller/OfficeToolsForVS2013Update1.appids)
 - Office 365 Video Portal
 	+ Before you start the installation process, ensure the Office 365 video portal is provisioned in your tenancy.  Follow the steps below to enable, provision and verify the Office 365 Video Portal is available in your tenancy.
 	
@@ -62,8 +62,6 @@ Important Notes
 ---------------  
 
 - Use Internet Explorer or Google Chrome to install and execute the web app portion of the code sample.  The Edge browser is not yet supported.
-- The *Microsoft Office Developer Tools for Visual Studio 2013 - April 2015 Update* breaks the Add Connected Service wizard.  If you have it installed, first uninstall it and then install the [Microsoft Office Developer Tools for Visual Studio 2013 - November 2014 Update](http://download.microsoft.com/download/A/D/0/AD077416-F349-4214-81C6-6650E2AF1AF2/enu/cba_bundle.exe).  A fix for this issue is coming shortly in a new update.
-- The Add Connected Service wizard is currently broken is Visual Studio 2015 as well.  A fix for this issue is coming shortly in a new update.
 - When you save the PropertyManagerMyApp directory to your local machine, save it to the root of one of your drives to ensure all Nuget functionality will work and your file paths will not become too long.
 
 To set up and configure the demo first download the Property Manager web app source code and open it in Visual Studio 2013.
@@ -71,8 +69,6 @@ To set up and configure the demo first download the Property Manager web app sou
 **Restore the Nuget packages the web app depends on**
 
 1. Right click on the  **PropertyManagerMyApp project** and select **Build**.
-
-	> **Note:**  You will get build errors after this step, they are to be expected. 
 
 **Register the Property Manager web app with your Azure Active Directory**
 
@@ -84,21 +80,13 @@ To register the Property Manager web app with your Azure Active Directory follow
   
 	The following images demonstrate how your app settings and api permissions should be configured for the Property Manager web app to work.
 	
-	Office 365 API Calendar Permissions
-	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Calendar Permissions-2.png)
-	
-	Office 365 API Mail Permissions
-	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Mail Permissions-2.png)
-	
 	Office 365 API Sites Permissions
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API Sites Permissions-2.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365%20API%20Sites%20Permissions-2.png)
 	
 	Office 365 API Users and Groups Permissions
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365 API AD Permissions-2.png)	
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365%20API%20AD%20Permissions-2.png)	
 
 4. Click **OK** in the Add Connected Services wizard to commit the changes.  
 
@@ -118,47 +106,29 @@ At this point Visual Studio will add the appropriate Office 365 Nuget packages t
 5.	Ensure the **PropertyManagerMyApp.Office365App** application exists, then click it.
 6.	Click **Configure** 
 7.	Scroll down to **Permissions to other applications** and click **Add application**
-8.	Mouse over Office 365 unified API (preview) and click the **+ button**
+8.	Mouse over **Microsoft Graph API**  and click the **+ button**
 9.	Click the **checkmark button** on the bottom right
-10.	Open the **Delegated Permissions dropdown list** for the Office 365 unified API (preview) item you just added
+10.	Open the **Delegated Permissions dropdown list** for the Microsoft Graph API item you just added
 11.	Select the following permissions:
+	- Read and write user notebooks (preview)
+	- Have full access to all files user can access
 	- Have full access to user calendars
+	- Send mail as a user
+	- Read and write access to user mail
+	- Access directory as the signed in user
 	- Read and write directory data
-	- Read and write all groups (preview)
-	- Enable sign-in and read user profile
-	- Read and write all user's full profiles
-
-	> **Note:** There is a permission named **Read all users' full profiles** that looks very similar to the **Read and write all user's full profiles** permission.  Make sure you select the **Read and write all user's full profiles** permission.
+	- Read and write all groups
+	- Read and write all users' full profiles
 	
 12.	Click **Save**
-
-**Add OneNote permissions to the PropertyManagerMyApp AAD app**
-
-In order to make the OneNote Azure Active Directory Application permission available, you must first provision the default OneNote Online notebook in your tenancy and access it.  To do this, follow these steps.
-
-1. In your web browser, open [](https://login.microsoftonline.com/) and sign in with an account that has an Office 365 license assigned to it that includes OneNote Online.
-2. Click the **OneNote Online** tile.
-3. Click a **OneNote notebook** in the list to open it.
-4.	In your web browser, open [](https://manage.windowsazure.com) and sign in with a subscription administrator account.
-5.	In the left menu, select **Active Directory**
-6.	Select your Azure Active Directory
-7.	Click **Applications**
-8.	Click the **PropertyManagerMyApp** application.
-9.	Click **Configure** 
-10.	Scroll down to **Permissions to other applications** and click **Add application**
-11.	Mouse over OneNote and click the **+ button**
-12.	Click the **checkmark button** on the bottom right
-13.	Open the **Delegated Permissions dropdown list** for the Office 365 unified API (preview) item you just added
-14.	Select **all the permissions**.	
-15.	Click **Save**
 
 **Edit web.config**
 
 The Property Manager web app stores configuration settings in the web.config file.  These settings must be configured for your environment in order for the Property Manager web app to work.  The Add Connected Service wizard creates some of these settings in the web.config file when it registers you app with Azure Active Directory.  These settings the Add Connected Service wizard creates include:
 
 - ida:ClientID
-- ida:ClientSecret (Microsoft Office Developer Tools for Visual Studio 2013 - November 2014 Update) or ida:Password (Microsoft Office Developer Tools for Visual Studio 2013 - April 2015 Update
-- ida:AuthorizationUri
+- ida:ClientSecret
+- ida:AADInstance
 
 In addition to the settings above, other settings exist that you must configure to match your tenancy.  These settings include:
 
@@ -194,30 +164,7 @@ In addition to the settings above, other settings exist that you must configure 
 5. Click **Update All**.
 6. Click **I Accept**.
 7. Click **Close**.
-8. In the web.config file **locate the bindingRedirect elements for the Microsoft.OData.Client, Microsoft.OData.Edm, and Microsoft.OData.Core assemblies and edit them to redirect to the latest version of the NuGet packages you downloaded**.  You can find the latest version of these assemblies in the packages.config file.
-
-	In this example the packages.config file looks like this:
-
-		<package id="Microsoft.OData.Client" version="6.13.0" targetFramework="net45" />
-	  	<package id="Microsoft.OData.Core" version="6.13.0" targetFramework="net45" />
-	  	<package id="Microsoft.OData.Edm" version="6.13.0" targetFramework="net45" />
-
-	Therefore, the bindingRedirect attributes look like this.  Notice the 6.13.0 value used in the oldVersion and newVersion attributes matches the version in the packages.config snippet above.
-
-		<dependentAssembly>
-	        <assemblyIdentity name="Microsoft.OData.Client" publicKeyToken="31bf3856ad364e35" culture="neutral" />
-	        <bindingRedirect oldVersion="0.0.0.0-6.13.0.0" newVersion="6.13.0.0" />
-	    </dependentAssembly>
-	    <dependentAssembly>
-	        <assemblyIdentity name="Microsoft.OData.Edm" publicKeyToken="31bf3856ad364e35" culture="neutral" />
-	        <bindingRedirect oldVersion="0.0.0.0-6.13.0.0" newVersion="6.13.0.0" />
-	    </dependentAssembly>
-	    <dependentAssembly>
-	        <assemblyIdentity name="Microsoft.OData.Core" publicKeyToken="31bf3856ad364e35" culture="neutral" />
-	        <bindingRedirect oldVersion="0.0.0.0-6.13.0.0" newVersion="6.13.0.0" />
-	    </dependentAssembly>
-
-9. **Save** the web.config file.
+8. **Save** the web.config file.
 
 **Configure Trusted Sites**
 
@@ -257,7 +204,7 @@ After you have performed the configuration steps described above, provision the 
 
 2. When prompted, click the **Accept** button. 
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/grant consent.jpg)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/grant%20consent.jpg)
 	
 	After you successfully build and run the project and login, **ignore the error you see in the web browser**.  The error occurs because the Site Collection has not been provisioned yet.
 	 
@@ -268,7 +215,7 @@ After you have performed the configuration steps described above, provision the 
 
 	> **Note:**  This process can take up to 20 minutes to complete.  Do not refresh the page during this process.  The page will refresh every minute and display the current time to let you know it is still running.  When the process completes you will see this screen:
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/sc provision success-2.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/sc%20provision%20success-2.png)
 
 **Provision Azure Active Directory Groups, Users, and demo data**
 
@@ -305,9 +252,11 @@ Finally, you will create the Azure Active Directory Groups, Users, and demo data
 
 9. Enter the date when you plan to execute the demo, then click the **Populate** button.
 
-	When the process completes you will see this screen:
+	When the process completes you will see this screen.  Click the **Click here to inititalize OneNote site for demo Office 365 Groups** button.
 	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/demo data provision success-2.png)
+    ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/demo%20data%20provision%20success-2.png)
+    
+    > **Note:** You need to wait 24-48 hours for all the OneNote Notebooks corresponding to the Office 365 Groups to be completely created.
 	
 	If you navigate to the Site Contents page in the Site Collection you will see the lists and libraries which indicate they just had sample data added to them.
 	
@@ -320,8 +269,6 @@ Finally, you will create the Azure Active Directory Groups, Users, and demo data
 **Passwords**
 
 The initial password for all the users is **TempP@ssw0rd!**
-
-You will need to specify a new password for each user the first time you log in with them. 
 
 **Office 365 Video Portal Permissions**
 You must grant the repair person's account the permission to upload videos to Office 365 Video Portal so the repair person can upload a video from the Repair mobile app. To do this, follow these steps:
@@ -356,25 +303,12 @@ You must grant the repair person's account the permission to upload videos to Of
 
 1. Next, log in with each user to your tenancy and access Outlook to set up their email.
 
-	> **Note:** It may take up to 24 hours for the Office 365 infrastructure to create an Exchange Mailbox and Calendar.  Usually, it takes 10 seconds.
+> **Note:** It may take up to 24 hours for the Office 365 infrastructure to create an Exchange Mailbox and Calendar.  Usually, it takes 10 seconds.
 
 **Property Manager web app Configuration**
 This step is optional.  If you wish to add a custom logo to your Property Manager web app you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  
 
 1. To do this, access the AAD App in the Azure Management Portal and use the image file you can find in the PropertyManagementMyApp Visual Studio Solution.  **/Content/Images/AADAppLogos/logo-prop-man.jpg**
-
-**Associate pictures with unified groups**
-This step is optional.  If you wish to add pictures tot he unified groups associated with each property in the demo data you can manually upload the pictures to the unified groups.  Currently, this capability is not supported via the API. 
-
-1. Go to https://outlook.office365.com
-
-	For each unified group, perform these steps:
-
-2. Click a **unified group** you created in the Groups section.
-3. Click the **edit icon button**, which is found in the default group photo.
-4. Click **edit icon** in the edit group section.
-5. Upload the **image** for the unified group.  The images for the unified groups are located in the \content\images\properties directory in the PropertyManagementMyApp project.
-6. Click **Save**.
 
 **Property Manager web app Installation Complete!**
 You can now install and run the mobile apps.
@@ -386,7 +320,7 @@ Signing into Office 365 and viewing the web app does not obtain the token used t
 
 ***Since this is the case you must first log into the SharePoint site collection before you try to access the web app.***
 
-In future releases the Unified API will include the ability to query SharePoint list items and document libraries and the Video Portal.  Once the Unified API includes this functionality the web app will be updated to use the Unified API.  After the web app has been converted to use the Unified API the separate token needed to access the  REST APIs is no longer needed and there will be no need to log into the SharePoint site collection before accessing the web app.
+In future releases the Graph API will include the ability to query SharePoint list items and document libraries and the Video Portal.  Once the Unified API includes this functionality the web app will be updated to use the Graph API.  After the web app has been converted to use the Unified API the separate token needed to access the  REST APIs is no longer needed and there will be no need to log into the SharePoint site collection before accessing the web app.
 
 **Access the property management web app dashboard**
 
@@ -460,5 +394,3 @@ To re-provision (reset) the entire information architecture and demo data to the
 
 ## License
 Copyright (c) Microsoft, Inc. All rights reserved. Licensed under the Apache License, Version 2.0.
-
-

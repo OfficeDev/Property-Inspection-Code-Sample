@@ -37,7 +37,7 @@ namespace SuiteLevelWebApp.Controllers
             string strRedirectController = Request.QueryString["redirect"];
 
             string authorizationRequest = String.Format(
-                "/common/oauth2/authorize?response_type=code&client_id={0}&resource={1}&redirect_uri={2}",
+                "common/oauth2/authorize?response_type=code&client_id={0}&resource={1}&redirect_uri={2}",
                     AADAppSettings.AuthorizationUri,
                     Uri.EscapeDataString(AADAppSettings.ClientId),
                     Uri.EscapeDataString(strResource),
@@ -53,7 +53,7 @@ namespace SuiteLevelWebApp.Controllers
             string strRedirectController = Request.QueryString["redirect"];
 
             string authorizationRequest = String.Format(
-                "/common/oauth2/authorize?response_type=code&client_id={0}&resource={1}&redirect_uri={2}&prompt={3}",
+                "common/oauth2/authorize?response_type=code&client_id={0}&resource={1}&redirect_uri={2}&prompt={3}",
                     AADAppSettings.AuthorizationUri,
                     Uri.EscapeDataString(AADAppSettings.ClientId),
                     Uri.EscapeDataString(strResource),

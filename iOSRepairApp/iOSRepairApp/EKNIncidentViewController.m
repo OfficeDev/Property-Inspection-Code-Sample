@@ -60,7 +60,7 @@
     [self.view addSubview:self.backButton];
     
     [self addSpinner];
-   
+    
     if(self.incidentId == nil)
     {
         [self getIncidentFirstId];
@@ -132,14 +132,14 @@
     [self.lpsIncidentMenuTableView setScrollEnabled:NO];
     
     NSIndexPath *initIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-
+    
     [self.lpsIncidentMenuTableView selectRowAtIndexPath:initIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     [self tableView:self.lpsIncidentMenuTableView didSelectRowAtIndexPath:initIndexPath];
     
     [self.leftPanelView addSubview:self.lpsIncidentMenuTableView];
     
     
-   self.lpsPropertyDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(25, 9, 315, 349) style:UITableViewStyleGrouped];
+    self.lpsPropertyDetailTableView = [[UITableView alloc] initWithFrame:CGRectMake(25, 9, 315, 349) style:UITableViewStyleGrouped];
     self.lpsPropertyDetailTableView.tag = LpsPropertyDetailTableViewTag;
     self.lpsPropertyDetailTableView.backgroundColor = [UIColor whiteColor];
     self.lpsPropertyDetailTableView.delegate = self;
@@ -220,7 +220,7 @@
 -(void)expandLeftPanel{
     self.lpsIncidentMenuTableView.frame = CGRectMake(0, 0, 344, 448);
     self.lpsIncidentMenuTableView.hidden = NO;
-
+    
     self.lpsPropertyDetailTableView.frame = CGRectMake(25, 448+9, 315, 349);
     
     self.lpsContactOfficeTableView.hidden = YES;
@@ -395,7 +395,7 @@
     
     self.spinner.hidden = NO;
     [self.spinner startAnimating];
-   
+    
 }
 
 -(void)hideLoading
@@ -587,6 +587,7 @@
                     [self hideLoading];
                     [self updateMpsIncidentsListTableCell:self.selectedIndexPath];
                     [self showSuccessMessage:@"Finalize repair successfully."];
+                    
                     [self sendEmailAfterRepair];
                 }
                 else
@@ -643,8 +644,15 @@
                  NSLog(@"Send email failed.");
              }
          });
-
+         
      }];
+    
+    //update task
+    EKNGraphService *service = [[EKNGraphService alloc] init];
+    [service updateTask:self.selectGroupId incidentId:self.selectIncidentId callback:^(NSString *error) {
+    }];
+    //
+    
 }
 
 -(void)sendDispatcherEmail
@@ -652,36 +660,36 @@
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     NSString *address = [standardUserDefaults objectForKey:@"dispatcherEmail"];
     [self showSendEmailViewController:address body:@"IOS Sent dispather Email"];
-
+    
     
     
     /*NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *to = [standardUserDefaults objectForKey:@"dispatcherEmail"];
-    
-    NSMutableDictionary *emailDataDic = [[NSMutableDictionary alloc] init];
-    [emailDataDic setObject:@"Sent from ios" forKey:@"subject"];
-    [emailDataDic setObject:to forKey:@"to"];
-    [emailDataDic setObject:@"Sent from ios" forKey:@"body"];
-    
-    [self showLoading];
-    
-    
-    EKNGraphService *graph = [[EKNGraphService alloc] init];
-    [graph sendMail:emailDataDic callback:^(int returnValue, NSError *error)
+     NSString *to = [standardUserDefaults objectForKey:@"dispatcherEmail"];
+     
+     NSMutableDictionary *emailDataDic = [[NSMutableDictionary alloc] init];
+     [emailDataDic setObject:@"Sent from ios" forKey:@"subject"];
+     [emailDataDic setObject:to forKey:@"to"];
+     [emailDataDic setObject:@"Sent from ios" forKey:@"body"];
+     
+     [self showLoading];
+     
+     
+     EKNGraphService *graph = [[EKNGraphService alloc] init];
+     [graph sendMail:emailDataDic callback:^(int returnValue, NSError *error)
      {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             [self hideLoading];
-             if (error ==nil) {
-                 //
-                 [self showHintAlertView:@"EMAIL DISPATCHER" message:@"Send email success."];
-                 NSLog(@"Send email success.");
-             }
-             else
-             {
-                 [self showHintAlertView:@"EMAIL DISPATCHER" message:@"Send email failed."];
-                 NSLog(@"Send email failed.");
-             }
-         });
+     dispatch_async(dispatch_get_main_queue(), ^{
+     [self hideLoading];
+     if (error ==nil) {
+     //
+     [self showHintAlertView:@"EMAIL DISPATCHER" message:@"Send email success."];
+     NSLog(@"Send email success.");
+     }
+     else
+     {
+     [self showHintAlertView:@"EMAIL DISPATCHER" message:@"Send email failed."];
+     NSLog(@"Send email failed.");
+     }
+     });
      }
      ];*/
 }
@@ -1260,7 +1268,7 @@
             [self.rightPanelView bringSubviewToFront:commonTable];
             NSMutableDictionary *groupDic =[[self.groupAllFilesDic objectForKey:groupkey] objectForKey:self.selectGroupId];
             if(groupDic == nil){
-                [commonTable getPPcommonTableService];
+                [commonTable getPPcommonTableService:self.selectIncidentId];
             }
             else{
                 [commonTable loadPPcommonTableView:groupDic];

@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <QuartzCore/QuartzCore.h>
-#import "ListClient.h"
-#import "ListItem.h"
+#import "EKNListClient.h"
+#import "EKNListItem.h"
 #import "EKN+UIViewController.h"
 #import "PropertyListCell.h"
 #import "PropertyDetailsImage.h"
@@ -21,6 +21,8 @@
 #import "EKNCollectionViewCell.h"
 #import "RoomListCell.h"
 #import "CommentCollectionViewCell.h"
+#import "EKNVideoService.h"
+#import "SPVideoItem.h"
 
 
 typedef NS_ENUM(NSInteger, PropertySubViewsTag) {
@@ -140,7 +142,7 @@ UICollectionViewDataSource,UICollectionViewDelegate, UITextViewDelegate,UIPicker
 
 
 
-@property(nonatomic) ListClient *listClient;
+@property(nonatomic) EKNListClient *listClient;
 
 @property(nonatomic) MFMailComposeViewController *mailController;
 -(void)setDataExternal:(NSString *)pid loginName:(NSString *)loginName token:(NSString *)token;

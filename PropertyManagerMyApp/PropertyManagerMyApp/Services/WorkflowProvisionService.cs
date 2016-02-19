@@ -3,7 +3,7 @@ using Microsoft.SharePoint.Client.WorkflowServices;
 using System;
 using System.Collections.Generic;
 
-namespace SuiteLevelWebApp.Service
+namespace SuiteLevelWebApp.Services
 {
     [Flags]
     public enum WorkflowSubscritpionEventType

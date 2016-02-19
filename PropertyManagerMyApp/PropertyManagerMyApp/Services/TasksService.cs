@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuiteLevelWebApp.Service
+namespace SuiteLevelWebApp.Services
 {
     public class TasksService
     {

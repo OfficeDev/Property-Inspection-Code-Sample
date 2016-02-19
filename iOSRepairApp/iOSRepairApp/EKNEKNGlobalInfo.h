@@ -74,6 +74,7 @@ typedef NS_ENUM(NSInteger, DocumentType){
 +(NSString *)getSiteUrl;
 +(NSString *)createFileName:(NSString *)fileExtension;
 +(void)openUrl:(NSString *)url;
++(NSDictionary*)parseResponseDataToDic:(NSData *)data;
 @end
 
 

@@ -67,5 +67,10 @@ namespace XamarinRepairApp.Model
         {
             return Helper.GetString(mData["sl_postalCode"]);
         }
+
+		public String GetGroupID()
+		{
+			return Helper.GetString(mData["sl_group"]);
+		}
     }
 }

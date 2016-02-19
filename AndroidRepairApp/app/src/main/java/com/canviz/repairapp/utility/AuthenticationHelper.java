@@ -143,6 +143,32 @@ public class AuthenticationHelper {
         return getTClientAAD(Constants.GRAPH_RESOURCE_ID, Constants.GRAPH_RESOURCE_URL + Constants.AAD_CLIENT_ID, GraphServiceClient.class);
     }
 
+    public static SettableFuture<String> getGraphAccessToken(){
+        final SettableFuture<String> future = SettableFuture.create();
+        try {
+            getAuthenticationContext().acquireToken(
+                    mActivity,
+                    Constants.GRAPH_RESOURCE_ID,
+                    Constants.AAD_CLIENT_ID,
+                    Constants.AAD_REDIRECT_URL,
+                    PromptBehavior.Auto,
+                    new AuthenticationCallback<AuthenticationResult>() {
+                        @Override
+                        public void onSuccess(AuthenticationResult authenticationResult) {
+                            future.set(authenticationResult.getAccessToken());
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            future.setException(e);
+                        }
+                    });
+        } catch (Throwable t) {
+            future.setException(t);
+        }
+        return future;
+    }
+
     public static OneNoteApiClient getOneNoteClient(String token) {
         return new OneNoteApiClient(Constants.ONENOTE_RESOURCE_URL, getDependencyResolver(token));
     }

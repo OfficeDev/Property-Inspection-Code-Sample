@@ -44,9 +44,8 @@ To configure the Xamarin Android Repair App follow these instructions.
 
     Example: katiej@contoso.onmicrosoft.com
 
-7. Edit the **AAD_CLIENT_ID** variable.  This is the Client ID value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
+7. Edit the **AAD_CLIENT_ID** variable.  This is the Client ID value you copied at step 12 in "Mobile Repair App Azure Active Directory Application Installation README".  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
 
-8. Edit the **AAD_REDIRECT_URL** variable.  This is the Redirect URI value you copied and pasted in the steps above.  This value is also displayed in the CONFIGURE page for the PropertyManagementRepairApp Azure Active Directory Application in the Azure Management Portal.
 
 Set Up Android Virtual Device
 -----------------------------
@@ -56,13 +55,13 @@ The Android Repair App targets the Nexus 9 device.  These steps describe how to 
 1. In Visual Studio, click the **Tools** menu, select **Android**, and click **Open Android Emulator Manager** to open the Android Virtual Device Manager.
 2. Use the Android Virtual Device Manager to configure the Nexus 9 device.  Refer to the image below.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Nexus 9 AVD Settings.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Nexus%209%20AVD%20Settings.png)
 
 3. In the Android Virtual Device Manager, start the Nexus 9 Android Virtual Device.
 
 	> **Note:** When the device is starting you can see if HAXM is enabled on your system and if the emulator is taking advantage of it.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Starting Nexus 9 AVD.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Starting%20Nexus%209%20AVD.png)
 
 4. Wait for the device to boot, unlock it, and click the OK button.  
 
@@ -73,7 +72,7 @@ Run the Xamarin Android Repair App on the Nexus 9 Android Virtual Device
 
 1. In Visual Studio, select the **Any CPU Configuration** and the **Nexus_9** emulator.
 
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Xamarin Nexus 9 Simulator.png)
+	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Xamarin%20Nexus%209%20Simulator.png)
 
 2. Click **Build | Deploy Solution** to deploy the application to the Android emulator.
 3. In the Android emulator, click the **apps button**.
@@ -84,5 +83,7 @@ Run the Xamarin Android Repair App on the Nexus 9 Android Virtual Device
 
 ## License
 Copyright (c) Microsoft, Inc. All rights reserved. Licensed under the Apache License, Version 2.0.
+
+
 
 

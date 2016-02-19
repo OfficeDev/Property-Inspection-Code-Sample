@@ -2,27 +2,6 @@
 
 <h1>Inspection</h1>
 <div class="bg-white inspection-details">
-    @*<div class="rooms">
-            <div class="img-scroll-control clear">
-                <a class="left-arrow"></a>
-                <div class="img-container">
-                    <div class="img-list">
-                        <ul class="clear">
-                            @foreach (var item in Model.roomInspectionPhotos)
-                            {
-                                <li>
-                                    <img src="@item.sl_roomID.imgUrl" />
-                                    <div>
-                                        <span>@item.sl_roomID.Title</span>
-                                    </div>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-                <a class="right-arrow"></a>
-            </div>
-        </div>*@
     <div class="content-block">
         <div class="fs-smaller">Photos</div>
         <div class="photo-lists">
@@ -42,7 +21,7 @@
     {
         <div class="content-block">
             <button class="pull-left fs-smaller" id="annotateImagesButton" type="button" data-form-method="POST" data-form-target="_blank"
-                    data-form-action="@Url.Action("AnnotateImages", new { incidentId = Model.incidentId })" @(string.IsNullOrEmpty(Model.oneNoteUrl) ? "disabled": "" )>
+                    data-form-action="@Url.Action("AnnotateImages", new { incidentId = Model.incidentId })" @(string.IsNullOrEmpty(Model.oneNoteUrl) ? "disabled" : "")>
                 Annotate images
             </button>
         </div>

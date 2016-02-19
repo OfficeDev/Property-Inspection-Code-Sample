@@ -1,14 +1,19 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using SuiteLevelWebApp.Service;
+using SuiteLevelWebApp.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Graph = Microsoft.Graph;
 
 namespace SuiteLevelWebApp.Utils
@@ -17,6 +22,9 @@ namespace SuiteLevelWebApp.Utils
     {
         public ClientContext clientContext = null;
         private XmlDocument _sampleDataDoc = null;
+        private string _baseFolderPath = string.Empty;
+        private string _currentUserName = string.Empty;
+        private string _graphServiceToken = string.Empty;
 
         private XmlDocument sampleData
         {
@@ -26,18 +34,21 @@ namespace SuiteLevelWebApp.Utils
                 {
                     _sampleDataDoc = new XmlDocument();
 
-                    var sampleDataUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + "/Content/SampleData.xml";
-
-                    _sampleDataDoc.Load(sampleDataUrl);
+                    _sampleDataDoc.Load(_baseFolderPath + "Content\\SampleData.xml");
                 }
 
                 return _sampleDataDoc;
             }
         }
 
-        public SiteProvisioning(ClientContext ClientContext)
+        public SiteProvisioning(ClientContext ClientContext, string BaseFolderPath, string CurrentUserName = "", string GraphServiceToken = "")
         {
             clientContext = ClientContext;
+            _baseFolderPath = BaseFolderPath;
+            if (!string.IsNullOrEmpty(CurrentUserName))
+                _currentUserName = CurrentUserName;
+            if (!string.IsNullOrEmpty(GraphServiceToken))
+                _graphServiceToken = GraphServiceToken;
         }
 
         #region Provision Site Collection and information architecture
@@ -264,13 +275,13 @@ namespace SuiteLevelWebApp.Utils
             CSOMUtil.AddListItems(clientContext, "Incidents", sampleData);
 
             //add items to Room Inspection Photos list
-            CSOMUtil.AddDocumentLibItems(clientContext, "Room Inspection Photos", sampleData);
+            CSOMUtil.AddDocumentLibItems(clientContext, "Room Inspection Photos", sampleData, _baseFolderPath);
 
             //add items to Repair Photos list
-            CSOMUtil.AddDocumentLibItems(clientContext, "Repair Photos", sampleData);
+            CSOMUtil.AddDocumentLibItems(clientContext, "Repair Photos", sampleData, _baseFolderPath);
 
             //add items to Property Photos list
-            CSOMUtil.AddDocumentLibItems(clientContext, "Property Photos", sampleData);
+            CSOMUtil.AddDocumentLibItems(clientContext, "Property Photos", sampleData, _baseFolderPath);
 
             //upload demo videos to Video Portal
             await ProvisionDemoVideosAsync(videoPortalHelper, "Videos", sampleData);
@@ -320,17 +331,17 @@ namespace SuiteLevelWebApp.Utils
 
                 ListItem listItem2 = inspectionitems[2];
                 listItem2["sl_datetime"] = this.getNewDateTime(0, 21, 0, demodate);
-                listItem2["sl_finalized"] = this.getNewDateTime(0, 21, 30, demodate);
+                //listItem2["sl_finalized"] = this.getNewDateTime(0, 21, 30, demodate);
                 listItem2.Update();
 
                 ListItem listItem3 = inspectionitems[3];
                 listItem3["sl_datetime"] = this.getNewDateTime(0, 20, 0, demodate);
-                listItem3["sl_finalized"] = this.getNewDateTime(0, 20, 30, demodate);
+                //listItem3["sl_finalized"] = this.getNewDateTime(0, 20, 30, demodate);
                 listItem3.Update();
 
                 ListItem listItem4 = inspectionitems[4];
                 listItem4["sl_datetime"] = this.getNewDateTime(0, 19, 0, demodate);
-                listItem4["sl_finalized"] = this.getNewDateTime(0, 19, 30, demodate);
+                //listItem4["sl_finalized"] = this.getNewDateTime(0, 19, 30, demodate);
                 listItem4.Update();
                 clientContext.ExecuteQuery();
 
@@ -361,12 +372,12 @@ namespace SuiteLevelWebApp.Utils
         #endregion
 
         #region Provision Azure Active Directory Groups, Users
-        public async Task AddGroupsAndUsersAsync(GraphService graphService)
+        public async Task AddGroupsAndUsersAsync(GraphService graphService, string graphAccessToken)
         {
             List<string> newUsers = new List<string>();
 
             #region Create AD Group
-            var groupsDict = new Dictionary<string, Graph.Group>();
+            var groupsDict = new Dictionary<string, group>();
 
             XmlNode groupItems = sampleData.SelectSingleNode("//List[@name='AD Groups']");
 
@@ -381,7 +392,7 @@ namespace SuiteLevelWebApp.Utils
                 {
                     group = await GraphServiceExtension.AddGroupAsync(graphService, mailNickname, displayName, description);
                 }
-                groupsDict.Add(displayName, group as Graph.Group);
+                groupsDict.Add(displayName, group as group);
             }
             #endregion
 
@@ -393,20 +404,47 @@ namespace SuiteLevelWebApp.Utils
                 string userPrincipalName = item.Attributes["PrincipalName"].Value;
                 string password = item.Attributes["Password"].Value;
                 string ownGroupDisplayName = item.Attributes["GroupsDisplayName"].Value;
+                string jobTitle = item.Attributes["JobTitle"].Value;
+                string companyName = item.Attributes["CompanyName"].Value;
+                string officeLocation = item.Attributes["OfficeLocation"].Value;
+                string mobilePhone = item.Attributes["MobilePhone"].Value;
+                string businessPhone = item.Attributes["BusinessPhone"].Value;
 
-                Graph.IUser user = await GraphServiceExtension.GetFirstUserAsync(graphService, i => i.displayName == displayName);
+                Iuser user = await GraphServiceExtension.GetFirstUserAsync(graphService, i => i.displayName == displayName);
                 if (user == null)
                 {
                     user = await GraphServiceExtension.AddUserAsync(graphService, userPrincipalName, displayName, password);
-                    await GraphServiceExtension.AssignLicenseAsyncViaHttpClientAsync(graphService, user as Graph.User);
+                    await GraphServiceExtension.AssignLicenseAsyncViaHttpClientAsync(graphService, graphAccessToken, user as Graph.user);
+
+                    dynamic userJSON = new JObject();
+                    userJSON["@odata.type"] = "#Microsoft.Graph.user";
+                    userJSON.jobTitle = jobTitle;
+                    userJSON.department = companyName;
+                    userJSON.officeLocation = officeLocation;
+                    userJSON.mobilePhone = mobilePhone;
+                    userJSON.businessPhones = new JArray(businessPhone);
+                    HttpRequestMessage message = new HttpRequestMessage(new HttpMethod("PATCH"), string.Format("{0}users('{1}')", AADAppSettings.GraphResourceUrl, user.id));
+                    message.Content = new StringContent(userJSON.ToString(), System.Text.Encoding.UTF8, "application/json");
+                    message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", graphAccessToken);
+                    using (HttpClient client = new HttpClient())
+                    {
+                        await client.SendAsync(message);
+                    }
                 }
 
                 if (groupsDict.ContainsKey(ownGroupDisplayName)
                     && (await GraphServiceExtension.GetGroupMembersAsync(graphService, ownGroupDisplayName))
                     .Where(i => i.userPrincipalName == user.userPrincipalName).Count() == 0)
                 {
-                    groupsDict[ownGroupDisplayName].members.Add(user as Graph.User);
-                    await groupsDict[ownGroupDisplayName].SaveChangesAsync();
+                    groupsDict[ownGroupDisplayName].members.Add(user as Graph.user);
+                    try
+                    {
+                        await groupsDict[ownGroupDisplayName].UpdateAsync(false);
+                    }
+                    catch
+                    { }
+
                 }
 
                 newUsers.Add(user.userPrincipalName);
@@ -438,7 +476,7 @@ namespace SuiteLevelWebApp.Utils
                 string videoTitle = item.Attributes["Title"].Value;
                 string videoDescription = item.Attributes["Description"].Value;
                 string ChannelName = item.Attributes["ChannelName"].Value;
-                string videoPhysicalPath = HttpContext.Current.Server.MapPath("../") + item.Attributes["path"].Value;
+                string videoPhysicalPath = _baseFolderPath + item.Attributes["path"].Value;
 
                 var match = Regex.Match(videoTitle, @"(?is)(?<=\[)(.*)(?=\])");
                 int index = match.Success ? int.Parse(match.Captures[0].Value) : 0;
@@ -453,11 +491,11 @@ namespace SuiteLevelWebApp.Utils
         #endregion
 
         #region Provision Unified Groups
-        public async Task CreateUnifiedGroupsForPropertiesAsync(GraphService graphService)
+        public async Task CreateUnifiedGroupsForPropertiesAsync(GraphService graphService, string graphAccessToken)
         {
             var properties = Task.Run(() => CSOMUtil.GetListItems(clientContext, "Properties"));
 
-            var members = new List<IUser>();
+            var members = new List<Iuser>();
             {
                 var dispatcher = await graphService.GetFirstUserAsync(u => u.mail == AppSettings.DispatcherEmail);
                 var inspectors = await graphService.GetGroupMembersAsync("Inspectors");
@@ -472,39 +510,54 @@ namespace SuiteLevelWebApp.Utils
             {
                 var group = await graphService.GetGroupByDisplayNameAsync((string)property["Title"]);
                 if (group == null)
-                    group = await CreateUnifiedGroupForPropertyAsync(graphService, property, members);
-                property["sl_group"] = group.objectId;
+                {
+                    group = await CreateUnifiedGroupForPropertyAsync(graphService, graphAccessToken, property, members);
+                }
+
+                property["sl_group"] = group.id;
                 property.Update();
             }
             clientContext.ExecuteQuery();
+
+            await UpdateGroupPhoto(graphService);
         }
 
-        public async Task<IGroup> CreateUnifiedGroupForPropertyAsync(GraphService graphService, ListItem propertyItem, IEnumerable<Graph.IUser> members)
+        public async Task<Igroup> CreateUnifiedGroupForPropertyAsync(GraphService graphService, string graphAccessToken, ListItem propertyItem, IEnumerable<Iuser> members)
         {
             var propertyTitle = propertyItem["Title"] as string;
             var propertyOwnerName = propertyItem["sl_owner"] as string;
             var propertyOwner = await graphService.GetFirstUserAsync(i => i.displayName == propertyOwnerName);
 
-            // Create group
-            var group = new Graph.Group
+            // Create Office 365 Group
+            string groupId = string.Empty;
+            dynamic groupJSON = new JObject();
+            groupJSON.displayName = propertyTitle;
+            groupJSON.mailNickname = propertyTitle.Replace(" ", "");
+            groupJSON.securityEnabled = false;
+            groupJSON.mailEnabled = true;
+            groupJSON.description = "Property Group";
+            groupJSON.groupTypes = new JArray("Unified");
+            HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, string.Format("{0}groups", AADAppSettings.GraphResourceUrl));
+            message.Content = new StringContent(groupJSON.ToString(), System.Text.Encoding.UTF8, "application/json");
+            message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", graphAccessToken);
+            using (HttpClient client = new HttpClient())
             {
-                displayName = propertyTitle,
-                mailNickname = propertyTitle.Replace(" ", ""),
-                securityEnabled = false,
-                mailEnabled = true,
-                groupType = "Unified",
-                description = "Property Group",
-            };
-            try
-            {
-                await graphService.groups.AddGroupAsync(group);
-            }
-            catch { }
+                var responseMessage = await client.SendAsync(message);
 
-            // Add users to group
-            var groupMembers = new HashSet<Graph.IUser>(members);
-            var groupOwners = new HashSet<Graph.IUser>();
-            var adminUserName = HttpContext.Current.User.Identity.Name;
+                if (responseMessage.StatusCode != System.Net.HttpStatusCode.Created)
+                    throw new System.Web.Http.HttpResponseException(responseMessage.StatusCode);
+
+                var payload = await responseMessage.Content.ReadAsStringAsync();
+
+                groupId = JObject.Parse(payload)["id"].ToString();
+            }
+            var group = await graphService.groups.GetById(groupId).ExecuteAsync() as group;
+
+            // Add users to Office 365 Group
+            var groupMembers = new HashSet<Graph.Iuser>(members);
+            var groupOwners = new HashSet<Graph.Iuser>();
+            var adminUserName = _currentUserName;
             var admin = await graphService.GetFirstUserAsync(i => i.mail == adminUserName);
             if (admin != null)
             {
@@ -516,29 +569,89 @@ namespace SuiteLevelWebApp.Utils
                 groupMembers.Add(propertyOwner);
                 groupOwners.Add(propertyOwner);
             }
-            
-            foreach (var user in groupMembers.OfType<Graph.User>())
+
+            foreach (var user in groupMembers.OfType<Graph.user>())
             {
                 group.members.Add(user);
                 try
                 {
-                    await group.SaveChangesAsync();
+                    await group.UpdateAsync(false);
                 }
                 catch { }
             }
 
-            foreach (var user in groupOwners.OfType<Graph.User>())
+            foreach (var user in groupOwners.OfType<Graph.user>())
             {
                 group.owners.Add(user);
                 try
                 {
-                    await group.SaveChangesAsync();
+                    await group.UpdateAsync(false);
                 }
                 catch { }
             }
 
             return group;
         }
+        #endregion
+
+        #region Update photo of group
+
+        public async Task UpdateGroupPhoto(GraphService graphService)
+        {
+            var groups = await (await graphService.groups.ExecuteAsync()).GetAllAsnyc();
+            var propertyGroups = groups
+                .Where(i => i.description == "Property Group")
+                .ToArray();
+
+            foreach (var group in propertyGroups)
+            {
+                int retrycount = 5;
+                XmlNode groupItems = sampleData.SelectSingleNode(string.Format("//List[@name='Properties']/item[column = '{0}']", group.displayName));
+                if (groupItems != null && groupItems.Attributes["path"] != null)
+                {
+                    while (retrycount-- > 0)
+                    {
+                        try
+                        {
+                            await UploadImageForGroup(group, groupItems.Attributes["path"].Value);
+                            break;
+                        }
+                        catch
+                        {
+                            System.Threading.Thread.Sleep(2000);
+                        }
+                    }
+
+                }
+            }
+        }
+
+private async Task UploadImageForGroup(Igroup group, string imagePaht)
+{
+    string requestUri = string.Format("{0}groups('{1}')/photo/$value",
+        AADAppSettings.GraphResourceUrl,
+        group.id);
+
+    //Create placeholder
+    HttpWebRequest req_uploadFile = (HttpWebRequest)HttpWebRequest.Create(requestUri);
+    req_uploadFile.Method = "PATCH";
+    req_uploadFile.Headers.Add("Authorization", _graphServiceToken);
+    req_uploadFile.ContentType = "image/jpeg";
+
+    //Upload the image
+    using (var dataStream = req_uploadFile.GetRequestStream())
+    {
+        var filePath = _baseFolderPath + imagePaht;
+        using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+        {
+            await fs.CopyToAsync(dataStream);
+        }
+    }
+
+    using (HttpWebResponse response = (HttpWebResponse)req_uploadFile.GetResponse())
+    { }
+
+}
         #endregion
 
         #region Provision Workflow

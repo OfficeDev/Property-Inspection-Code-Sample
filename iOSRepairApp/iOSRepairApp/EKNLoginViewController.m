@@ -87,7 +87,6 @@
     {
         settingsMissing = 1;
         self.authority = @"https://login.microsoftonline.com/common";
-        
         [standardUserDefaults setValue:self.authority forKey:@"authority"];
         [standardUserDefaults synchronize];
     }
@@ -114,7 +113,6 @@
     {
         settingsMissing = 1;
         self.redirectUriString = @"http://PropertyManagementiOSiPadApp";
-        
         [standardUserDefaults setValue:self.redirectUriString forKey:@"redirectUriString"];
         [standardUserDefaults synchronize];
     }
@@ -124,7 +122,7 @@
     {
         settingsMissing = 1;
         [standardUserDefaults setValue:@"https://TENANCY.sharepoint.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
-		[standardUserDefaults synchronize];
+        [standardUserDefaults synchronize];
     }
 
     //Check to see if the dispatcherEmail setting exists
@@ -132,7 +130,6 @@
     {
         settingsMissing = 1;
         [standardUserDefaults setValue:@"katiej@TENANCY.onmicrosoft.com" forKey:@"dispatcherEmail"];
-		        
         [standardUserDefaults synchronize];
     }
     
@@ -140,8 +137,7 @@
     if (nil == [standardUserDefaults objectForKey:@"graphResourceId"])
     {
         settingsMissing = 1;
-        [standardUserDefaults setValue:@"https://graph.microsoft.com/" forKey:@"graphResourceId"];	
-        
+        [standardUserDefaults setValue:@"https://graph.microsoft.com/" forKey:@"graphResourceId"];
         [standardUserDefaults synchronize];
     }
     
@@ -149,8 +145,7 @@
     if (nil == [standardUserDefaults objectForKey:@"graphResourceUrl"])
     {
         settingsMissing = 1;
-		[standardUserDefaults setValue:@"https://graph.microsoft.com/beta/" forKey:@"graphResourceUrl"];		
-		
+		[standardUserDefaults setValue:@"https://graph.microsoft.com/beta/" forKey:@"graphResourceUrl"];
         [standardUserDefaults synchronize];
     }
     
@@ -159,23 +154,14 @@
     {
         settingsMissing = 1;
         [standardUserDefaults setValue:@"https://onenote.com/" forKey:@"oneNoteResourceId"];
-        
         [standardUserDefaults synchronize];
     }
     
-    //Check to see if the oneNoteResourceUrl setting exists
-    if (nil == [standardUserDefaults objectForKey:@"oneNoteResourceUrl"])
-    {
-        settingsMissing = 1;
-        [standardUserDefaults setValue:@"https://www.onenote.com/api/beta/" forKey:@"oneNoteResourceUrl"];
-        
-        [standardUserDefaults synchronize];
-    }
     if (nil == [standardUserDefaults objectForKey:@"outlookResourceId"])
     {
         settingsMissing = 1;
-        [standardUserDefaults setValue:@"https://outlook.office365.com/" forKey:@"outlookResourceId"];
-        
+       [standardUserDefaults setValue:@"https://outlook.office365.com/" forKey:@"outlookResourceId"];
+
         [standardUserDefaults synchronize];
     }
     
@@ -184,6 +170,7 @@
     {
         settingsMissing = 1;
         [standardUserDefaults setValue:@"https://TENANCY.sharepoint.com/portals/hub" forKey:@"videoPortalEndpointUri"];
+        
         
         [standardUserDefaults synchronize];
     }

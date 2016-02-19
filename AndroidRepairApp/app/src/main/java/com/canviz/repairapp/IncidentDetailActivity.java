@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,10 +29,14 @@ import com.canviz.repairapp.data.GroupFileModel;
 import com.canviz.repairapp.data.GroupNoteBookModel;
 import com.canviz.repairapp.data.GroupVideoModel;
 import com.canviz.repairapp.data.IncidentModel;
+import com.canviz.repairapp.data.TaskModel;
 import com.canviz.repairapp.data.UserModel;
 import com.canviz.repairapp.data.IncidentWorkflowTaskModel;
 import com.canviz.repairapp.data.InspectionInspectorModel;
 import com.canviz.repairapp.data.RepairPhotoModel;
+import com.canviz.repairapp.graph.DriveFetcher;
+import com.canviz.repairapp.graph.DriveItem;
+import com.canviz.repairapp.graph.DriveItemFetcher;
 import com.canviz.repairapp.utility.AuthenticationHelper;
 import com.canviz.repairapp.utility.FileHelper;
 import com.canviz.repairapp.utility.GroupConversationAdapter;
@@ -42,18 +47,19 @@ import com.canviz.repairapp.utility.Helper;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.microsoft.services.graph.Conversation;
-import com.microsoft.services.graph.File;
 import com.microsoft.services.graph.Group;
-import com.microsoft.services.graph.Item;
+import com.microsoft.services.graph.Photo;
+import com.microsoft.services.graph.fetchers.ConversationCollectionOperations;
+import com.microsoft.services.graph.fetchers.ConversationFetcher;
+import com.microsoft.services.graph.fetchers.PhotoCollectionOperations;
+import com.microsoft.services.graph.fetchers.PhotoFetcher;
+import com.microsoft.services.graph.fetchers.UserCollectionOperations;
 import com.microsoft.services.onenote.Notebook;
 import com.microsoft.services.onenote.Page;
 import com.microsoft.services.onenote.Section;
-import com.microsoft.services.onenote.SiteCollection;
-import com.microsoft.services.onenote.SiteMetadata;
+import com.microsoft.services.onenote.fetchers.NotebookCollectionOperations;
 import com.microsoft.services.onenote.fetchers.NotebookFetcher;
 import com.microsoft.services.onenote.fetchers.NotesFetcher;
-import com.microsoft.services.onenote.fetchers.OneNoteApiClient;
 import com.microsoft.services.graph.EmailAddress;
 import com.microsoft.services.graph.ItemBody;
 import com.microsoft.services.graph.Recipient;
@@ -61,12 +67,21 @@ import com.microsoft.services.graph.User;
 import com.microsoft.services.graph.fetchers.GraphServiceClient;
 import com.microsoft.services.graph.fetchers.UserFetcher;
 import com.microsoft.services.graph.fetchers.GroupFetcher;
-import com.microsoft.services.orc.log.LogLevel;
+import com.microsoft.services.onenote.fetchers.SectionCollectionOperations;
+import com.microsoft.services.onenote.fetchers.SectionFetcher;
 import com.microsoft.services.orc.resolvers.ADALDependencyResolver;
 import com.microsoft.services.orc.core.OrcCollectionFetcher;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import android.net.Uri;
-import android.os.Environment;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -74,9 +89,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import android.database.Cursor;
 
-import org.json.JSONObject;
 import java.io.InputStream;
 
 
@@ -141,9 +154,8 @@ public class IncidentDetailActivity extends Activity {
     private ImageView closeImage;
     private ImageView camera;
     private Boolean canEditComment = true;
-    private String groupNoteBookSiteCollectionId = null;
-    private String groupNoteBookSiteId = null;
-    private String groupNoteBookId = null;
+
+    private String notebookUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -639,12 +651,12 @@ public class IncidentDetailActivity extends Activity {
                     bindInspectionData();
                 }
                 else{
-                    Toast.makeText(IncidentDetailActivity.this, "Load inspection data failed.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(IncidentDetailActivity.this, "Loading inspection data failed.", Toast.LENGTH_LONG).show();
                 }
             }
             else
             {
-                Toast.makeText(IncidentDetailActivity.this, "Load inspection inspector data failed.", Toast.LENGTH_LONG).show();
+                Toast.makeText(IncidentDetailActivity.this, "Loading inspection inspector data failed.", Toast.LENGTH_LONG).show();
             }
             process.dismiss();
         }
@@ -658,15 +670,154 @@ public class IncidentDetailActivity extends Activity {
                 sendEmailAfterRepairCompleted();
                 finalizeBtn.setVisibility(View.GONE);
                 setBtnStatus(false);
-                Toast.makeText(IncidentDetailActivity.this, "Finalized repair successfully.", Toast.LENGTH_LONG).show();
+                updateTasks();
             }
             else
             {
                 Toast.makeText(IncidentDetailActivity.this, "Finalizing repair failed.", Toast.LENGTH_LONG).show();
+                process.dismiss();
             }
+
+        }
+    };
+
+    private void updateTasks(){
+        final Handler updateTasksHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                Toast.makeText(IncidentDetailActivity.this, "Finalized repair successfully.", Toast.LENGTH_LONG).show();
             process.dismiss();
         }
     };
+
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        try{
+            Futures.addCallback(AuthenticationHelper.getGraphAccessToken(), new FutureCallback<String>() {
+                @Override
+                public void onSuccess(final String token) {
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            try{
+                                String planId = getPlanId(token, SelectedIncidentModel.getProperty().getGroup());
+                                if(planId != null){
+                                    String bucketId = getBucketId(token, planId, String.format("Incident [%d]",SelectedIncidentModel.getId()));
+                                    if(bucketId != null){
+                                        List<TaskModel> tasks = getTasks(token, bucketId);
+                                        if(tasks.size() > 0){
+                                            RequestBody body = RequestBody.create(JSON, "{'percentComplete': 100}");
+                                            for (int i = 0; i < tasks.size(); i++){
+                                                String requestUrl = String.format("%sTasks/%s",Constants.GRAPH_RESOURCE_URL,tasks.get(i).getTaskID());
+                                                OkHttpClient client = new OkHttpClient();
+                                                Request request = new Request.Builder()
+                                                        .url(requestUrl)
+                                                        .addHeader("accept","application/json")
+                                                        .addHeader("ContentType","application/json")
+                                                        .addHeader("If-Match",tasks.get(i).getEtag())
+                                                        .addHeader("Authorization","Bearer " + token)
+                                                        .patch(body)
+                                                        .build();
+                                                Response response = client.newCall(request).execute();
+                                                if(response.code() == 204){
+                                                    Log.d(TAG,"Update task width id: "+ tasks.get(i).getTaskID() +" successfully.");
+                                                }
+                                            }
+                                            updateTasksHandler.sendEmptyMessage(0);
+                                        }
+                                        else{
+                                            updateTasksHandler.sendEmptyMessage(0);
+                                        }
+                                    }
+                                    else{
+                                        updateTasksHandler.sendEmptyMessage(0);
+                                    }
+                                }
+                                else{
+                                    updateTasksHandler.sendEmptyMessage(0);
+                                }
+                            }catch (Throwable t){
+                                updateTasksHandler.sendEmptyMessage(0);
+                            }
+                        }
+
+                    }.start();
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.d(TAG,"Get graph access token failed.");
+                    updateTasksHandler.sendEmptyMessage(0);
+                }
+            });
+        }catch (Throwable t){
+            Log.d(TAG,"Update tasks failed.");
+            updateTasksHandler.sendEmptyMessage(0);
+        }
+    }
+
+    private List<TaskModel> getTasks(String token, String bucketId) throws Exception{
+        List<TaskModel> list = new ArrayList<TaskModel>();
+        String requestUrl = String.format("%sbuckets/%s/Tasks", Constants.GRAPH_RESOURCE_URL,bucketId);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(requestUrl)
+                .addHeader("Authorization ", "Bearer " + token)
+                .addHeader("accept", "application/json")
+                .get()
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+        if(response.code() == 200){
+            JSONObject jsonObject = new JSONObject(response.body().string());
+            JSONArray jsonArray = jsonObject.getJSONArray("value");
+            for (int i=0;i<jsonArray.length();i++) {
+                TaskModel model = new TaskModel();
+                model.setTaskID(jsonArray.getJSONObject(i).getString("id"));
+                model.setEtag(jsonArray.getJSONObject(i).getString("@odata.etag"));
+                list.add(model);
+            }
+        }
+        return list;
+    }
+
+    private String getPlanId(String token, String groupId) throws Exception{
+        String requestUrl = String.format("%sgroups/%s/plans", Constants.GRAPH_RESOURCE_URL,groupId);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(requestUrl)
+                .addHeader("Authorization ", "Bearer " + token)
+                .addHeader("accept", "application/json")
+                .get()
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+        if(response.code() == 200){
+            JSONObject jsonObject = new JSONObject(response.body().string());
+            JSONArray jsonArray = jsonObject.getJSONArray("value");
+            return jsonArray.getJSONObject(0).getString("id");
+        }
+        return null;
+    }
+
+    private String getBucketId(String token, String planId, String bucketName) throws Exception{
+        String requestUrl = String.format("%splans/%s/Buckets", Constants.GRAPH_RESOURCE_URL,planId);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(requestUrl)
+                .addHeader("Authorization ", "Bearer " + token)
+                .addHeader("accept", "application/json")
+                .get()
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+        if(response.code() == 200){
+            JSONObject jsonObject = new JSONObject(response.body().string());
+            JSONArray jsonArray = jsonObject.getJSONArray("value");
+            for (int i=0;i<jsonArray.length();i++) {
+                if(jsonArray.getJSONObject(i).getString("name").equals(bucketName)){
+                    return jsonArray.getJSONObject(i).getString("id");
+                }
+            }
+        }
+        return null;
+    }
 
     private Handler updateCommentHandler = new Handler() {
         @Override
@@ -689,9 +840,9 @@ public class IncidentDetailActivity extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == Constants.SUCCESS) {
-                    Log.d(TAG, "Send email success.");
+                    Log.d(TAG, "Sent email successfully.");
                 } else {
-                    Log.d(TAG, "Send email failed.");
+                    Log.d(TAG, "Sending email failed.");
                 }
             }
         };
@@ -792,11 +943,11 @@ public class IncidentDetailActivity extends Activity {
                 if(msg.what == Constants.SUCCESS)
                 {
                     propertyLogo.setImageBitmap((Bitmap)msg.obj);
-                    Log.d(TAG, "Load property photos success.");
+                    Log.d(TAG, "Loaded property photos successfully.");
                 }
                 else
                 {
-                    Log.d(TAG,"Load property photos failed.");
+                    Log.d(TAG,"Loading property photos failed.");
                 }
             }
         };
@@ -858,11 +1009,11 @@ public class IncidentDetailActivity extends Activity {
                             showLargeImage(bitmap);
                         }
                     });
-                    Log.d(TAG, "Load inspection photos success.");
+                    Log.d(TAG, "Loaded inspection photos successfully.");
                 }
                 else
                 {
-                    Log.d(TAG, "Load inspection photos failed.");
+                    Log.d(TAG, "Loading inspection photos failed.");
                 }
             }
         };
@@ -919,11 +1070,11 @@ public class IncidentDetailActivity extends Activity {
                             showLargeImage(bitmap);
                         }
                     });
-                    Log.d(TAG, "Load repair photos success.");
+                    Log.d(TAG, "Loaded repair photos successfully.");
                 }
                 else
                 {
-                    Log.d(TAG, "Load repair photos failed.");
+                    Log.d(TAG, "Loading repair photos failed.");
                 }
             }
         };
@@ -1048,7 +1199,10 @@ public class IncidentDetailActivity extends Activity {
                     else if(type == 5){
                         if(groupNoteBook.size() == 0) {
                             process = ProgressDialog.show(IncidentDetailActivity.this,"Loading","Loading group notebooks...");
-                            groupNoteBookAuthentication();
+                            getGroupNoteBooks();
+                        }
+                        else{
+                            bindGroupNote(notebookUrl);
                         }
                     }
                     else if(type == 7){
@@ -1116,8 +1270,11 @@ public class IncidentDetailActivity extends Activity {
     /* Group members */
     private void getGroupMembers() {
         try {
-            OrcCollectionFetcher collectionFetcher = groupFetcher.getMembers();
-            Futures.addCallback(collectionFetcher.read(), new FutureCallback<List<User>>() {
+            //OrcCollectionFetcher membersFetcher = groupFetcher.getMembers();
+            // Workaround for PPE
+            final OrcCollectionFetcher membersFetcher =  new OrcCollectionFetcher<User, UserFetcher, UserCollectionOperations>("members", groupFetcher, User.class, UserCollectionOperations.class);
+
+            Futures.addCallback(membersFetcher.read(), new FutureCallback<List<User>>() {
                 @Override
                 public void onSuccess(List<User> list) {
                     for (User user : list) {
@@ -1129,7 +1286,7 @@ public class IncidentDetailActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showMessage("Load group member success", true);
+                            showMessage("Loaded group members successfully.", true);
                             bindGroupMember();
                         }
                     });
@@ -1140,13 +1297,13 @@ public class IncidentDetailActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showMessage("Load group member failed",true);
+                            showMessage("Loading group members failed.",true);
                         }
                     });
                 }
             });
         } catch (Exception e) {
-            showMessage("Load group member failed", true);
+            showMessage("Loading group members failed.", true);
             e.printStackTrace();
         }
     }
@@ -1154,16 +1311,17 @@ public class IncidentDetailActivity extends Activity {
     /* Group files */
     private void getGroupFiles(final String name) {
         try {
-            OrcCollectionFetcher collectionFetcher = groupFetcher.getFiles();
-            Futures.addCallback(collectionFetcher.read(), new FutureCallback<List<Item>>() {
+            DriveFetcher driverFecther = new DriveFetcher("drive", groupFetcher);
+            DriveItemFetcher rootFetcher = new DriveItemFetcher("root", driverFecther);
+            Futures.addCallback(rootFetcher.getChildren().read(), new FutureCallback<List<DriveItem>>() {
                 @Override
-                public void onSuccess(List<Item> list) {
-                    for (Item file : list) {
+                public void onSuccess(List<DriveItem> items) {
+                    for (DriveItem file : items) {
                         GroupFileModel model = new GroupFileModel();
                         model.setTitle(file.getName());
                         model.setUrl(file.getWebUrl());
                         model.setOWAUrl(file.getWebUrl(), file.getName(), file.getETag());
-                        model.setLastModified(file.getDateTimeLastModified());
+                        model.setLastModified(file.getLastModifiedDateTime());
                         model.setLastModifiedBy(file.getLastModifiedBy().getUser().getDisplayName());
                         model.setSize(file.getSize());
                         groupFile.add(model);
@@ -1171,7 +1329,7 @@ public class IncidentDetailActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showMessage("Load group " + name + " success", true);
+                            showMessage("Loaded group " + name + " successfully.", true);
                             if (name == "file") {
                                 bindGroupFile();
                             } else {
@@ -1186,13 +1344,13 @@ public class IncidentDetailActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showMessage("Load group " + name + " failed", true);
+                            showMessage("Loading group " + name + " failed.", true);
                         }
                     });
                 }
             });
         } catch (Exception e) {
-            showMessage("Load group " + name + " failed", true);
+            showMessage("Loading group " + name + " failed.", true);
             e.printStackTrace();
         }
     }
@@ -1201,10 +1359,14 @@ public class IncidentDetailActivity extends Activity {
     private void getGroupConversation() {
         try {
             OrcCollectionFetcher orcCollectionFetcher =  groupFetcher.getConversations();
-            Futures.addCallback(orcCollectionFetcher.read(), new FutureCallback<List<Conversation>>() {
+            // Workaround for PPE
+            orcCollectionFetcher =  new OrcCollectionFetcher<com.canviz.repairapp.graph.Conversation, ConversationFetcher, ConversationCollectionOperations>(
+                    "conversations", groupFetcher, com.canviz.repairapp.graph.Conversation.class, ConversationCollectionOperations.class);
+
+            Futures.addCallback(orcCollectionFetcher.read(), new FutureCallback<List<com.canviz.repairapp.graph.Conversation>>() {
                 @Override
-                public void onSuccess(List<Conversation> list) {
-                    for(Conversation item : list){
+                public void onSuccess(List<com.canviz.repairapp.graph.Conversation> list) {
+                    for(com.canviz.repairapp.graph.Conversation item : list){
                         GroupConversationModel model = new GroupConversationModel();
                         model.setTitle(item.getTopic());
                         model.setPreview(item.getPreview());
@@ -1214,7 +1376,7 @@ public class IncidentDetailActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showMessage("Load group conversations success", true);
+                            showMessage("Loaded group conversations successfully.", true);
                             bindGroupConversation();
                         }
                     });
@@ -1225,187 +1387,115 @@ public class IncidentDetailActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showMessage("Load group conversation failed", true);
+                            showMessage("Loading group conversations failed.", true);
                         }
                     });
                 }
             });
         } catch (Exception e) {
-            showMessage("Load group conversation failed", true);
+            showMessage("Loading group conversations failed.", true);
             e.printStackTrace();
         }
     }
 
     /* Group notebooks */
-    private void groupNoteBookAuthentication() {
+    private void getGroupNoteBooks() {
         try {
-            Futures.addCallback(AuthenticationHelper.acquireToken(Constants.ONENOTE_RESOURCE_ID), new FutureCallback<String>() {
-                @Override
-                public void onSuccess(final String result) {
-                    getGroupNoteBookSiteCollection(result);
-                }
+            String groupNotebookName = (group.getDisplayName() + " Notebook").replace(" ", "%20");
 
-                @Override
-                public void onFailure(Throwable t) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showMessage("Group notebook authentication failed",true);
-                        }
-                    });
-                }
-            });
-        } catch (Exception e) {
-            showMessage("Group notebook authentication failed", true);
-            e.printStackTrace();
-        }
-    }
+            final NotesFetcher notesFetcher = new NotesFetcher("notes", groupFetcher);
+            OrcCollectionFetcher groupNotebooksFetcher = notesFetcher.getNotebooks().filter("name eq '" + groupNotebookName + "'").top(1);
 
-    private void getGroupNoteBooks(final String token) {
-        try {
-            final OneNoteApiClient oneNoteApiClient = AuthenticationHelper.getOneNoteClient(token);
-            final NotesFetcher notesFetcher = oneNoteApiClient.getMyOrganization().getSiteCollection(groupNoteBookSiteCollectionId).getSite(groupNoteBookSiteId).getNote();
-            final NotebookFetcher notebookFetcher = notesFetcher.getNotebooks().getById(groupNoteBookId);
-
-            Futures.addCallback(notebookFetcher.read(), new FutureCallback<Notebook>() {
+            Futures.addCallback(groupNotebooksFetcher.read(), new FutureCallback<List<Notebook>>() {
                 @Override
-                public void onSuccess(Notebook notebook) {
-                    final String notebookUrl = notebook.getLinks().getOneNoteWebUrl().getHref();
-                    final OrcCollectionFetcher sectionIdFetcher = notesFetcher.getNotebook(groupNoteBookId).getSections().filter("name eq '" + SelectedIncidentModel.getProperty().getTitle() + "'").top(1);
-                    ;
-                    Futures.addCallback(sectionIdFetcher.read(), new FutureCallback<List<Section>>() {
+                public void onSuccess(List<Notebook> notebooks) {
+                    if (notebooks.isEmpty()) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                        showMessage("No notebook found.", true);
+                            }
+                        });
+                        return;
+                    }
+
+                    Notebook notebook = notebooks.get(0);
+                    notebookUrl = notebook.getLinks().getOneNoteWebUrl().getHref();
+
+                    final OrcCollectionFetcher<Section, SectionFetcher, SectionCollectionOperations> sectionsFetcher =
+                            notesFetcher.getSections().filter("name eq '" + group.getDisplayName() + "'").top(1);
+                    Futures.addCallback(sectionsFetcher.read(), new FutureCallback<List<Section>>() {
                         @Override
                         public void onSuccess(List<Section> sections) {
-                            for (Section section : sections) {
-                                String sectionId = section.getId();
-                                final OrcCollectionFetcher pagesFetcher = notesFetcher.getSection(sectionId).getPages().filter("title eq 'Incident[" + SelectedIncidentModel.getId() + "]'");
-                                Futures.addCallback(pagesFetcher.read(), new FutureCallback<List<Page>>() {
+                            if (sections.isEmpty()) {
+                                runOnUiThread(new Runnable() {
                                     @Override
-                                    public void onSuccess(List<Page> pages) {
-                                        for (Page page : pages) {
-                                            GroupNoteBookModel model = new GroupNoteBookModel();
-                                            model.setTitle(page.getTitle());
-                                            model.setUrl(page.getLinks().getOneNoteWebUrl().getHref());
-                                            groupNoteBook.add(model);
-                                        }
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                showMessage("Load group notebooks success", true);
-                                                bindGroupNote(notebookUrl);
-                                            }
-                                        });
-                                    }
-
-                                    @Override
-                                    public void onFailure(Throwable t) {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                showMessage("Load group notebooks failed", true);
-                                            }
-                                        });
+                                    public void run() {
+                                        showMessage("Loaded group notebooks successfully, but no sections were found.", true);
+                                        bindGroupNote(notebookUrl);
                                     }
                                 });
+                                return;
                             }
-                        }
 
+                            Section section = sections.get(0);
+                            SectionFetcher sectionFetcher = sectionsFetcher.getById(section.getId());
+                            OrcCollectionFetcher pagesFetcher = sectionFetcher.getPages().filter("title eq 'Incident[" + SelectedIncidentModel.getId() + "]'");
+                            Futures.addCallback(pagesFetcher.read(), new FutureCallback<List<Page>>() {
+                                @Override
+                                public void onSuccess(List<Page> pages) {
+                                    for (Page page : pages) {
+                                        GroupNoteBookModel model = new GroupNoteBookModel();
+                                        model.setTitle(page.getTitle());
+                                        model.setUrl(page.getLinks().getOneNoteWebUrl().getHref());
+                                        groupNoteBook.add(model);
+                                    }
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            showMessage("Loaded group notebooks successfully.", true);
+                                            bindGroupNote(notebookUrl);
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            showMessage("Loading group notebooks failed.", true);
+                                        }
+                                    });
+                                }
+                            });
+
+                        }
                         @Override
                         public void onFailure(Throwable t) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    showMessage("Load group notebooks failed", true);
+                                    showMessage("Loading group notebooks failed.", true);
                                 }
                             });
                         }
                     });
                 }
-
                 @Override
                 public void onFailure(Throwable t) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showMessage("Load group notebooks failed", true);
+                            showMessage("Loading group notebooks failed.", true);
                         }
                     });
                 }
             });
-
         } catch (Exception e) {
-            showMessage("Load group notebooks failed", true);
+            showMessage("Loading group notebooks failed.", true);
             e.printStackTrace();
         }
-    }
-
-    private void getGroupNoteBookSiteCollection(final String token) {
-        final Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == Constants.SUCCESS) {
-                    getGroupNoteBookId(token);
-                } else {
-                    showMessage("Load notebook site collection failed",true);
-                }
-            }
-        };
-
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    JSONObject jsonObject = FileHelper.getGroupNoteBookSiteCollection(token, group.getMailNickname());
-                    if(jsonObject != null && jsonObject.has("siteCollectionId") && jsonObject.has("siteId")){
-                        Message m = new Message();
-                        m.what = Constants.SUCCESS;
-                        groupNoteBookSiteCollectionId = jsonObject.getString("siteCollectionId");
-                        groupNoteBookSiteId = jsonObject.getString("siteId");
-                        handler.sendMessage(m);
-                    }
-                    else{
-                        Message m = new Message();
-                        m.what = Constants.FAILED;
-                        handler.sendMessage(m);
-                    }
-                } catch (Exception e) {
-                    Message m = new Message();
-                    m.what = Constants.FAILED;
-                    handler.sendMessage(m);
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
-    private void getGroupNoteBookId(final String token) {
-        final Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == Constants.SUCCESS) {
-                    getGroupNoteBooks(token);
-                } else {
-                    showMessage("Load group notebook id failed", true);
-                }
-            }
-        };
-
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    groupNoteBookId = FileHelper.getGroupNoteBookId(token, groupNoteBookSiteCollectionId, groupNoteBookSiteId, group.getDisplayName());
-                    Message m = new Message();
-                    m.what = Constants.SUCCESS;
-                    handler.sendMessage(m);
-                } catch (Exception e) {
-                    Message m = new Message();
-                    m.what = Constants.FAILED;
-                    handler.sendMessage(m);
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
     /* Group video */
@@ -1414,10 +1504,10 @@ public class IncidentDetailActivity extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == Constants.SUCCESS) {
-                    Log.d(TAG, "Load group video list success");
+                    Log.d(TAG, "Loaded group video list successfully.");
                     bindGroupVideo();
                 } else {
-                    Log.d(TAG, "Load group video list failed");
+                    Log.d(TAG, "Loading group video list failed.");
                 }
             }
         };
@@ -1482,11 +1572,11 @@ public class IncidentDetailActivity extends Activity {
                     groupMember.get(msg.arg1).setImage((Bitmap)msg.obj);
                     groupMember.get(msg.arg1).setIsChanged(true);
                     groupMemberAdapter.notifyDataSetChanged();
-                    Log.d(TAG,"Load group member photos success");
+                    Log.d(TAG,"Loaded group member photos successfully.");
                 }
                 else
                 {
-                    Log.d(TAG,"Load group member photo failed");
+                    Log.d(TAG,"Loading group member photo failed.");
                 }
             }
         };
@@ -1496,20 +1586,29 @@ public class IncidentDetailActivity extends Activity {
             new Thread(){
                 @Override
                 public void run() {
-                    try {
-                        Bitmap image = FileHelper.getUserPhoto(token,groupMember.get(index).getMail());
-                        Message message = new Message();
-                        message.what = Constants.SUCCESS;
-                        message.obj = image;
-                        message.arg1 = index;
-                        loadPhotoHandler.sendMessage(message);
-                    } catch (Exception e) {
-                        Message message = new Message();
-                        message.what = Constants.FAILED;
-                        message.obj = e.getMessage();
-                        loadPhotoHandler.sendMessage(message);
-                        e.printStackTrace();
-                    }
+                    String mail = groupMember.get(index).getMail();
+                    UserFetcher userFetcher =  graphServiceClient.getUsers().getById(mail);
+                    PhotoFetcher photoFetcher = new OrcCollectionFetcher<Photo, PhotoFetcher, PhotoCollectionOperations>("photos", userFetcher, Photo.class, PhotoCollectionOperations.class).getById("48X48");
+
+                    Futures.addCallback(photoFetcher.getStreamedContent(), new FutureCallback<InputStream>() {
+                        @Override
+                        public void onSuccess(InputStream result) {
+                            Bitmap bitmap = BitmapFactory.decodeStream(result);
+                            Message message = new Message();
+                            message.what = Constants.SUCCESS;
+                            message.obj = bitmap;
+                            message.arg1 = index;
+                            loadPhotoHandler.sendMessage(message);
+                        }
+                        @Override
+                        public void onFailure(Throwable t) {
+                            Message message = new Message();
+                            message.what = Constants.FAILED;
+                            message.obj = t.getMessage();
+                            loadPhotoHandler.sendMessage(message);
+                            t.printStackTrace();
+                        }
+                    });
                 }
             }.start();
         }
@@ -1594,7 +1693,8 @@ public class IncidentDetailActivity extends Activity {
 
     /* Bind group note */
     private void bindGroupNote(final String notebookUrl){
-        View footView = getLayoutInflater().inflate(R.layout.footview,null);
+        if(this.groupNoteListView.getFooterViewsCount() == 0) {
+            View footView = getLayoutInflater().inflate(R.layout.footview, null);
         this.groupNoteListView.addFooterView(footView);
         ((Button)footView.findViewById(R.id.foot_view_more)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1602,9 +1702,9 @@ public class IncidentDetailActivity extends Activity {
                 openBrowser(notebookUrl);
             }
         });
+        }
         this.groupNoteAdapter = new GroupNoteAdapter(this,this.groupNoteBook);
         this.groupNoteListView.setAdapter(this.groupNoteAdapter);
-
         this.groupNoteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -1647,11 +1747,11 @@ public class IncidentDetailActivity extends Activity {
             public void handleMessage(Message msg) {
                 if(msg.what == Constants.SUCCESS)
                 {
-                    Toast.makeText(IncidentDetailActivity.this,"Upload video successfully",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(IncidentDetailActivity.this,"Uploaded video successfully.",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(IncidentDetailActivity.this,"Upload video failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(IncidentDetailActivity.this,"Uploading video failed.",Toast.LENGTH_SHORT).show();
                 }
                 process.dismiss();
             }

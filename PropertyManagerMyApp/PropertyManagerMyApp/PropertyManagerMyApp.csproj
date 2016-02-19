@@ -24,6 +24,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,21 +58,33 @@
       <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Workflow Manager\1.0\Microsoft.Activities.Design.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Azure.ActiveDirectory.GraphClient, Version=2.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.ActiveDirectory.GraphClient.2.1.0\lib\portable-net4+sl5+win+wpa+wp8\Microsoft.Azure.ActiveDirectory.GraphClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Graph, Version=0.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Graph.0.2.8-rc\lib\portable-net4+sl5+win+wpa+wp8\Microsoft.Graph.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.18.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.19.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.19.208020213\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms, Version=2.18.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms, Version=2.19.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.19.208020213\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Extensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=69c3241e6f0468ca, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -80,21 +93,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.IdentityModel.Protocol.Extensions.1.0.2.206221351\lib\net45\Microsoft.IdentityModel.Protocol.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.OData.Client, Version=6.12.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.OData.Client.6.12.0\lib\net40\Microsoft.OData.Client.dll</HintPath>
+    <Reference Include="Microsoft.OData.Client, Version=6.14.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.OData.Client.6.14.0\lib\net40\Microsoft.OData.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.OData.Core, Version=6.12.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.OData.Core.6.12.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.OData.Core.dll</HintPath>
+    <Reference Include="Microsoft.OData.Core, Version=6.14.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.OData.Core.6.14.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.OData.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.OData.Edm, Version=6.12.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.OData.Edm.6.12.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.OData.Edm.dll</HintPath>
+    <Reference Include="Microsoft.OData.Edm, Version=6.14.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.OData.Edm.6.14.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.OData.Edm.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.OData.ProxyExtensions, Version=1.0.35.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.OData.ProxyExtensions.1.0.35\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Microsoft.OData.ProxyExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office365.Discovery, Version=1.0.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office365.Discovery.1.0.22\lib\portable-net40+sl5+wp8+win8+MonoAndroid10+MonoTouch10+WindowsPhoneApp81\Microsoft.Office365.Discovery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office365.SharePoint, Version=1.0.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office365.SharePoint.1.0.22\lib\net40\Microsoft.Office365.SharePoint.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Online.SharePoint.Client.Tenant, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -129,9 +150,9 @@
     <Reference Include="Microsoft.SharePoint.Client.WorkflowServices, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SharePoint.DesignTime.Activities.16.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SharePoint.DesignTime.Activities.16.0.Design, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Spatial, Version=6.12.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Spatial.6.12.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.Spatial.dll</HintPath>
+    <Reference Include="Microsoft.Spatial, Version=6.14.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Spatial.6.14.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.Spatial.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -145,16 +166,16 @@
       <HintPath>Assemblies\Microsoft.Workflow.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.7.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\RazorEngine.3.7.0\lib\net45\RazorEngine.dll</HintPath>
+    <Reference Include="RazorEngine, Version=3.7.6.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.7.6\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
@@ -173,6 +194,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -254,7 +279,7 @@
     <Compile Include="Models\ScheduleRepairModel.cs" />
     <Compile Include="Models\UploadFileModel.cs" />
     <Compile Include="Services\OneNoteService.cs" />
-    <Compile Include="Services\OneNoteServiceFactory.cs" />
+    <Compile Include="Services\PlanService.cs" />
     <Compile Include="Utils\GraphServiceExtension.cs" />
     <Compile Include="Utils\HandleAdalExceptionAttribute.cs" />
     <Compile Include="Models\CalendarEvent.cs" />
@@ -278,9 +303,127 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assemblies\Microsoft.Online.SharePoint.Client.Tenant.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assemblies\Microsoft.Workflow.Common.dll" />
+    <Content Include="Assemblies\Microsoft.Workflow.Common.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="components\Breadcrumb\Breadcrumb.html" />
+    <Content Include="components\Button\Button.Command.html" />
+    <Content Include="components\Button\Button.Compound.html" />
+    <Content Include="components\Button\Button.Hero.html" />
+    <Content Include="components\Button\Button.html" />
+    <Content Include="components\Button\Button.Primary.html" />
+    <Content Include="components\Callout\Callout.ActionText.html" />
+    <Content Include="components\Callout\Callout.Close.html" />
+    <Content Include="components\Callout\Callout.html" />
+    <Content Include="components\Callout\Callout.Oobe.html" />
+    <Content Include="components\Callout\Callout.Peek.html" />
+    <Content Include="components\ChoiceField\ChoiceField.Checkbox.Disabled.html" />
+    <Content Include="components\ChoiceField\ChoiceField.Checkbox.html" />
+    <Content Include="components\ChoiceField\ChoiceField.Checkbox.Selected.html" />
+    <Content Include="components\ChoiceField\ChoiceField.ChoiceFieldGroup.html" />
+    <Content Include="components\ChoiceField\ChoiceField.Disabled.html" />
+    <Content Include="components\ChoiceField\ChoiceField.html" />
+    <Content Include="components\ChoiceField\ChoiceField.Selected.html" />
+    <Content Include="components\CommandBar\CommandBar.html" />
+    <Content Include="components\CommandBar\Jquery.CommandBar.js" />
+    <Content Include="components\ContextualMenu\ContextualMenu.Dividers.html" />
+    <Content Include="components\ContextualMenu\ContextualMenu.html" />
+    <Content Include="components\ContextualMenu\ContextualMenu.Multiselect.html" />
+    <Content Include="components\ContextualMenu\ContextualMenu.SubMenu.html" />
+    <Content Include="components\ContextualMenu\Jquery.ContextualMenu.js" />
+    <Content Include="components\DatePicker\DatePicker.html" />
+    <Content Include="components\DatePicker\Jquery.DatePicker.js" />
+    <Content Include="components\DatePicker\PickaDate.js" />
+    <Content Include="components\Dialog\Dialog.Close.html" />
+    <Content Include="components\Dialog\Dialog.html" />
+    <Content Include="components\Dialog\Dialog.LgHeader.html" />
+    <Content Include="components\Dialog\Dialog.Multiline.html" />
+    <Content Include="components\Dropdown\Dropdown.Disabled.html" />
+    <Content Include="components\Dropdown\Dropdown.html" />
+    <Content Include="components\Dropdown\Jquery.Dropdown.js" />
+    <Content Include="components\Label\Label.Disabled.html" />
+    <Content Include="components\Label\Label.html" />
+    <Content Include="components\Label\Label.Required.html" />
+    <Content Include="components\Link\Link.Hero.html" />
+    <Content Include="components\Link\Link.html" />
+    <Content Include="components\ListItem\Jquery.ListItem.js" />
+    <Content Include="components\ListItem\ListItem.Document.html" />
+    <Content Include="components\ListItem\ListItem.html" />
+    <Content Include="components\ListItem\ListItem.Image.html" />
+    <Content Include="components\ListItem\ListItem.Selectable.html" />
+    <Content Include="components\ListItem\ListItem.Selected.html" />
+    <Content Include="components\ListItem\ListItem.Unread.html" />
+    <Content Include="components\ListItem\ListItem.Unseen.html" />
+    <Content Include="components\List\List.Grid.html" />
+    <Content Include="components\List\List.html" />
+    <Content Include="components\NavBar\Jquery.NavBar.js" />
+    <Content Include="components\NavBar\NavBar.html" />
+    <Content Include="components\OrgChart\OrgChart.html" />
+    <Content Include="components\OrgChart\OrgChart.Square.html" />
+    <Content Include="components\Overlay\Overlay.Dark.html" />
+    <Content Include="components\Overlay\Overlay.html" />
+    <Content Include="components\Overlay\Overlay.None.html" />
+    <Content Include="components\Panel\Jquery.Panel.js" />
+    <Content Include="components\Panel\Panel.ExtraLarge.html" />
+    <Content Include="components\Panel\Panel.html" />
+    <Content Include="components\Panel\Panel.Large.html" />
+    <Content Include="components\Panel\Panel.Medium.html" />
+    <Content Include="components\PeoplePicker\Jquery.PeoplePicker.js" />
+    <Content Include="components\PeoplePicker\PeoplePicker.Compact.html" />
+    <Content Include="components\PeoplePicker\PeoplePicker.Disconnected.html" />
+    <Content Include="components\PeoplePicker\PeoplePicker.FacePile.html" />
+    <Content Include="components\PeoplePicker\PeoplePicker.html" />
+    <Content Include="components\PeoplePicker\PeoplePicker.Searching.png" />
+    <Content Include="components\PersonaCard\Jquery.PersonaCard.js" />
+    <Content Include="components\PersonaCard\PersonaCard.html" />
+    <Content Include="components\PersonaCard\PersonaCard.Square.html" />
+    <Content Include="components\Persona\Persona.ExtraLarge.html" />
+    <Content Include="components\Persona\Persona.ExtraSmall.html" />
+    <Content Include="components\Persona\Persona.html" />
+    <Content Include="components\Persona\Persona.Large.html" />
+    <Content Include="components\Persona\Persona.Person.jpg" />
+    <Content Include="components\Persona\Persona.Person2.png" />
+    <Content Include="components\Persona\Persona.Presence.Available.html" />
+    <Content Include="components\Persona\Persona.Presence.Away.html" />
+    <Content Include="components\Persona\Persona.Presence.Blocked.html" />
+    <Content Include="components\Persona\Persona.Presence.Busy.html" />
+    <Content Include="components\Persona\Persona.Presence.Dnd.html" />
+    <Content Include="components\Persona\Persona.Presence.Offline.html" />
+    <Content Include="components\Persona\Persona.Presence.Square.Available.html" />
+    <Content Include="components\Persona\Persona.Presence.Square.Away.html" />
+    <Content Include="components\Persona\Persona.Presence.Square.Blocked.html" />
+    <Content Include="components\Persona\Persona.Presence.Square.Busy.html" />
+    <Content Include="components\Persona\Persona.Presence.Square.Dnd.html" />
+    <Content Include="components\Persona\Persona.Presence.Square.Offline.html" />
+    <Content Include="components\Persona\Persona.Small.html" />
+    <Content Include="components\Persona\Persona.Square.ExtraLarge.html" />
+    <Content Include="components\Persona\Persona.Square.ExtraSmall.html" />
+    <Content Include="components\Persona\Persona.Square.html" />
+    <Content Include="components\Persona\Persona.Square.Large.html" />
+    <Content Include="components\Persona\Persona.Square.Small.html" />
+    <Content Include="components\Persona\Persona.Square.Tiny.html" />
+    <Content Include="components\Persona\Persona.Tiny.html" />
+    <Content Include="components\Pivot\jquery.Pivot.js" />
+    <Content Include="components\Pivot\Pivot.html" />
+    <Content Include="components\Pivot\Pivot.Large.html" />
+    <Content Include="components\Pivot\Pivot.Tabs.html" />
+    <Content Include="components\Pivot\Pivot.Tabs.Large.html" />
+    <Content Include="components\ProgressIndicator\ProgressIndicator.html" />
+    <Content Include="components\ProgressIndicator\ProgressIndicator.js" />
+    <Content Include="components\SearchBox\Jquery.SearchBox.js" />
+    <Content Include="components\SearchBox\SearchBox.html" />
+    <Content Include="components\Spinner\Spinner.html" />
+    <Content Include="components\Spinner\Spinner.js" />
+    <Content Include="components\Table\Table.html" />
+    <Content Include="components\TextField\Jquery.TextField.js" />
+    <Content Include="components\TextField\TextField.html" />
+    <Content Include="components\TextField\TextField.Multiline.html" />
+    <Content Include="components\TextField\TextField.Placeholder.html" />
+    <Content Include="components\TextField\TextField.Underlined.html" />
+    <Content Include="components\Toggle\Toggle.html" />
+    <Content Include="components\Toggle\Toggle.TextLeft.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -356,6 +499,7 @@
     <Content Include="Content\Images\iOS App AAD Perms.png" />
     <Content Include="Content\Images\iOS App Exchange Perms.png" />
     <Content Include="Content\Images\iOS App SP Perms.png" />
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\logo-prop-main.jpg" />
     <Content Include="Content\Images\logo-prop-main.png" />
     <Content Include="Content\Images\logo_office.png" />
@@ -442,6 +586,14 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Videos\LeakyFaucet[4].mp4" />
+    <Content Include="css\fabric.components.css" />
+    <Content Include="css\fabric.components.min.css" />
+    <Content Include="css\fabric.components.rtl.css" />
+    <Content Include="css\fabric.components.rtl.min.css" />
+    <Content Include="css\fabric.css" />
+    <Content Include="css\fabric.min.css" />
+    <Content Include="css\fabric.rtl.css" />
+    <Content Include="css\fabric.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -451,7 +603,10 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Dashboard\CreateTask.cshtml" />
+    <Content Include="Scripts\jquery.fabric.js" />
+    <Content Include="Scripts\jquery.fabric.min.js" />
+    <Content Include="Scripts\PPE\Office.Controls.Login.js" />
+    <Content Include="Scripts\PPE\Office.Controls.People.js" />
     <Content Include="Content\Fonts\Office365-Icons\fonts\icomoon.eot" />
     <Content Include="Content\Fonts\Office365-Icons\fonts\icomoon.ttf" />
     <Content Include="Content\Fonts\Office365-Icons\fonts\icomoon.woff" />
@@ -499,6 +654,82 @@
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.woff" />
+    <Content Include="less\Fabric.RTL.less" />
+    <Content Include="less\Fabric.less" />
+    <Content Include="less\Fabric.Components.less" />
+    <Content Include="less\_Office.Color.Variables.less" />
+    <Content Include="less\_Office.Color.Mixins.less" />
+    <Content Include="less\_Fabric.ZIndex.Variables.less" />
+    <Content Include="less\_Fabric.Utilities.less" />
+    <Content Include="less\_Fabric.Typography.Variables.less" />
+    <Content Include="less\_Fabric.Typography.less" />
+    <Content Include="less\_Fabric.Typography.Languageoverrides.less" />
+    <Content Include="less\_Fabric.Typography.Fonts.less" />
+    <Content Include="less\_Fabric.Responsive.Variables.less" />
+    <Content Include="less\_Fabric.Responsive.Utilities.less" />
+    <Content Include="less\_Fabric.Mixins.less" />
+    <Content Include="less\_Fabric.Icons.RTL.less" />
+    <Content Include="less\_Fabric.Icons.less" />
+    <Content Include="less\_Fabric.Icons.Font.less" />
+    <Content Include="less\_Fabric.Grid.less" />
+    <Content Include="less\_Fabric.Color.Variables.less" />
+    <Content Include="less\_Fabric.Color.Mixins.less" />
+    <Content Include="less\_Fabric.Animations.RTL.less" />
+    <Content Include="less\_Fabric.Animations.less" />
+    <Content Include="components\Toggle\Toggle.less" />
+    <Content Include="components\Toggle\Toggle.json" />
+    <Content Include="components\TextField\TextField.less" />
+    <Content Include="components\TextField\TextField.json" />
+    <Content Include="components\Table\Table.less" />
+    <Content Include="components\Table\Table.json" />
+    <Content Include="components\Spinner\Spinner.less" />
+    <Content Include="components\Spinner\Spinner.json" />
+    <Content Include="components\SearchBox\SearchBox.less" />
+    <Content Include="components\SearchBox\SearchBox.json" />
+    <Content Include="components\ProgressIndicator\ProgressIndicator.less" />
+    <Content Include="components\ProgressIndicator\ProgressIndicator.json" />
+    <Content Include="components\Pivot\Pivot.less" />
+    <Content Include="components\Pivot\Pivot.json" />
+    <Content Include="components\PersonaCard\PersonaCard.less" />
+    <Content Include="components\PersonaCard\PersonaCard.json" />
+    <Content Include="components\Persona\Persona.less" />
+    <Content Include="components\Persona\Persona.json" />
+    <Content Include="components\PeoplePicker\PeoplePicker.less" />
+    <Content Include="components\PeoplePicker\PeoplePicker.json" />
+    <Content Include="components\Panel\Panel.less" />
+    <Content Include="components\Panel\Panel.json" />
+    <Content Include="components\Overlay\Overlay.less" />
+    <Content Include="components\Overlay\Overlay.json" />
+    <Content Include="components\OrgChart\OrgChart.less" />
+    <Content Include="components\OrgChart\OrgChart.json" />
+    <Content Include="components\NavBar\NavBar.less" />
+    <Content Include="components\NavBar\NavBar.json" />
+    <Content Include="components\ListItem\ListItem.less" />
+    <Content Include="components\ListItem\ListItem.json" />
+    <Content Include="components\List\List.less" />
+    <Content Include="components\List\List.json" />
+    <Content Include="components\Link\Link.less" />
+    <Content Include="components\Link\Link.json" />
+    <Content Include="components\Label\Label.less" />
+    <Content Include="components\Label\Label.json" />
+    <Content Include="components\Dropdown\Dropdown.less" />
+    <Content Include="components\Dropdown\Dropdown.json" />
+    <Content Include="components\Dialog\Dialog.less" />
+    <Content Include="components\Dialog\Dialog.json" />
+    <Content Include="components\DatePicker\DatePicker.less" />
+    <Content Include="components\DatePicker\DatePicker.json" />
+    <Content Include="components\ContextualMenu\ContextualMenu.less" />
+    <Content Include="components\ContextualMenu\ContextualMenu.json" />
+    <Content Include="components\CommandBar\CommandBar.less" />
+    <Content Include="components\CommandBar\CommandBar.json" />
+    <Content Include="components\ChoiceField\ChoiceField.less" />
+    <Content Include="components\ChoiceField\ChoiceField.json" />
+    <Content Include="components\Callout\Callout.less" />
+    <Content Include="components\Callout\Callout.json" />
+    <Content Include="components\Button\Button.less" />
+    <Content Include="components\Button\Button.json" />
+    <Content Include="components\Breadcrumb\Breadcrumb.less" />
+    <Content Include="components\Breadcrumb\Breadcrumb.json" />
     <None Include="Properties\PublishProfiles\prop-man - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\prop-man - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
@@ -769,20 +1000,25 @@
     <Content Include="Views\Dashboard\RepairInProgress.cshtml" />
     <Content Include="Views\Dashboard\RepairComplete.cshtml" />
     <Content Include="Views\Dashboard\Inspection.cshtml" />
-    <Content Include="Views\Test\uploadFile.cshtml" />
     <Content Include="Templates\IncidentOneNotePage.cshtml" />
     <Content Include="Views\Dashboard\RepairApproved.cshtml" />
-    <Content Include="Views\Test\VerifyIssues.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\property2Incidents\" />
     <Folder Include="Content\Images\property2Repairs\" />
+    <Folder Include="merges\windows\services\office365\scripts\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Workflows\Incident.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Graph\Microsoft.Graph.csproj">
+      <Project>{e9ce20f2-f527-4040-9f76-4d4f9c37ea2b}</Project>
+      <Name>Microsoft.Graph</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

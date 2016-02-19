@@ -51,8 +51,8 @@
     }
     else
     {
-        settingsMissing = 1;        
-        self.clientId = @"YOUR CLIENT ID";		
+        settingsMissing = 1;
+        self.clientId = @"YOUR CLIENT ID";
         
         [standardUserDefaults setValue:self.clientId  forKey:@"clientId"];
         [standardUserDefaults synchronize];
@@ -66,7 +66,7 @@
     else
     {
         settingsMissing = 1;
-		self.authority = @"https://login.microsoftonline.com/common";
+        self.authority = @"https://login.microsoftonline.com/common";
 		        
         [standardUserDefaults setValue:self.authority forKey:@"authority"];
         [standardUserDefaults synchronize];
@@ -80,7 +80,7 @@
     else
     {
         settingsMissing = 1;
-		self.demoSiteServiceResourceId = @"https://TENANCY.sharepoint.com";
+        self.demoSiteServiceResourceId = @"https://TENANCY.sharepoint.com";
 		        
         [standardUserDefaults setValue:self.demoSiteServiceResourceId forKey:@"demoSiteServiceResourceId"];
         [standardUserDefaults synchronize];
@@ -104,7 +104,8 @@
     if (nil == [standardUserDefaults objectForKey:@"demoSiteCollectionUrl"])
     {
         settingsMissing = 1;
-        [standardUserDefaults setValue:@"https://TENANCY.sharepoint.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
+        
+        [standardUserDefaults setValue:@"https://TENANCY.sharepoint.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"]; 
 
         [standardUserDefaults synchronize];
     }
@@ -122,7 +123,7 @@
     if (nil == [standardUserDefaults objectForKey:@"graphResourceId"])
     {
         settingsMissing = 1;
-		[standardUserDefaults setValue:@"https://graph.microsoft.com/" forKey:@"graphResourceId"];
+        [standardUserDefaults setValue:@"https://graph.microsoft.com/" forKey:@"graphResourceId"];
 		
 		[standardUserDefaults synchronize];
     }
@@ -135,7 +136,25 @@
         
         [standardUserDefaults synchronize];
     }
-
+    //Check to see if the videoPortalEndpointUri setting exists
+    if (nil == [standardUserDefaults objectForKey:@"videoPortalEndpointUri"])
+    {
+        settingsMissing = 1;
+        [standardUserDefaults setValue:@"https://TENANCY.sharepoint.com/portals/hub" forKey:@"videoPortalEndpointUri"];
+        
+        
+        [standardUserDefaults synchronize];
+    }
+    
+    //Check to see if the videoPortalIncidentsChannelName setting exists
+    if (nil == [standardUserDefaults objectForKey:@"videoPortalIncidentsChannelName"])
+    {
+        settingsMissing = 1;
+        [standardUserDefaults setValue:@"Incidents" forKey:@"videoPortalIncidentsChannelName"];
+        
+        [standardUserDefaults synchronize];
+    }
+    
     if (settingsMissing == 0)
     {
         [_login_bt setTitle:@"Sign In" forState:UIControlStateNormal];
@@ -236,32 +255,36 @@
 
     [context acquireTokenWithResource:self.demoSiteServiceResourceId clientId:self.clientId redirectUri:[NSURL URLWithString:self.redirectUriString] completionBlock:^(ADAuthenticationResult *result) {
 
-        [spinner stopAnimating];
-        [spinner removeFromSuperview];
-        
-        if (result.status != AD_SUCCEEDED)
-        {
-            NSString *errorMessage = [@"Login failed. Reason: " stringByAppendingString: result.error.errorDetails];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
-            [alert show];
-
-            return;
-        }
-        else
-        {
-            NSString *token = result.accessToken;
-            NSString *userId = result.tokenCacheStoreItem.userInformation.userId;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [spinner stopAnimating];
+            [spinner removeFromSuperview];
             
-            NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-            NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
-            [context acquireTokenWithResource:graphResourceId clientId:self.clientId redirectUri:[NSURL URLWithString:self.redirectUriString] completionBlock:^(ADAuthenticationResult *result) {
-            
-                EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
-                [propertydetailsctrl setDataExternal:self.propertyId loginName:userId token:token];
+            if (result.status != AD_SUCCEEDED)
+            {
+                NSString *errorMessage = [@"Login failed. Reason: " stringByAppendingString: result.error.errorDetails];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:@"Cancel", nil];
+                [alert show];
                 
-                [self.navigationController pushViewController:propertydetailsctrl animated:YES];
-            }];
-        }
+                return;
+            }
+            else
+            {
+                NSString *token = result.accessToken;
+                NSString *userId = result.tokenCacheStoreItem.userInformation.userId;
+                
+                NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+                NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
+                [context acquireTokenWithResource:graphResourceId clientId:self.clientId redirectUri:[NSURL URLWithString:self.redirectUriString] completionBlock:^(ADAuthenticationResult *result) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        EKNPropertyDetailsViewController *propertydetailsctrl = [[EKNPropertyDetailsViewController alloc] init];
+                        [propertydetailsctrl setDataExternal:self.propertyId loginName:userId token:token];
+                        
+                        [self.navigationController pushViewController:propertydetailsctrl animated:YES];
+                    });
+
+                }];
+            }
+        });
     }];
 
 }
@@ -269,5 +292,15 @@
 - (void)getUsers:(ADTokenCacheStoreItem* )cach
 {
     ///
+}
+-(void)signOut{
+    ADAuthenticationError *error;
+    ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:self.authority error:&error];
+    if (!context)
+    {
+        //here need
+        return;
+    }
+    [[context tokenCacheStore] removeAllWithError:&error];
 }
 @end

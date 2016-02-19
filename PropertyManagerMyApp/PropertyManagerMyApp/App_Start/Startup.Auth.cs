@@ -49,10 +49,9 @@ namespace SuiteLevelWebApp
                             var code = context.Code;
 
                             ClientCredential credential = new ClientCredential(AADAppSettings.ClientId, AADAppSettings.AppKey);
-                            string tenantID = context.AuthenticationTicket.Identity.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
                             string signedInUserID = context.AuthenticationTicket.Identity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                            AuthenticationContext authContext = new AuthenticationContext(string.Format("{0}/{1}", AADAppSettings.AuthorizationUri, tenantID), new NaiveSessionCache(signedInUserID));
+                            AuthenticationContext authContext = new AuthenticationContext(string.Format("{0}{1}", AADAppSettings.AuthorizationUri, AADAppSettings.TenantId), new NaiveSessionCache(signedInUserID));
 
                             // Get the access token for AAD Graph. Doing this will also initialize the token cache associated with the authentication context
                             // In theory, you could acquire token for any service your application has access to here so that you can initialize the token cache

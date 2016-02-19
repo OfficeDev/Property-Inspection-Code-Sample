@@ -56,7 +56,7 @@ namespace XamarinRepairApp.Utils
         public static async Task<List<IncidentModel>> GetIncidents()
         {
             List<IncidentModel> incidents = new List<IncidentModel>();
-            string select = "ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_repairCompleted,sl_propertyIDId,sl_inspectionIDId,sl_roomIDId,sl_taskId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_inspectionID/sl_inspector,sl_inspectionID/sl_emailaddress,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_roomID/ID,sl_roomID/Title";
+			string select = "ID,Title,sl_inspectorIncidentComments,sl_dispatcherComments,sl_repairComments,sl_status,sl_type,sl_date,sl_repairCompleted,sl_propertyIDId,sl_inspectionIDId,sl_roomIDId,sl_taskId,sl_inspectionID/ID,sl_inspectionID/sl_datetime,sl_inspectionID/sl_finalized,sl_inspectionID/sl_inspector,sl_inspectionID/sl_emailaddress,sl_propertyID/ID,sl_propertyID/Title,sl_propertyID/sl_emailaddress,sl_propertyID/sl_owner,sl_propertyID/sl_address1,sl_propertyID/sl_address2,sl_propertyID/sl_city,sl_propertyID/sl_state,sl_propertyID/sl_postalCode,sl_propertyID/sl_group,sl_roomID/ID,sl_roomID/Title";
             string expand = "sl_inspectionID,sl_propertyID,sl_roomID";
             string filter = string.Format("sl_propertyIDId eq {0} and sl_inspectionIDId gt 0 and sl_roomIDId gt 0", App.PropertyId);
             string orderBy = "sl_date desc";

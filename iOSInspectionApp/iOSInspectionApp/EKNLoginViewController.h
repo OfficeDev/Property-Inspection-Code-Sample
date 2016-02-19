@@ -14,7 +14,6 @@
 #import <ADALiOS/ADAuthenticationParameters.h>
 #import <ADALiOS/ADLogger.h>
 #import <ADALiOS/ADInstanceDiscovery.h>
-#import <office365_odata_base/office365_odata_base.h>
 
 @interface EKNLoginViewController : UIViewController
 

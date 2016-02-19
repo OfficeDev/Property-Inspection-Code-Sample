@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ListItem.h"
+#import "EKNListItem.h"
 @interface PropertyListCell : UITableViewCell {
 }
 @property (strong, nonatomic) IBOutlet UIImageView *hotelImage;
