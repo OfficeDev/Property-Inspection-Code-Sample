@@ -118,8 +118,12 @@ namespace SuiteLevelWebApp.Models
 
             var groupMembers = graphService.GetGroupMembersAsync(unifiedGroupFetcher);
 
-            var plan = PlanService.GetPlanAsync(await unifiedGroup);
-            var tasks = GetO365TasksAsync(graphService, await plan);
+            var plan = await PlanService.GetPlanAsync(await unifiedGroup);
+            List<O365Task> tasks = new List<O365Task>();
+            if (plan != null)
+            {
+                tasks = await GetO365TasksAsync(graphService, plan);
+            }
 
             var recentEarliestDateTime = new DateTimeOffset(DateTime.UtcNow).AddDays(-7);
             var recentDocuments = (await groupFiles)
@@ -150,14 +154,14 @@ namespace SuiteLevelWebApp.Models
                 members = await groupMembers,
                 roomInspectionPhotos = await getInspectionPhotos,
                 inspectionComment = await GetInspectionCommentAsync(inspectionID, incident.sl_roomID.Id),
-                tasks = (await tasks).ToArray(),
+                tasks = tasks.ToArray(),
                 repairPeople = getRepairPeople != null ? getRepairPeople : new Graph.Iuser[0],
                 repairPhotos = getRepairPhotos != null ? await getRepairPhotos : new RepairPhoto[0],
                 DispatcherMails = isCurrentUserDispatcher ? await GetMailsForDispatcherAsync(graphService, CurrentUser) : new HyperLink[0],
                 oneNotePages = await oneNotePages,
                 oneNoteUrl = (await notebook) != null ? (await notebook).links.oneNoteWebUrl.ToString() : "",
                 conversations = await groupConversations,
-                PlanId = (await plan).id
+                PlanId = plan != null ? plan.id : string.Empty
             };
             return viewModel;
         }
@@ -240,8 +244,9 @@ namespace SuiteLevelWebApp.Models
             var property = incident.sl_propertyID;
             var unifiedGroup = graphService.groups.GetById(property.sl_group).ExecuteAsync();
 
-
             var plan = PlanService.GetPlanAsync(await unifiedGroup);
+
+            if (await plan == null) return;
 
             var incidentBucket = PlanService.CreateBucketAsync(new bucket
             {

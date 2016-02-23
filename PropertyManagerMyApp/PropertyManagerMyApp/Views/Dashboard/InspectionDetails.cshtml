@@ -127,20 +127,33 @@ else
                                     <div class="content-row">
                                         <h2><i class="ms-Icon ms-Icon--tasks" aria-hidden="true"></i>In progress Tasks<i class="ms-Icon ms-Icon--chevronThinDown" aria-hidden="true"></i></h2>
                                     </div>
-                                    <div class="details-block">
-                                        @foreach (var item in Model.tasks)
-                                        {
-                                            <div class="content-row">
-                                                <div class="link-see-more">
-                                                    <a data-assignedto="@item.AssignedTo" data-assignedby="@item.AssignedBy" data-assigneddate="@item.AssignedDate">@item.Title</a>
-                                                    <a><i class="ms-Icon ms-Icon--ellipsis" aria-hidden="true"></i></a>
+                                    @if (!string.IsNullOrEmpty(Model.PlanId))
+                                    {
+                                        <div class="details-block">
+                                            @foreach (var item in Model.tasks)
+                                            {
+                                                <div class="content-row">
+                                                    <div class="link-see-more">
+                                                        <a data-assignedto="@item.AssignedTo" data-assignedby="@item.AssignedBy" data-assigneddate="@item.AssignedDate">@item.Title</a>
+                                                        <a><i class="ms-Icon ms-Icon--ellipsis" aria-hidden="true"></i></a>
+                                                    </div>
                                                 </div>
+                                            }
+                                        </div>
+                                        <div class="content-row">
+                                            <a class="seemorelink" href="@string.Format("{0}{1}/en-US/Home/PlanViews/{2}", AADAppSettings.OfficeUrl, AppSettings.DemoSiteCollectionOwner.Split('@')[1], Model.PlanId)" target="_blank">See More</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="details-block">
+                                            <div class="content-row">
+                                                <span style="color:red; font-size:12px">
+                                                    The Office 365 Planner service is not provisioned on your tenancy yet.  Planner and tasks integration is currently disabled.
+                                                </span>
                                             </div>
-                                        }
-                                    </div>
-                                    <div class="content-row">
-                                        <a class="seemorelink" href="@string.Format("{0}{1}/en-US/Home/PlanViews/{2}", AADAppSettings.OfficeUrl, AppSettings.DemoSiteCollectionOwner.Split('@')[1], Model.PlanId)" target="_blank">See More</a>
-                                    </div>
+                                        </div>
+                                    }
                                 </div>
 
                                 <!-- Conversations -->
@@ -202,7 +215,7 @@ else
                                 <div class="content-block">
                                     <div class="upload-file-block">
                                         @using (Html.BeginForm("UploadFile", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                                            {
+                                        {
                                             @Html.Hidden("PropertyTitle", Model.incident.sl_propertyID.Title)
                                             @Html.Hidden("IncidentId", Model.incidentId)
                                             <div class="form-button">
@@ -210,7 +223,7 @@ else
                                                 <br />
                                                 <button>Upload</button>
                                             </div>
-                                            }
+                                        }
                                     </div>
 
                                 </div>

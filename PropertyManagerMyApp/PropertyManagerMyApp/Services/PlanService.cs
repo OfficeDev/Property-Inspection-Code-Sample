@@ -49,30 +49,37 @@ namespace SuiteLevelWebApp.Services
 
             var pageEndPoint = string.Format("{0}groups/{1}/plans", AADAppSettings.GraphResourceUrl, group.id);
 
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await accessToken);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var responseMessage = await client.GetAsync(pageEndPoint);
-
-                if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
-                    throw new Exception();
-
-                var payload = await responseMessage.Content.ReadAsStringAsync();
-
-                var jobject = JObject.Parse(payload);
-
-                if (jobject["value"].Children().Count() > 0)
+                using (var client = new HttpClient())
                 {
-                    return new plan
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await accessToken);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var responseMessage = await client.GetAsync(pageEndPoint);
+
+                    if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
+                        throw new Exception();
+
+                    var payload = await responseMessage.Content.ReadAsStringAsync();
+
+                    var jobject = JObject.Parse(payload);
+
+                    if (jobject["value"].Children().Count() > 0)
                     {
-                        id = jobject["value"][0]["id"].ToString()
-                    };
+                        return new plan
+                        {
+                            id = jobject["value"][0]["id"].ToString()
+                        };
+                    }
+                    else
+                    {
+                        return await CreatePlanAsync(group);
+                    }
                 }
-                else
-                {
-                    return await CreatePlanAsync(group);
-                }
+            }
+            catch
+            {
+                return null;
             }
         }
 
