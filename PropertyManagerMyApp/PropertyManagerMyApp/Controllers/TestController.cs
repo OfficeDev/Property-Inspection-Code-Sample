@@ -57,25 +57,5 @@ namespace SuiteLevelWebApp.Controllers
             return Content(propertyGroups.Length + " property group(s) have been deleted.");
         }
 
-        //--------------------------- Repro Issues ----------------------------------//
-
-
-        //public async Task<ActionResult> GetEventsViaOutlookAPI2()
-        //{
-        //    var client = await AuthenticationHelper.GetOutlookServiceAsync();
-
-        //    var events = await (await client.Me.Events.ExecuteAsync()).GetAllAsnyc();
-
-        //    return Content(events.Count().ToString());
-        //}
-
-        //public async Task<ActionResult> GetEventsViaGraphAPI()
-        //{
-        //    var graphService = await AuthenticationHelper.GetGraphServiceAsync();
-
-        //    var events = await (await graphService.me.events.ExecuteAsync()).GetAllAsnyc();
-
-        //    return Content(events.Count().ToString());
-        //}
     }
 }

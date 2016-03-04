@@ -14,8 +14,8 @@
 
 - Office 365 Subscription
 - Microsoft Azure Subscription
-- Visual Studio 2013 Update 4
-- [Microsoft Office Developer Tools for Visual Studio 2013 August 2015 Update](https://www.microsoft.com/web/handlers/WebPI.ashx/getinstaller/OfficeToolsForVS2013Update1.appids)
+- Visual Studio 2015 Update 1
+- [Microsoft Office Developer Tools Update 1 for Visual Studio 2015](http://go.microsoft.com/fwlink/?LinkID=703807&clcid=0x409)
 - Office 365 Video Portal
 	+ Before you start the installation process, ensure the Office 365 video portal is provisioned in your tenancy.  Follow the steps below to enable, provision and verify the Office 365 Video Portal is available in your tenancy.
 	
@@ -64,7 +64,7 @@ Important Notes
 - Use Internet Explorer or Google Chrome to install and execute the web app portion of the code sample.  The Edge browser is not yet supported.
 - When you save the PropertyManagerMyApp directory to your local machine, save it to the root of one of your drives to ensure all Nuget functionality will work and your file paths will not become too long.
 
-To set up and configure the demo first download the Property Manager web app source code and open it in Visual Studio 2013.
+To set up and configure the demo first download the Property Manager web app source code and open it in Visual Studio 2015.
 
 **Restore the Nuget packages the web app depends on**
 
@@ -75,24 +75,21 @@ To set up and configure the demo first download the Property Manager web app sou
 To register the Property Manager web app with your Azure Active Directory follow these steps.
 
 1. Right click the **PropertyManagerMyApp project** and select **Add -> Connected Service**.
-2. Click **Register your app** and authenticate with the global administrator credentials associated with your tenancy.
-3. Use the wizard to configure the appropriate Office 365 permissions.
-  
-	The following images demonstrate how your app settings and api permissions should be configured for the Property Manager web app to work.
-	
-	Office 365 API Sites Permissions
-	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365%20API%20Sites%20Permissions-2.png)
-	
-	Office 365 API Users and Groups Permissions
-	
-	![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/O365%20API%20AD%20Permissions-2.png)	
-
-4. Click **OK** in the Add Connected Services wizard to commit the changes.  
+2. Select **Office 365 APIs** and then click **Configure**.
+3. Type your **Azure AD Domain**, and then click **Next**
+4. Log in with the tenant administrator credentials for your tenancy.
+5. Make sure **Create a new Azure AD application to access Office 365 API services** option is checked, and then click **Next** 
+6. In **Calendar** section, no operation needed, click **Next**.
+7. In **Contacts** section, no operation needed, click **Next**.
+8. In **Mail** section, no operation needed, click **Next**.
+9. In **My Files** section, no operation needed, click **Next**.
+10. In **Sites** section, make sure **Have full control of all site collections**  option is checked, and then click **Next**.
+11. In **Users and Groups** section, make sure **Sign you in and read your profile** option is checked, and then click **Finish**.
+12. Add Connected Services wizard is done.  
 
 At this point Visual Studio will add the appropriate Office 365 Nuget packages to the Visual Studio Solution.
 
-**Add Office 365 unified API (preview) permissions to the PropertyManagerMyApp AAD app**
+**Add Microsoft Graph API permissions to the PropertyManagerMyApp AAD app**
 
 1.	In your web browser, open https://portal.office.com and sign in with a global administrator account.
 2.	Click the **Admin tile**.
@@ -103,7 +100,7 @@ At this point Visual Studio will add the appropriate Office 365 Nuget packages t
 4.	Click **Applications**
 5.	In the Show dropdown list, select **Applications my company owns**.
 6.	Click the **checkmark** button.
-5.	Ensure the **PropertyManagerMyApp.Office365App** application exists, then click it.
+5.	Ensure the **PropertyManagerMyApp15** application exists, then click it.
 6.	Click **Configure** 
 7.	Scroll down to **Permissions to other applications** and click **Add application**
 8.	Mouse over **Microsoft Graph API**  and click the **+ button**
@@ -111,7 +108,7 @@ At this point Visual Studio will add the appropriate Office 365 Nuget packages t
 10.	Open the **Delegated Permissions dropdown list** for the Microsoft Graph API item you just added
 11.	Select the following permissions:
 	- Read and write user notebooks (preview)
-	- Have full access to all files user can access
+	- Have full access to user files and files shared with user
 	- Have full access to user calendars
 	- Send mail as a user
 	- Read and write access to user mail
@@ -161,7 +158,7 @@ In addition to the settings above, other settings exist that you must configure 
 2. Edit the **DemoSiteCollectionOwner setting** in the web.config file to match your Office 365 global administrator account.
 3. Right click the **PropertyManagerMyApp project** and select **Manage Nuget Packages**.
 4. Click the **Updates tab** and select **nuget.org**.
-5. Click **Update All**.
+5. Select all packages listed under **Updates tab**, click **Update**.
 6. Click **I Accept**.
 7. Click **Close**.
 8. **Save** the web.config file.
@@ -210,7 +207,7 @@ After you have performed the configuration steps described above, provision the 
 	 
 **Provision Site Collection and information architecture**
 
-3. In your web browser, navigate to **http://localhost:44312/O365SiteProvisioning** 
+3. In your web browser, navigate to **https://localhost:44312/O365SiteProvisioning** 
 4. Click **Create Demo Site Collection** to invoke the the O365SiteProvisioning controller and create the Site Collection, information architecture, and workflows.
 
 	> **Note:**  This process can take up to 20 minutes to complete.  Do not refresh the page during this process.  The page will refresh every minute and display the current time to let you know it is still running.  When the process completes you will see this screen:

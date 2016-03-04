@@ -1,54 +1,174 @@
 /**
- * Office UI Fabric 1.1.3
+ * Office UI Fabric 2.0.1
  * The front-end framework for building experiences for Office 365.
  **/
+/*
+  Your use of the content in the files referenced here are subject to the terms of the license at http://aka.ms/fabric-font-license
+*/
 .ms-Breadcrumb {
-  height: 40px;
+  margin: 23px 0 1px 0;
 }
 
-.ms-Breadcrumb .ms-Breadcrumb-currentLarge {
+.ms-Breadcrumb.is-overflow .ms-Breadcrumb-overflow {
+  display: inline;
+}
+
+.ms-Breadcrumb-chevron {
+  font-size: 17px;
+  color: #666666;
+  vertical-align: top;
+  margin: 10px 0;
+}
+
+.ms-Breadcrumb-list {
+  display: inline;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+}
+
+.ms-Breadcrumb-list .ms-Breadcrumb-listItem {
+  list-style-type: none;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.ms-Breadcrumb-list .ms-Breadcrumb-listItem:last-of-type .ms-Breadcrumb-chevron {
   display: none;
 }
 
-.ms-Breadcrumb .ms-Breadcrumb-parent,
-.ms-Breadcrumb .ms-Breadcrumb-current {
-  font-size: 14px;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
-  line-height: 50px;
-  color: #666666;
+.ms-Breadcrumb-overflow {
+  display: none;
+  position: relative;
+  margin-right: -4px;
 }
 
-.ms-Breadcrumb .ms-Breadcrumb-parent {
-  color: #333333;
+.ms-Breadcrumb-overflow .ms-Breadcrumb-overflowButton {
+  font-size: 12px;
+  display: inline-block;
+  color: #0078d7;
+  margin-right: -4px;
+  padding: 12px 8px 3px 8px;
+  cursor: pointer;
+}
+
+.ms-Breadcrumb-overflowMenu {
+  display: none;
+  position: absolute;
+}
+
+.ms-Breadcrumb-overflowMenu.is-open {
+  display: block;
+  top: 36px;
+  left: 0;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+  background-color: #ffffff;
+  border: 1px solid #c8c8c8;
+  z-index: 105;
+}
+
+.ms-Breadcrumb-overflowMenu:before {
+  position: absolute;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+  top: -6px;
+  left: 6px;
+  content: ' ';
+  width: 16px;
+  height: 16px;
+  -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+  background-color: white;
+}
+
+.ms-Breadcrumb-overflowMenu .ms-ContextualMenu {
+  border: none;
+  box-shadow: none;
+  position: relative;
+  width: 190px;
+}
+
+.ms-Breadcrumb-overflowMenu .ms-ContextualMenu.is-open {
+  margin-bottom: 0;
+}
+
+.ms-Breadcrumb-itemLink,
+.ms-Breadcrumb-overflowButton {
   text-decoration: none;
+  outline: transparent;
 }
 
-.ms-Breadcrumb .ms-Breadcrumb-parent:hover {
+.ms-Breadcrumb-itemLink:hover,
+.ms-Breadcrumb-overflowButton:hover {
+  background-color: #f4f4f4;
+}
+
+.ms-Breadcrumb-itemLink:focus,
+.ms-Breadcrumb-overflowButton:focus {
+  outline: #767676 solid 1px;
   color: #000000;
 }
 
-.ms-Breadcrumb .ms-Breadcrumb-parent:active {
-  color: #0078d7;
+.ms-Breadcrumb-itemLink:active,
+.ms-Breadcrumb-overflowButton:active {
+  outline: transparent;
+  background-color: #c8c8c8;
 }
 
-.ms-Breadcrumb .ms-Breadcrumb-chevron {
-  padding: 0 7px 0 5px;
+.ms-Breadcrumb-itemLink {
+  color: #333333;
+  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, sans-serif;
+  font-size: 21px;
+  font-weight: normal;
+  display: inline-block;
+  padding: 0 4px;
+  max-width: 160px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-@media (min-width: 640px) {
-  .ms-Breadcrumb .ms-Breadcrumb-currentLarge {
-    display: inline;
-    font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
-    font-size: 21px;
-    color: #0078d7;
-    line-height: 42px;
-    margin-right: 20px;
+@media screen and (max-width: 639px) {
+  .ms-Breadcrumb {
+    margin: 10px 0;
+  }
+
+  .ms-Breadcrumb-itemLink {
+    font-size: 17px;
+  }
+
+  .ms-Breadcrumb-chevron {
+    font-size: 14px;
+    margin-top: 7px;
+  }
+
+  .ms-Breadcrumb-overflow .ms-Breadcrumb-overflowButton {
+    padding-top: 8px;
+    padding-bottom: 3px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .ms-Breadcrumb-itemLink {
+    font-size: 14px;
+    max-width: 116px;
+  }
+
+  .ms-Breadcrumb-chevron {
+    margin-top: 4px;
+  }
+
+  .ms-Breadcrumb-overflow .ms-Breadcrumb-overflowButton {
+    padding-top: 5px;
+    padding-bottom: 3px;
   }
 }
 
 .ms-Button {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -106,8 +226,8 @@
 }
 
 .ms-Button:disabled:hover,
-.ms-Button.is-disabled:hover,
 .ms-Button:disabled:focus,
+.ms-Button.is-disabled:hover,
 .ms-Button.is-disabled:focus {
   outline: 0;
 }
@@ -118,7 +238,7 @@
 
 .ms-Button-label {
   color: #333333;
-  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
 }
 
@@ -166,6 +286,7 @@
   background-color: transparent;
   border: none;
   vertical-align: top;
+  line-height: normal;
 }
 
 .ms-Button.ms-Button--hero .ms-Button-icon {
@@ -173,20 +294,12 @@
   display: inline-block;
   font-size: 12px;
   position: relative;
-  top: 1px;
+  top: -8px;
 }
 
 .ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon {
-  position: relative;
-  display: inline-block;
-  font-size: 1rem;
-  width: 1em;
-  height: 1em;
-  margin: 0 0.5em 0 0;
-  padding: 0;
-  text-align: left;
-  -webkit-font-smoothing: antialiased;
-  border-width: 2px;
+  border-radius: 18px;
+  border: 1px solid #0078d7;
   height: 18px;
   line-height: 18px;
   width: 18px;
@@ -194,563 +307,9 @@
   margin: 0;
 }
 
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon:before,
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon:after {
-  line-height: 1;
-  font-size: inherit;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon:before {
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  vertical-align: top;
-  position: absolute;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon:after {
-  content: '\e000';
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-transform: scale(2);
-      -ms-transform: scale(2);
-          transform: scale(2);
-  -webkit-transform-origin: 50% 50%;
-      -ms-transform-origin: 50% 50%;
-          transform-origin: 50% 50%;
-  z-index: 0;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--star:before {
-  top: -2%;
-  left: 1%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--person:before {
-  top: -2%;
-  left: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--alert:before {
-  top: -4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--mailOpen:before {
-  top: -5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--people:before {
-  top: -4%;
-  left: -7%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--bell:before {
-  top: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--scheduling:before {
-  top: -3%;
-  left: 6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--documents:before {
-  top: -1%;
-  left: -2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--listBullets:before {
-  top: -1%;
-  left: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--panel:before {
-  left: -2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--popout:before {
-  top: -2%;
-  left: -2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--home:before {
-  top: -4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--favorites:before {
-  top: -2%;
-  left: 2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--phone:before {
-  top: -2%;
-  left: -2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--mailSend:before {
-  left: -10%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--pencil:before {
-  top: -2%;
-  left: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--flag:before {
-  left: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--miniatures:before {
-  left: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--voicemail:before {
-  top: 2%;
-  left: -7%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--onlineAdd:before {
-  top: -1%;
-  left: 2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--pinDown:before {
-  top: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--gear:before {
-  left: 2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--check:before {
-  top: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--ellipsis:before {
-  top: 2%;
-  left: -12%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--directions:before {
-  left: 10%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--microphone:before {
-  top: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretDown:before {
-  top: 5%;
-  left: 2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretLeft:before {
-  left: -6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretRight:before {
-  left: 6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretUpLeft:before {
-  top: 5%;
-  left: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretUpRight:before {
-  top: 5%;
-  left: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretDownRight:before {
-  left: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretDownLeft:before {
-  left: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--note:before {
-  top: 2%;
-  left: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--noteReply:before {
-  top: 6%;
-  left: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--noteForward:before {
-  top: 6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--key:before {
-  top: 5%;
-  left: 1%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--tile:before {
-  top: -1%;
-  left: -18%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--taskRecurring:before {
-  top: 2%;
-  left: -1%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--starEmpty:before {
-  top: -4%;
-  left: 1%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--documentReply:before {
-  top: -2%;
-  left: 7%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--documentForward:before {
-  left: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--partner:before {
-  top: -2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--reactivate:before {
-  top: -2%;
-  left: 6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--sort:before {
-  left: -19%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--personAdd:before {
-  top: -2%;
-  left: 6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--chevronDown:before {
-  top: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--chevronLeft:before {
-  left: -5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--chevronRight:before {
-  left: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--peopleAdd:before {
-  top: -5%;
-  left: -12%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--newsfeed:before {
-  left: -4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--notebook:before {
-  left: -4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--link:before {
-  top: 2%;
-  left: -18%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--chevronsDown:before {
-  top: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--chevronsLeft:before {
-  left: -5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--chevronsRight:before {
-  left: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--personRemove:before {
-  left: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--receiptForward:before {
-  left: -20%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--receiptReply:before {
-  left: -20%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--receiptCheck:before {
-  left: -20%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--peopleRemove:before {
-  top: -3%;
-  left: -12%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--merge:before {
-  top: 2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--split:before {
-  top: 2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--eventCancel:before {
-  left: -2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--today:before {
-  top: -2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--oofReply:before {
-  left: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--voicemailReply:before {
-  top: 4%;
-  left: -25%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--voicemailForward:before {
-  top: 4%;
-  left: -20%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--eye:before {
-  top: -4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--post:before {
-  top: -4%;
-  left: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--fax:before {
-  top: -3%;
-  left: -2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--lightning:before {
-  top: 2%;
-  left: 1%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--filter:before {
-  top: 7%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--cart:before {
-  left: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--socialListening:before {
-  top: 2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--mapMarker:before {
-  top: 2%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--replyAllAlt:before {
-  left: -16%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--group:before {
-  left: -33%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--money:before {
-  left: -8%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--noteEdit:before {
-  left: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--mailEdit:before {
-  top: 3%;
-  left: 7%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--pinLeft:before {
-  left: -6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--heart:before {
-  top: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--heartEmpty:before {
-  top: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--cake:before {
-  top: -5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--books:before {
-  left: -8%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--video:before {
-  top: -3%;
-  left: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--balloon:before {
-  top: 4%;
-  left: -1%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--music:before {
-  top: -2%;
-  left: -5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--stopwatch:before {
-  top: -3%;
-  left: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--coffee:before {
-  top: -3%;
-  left: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--plane:before {
-  left: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--dogAlt:before {
-  left: -15%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--metadata:before {
-  top: -4%;
-  left: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--text:before {
-  top: -4%;
-  left: 10%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--fieldText:before {
-  left: -14%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--fieldNumber:before {
-  left: -14%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--dropdown:before {
-  left: -14%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--story:before {
-  left: -5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--bold:before {
-  left: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--underline:before {
-  top: 4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--quote:before {
-  left: -4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--styleRemove:before {
-  top: 4%;
-  left: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--pictureAdd:before {
-  left: -6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--pictureRemove:before {
-  left: -6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--mobile:before {
-  left: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--hide:before {
-  top: -4%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--header:before {
-  left: -9%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--msn:before {
-  left: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--peopleCheck:before {
-  left: -7%;
-  top: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretDownOutline:before {
-  top: 6%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretLeftOutline:before {
-  left: -5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--caretRightOutline:before {
-  left: 5%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--sway:before {
-  left: -3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--mailSync:before {
-  left: 8%;
-  top: 3%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--peopleSync:before {
-  left: -8%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--peopleError:before {
-  left: -8%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--peoplePause:before {
-  left: -8%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--documentSearch:before {
-  left: 8%;
-}
-
-.ms-Button.ms-Button--hero .ms-Button-icon .ms-Icon.ms-Icon--dynamicsMarketing:before {
-  left: -8%;
-}
-
 .ms-Button.ms-Button--hero .ms-Button-label {
   color: #0078d7;
-  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe WP Light', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 21px;
   position: relative;
   top: -5px;
@@ -794,7 +353,7 @@
 
 .ms-Button.ms-Button--compound .ms-Button-label {
   display: block;
-  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
   position: relative;
   text-align: left;
   margin-top: -5px;
@@ -803,7 +362,7 @@
 .ms-Button.ms-Button--compound .ms-Button-description {
   color: #666666;
   display: block;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 12px;
   position: relative;
   text-align: left;
@@ -837,27 +396,27 @@
 }
 
 .ms-Button.ms-Button--compound:disabled .ms-Button-label,
-.ms-Button.ms-Button--compound.is-disabled .ms-Button-label,
 .ms-Button.ms-Button--compound:disabled .ms-Button-description,
+.ms-Button.ms-Button--compound.is-disabled .ms-Button-label,
 .ms-Button.ms-Button--compound.is-disabled .ms-Button-description {
   color: #a6a6a6;
 }
 
 .ms-Button.ms-Button--compound:disabled:focus,
-.ms-Button.ms-Button--compound.is-disabled:focus,
 .ms-Button.ms-Button--compound:disabled:active,
+.ms-Button.ms-Button--compound.is-disabled:focus,
 .ms-Button.ms-Button--compound.is-disabled:active {
   border-color: #f4f4f4;
   background-color: #f4f4f4;
 }
 
 .ms-Button.ms-Button--compound:disabled:focus .ms-Button-label,
-.ms-Button.ms-Button--compound.is-disabled:focus .ms-Button-label,
-.ms-Button.ms-Button--compound:disabled:active .ms-Button-label,
-.ms-Button.ms-Button--compound.is-disabled:active .ms-Button-label,
 .ms-Button.ms-Button--compound:disabled:focus .ms-Button-description,
-.ms-Button.ms-Button--compound.is-disabled:focus .ms-Button-description,
+.ms-Button.ms-Button--compound:disabled:active .ms-Button-label,
 .ms-Button.ms-Button--compound:disabled:active .ms-Button-description,
+.ms-Button.ms-Button--compound.is-disabled:focus .ms-Button-label,
+.ms-Button.ms-Button--compound.is-disabled:focus .ms-Button-description,
+.ms-Button.ms-Button--compound.is-disabled:active .ms-Button-label,
 .ms-Button.ms-Button--compound.is-disabled:active .ms-Button-description {
   color: #a6a6a6;
 }
@@ -881,7 +440,7 @@
 }
 
 .ms-Button.ms-Button--command .ms-Button-label {
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-Button.ms-Button--command:hover .ms-Button-icon,
@@ -921,12 +480,12 @@
 }
 
 .ms-Callout.ms-Callout--arrowRight:before,
-.ms-Callout.ms-Callout--arrowLeft:before,
-.ms-Callout.ms-Callout--arrowBottom:before,
-.ms-Callout.ms-Callout--arrowTop:before,
 .ms-Callout.ms-Callout--arrowRight:after,
+.ms-Callout.ms-Callout--arrowLeft:before,
 .ms-Callout.ms-Callout--arrowLeft:after,
+.ms-Callout.ms-Callout--arrowBottom:before,
 .ms-Callout.ms-Callout--arrowBottom:after,
+.ms-Callout.ms-Callout--arrowTop:before,
 .ms-Callout.ms-Callout--arrowTop:after {
   content: '';
   position: absolute;
@@ -954,8 +513,8 @@
 }
 
 .ms-Callout.ms-Callout--arrowLeft:before,
-.ms-Callout.ms-Callout--arrowRight:before,
 .ms-Callout.ms-Callout--arrowLeft:after,
+.ms-Callout.ms-Callout--arrowRight:before,
 .ms-Callout.ms-Callout--arrowRight:after {
   top: 40px;
   display: none;
@@ -980,8 +539,8 @@
 }
 
 .ms-Callout.ms-Callout--arrowTop:before,
-.ms-Callout.ms-Callout--arrowBottom:before,
 .ms-Callout.ms-Callout--arrowTop:after,
+.ms-Callout.ms-Callout--arrowBottom:before,
 .ms-Callout.ms-Callout--arrowBottom:after {
   left: 0;
   right: 0;
@@ -1044,13 +603,13 @@
 
 .ms-Callout-title {
   margin: 0;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 21px;
 }
 
 .ms-Callout-subText {
   margin: 0;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   color: #333333;
   font-size: 12px;
 }
@@ -1092,10 +651,10 @@
 }
 
 .ms-Callout.ms-Callout--OOBE.ms-Callout--arrowRight:before,
-.ms-Callout.ms-Callout--OOBE.ms-Callout--arrowLeft:before,
-.ms-Callout.ms-Callout--OOBE.ms-Callout--arrowTop:before,
 .ms-Callout.ms-Callout--OOBE.ms-Callout--arrowRight:after,
+.ms-Callout.ms-Callout--OOBE.ms-Callout--arrowLeft:before,
 .ms-Callout.ms-Callout--OOBE.ms-Callout--arrowLeft:after,
+.ms-Callout.ms-Callout--OOBE.ms-Callout--arrowTop:before,
 .ms-Callout.ms-Callout--OOBE.ms-Callout--arrowTop:after {
   border-color: #0078d7;
   background-color: transparent;
@@ -1107,7 +666,7 @@
 }
 
 .ms-Callout.ms-Callout--OOBE .ms-Callout-title {
-  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe WP Light', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 28px;
   color: #ffffff;
 }
@@ -1126,18 +685,18 @@
 }
 
 .ms-Callout.ms-Callout--peek.ms-Callout--arrowTop:before,
-.ms-Callout.ms-Callout--peek.ms-Callout--arrowBottom:before,
 .ms-Callout.ms-Callout--peek.ms-Callout--arrowTop:after,
+.ms-Callout.ms-Callout--peek.ms-Callout--arrowBottom:before,
 .ms-Callout.ms-Callout--peek.ms-Callout--arrowBottom:after {
   left: 40px;
   right: auto;
 }
 
 .ms-Callout.ms-Callout--peek.ms-Callout--arrowRight:before,
-.ms-Callout.ms-Callout--peek.ms-Callout--arrowLeft:before,
 .ms-Callout.ms-Callout--peek.ms-Callout--arrowRight:after,
+.ms-Callout.ms-Callout--peek.ms-Callout--arrowLeft:before,
 .ms-Callout.ms-Callout--peek.ms-Callout--arrowLeft:after {
-  top: calc(50% - 10px);
+  top: calc('50% - 10px');
 }
 
 .ms-Callout.ms-Callout--peek .ms-Callout-header {
@@ -1160,8 +719,8 @@
   }
 
   .ms-Callout.ms-Callout--arrowRight:before,
-  .ms-Callout.ms-Callout--arrowLeft:before,
   .ms-Callout.ms-Callout--arrowRight:after,
+  .ms-Callout.ms-Callout--arrowLeft:before,
   .ms-Callout.ms-Callout--arrowLeft:after {
     display: block;
   }
@@ -1169,7 +728,7 @@
 
 .ms-ChoiceField {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -1412,8 +971,8 @@
 }
 
 .ms-CommandBarItem.icon-only .ms-CommandBarItem-chevronDown,
-.ms-CommandBarItem.ms-CommandBarItem--iconOnly .ms-CommandBarItem-chevronDown,
 .ms-CommandBarItem.icon-only .ms-CommandBarItem-commandText,
+.ms-CommandBarItem.ms-CommandBarItem--iconOnly .ms-CommandBarItem-chevronDown,
 .ms-CommandBarItem.ms-CommandBarItem--iconOnly .ms-CommandBarItem-commandText {
   display: none;
 }
@@ -1687,7 +1246,7 @@
 
 .ms-ContextualMenu {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -1728,7 +1287,7 @@
   text-transform: uppercase;
   height: 40px;
   line-height: 40px;
-  padding: 0 30px;
+  padding: 0 18px;
 }
 
 .ms-ContextualMenu-link {
@@ -1761,7 +1320,7 @@
 .ms-ContextualMenu-link.is-selected {
   background-color: #c7e0f4;
   color: #000000;
-  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-ContextualMenu-link.is-selected:hover {
@@ -1796,6 +1355,10 @@
   right: 7px;
   z-index: 1;
   pointer-events: none;
+}
+
+.ms-ContextualMenu.ms-ContextualMenu--multiselect .ms-ContextualMenu-item.ms-ContextualMenu-item--header {
+  padding: 0 30px;
 }
 
 .ms-ContextualMenu.ms-ContextualMenu--multiselect .ms-ContextualMenu-link {
@@ -1866,8 +1429,8 @@
 }
 
 .ms-DatePicker-picker.ms-DatePicker-picker--opened .ms-DatePicker-holder {
-  -webkit-animation-name: fadeIn, slideDown10;
-          animation-name: fadeIn, slideDown10;
+  -webkit-animation-name: fadeIn, slideDownIn10;
+          animation-name: fadeIn, slideDownIn10;
   -webkit-animation-duration: 0.167s;
      -moz-animation-duration: 0.167s;
       -ms-animation-duration: 0.167s;
@@ -1909,7 +1472,7 @@
 .ms-DatePicker-month,
 .ms-DatePicker-year {
   display: inline-block;
-  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe WP Light', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 21px;
   color: #0078d7;
   margin-top: -1px;
@@ -1952,7 +1515,7 @@
   height: 40px;
   padding: 0;
   line-height: 40px;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 15px;
   font-weight: normal;
   color: #333333;
@@ -1969,7 +1532,7 @@
 
 .ms-DatePicker-day--outfocus {
   color: #a6a6a6;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-DatePicker-day--infocus:hover,
@@ -2020,6 +1583,7 @@
   display: block;
   float: right;
   margin-left: 10px;
+  text-align: center;
   line-height: 40px;
   text-align: center;
   font-size: 21px;
@@ -2053,7 +1617,7 @@
 .ms-DatePicker-currentDecade {
   display: block;
   font-weight: normal;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 21px;
   height: 40px;
   line-height: 42px;
@@ -2086,7 +1650,7 @@
   float: left;
   margin: 0 10px 10px 0;
   font-weight: normal;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 13px;
   color: #333333;
   text-align: center;
@@ -2108,7 +1672,7 @@
   bottom: 9px;
   color: #0078d7;
   cursor: pointer;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 13px;
   height: 30px;
   line-height: 30px;
@@ -2119,15 +1683,6 @@
 
 .ms-DatePicker-goToday:hover {
   outline: 1px solid transparent;
-}
-
-.ms-DatePicker.is-pickingMonths .ms-DatePicker-dayPicker,
-.ms-DatePicker.is-pickingMonths .ms-DatePicker-monthComponents {
-  display: none;
-}
-
-.ms-DatePicker.is-pickingMonths .ms-DatePicker-monthPicker {
-  display: block;
 }
 
 .ms-DatePicker.is-pickingYears .ms-DatePicker-dayPicker,
@@ -2150,7 +1705,7 @@
 
   .ms-DatePicker-month,
   .ms-DatePicker-year {
-    font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+    font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   }
 
   .ms-DatePicker-header {
@@ -2211,7 +1766,7 @@
     width: 30px;
     height: 30px;
     line-height: 30px;
-    font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+    font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
     font-size: 12px;
   }
 
@@ -2277,6 +1832,17 @@
   }
 
   .ms-DatePicker.is-pickingYears .ms-DatePicker-yearPicker {
+    display: block;
+  }
+}
+
+@media (max-width: 459px) {
+  .ms-DatePicker.is-pickingMonths .ms-DatePicker-dayPicker,
+  .ms-DatePicker.is-pickingMonths .ms-DatePicker-monthComponents {
+    display: none;
+  }
+
+  .ms-DatePicker.is-pickingMonths .ms-DatePicker-monthPicker {
     display: block;
   }
 }
@@ -2365,7 +1931,7 @@
 
 .ms-Dialog-title {
   margin: 0;
-  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe WP Light', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 21px;
 }
 
@@ -2381,7 +1947,7 @@
 .ms-Dialog-subText {
   margin: 0 0 20px 0;
   padding-top: 8px;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   color: #333333;
   font-size: 12px;
 }
@@ -2436,7 +2002,7 @@
 
 .ms-Dialog.ms-Dialog--lgHeader .ms-Dialog-title {
   font-size: 28px;
-  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe WP Light', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, sans-serif;
   color: #ffffff;
 }
 
@@ -2454,7 +2020,7 @@
 
 .ms-Dropdown {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -2467,10 +2033,10 @@
 }
 
 .ms-Dropdown:hover .ms-Dropdown-title,
-.ms-Dropdown:focus .ms-Dropdown-title,
-.ms-Dropdown:active .ms-Dropdown-title,
 .ms-Dropdown:hover .ms-Dropdown-caretDown,
+.ms-Dropdown:focus .ms-Dropdown-title,
 .ms-Dropdown:focus .ms-Dropdown-caretDown,
+.ms-Dropdown:active .ms-Dropdown-title,
 .ms-Dropdown:active .ms-Dropdown-caretDown {
   color: #000000;
 }
@@ -2510,7 +2076,7 @@
   font-size: 17px;
   position: absolute;
   right: 9px;
-  top: 9px;
+  bottom: 5px;
   z-index: 1;
   pointer-events: none;
 }
@@ -2528,6 +2094,7 @@
   line-height: 30px;
   padding: 0 32px 0 10px;
   position: relative;
+  overflow: hidden;
 }
 
 .ms-Dropdown-items {
@@ -2546,6 +2113,7 @@
   top: 0;
   right: 0;
   bottom: 0;
+  overflow-y: scroll;
 }
 
 .ms-Dropdown-items:before {
@@ -2613,7 +2181,6 @@
     right: auto;
     bottom: auto;
     left: auto;
-    overflow-y: scroll;
     max-width: 100%;
   }
 
@@ -2625,9 +2192,10 @@
 
 .ms-Label {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 12px;
   font-weight: normal;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   box-shadow: none;
@@ -2642,7 +2210,7 @@
 }
 
 .ms-Label.is-disabled {
-  color: #a6a6a6;
+  color: #333333;
 }
 
 .ms-Link {
@@ -2661,13 +2229,13 @@
 }
 
 .ms-Link.ms-Link--hero {
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   padding: 2px 8px 4px;
 }
 
 .ms-List {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -2690,7 +2258,7 @@
 
 .ms-ListItem {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -2716,6 +2284,7 @@
 .ms-ListItem-primaryText,
 .ms-ListItem-secondaryText,
 .ms-ListItem-tertiaryText {
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2724,7 +2293,7 @@
 
 .ms-ListItem-primaryText {
   color: #212121;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 21px;
   padding-right: 80px;
   position: relative;
@@ -2733,7 +2302,7 @@
 
 .ms-ListItem-secondaryText {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   line-height: 25px;
   position: relative;
@@ -2743,7 +2312,7 @@
 
 .ms-ListItem-tertiaryText {
   color: #767676;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   line-height: 15px;
   position: relative;
@@ -2753,7 +2322,7 @@
 
 .ms-ListItem-metaText {
   color: #333333;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 11px;
   position: absolute;
   right: 30px;
@@ -2809,7 +2378,7 @@
 .ms-ListItem.is-unread .ms-ListItem-secondaryText,
 .ms-ListItem.is-unread .ms-ListItem-metaText {
   color: #0078d7;
-  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-ListItem.is-unseen:after {
@@ -2917,14 +2486,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #666666;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 11px;
   padding-top: 6px;
 }
 
 .ms-NavBar {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -2966,7 +2535,7 @@
   display: block;
   height: 40px;
   line-height: 40px;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 17px;
   padding-left: 20px;
   position: relative;
@@ -2987,7 +2556,7 @@
 }
 
 .ms-NavBar-item.is-selected {
-  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-NavBar-item.is-disabled {
@@ -3081,13 +2650,17 @@
     outline: 1px solid transparent;
     z-index: 5;
   }
+
+  .ms-NavBar.is-open .ms-NavBar-item .ms-ContextualMenu {
+    position: relative;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 479px) {
   .ms-NavBar-item.ms-NavBar-item--hasMenu.is-selected {
     height: inherit;
     background-color: transparent;
-    font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+    font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   }
 
   .ms-NavBar-item.ms-NavBar-item--hasMenu.is-selected .ms-NavBar-chevronDown {
@@ -3104,7 +2677,7 @@
   }
 
   .ms-NavBar-item .ms-ContextualMenu .ms-ContextualMenu-link {
-    font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+    font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
     font-size: 17px;
   }
 
@@ -3148,7 +2721,7 @@
   }
 
   .ms-NavBar-item.is-selected {
-    font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+    font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
     border-bottom: 2px solid #0078d7;
   }
 
@@ -3167,7 +2740,7 @@
 
 .ms-OrgChart {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -3195,6 +2768,8 @@
 }
 
 .ms-OrgChart-listItemBtn {
+  background: none;
+  border: 0;
   cursor: pointer;
   position: relative;
   height: 50px;
@@ -3232,10 +2807,16 @@
   right: 0;
   top: 0;
   z-index: 300;
+  display: none;
+  pointer-events: none;
 }
 
 .ms-Panel .ms-Overlay {
   z-index: 0;
+  display: none;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.367s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
 
 .ms-Panel-main {
@@ -3246,6 +2827,83 @@
   top: 0;
   display: none;
   z-index: 10;
+  width: 100%;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:hover {
+  background-color: #d7eaf9;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:active {
+  background-color: #b5d8f4;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:active .ms-CommandBarItem-icon {
+  color: #07288b;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:active .ms-CommandBarItem-commandText {
+  color: #000000;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:first-child {
+  background-color: #0078d7;
+  box-shadow: inset 0 1px 0 0 #2488d8;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:first-child .ms-CommandBarItem-icon {
+  color: #ffffff;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:first-child .ms-CommandBarItem-commandText {
+  color: #ffffff;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:first-child .ms-CommandBarItem-linkWrapper {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:first-child:hover {
+  background-color: #005a9e;
+  box-shadow: none;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:first-child:hover .ms-CommandBarItem-icon {
+  color: #ffffff;
+}
+
+.ms-Panel-main .ms-CommandBar .ms-CommandBarItem:first-child:hover .ms-CommandBarItem-commandText {
+  color: #ffffff;
+}
+
+.ms-Panel-closeButton {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  height: 24px;
+  width: 24px;
+  outline: 0;
+  padding: 0;
+  color: #666666;
+}
+
+.ms-Panel-closeButton:hover {
+  color: #333333;
+}
+
+.ms-Panel-closeIcon {
+  font-size: 14px;
 }
 
 .ms-Panel-contentInner {
@@ -3259,47 +2917,100 @@
 }
 
 .ms-Panel-headerText {
-  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe WP Light', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 21px;
   color: #333333;
   line-height: 82px;
   height: 70px;
 }
 
-@media (min-width: 320px) {
-  .ms-Panel {
-    display: none;
-  }
+.ms-Panel.is-open {
+  display: block;
+}
 
-  .ms-Panel.is-open {
-    display: block;
-  }
+.ms-Panel.is-open .ms-CommandBar {
+  -webkit-animation-name: fadeIn, slideDownIn20;
+          animation-name: fadeIn, slideDownIn20;
+  -webkit-animation-duration: 0.367s;
+     -moz-animation-duration: 0.367s;
+      -ms-animation-duration: 0.367s;
+       -o-animation-duration: 0.367s;
+  -webkit-animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+          animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-delay: 250ms;
+          animation-delay: 250ms;
+}
 
-  .ms-Panel .ms-Overlay {
-    display: none;
-  }
+.ms-Panel.is-open .ms-Panel-main {
+  opacity: 1;
+  pointer-events: auto;
+  display: block;
+}
 
-  .ms-Panel.is-open .ms-Panel-main {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 1;
-  }
+.ms-Panel.is-open .ms-Overlay {
+  display: block;
+  pointer-events: auto;
+}
+
+.ms-Panel.is-open.ms-Panel-animateOut .ms-Panel-main {
+  -webkit-animation-duration: 0.367s;
+  -webkit-animation-name: fadeOut;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-duration: 0.367s;
+          animation-duration: 0.367s;
+  -webkit-animation-name: fadeOut;
+          animation-name: fadeOut;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-duration: 0.1s;
+          animation-duration: 0.1s;
+}
+
+.ms-Panel.is-open.ms-Panel-animateOut .ms-Overlay {
+  display: none;
+}
+
+.ms-Panel .ms-CommandBarItem .ms-CommandBarItem-commandText {
+  display: inline-block;
+}
+
+.ms-Panel .ms-CommandBar-mainArea {
+  padding-left: 0;
+  margin-left: -1px;
+  overflow: hidden;
 }
 
 @media (min-width: 480px) {
-  .ms-Panel {
-    display: block;
-    pointer-events: none;
+  .ms-Panel.is-open.ms-Panel-animateIn .ms-Panel-main {
+    -webkit-animation-name: fadeIn, slideLeftIn40;
+            animation-name: fadeIn, slideLeftIn40;
+    -webkit-animation-duration: 0.367s;
+       -moz-animation-duration: 0.367s;
+        -ms-animation-duration: 0.367s;
+         -o-animation-duration: 0.367s;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+            animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
   }
 
-  .ms-Panel-main {
-    border-left: 1px solid #eaeaea;
-    border-right: 1px solid #eaeaea;
-    right: -40px;
-    pointer-events: auto;
-    width: 341px;
+  .ms-Panel.is-open.ms-Panel-animateIn .ms-Overlay {
+    -webkit-animation-duration: 0.367s;
+    -webkit-animation-name: fadeIn;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-duration: 0.367s;
+            animation-duration: 0.367s;
+    -webkit-animation-name: fadeIn;
+            animation-name: fadeIn;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    -webkit-animation-duration: 0.267s;
+            animation-duration: 0.267s;
+  }
+
+  .ms-Panel.is-open.ms-Panel-animateOut .ms-Panel-main {
     -webkit-animation-name: fadeOut, slideRightOut40;
             animation-name: fadeOut, slideRightOut40;
     -webkit-animation-duration: 0.167s;
@@ -3312,11 +3023,23 @@
             animation-fill-mode: both;
   }
 
-  .ms-Panel.is-open .ms-Panel-main {
-    box-shadow: -30px 0px 30px -30px rgba(0, 0, 0, 0.2);
-    left: auto;
-    -webkit-animation-name: fadeIn, slideLeft40;
-            animation-name: fadeIn, slideLeft40;
+  .ms-Panel.is-open.ms-Panel-animateOut .ms-Overlay {
+    -webkit-animation-duration: 0.367s;
+    -webkit-animation-name: fadeOut;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-duration: 0.367s;
+            animation-duration: 0.367s;
+    -webkit-animation-name: fadeOut;
+            animation-name: fadeOut;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    -webkit-animation-duration: 0.167s;
+            animation-duration: 0.167s;
+  }
+
+  .ms-Panel.is-open.ms-Panel--left.ms-Panel-animateIn .ms-Panel-main {
+    -webkit-animation-name: fadeIn, slideRightIn40;
+            animation-name: fadeIn, slideRightIn40;
     -webkit-animation-duration: 0.367s;
        -moz-animation-duration: 0.367s;
         -ms-animation-duration: 0.367s;
@@ -3327,23 +3050,21 @@
             animation-fill-mode: both;
   }
 
-  .ms-Panel.ms-Panel--small.ms-Panel--left.is-open .ms-Panel-main {
-    box-shadow: 30px 0px 30px -30px rgba(0, 0, 0, 0.2);
-    -webkit-animation-name: fadeIn, slideRight40;
-            animation-name: fadeIn, slideRight40;
+  .ms-Panel.is-open.ms-Panel--left.ms-Panel-animateIn .ms-Overlay {
     -webkit-animation-duration: 0.367s;
-       -moz-animation-duration: 0.367s;
-        -ms-animation-duration: 0.367s;
-         -o-animation-duration: 0.367s;
-    -webkit-animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
-            animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+    -webkit-animation-name: fadeIn;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-duration: 0.367s;
+            animation-duration: 0.367s;
+    -webkit-animation-name: fadeIn;
+            animation-name: fadeIn;
     -webkit-animation-fill-mode: both;
             animation-fill-mode: both;
+    -webkit-animation-duration: 0.267s;
+            animation-duration: 0.267s;
   }
 
-  .ms-Panel.ms-Panel--small.ms-Panel--left .ms-Panel-main {
-    left: 0;
-    right: auto;
+  .ms-Panel.is-open.ms-Panel--left.ms-Panel-animateOut .ms-Panel-main {
     -webkit-animation-name: fadeOut, slideLeftOut40;
             animation-name: fadeOut, slideLeftOut40;
     -webkit-animation-duration: 0.167s;
@@ -3356,11 +3077,44 @@
             animation-fill-mode: both;
   }
 
-  .ms-Panel .ms-Overlay {
-    display: block;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.367s cubic-bezier(0.1, 0.9, 0.2, 1);
+  .ms-Panel.is-open.ms-Panel--left.ms-Panel-animateOut .ms-Overlay {
+    -webkit-animation-duration: 0.367s;
+    -webkit-animation-name: fadeOut;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-duration: 0.367s;
+            animation-duration: 0.367s;
+    -webkit-animation-name: fadeOut;
+            animation-name: fadeOut;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    -webkit-animation-duration: 0.167s;
+            animation-duration: 0.167s;
+  }
+
+  .ms-Panel.is-open .ms-CommandBar {
+    -webkit-animation-delay: 500ms;
+            animation-delay: 500ms;
+  }
+
+  .ms-Panel-main {
+    border-left: 1px solid #eaeaea;
+    border-right: 1px solid #eaeaea;
+    pointer-events: auto;
+    width: 340px;
+  }
+
+  .ms-Panel.is-open .ms-Panel-main {
+    box-shadow: -30px 0px 30px -30px rgba(0, 0, 0, 0.2);
+    left: auto;
+  }
+
+  .ms-Panel.ms-Panel--small.ms-Panel--left.is-open .ms-Panel-main {
+    box-shadow: 30px 0px 30px -30px rgba(0, 0, 0, 0.2);
+  }
+
+  .ms-Panel.ms-Panel--small.ms-Panel--left .ms-Panel-main {
+    left: 0;
+    right: auto;
   }
 
   .ms-Panel.is-open .ms-Overlay {
@@ -3414,7 +3168,7 @@
 
 .ms-PeoplePicker {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -3453,7 +3207,7 @@
 }
 
 .ms-PeoplePicker-searchField {
-  border: none;
+  border: 0;
   box-sizing: border-box;
   display: inline-block;
   float: left;
@@ -3487,9 +3241,9 @@
   color: #666666;
   display: inline-block;
   float: left;
-  height: 30px;
   text-align: center;
-  width: 30px;
+  height: 32px;
+  width: 32px;
 }
 
 .ms-PeoplePicker-personaRemove:hover {
@@ -3519,6 +3273,7 @@
 
 .ms-PeoplePicker.is-active .ms-PeoplePicker-results {
   display: block;
+  opacity: 1;
 }
 
 .ms-PeoplePicker-resultGroups {
@@ -3531,12 +3286,12 @@
 }
 
 .ms-PeoplePicker-resultGroup:first-child {
-  border-top: none;
+  border-top: 0;
 }
 
 .ms-PeoplePicker-resultGroupTitle {
   color: #0078d7;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 12px;
   padding: 17px 0 0 12px;
   text-transform: uppercase;
@@ -3560,16 +3315,6 @@
   cursor: pointer;
 }
 
-.ms-PeoplePicker-result .ms-Persona:hover .ms-Persona-primaryText {
-  color: #212121;
-}
-
-.ms-PeoplePicker-result .ms-Persona:hover .ms-Persona-secondaryText,
-.ms-PeoplePicker-result .ms-Persona:hover .ms-Persona-tertiaryText,
-.ms-PeoplePicker-result .ms-Persona:hover .ms-Persona-optionalText {
-  color: #333333;
-}
-
 .ms-PeoplePicker-result .ms-Persona:active {
   background-color: #c7e0f4;
 }
@@ -3578,10 +3323,14 @@
   width: 100%;
 }
 
-.ms-PeoplePicker-resultBtn {
+.ms-PeoplePicker-resultBtn,
+.ms-PeoplePicker-peopleListBtn {
+  background: none;
+  border: 0;
   cursor: pointer;
   position: relative;
-  height: 50px;
+  box-sizing: border-box;
+  height: 34px;
   width: 100%;
   background: none;
   border: 0;
@@ -3590,17 +3339,36 @@
   padding: 0 0 0 9px;
 }
 
-.ms-PeoplePicker-resultBtn:hover {
+@media (min-width: 480px) {
+  .ms-PeoplePicker-resultBtn,
+  .ms-PeoplePicker-peopleListBtn {
+    height: 48px;
+  }
+}
+
+.ms-PeoplePicker-resultBtn:hover,
+.ms-PeoplePicker-peopleListBtn:hover {
   background-color: #eaeaea;
   outline: 1px solid transparent;
 }
 
-.ms-PeoplePicker-resultBtn:focus {
+.ms-PeoplePicker-resultBtn:focus,
+.ms-PeoplePicker-peopleListBtn:focus {
   outline: 1;
 }
 
-.ms-PeoplePicker-resultBtn.ms-PeoplePicker-resultBtn--compact {
-  height: 30px;
+.ms-PeoplePicker-resultBtn.ms-PeoplePicker-resultBtn--compact,
+.ms-PeoplePicker-peopleListBtn.ms-PeoplePicker-resultBtn--compact {
+  height: 32px;
+}
+
+.ms-PeoplePicker-peopleListBtn {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.ms-PeoplePicker-peopleListBtn:hover {
+  background-color: transparent;
 }
 
 .ms-PeoplePicker-resultAction {
@@ -3608,22 +3376,24 @@
   border: 0;
   cursor: pointer;
   display: block;
+  height: 34px;
   transition: background-color 0.367s cubic-bezier(0.1, 0.9, 0.2, 1);
-  height: 50px;
   position: absolute;
   right: 0;
   top: 0;
   width: 30px;
-  z-index: 300;
+  text-align: center;
+}
+
+@media (min-width: 480px) {
+  .ms-PeoplePicker-resultAction {
+    height: 48px;
+  }
 }
 
 .ms-PeoplePicker-resultAction .ms-Icon {
   color: #666666;
   font-size: 15px;
-  margin-top: -8px;
-  position: absolute;
-  text-align: center;
-  left: 8px;
 }
 
 .ms-PeoplePicker-resultAction:hover {
@@ -3658,6 +3428,7 @@
   border-top: 1px solid #eaeaea;
   height: 69px;
   position: relative;
+  overflow: hidden;
 }
 
 .ms-PeoplePicker-searchMore .ms-Spinner {
@@ -3708,6 +3479,7 @@
   cursor: pointer;
 }
 
+.ms-PeoplePicker-searchMoreBtn:focus,
 .ms-PeoplePicker-searchMoreBtn:active {
   background-color: #c7e0f4;
 }
@@ -3727,7 +3499,7 @@
 
 .ms-PeoplePicker-searchMoreIcon .ms-Icon {
   color: #333333;
-  font-size: 24px;
+  font-size: 16px;
   position: absolute;
   text-align: center;
   top: 27px;
@@ -3736,11 +3508,11 @@
 
 .ms-PeoplePicker-searchMorePrimary {
   padding-top: 2px;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-PeoplePicker-searchMoreSecondary {
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 11px;
   color: #666666;
 }
@@ -3756,9 +3528,11 @@
 
 .ms-PeoplePicker-searchMore.ms-PeoplePicker-searchMore--disconnected .ms-PeoplePicker-searchMorePrimary {
   color: #666666;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 11px;
   line-height: 20px;
+  position: relative;
+  top: 12px;
 }
 
 .ms-PeoplePicker.ms-PeoplePicker--compact .ms-PeoplePicker-resultGroups {
@@ -3766,7 +3540,7 @@
 }
 
 .ms-PeoplePicker.ms-PeoplePicker--compact .ms-PeoplePicker-resultAction {
-  height: 30px;
+  height: 32px;
 }
 
 .ms-PeoplePicker.ms-PeoplePicker--compact .ms-PeoplePicker-resultAction .ms-Icon {
@@ -3795,24 +3569,34 @@
 
 .ms-PeoplePicker.ms-PeoplePicker--compact .ms-PeoplePicker-searchMoreIcon .ms-Icon {
   font-size: 17px;
-  margin-top: -12px;
+  top: 0;
+  margin-top: 0;
+  line-height: 50px;
 }
 
 .ms-PeoplePicker.ms-PeoplePicker--compact .ms-PeoplePicker-searchMorePrimary {
   font-size: 12px;
+  line-height: 45px;
 }
 
 .ms-PeoplePicker.ms-PeoplePicker--compact .ms-PeoplePicker-searchMoreSecondary {
   display: none;
 }
 
-.ms-PeoplePicker.ms-PeoplePicker--facePile .ms-PeoplePicker-searchBox {
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchBox,
+.ms-PeoplePicker.ms-PeoplePicker--membersList .ms-PeoplePicker-searchBox {
   height: 30px;
   min-height: 30px;
 }
 
-.ms-PeoplePicker.ms-PeoplePicker--facePile .ms-PeoplePicker-searchField {
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchField,
+.ms-PeoplePicker.ms-PeoplePicker--membersList .ms-PeoplePicker-searchField {
   height: 28px;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-Persona,
+.ms-PeoplePicker.ms-PeoplePicker--membersList .ms-Persona {
+  cursor: pointer;
 }
 
 .ms-PeoplePicker-selected {
@@ -3824,16 +3608,153 @@
   display: block;
 }
 
-.ms-PeoplePicker-selectedHeader {
-  color: #0078d7;
-  text-transform: uppercase;
+.ms-PeoplePicker.ms-PeoplePicker--Facepile.is-searching .ms-PeoplePicker-results {
+  border-bottom: 0;
+  padding: 20px 0 0;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile.is-searching .ms-PeoplePicker-peopleListHeader {
+  display: none;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results {
+  position: relative;
+  border: 0;
+  box-shadow: none;
+  margin: 0;
+  max-width: 100%;
+  padding: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+@media (max-width: 479px) {
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona-imageArea,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona-image,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona-imageArea,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona-image {
+    width: 32px;
+    height: 32px;
+  }
+
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona-placeholder,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona-placeholder {
+    font-size: 28px;
+    top: 6px;
+  }
+
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona-initials,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona-initials {
+    font-size: 12px;
+    line-height: 32px;
+  }
+
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona-presence,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona-presence {
+    left: 19px;
+  }
+
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona-details,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona-details {
+    padding-left: 8px;
+  }
+
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona-primaryText,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona-primaryText {
+    font-size: 14px;
+    padding-top: 3px;
+  }
+
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona-secondaryText,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona-secondaryText {
+    display: none;
+  }
+}
+
+@media (min-width: 480px) {
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-results .ms-Persona .ms-Persona-secondaryText,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-selectedPeople .ms-Persona .ms-Persona-secondaryText {
+    display: block;
+  }
+}
+
+@media (min-width: 480px) {
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-resultBtn,
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-peopleListBtn {
+    height: 42px;
+  }
+}
+
+@media (min-width: 480px) {
+  .ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-resultAction {
+    height: 42px;
+  }
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-Persona.ms-Persona--selectable {
+  padding: 0;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMore {
+  display: none;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMore.is-active {
+  display: block;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMore,
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMoreBtn,
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMoreIcon {
+  height: 48px;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMoreBtn {
+  padding-left: 48px;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMoreIcon {
+  width: 48px;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMorePrimary {
   font-size: 12px;
-  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe WP Light', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  line-height: 48px;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PeoplePicker-searchMoreIcon .ms-Icon {
+  top: 0;
+  line-height: 48px;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-Spinner {
+  top: 16px;
+  left: 14px;
+  height: 20px;
+  width: 20px;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PersonaCard {
+  display: none;
+  position: absolute;
+  height: 200px;
+}
+
+.ms-PeoplePicker.ms-PeoplePicker--Facepile .ms-PersonaCard.is-active {
+  display: block;
+}
+
+.ms-PeoplePicker-selectedHeader,
+.ms-PeoplePicker-peopleListHeader {
+  color: #0078d7;
+  font-size: 12px;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   height: 50px;
   line-height: 50px;
 }
 
-.ms-PeoplePicker-selectedPeople {
+.ms-PeoplePicker-selectedPeople,
+.ms-PeoplePicker-peopleList {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -3842,13 +3763,18 @@
 }
 
 .ms-PeoplePicker-selectedPerson {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.ms-PeoplePicker-peopleListItem {
+  margin-bottom: 6px;
   position: relative;
 }
 
 .ms-Persona {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -3863,12 +3789,11 @@
 .ms-Persona-imageArea {
   position: relative;
   display: block;
-  background-color: transparent;
   overflow: hidden;
-  width: 52px;
-  height: 52px;
+  text-align: center;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background-color: #a6a6a6;
 }
 
 .ms-Persona-placeholder {
@@ -3877,7 +3802,74 @@
   right: 0;
   left: 0;
   font-size: 47px;
-  top: 7px;
+  top: 9px;
+}
+
+.ms-Persona-initials {
+  color: #ffffff;
+  font-size: 17px;
+  font-family: 'Segoe UI Light WestEuropean', 'Segoe UI Light', 'Segoe UI', Tahoma, Arial, sans-serif;
+  line-height: 48px;
+}
+
+.ms-Persona-initials.ms-Persona-initials--lightBlue {
+  background-color: #6ba5e7;
+}
+
+.ms-Persona-initials.ms-Persona-initials--blue {
+  background-color: #2d89ef;
+}
+
+.ms-Persona-initials.ms-Persona-initials--darkBlue {
+  background-color: #2b5797;
+}
+
+.ms-Persona-initials.ms-Persona-initials--teal {
+  background-color: #00aba9;
+}
+
+.ms-Persona-initials.ms-Persona-initials--lightGreen {
+  background-color: #99b433;
+}
+
+.ms-Persona-initials.ms-Persona-initials--green {
+  background-color: #00a300;
+}
+
+.ms-Persona-initials.ms-Persona-initials--darkGreen {
+  background-color: #1e7145;
+}
+
+.ms-Persona-initials.ms-Persona-initials--lightPink {
+  background-color: #e773bd;
+}
+
+.ms-Persona-initials.ms-Persona-initials--pink {
+  background-color: #ff0097;
+}
+
+.ms-Persona-initials.ms-Persona-initials--magenta {
+  background-color: #7e3878;
+}
+
+.ms-Persona-initials.ms-Persona-initials--purple {
+  background-color: #603cba;
+}
+
+.ms-Persona-initials.ms-Persona-initials--black {
+  background-color: #1d1d1d;
+}
+
+.ms-Persona-initials.ms-Persona-initials--orange {
+  background-color: #da532c;
+}
+
+.ms-Persona-initials.ms-Persona-initials--red {
+  background-color: #ee1111;
+}
+
+.ms-Persona-initials.ms-Persona-initials--darkRed {
+  background-color: #b91d47;
 }
 
 .ms-Persona-image {
@@ -3886,8 +3878,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
 }
 
 .ms-Persona-image[src=''] {
@@ -3921,11 +3913,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ms-Persona-primaryText {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 17px;
   margin-top: -3px;
   line-height: 1.4;
@@ -3935,7 +3930,7 @@
 .ms-Persona-tertiaryText,
 .ms-Persona-optionalText {
   color: #666666;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 12px;
   white-space: nowrap;
   line-height: 1.3;
@@ -3961,7 +3956,7 @@
   left: 0;
   bottom: auto;
   right: auto;
-  height: 52px;
+  height: 48px;
   width: 5px;
   border-radius: 0;
   border: 0;
@@ -4022,7 +4017,12 @@
 
 .ms-Persona.ms-Persona--xs .ms-Persona-placeholder {
   font-size: 28px;
-  top: 4px;
+  top: 6px;
+}
+
+.ms-Persona.ms-Persona--xs .ms-Persona-initials {
+  font-size: 12px;
+  line-height: 32px;
 }
 
 .ms-Persona.ms-Persona--xs .ms-Persona-presence {
@@ -4059,6 +4059,11 @@
   top: 5px;
 }
 
+.ms-Persona.ms-Persona--sm .ms-Persona-initials {
+  font-size: 14px;
+  line-height: 40px;
+}
+
 .ms-Persona.ms-Persona--sm .ms-Persona-presence {
   left: 27px;
 }
@@ -4090,7 +4095,12 @@
 
 .ms-Persona.ms-Persona--lg .ms-Persona-placeholder {
   font-size: 67px;
-  top: 9px;
+  top: 10px;
+}
+
+.ms-Persona.ms-Persona--lg .ms-Persona-initials {
+  font-size: 28px;
+  line-height: 72px;
 }
 
 .ms-Persona.ms-Persona--lg .ms-Persona-presence {
@@ -4126,6 +4136,11 @@
   top: 12px;
 }
 
+.ms-Persona.ms-Persona--xl .ms-Persona-initials {
+  font-size: 42px;
+  line-height: 100px;
+}
+
 .ms-Persona.ms-Persona--xl .ms-Persona-presence {
   height: 20px;
   width: 20px;
@@ -4138,7 +4153,7 @@
 
 .ms-Persona.ms-Persona--xl .ms-Persona-primaryText {
   font-size: 21px;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   margin-top: 0;
 }
 
@@ -4158,13 +4173,17 @@
   left: 0;
 }
 
-.ms-Persona.ms-Persona--darkText .ms-Persona-primaryText {
+.ms-Persona.ms-Persona--darkText .ms-Persona-primaryText,
+.ms-PeoplePicker-result .ms-Persona:hover .ms-Persona-primaryText {
   color: #212121;
 }
 
 .ms-Persona.ms-Persona--darkText .ms-Persona-secondaryText,
+.ms-PeoplePicker-result .ms-Persona:hover .ms-Persona-secondaryText,
 .ms-Persona.ms-Persona--darkText .ms-Persona-tertiaryText,
-.ms-Persona.ms-Persona--darkText .ms-Persona-optionalText {
+.ms-PeoplePicker-result .ms-Persona:hover .ms-Persona-tertiaryText,
+.ms-Persona.ms-Persona--darkText .ms-Persona-optionalText,
+.ms-PeoplePicker-result .ms-Persona:hover .ms-Persona-optionalText {
   color: #333333;
 }
 
@@ -4213,11 +4232,11 @@
 
 .ms-PersonaCard {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
-  -webkit-animation-name: fadeIn, slideUp10;
-          animation-name: fadeIn, slideUp10;
+  -webkit-animation-name: fadeIn, slideUpIn10;
+          animation-name: fadeIn, slideUpIn10;
   -webkit-animation-duration: 0.167s;
      -moz-animation-duration: 0.167s;
       -ms-animation-duration: 0.167s;
@@ -4254,6 +4273,11 @@
   top: 11px;
 }
 
+.ms-PersonaCard-persona .ms-Persona .ms-Persona-initials {
+  font-size: 28px;
+  line-height: 80px;
+}
+
 .ms-PersonaCard-persona .ms-Persona .ms-Persona-presence {
   border-color: #f4f4f4;
   left: 77px;
@@ -4275,47 +4299,7 @@
   height: 48px;
 }
 
-.ms-PersonaCard-action {
-  display: inline-block;
-  cursor: pointer;
-  font-size: 17px;
-  height: 48px;
-  line-height: 48px;
-  padding: 0 10px;
-  color: #666666;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.ms-PersonaCard-action:hover {
-  color: #212121;
-}
-
-.ms-PersonaCard-action:active {
-  color: #0078d7;
-}
-
-.ms-PersonaCard-action.is-active {
-  color: #0078d7;
-}
-
-.ms-PersonaCard-action.is-active:after {
-  box-sizing: border-box;
-  -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-          transform: rotate(45deg);
-  content: '';
-  width: 10px;
-  height: 10px;
-  border: 1px solid #c8c8c8;
-  background-color: #ffffff;
-  position: absolute;
-  border-right: none;
-  border-bottom: none;
-  bottom: -4px;
-  left: 15px;
-}
-
+.ms-PersonaCard-action,
 .ms-PersonaCard-overflow {
   display: inline-block;
   cursor: pointer;
@@ -4326,25 +4310,25 @@
   color: #666666;
   position: relative;
   box-sizing: border-box;
-  font-size: 14px;
-  color: #333333;
-  float: right;
-  margin-top: -1px;
 }
 
+.ms-PersonaCard-action:hover,
 .ms-PersonaCard-overflow:hover {
   color: #212121;
 }
 
+.ms-PersonaCard-action:active,
 .ms-PersonaCard-overflow:active {
   color: #0078d7;
 }
 
-.ms-PersonaCard-overflow.is-active {
+.ms-PersonaCard-action.is-active,
+.is-active.ms-PersonaCard-overflow {
   color: #0078d7;
 }
 
-.ms-PersonaCard-overflow.is-active:after {
+.ms-PersonaCard-action.is-active:after,
+.is-active.ms-PersonaCard-overflow:after {
   box-sizing: border-box;
   -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -4355,10 +4339,17 @@
   border: 1px solid #c8c8c8;
   background-color: #ffffff;
   position: absolute;
-  border-right: none;
-  border-bottom: none;
+  border-right: 0;
+  border-bottom: 0;
   bottom: -4px;
   left: 15px;
+}
+
+.ms-PersonaCard-overflow {
+  font-size: 14px;
+  color: #333333;
+  float: right;
+  margin-top: -1px;
 }
 
 .ms-PersonaCard-overflow:hover {
@@ -4414,23 +4405,23 @@
 }
 
 .ms-PersonaCard-detailChat {
-  margin-left: 0 !important;
+  margin-left: 0;
 }
 
 .ms-PersonaCard-detailPhone {
-  margin-left: -100% !important;
+  margin-left: -100%;
 }
 
 .ms-PersonaCard-detailVideo {
-  margin-left: -200% !important;
+  margin-left: -200%;
 }
 
 .ms-PersonaCard-detailMail {
-  margin-left: -300% !important;
+  margin-left: -300%;
 }
 
 .ms-PersonaCard-detailOrg {
-  margin-left: -400% !important;
+  margin-left: -400%;
 }
 
 .ms-PersonaCard-detailChat .detail-1,
@@ -4503,7 +4494,8 @@
   color: #666666;
 }
 
-.ms-PersonaCard-action.ms-PersonaCard-orgChart:after {
+.ms-PersonaCard-action.ms-PersonaCard-orgChart:after,
+.ms-PersonaCard-orgChart.ms-PersonaCard-overflow:after {
   display: none;
 }
 
@@ -4528,7 +4520,7 @@
 
 .ms-Pivot {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -4544,7 +4536,7 @@
 .ms-Pivot-link {
   color: #333333;
   display: inline-block;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 15px;
   line-height: 27px;
   margin-right: 15px;
@@ -4562,7 +4554,7 @@
 
 .ms-Pivot-link.is-selected {
   color: #0078d7;
-  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-Pivot-link.ms-Pivot-link--overflow {
@@ -4593,7 +4585,7 @@
 }
 
 .ms-Pivot.ms-Pivot--large .ms-Pivot-link.is-selected {
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-Pivot.ms-Pivot--large .ms-Pivot-link.ms-Pivot-link--overflow:after {
@@ -4625,7 +4617,7 @@
 .ms-Pivot.ms-Pivot--tabs .ms-Pivot-link.is-selected {
   background-color: #0078d7;
   color: #ffffff;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
 .ms-Pivot.ms-Pivot--tabs .ms-Pivot-link.ms-Pivot-link--overflow:hover:not(.is-selected),
@@ -4649,13 +4641,13 @@
 
 @media screen and (-ms-high-contrast: active) {
   .ms-Pivot.ms-Pivot--tabs .ms-Pivot-link.is-selected {
-    font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe WP Semibold', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+    font-family: 'Segoe UI Semibold WestEuropean', 'Segoe UI Semibold', 'Segoe UI', Tahoma, Arial, sans-serif;
   }
 }
 
 .ms-SearchBox {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -4668,7 +4660,7 @@
 }
 
 .ms-SearchBox.is-disabled .ms-SearchBox-label {
-  color: #a6a6a6;
+  color: #333333;
 }
 
 .ms-SearchBox.is-disabled .ms-SearchBox-icon {
@@ -4684,41 +4676,49 @@
 
 .ms-SearchBox.is-active .ms-SearchBox-closeButton {
   display: block;
-  outline: 1px solid transparent;
+  outline: transparent 1px solid;
 }
 
 .ms-SearchBox-field {
+  position: relative;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   box-shadow: none;
   border: 1px solid #71afe5;
+  outline: transparent 1px solid;
   border-radius: 0;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   color: #000000;
   height: 32px;
   padding: 6px 3px 7px 10px;
   width: 180px;
+  background-color: transparent;
+  z-index: 5;
 }
 
-.ms-SearchBox-field:hover {
+.ms-SearchBox-field.hovering {
   border-color: #0078d7;
-  background-color: #c7e0f4;
+  background-color: rgba(0, 120, 215, 0.2);
 }
 
-.ms-SearchBox-field:hover + .ms-SearchBox-label {
+.ms-SearchBox-field.hovering + .ms-SearchBox-label {
   color: #000000;
 }
 
-.ms-SearchBox-field:hover + .ms-SearchBox-label .ms-Icon {
+.ms-SearchBox-field.hovering + .ms-SearchBox-label .ms-Icon {
   color: #333333;
 }
 
 .ms-SearchBox-field:focus {
   padding: 6px 32px 7px 10px;
   border-color: #0078d7;
-  background-color: #c7e0f4;
+  background-color: rgba(0, 120, 215, 0.2);
+}
+
+.ms-SearchBox-field::-ms-clear {
+  display: none;
 }
 
 .ms-SearchBox-closeButton {
@@ -4734,6 +4734,7 @@
   display: none;
   font-size: 17px;
   color: #ffffff;
+  z-index: 10;
 }
 
 .ms-SearchBox-label {
@@ -4753,15 +4754,34 @@
 
 .ms-Spinner {
   position: relative;
-  width: 32px;
-  height: 32px;
+  height: 20px;
+}
+
+.ms-Spinner.ms-Spinner--large {
+  height: 28px;
+}
+
+.ms-Spinner.ms-Spinner--large .ms-Spinner-label {
+  left: 30px;
+  top: 6px;
 }
 
 .ms-Spinner-circle {
   position: absolute;
-  border-radius: 999px;
-  background-color: black;
+  border-radius: 100px;
+  background-color: #0078d7;
   opacity: 0;
+}
+
+.ms-Spinner-label {
+  position: relative;
+  color: #333333;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  color: #0078d7;
+  left: 28px;
+  top: 2px;
 }
 
 .ms-Table {
@@ -4773,7 +4793,7 @@
   display: table-row;
   height: 30px;
   line-height: 30px;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 12px;
   color: #333333;
 }
@@ -4819,7 +4839,7 @@
 }
 
 .ms-Table-row:first-child {
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 11px;
   color: #666666;
 }
@@ -4873,9 +4893,32 @@
   }
 }
 
+.ms-Label {
+  color: #333333;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  display: block;
+  padding: 5px 0;
+}
+
+.ms-Label.is-required:after {
+  content: ' *';
+  color: #a80000;
+}
+
+.ms-Label.is-disabled {
+  color: #333333;
+}
+
 .ms-TextField {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -4913,7 +4956,7 @@
 }
 
 .ms-TextField.is-active {
-  border-color: #0078d7 !important;
+  border-color: #0078d7;
 }
 
 .ms-TextField-field {
@@ -4923,7 +4966,7 @@
   box-shadow: none;
   border: 1px solid #c8c8c8;
   border-radius: 0;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 12px;
   color: #333333;
   height: 32px;
@@ -4964,7 +5007,7 @@
 
 .ms-TextField.ms-TextField--placeholder .ms-Label {
   position: absolute;
-  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe WP Semilight', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Semilight WestEuropean', 'Segoe UI Semilight', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 12px;
   color: #666666;
   padding: 7px 0 7px 10px;
@@ -4975,7 +5018,7 @@
 }
 
 .ms-TextField.ms-TextField--placeholder.is-disabled .ms-Label {
-  color: #a6a6a6;
+  color: #333333;
 }
 
 .ms-TextField.ms-TextField--underlined {
@@ -5007,7 +5050,7 @@
 }
 
 .ms-TextField.ms-TextField--underlined .ms-TextField-field {
-  border: none;
+  border: 0;
   float: left;
   display: table-cell;
   text-align: left;
@@ -5025,7 +5068,7 @@
 }
 
 .ms-TextField.ms-TextField--underlined.is-disabled .ms-Label {
-  color: #a6a6a6;
+  color: #333333;
 }
 
 .ms-TextField.ms-TextField--underlined.is-disabled .ms-TextField-field {
@@ -5035,7 +5078,7 @@
 
 .ms-TextField.ms-TextField--multiline .ms-TextField-field {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 12px;
   font-weight: normal;
   line-height: 17px;
@@ -5045,9 +5088,32 @@
   overflow: auto;
 }
 
+.ms-Label {
+  color: #333333;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  display: block;
+  padding: 5px 0;
+}
+
+.ms-Label.is-required:after {
+  content: ' *';
+  color: #a80000;
+}
+
+.ms-Label.is-disabled {
+  color: #333333;
+}
+
 .ms-Toggle {
   color: #333333;
-  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
+  font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   box-sizing: border-box;
@@ -5075,7 +5141,7 @@
 }
 
 .ms-Toggle.is-disabled .ms-Label {
-  color: #a6a6a6 !important;
+  color: #333333;
 }
 
 .ms-Toggle.is-disabled .ms-Toggle-field {
@@ -5087,10 +5153,6 @@
 
 .ms-Toggle.is-disabled .ms-Toggle-field:before {
   background-color: #c8c8c8 !important;
-}
-
-.ms-Toggle-input {
-  display: none;
 }
 
 .ms-Toggle-description {
@@ -5112,14 +5174,16 @@
 }
 
 .ms-Toggle-input {
-  position: relative;
+  position: absolute;
+  opacity: 0;
+  top: 0;
 }
 
-.ms-Toggle-input:not(:checked) + .ms-Toggle-field {
+.ms-Toggle-input + .ms-Toggle-field {
   background-color: #f4f4f4;
 }
 
-.ms-Toggle-input:not(:checked) + .ms-Toggle-field:before {
+.ms-Toggle-input + .ms-Toggle-field:before {
   position: absolute;
   display: block;
   box-sizing: content-box;
@@ -5132,23 +5196,20 @@
   outline: 2px solid transparent;
 }
 
-.ms-Toggle-input:not(:checked) + .ms-Toggle-field:before {
+.ms-Toggle-input + .ms-Toggle-field:before {
+  right: auto;
   border-right: 2.5px solid #ffffff;
 }
 
-.ms-Toggle-input:not(:checked) + .ms-Toggle-field:hover {
-  background-color: #eaeaea;
-}
-
-.ms-Toggle-input:not(:checked) + .ms-Toggle-field:active {
+.ms-Toggle-input + .ms-Toggle-field:active {
   background-color: #0078d7;
 }
 
-.ms-Toggle-input:not(:checked) + .ms-Toggle-field .ms-Label--off {
+.ms-Toggle-input + .ms-Toggle-field .ms-Label--off {
   display: block;
 }
 
-.ms-Toggle-input:not(:checked) + .ms-Toggle-field .ms-Label--on {
+.ms-Toggle-input + .ms-Toggle-field .ms-Label--on {
   display: none;
 }
 
@@ -5170,11 +5231,8 @@
 }
 
 .ms-Toggle-input:checked + .ms-Toggle-field:before {
+  left: auto;
   border-left: 2.5px solid #ffffff;
-}
-
-.ms-Toggle-input:checked + .ms-Toggle-field:hover {
-  background-color: #005a9e;
 }
 
 .ms-Toggle-input:checked + .ms-Toggle-field:active {
@@ -5187,6 +5245,16 @@
 
 .ms-Toggle-input:checked + .ms-Toggle-field .ms-Label--on {
   display: block;
+}
+
+.ms-Toggle-input:focus + .ms-Toggle-field,
+.ms-Toggle-input:hover + .ms-Toggle-field {
+  background-color: #eaeaea;
+}
+
+.ms-Toggle-input:focus:checked + .ms-Toggle-field,
+.ms-Toggle-input:hover:checked + .ms-Toggle-field {
+  background-color: #005a9e;
 }
 
 .ms-Toggle.ms-Toggle--textLeft {

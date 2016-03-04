@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyManagerMyApp", "PropertyManagerMyApp\PropertyManagerMyApp.csproj", "{8A4C674C-1476-47D7-8B52-0B3A9AC735A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyManagerMyApp", "PropertyManagerMyApp\PropertyManagerMyApp.csproj", "{4EB95CD2-DF10-45CB-9170-B5C871BA727D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Graph", "Microsoft.Graph\Microsoft.Graph.csproj", "{E9CE20F2-F527-4040-9F76-4D4F9C37EA2B}"
 EndProject
@@ -13,10 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8A4C674C-1476-47D7-8B52-0B3A9AC735A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A4C674C-1476-47D7-8B52-0B3A9AC735A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A4C674C-1476-47D7-8B52-0B3A9AC735A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A4C674C-1476-47D7-8B52-0B3A9AC735A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB95CD2-DF10-45CB-9170-B5C871BA727D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EB95CD2-DF10-45CB-9170-B5C871BA727D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EB95CD2-DF10-45CB-9170-B5C871BA727D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EB95CD2-DF10-45CB-9170-B5C871BA727D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E9CE20F2-F527-4040-9F76-4D4F9C37EA2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E9CE20F2-F527-4040-9F76-4D4F9C37EA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9CE20F2-F527-4040-9F76-4D4F9C37EA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU

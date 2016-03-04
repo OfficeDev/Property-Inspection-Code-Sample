@@ -77,15 +77,23 @@
                                     var iWidth = 300;
                                     var iHeight = 200;
                                     var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
-                                    var iLeft = (window.screen.availWidth - 10 - iWidth) / 2
-                                    var newWin = window.open('about:blank', '', 'width=' + iWidth + ', height=' + iHeight + ',top=' + iTop + ',left=' + iLeft + ',toolbar=no,status=no,resizable=no,scrollbars=no,alwaysRaised=yes,depended=yes');
-                                    var index = 0;
-                                    setInterval((function () {
-                                        return function () {
-                                            if (index == $('#linkpanel a').length) newWin.close();
-                                            newWin.location = $('#linkpanel a').eq(index++).attr('href');
-                                        };
-                                    })(), 8000);
+                                    var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+                                   
+                                    if (navigator.userAgent.indexOf('Trident') > 0) {
+                                        $('#linkpanel a').each(function () {
+                                            window.open($(this).attr('href'), '', 'width=' + iWidth + ', height=' + iHeight + ',top=' + iTop + ',left=' + iLeft + ',toolbar=no,status=no,resizable=yes,scrollbars=no,alwaysRaised=yes,depended=yes');
+                                        });
+                                    }
+                                    else {
+                                        var index = 0;
+                                        var newWin = window.open('about:blank', '', 'width=' + iWidth + ', height=' + iHeight + ',top=' + iTop + ',left=' + iLeft + ',toolbar=no,status=no,resizable=no,scrollbars=no,alwaysRaised=yes,depended=yes');
+                                        setInterval((function () {
+                                            return function () {
+                                                if (index == $('#linkpanel a').length) newWin.close();
+                                                newWin.location = $('#linkpanel a').eq(index++).attr('href');
+                                            };
+                                        })(), 8000);
+                                    }
                                     $(this).hide();
                                 });
                                 $('#linkpanel').show();
