@@ -50,7 +50,7 @@
     [self.actiondelegate showLoading];
     
     EKNGraphService *graph = [[EKNGraphService alloc] init];
-    [graph getGroupMembers:self.groupId callback:^(NSMutableDictionary *listDict, NSError *error){
+    [graph getGroupMembers:self.groupId callback:^(NSMutableDictionary *listDict, NSString *error){
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.actiondelegate hideLoading];
             
@@ -62,7 +62,7 @@
             }
             else
             {
-                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error code %ld,error message: %@",error.code, error.localizedDescription]];
+                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error message: %@",error]];
             }
         });
     }];
@@ -92,8 +92,8 @@
 -(void)getOneNoteService:(NSString *)incidentId{
     [self.actiondelegate showLoading];
     
-    EKNGraphService *graph = [[EKNGraphService alloc] init];
-    [graph getGroupNotes:self.groupId incidentId:incidentId  callback:^(NSMutableDictionary *listDict, NSError *error){
+    EKNOneNoteService *oneNoteService = [[EKNOneNoteService alloc] init];
+    [oneNoteService getGroupNotePages:self.groupId incidentId:incidentId  callback:^(NSMutableDictionary *listDict, NSString *error){
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.actiondelegate hideLoading];
             
@@ -105,7 +105,7 @@
             }
             else
             {
-                 [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find OneNote item. Error code %d,error message: %@",error.code, error.localizedDescription]];
+                 [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find OneNote item. Error message: %@",error]];
             }
         });
     }];

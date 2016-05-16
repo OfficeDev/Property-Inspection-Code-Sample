@@ -7,8 +7,6 @@
 //
 
 #import "EKNIncidentViewController.h"
-#import "BaseController.h"
-#import "EKNGraphService.h"
 
 @interface EKNIncidentViewController ()
 
@@ -633,7 +631,7 @@
      {
          dispatch_async(dispatch_get_main_queue(), ^{
              // NSLog(@" send email error %@,%d",error,returnValue);
-             if (error ==nil) {
+             if (returnValue ==0) {
                  //
                  [self showHintAlertView:@"Success" message:@"Message sent Success!"];
                  NSLog(@"Send email success.");
@@ -648,11 +646,10 @@
      }];
     
     //update task
-    EKNGraphService *service = [[EKNGraphService alloc] init];
+     EKNPlanService *service = [[EKNPlanService alloc] init];
     [service updateTask:self.selectGroupId incidentId:self.selectIncidentId callback:^(NSString *error) {
     }];
     //
-    
 }
 
 -(void)sendDispatcherEmail

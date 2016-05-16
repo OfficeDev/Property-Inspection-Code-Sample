@@ -141,14 +141,20 @@
         [standardUserDefaults synchronize];
     }
     
-    //Check to see if the graphResourceId setting exists
+    //Check to see if the graphResourceUrl setting exists
     if (nil == [standardUserDefaults objectForKey:@"graphResourceUrl"])
     {
         settingsMissing = 1;
-		[standardUserDefaults setValue:@"https://graph.microsoft.com/beta/" forKey:@"graphResourceUrl"];
+		[standardUserDefaults setValue:@"https://graph.microsoft.com/v1.0/" forKey:@"graphResourceUrl"];
         [standardUserDefaults synchronize];
     }
-    
+    //Check to see if the graphBetaResourceUrl setting exists
+    if (nil == [standardUserDefaults objectForKey:@"graphBetaResourceUrl"])
+    {
+        settingsMissing = 1;
+        [standardUserDefaults setValue:@"https://graph.microsoft.com/beta/" forKey:@"graphBetaResourceUrl"];
+        [standardUserDefaults synchronize];
+    }
     //Check to see if the oneNoteResourceId setting exists
     if (nil == [standardUserDefaults objectForKey:@"oneNoteResourceId"])
     {

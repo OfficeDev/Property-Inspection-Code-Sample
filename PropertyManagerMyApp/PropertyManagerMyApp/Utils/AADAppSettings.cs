@@ -12,7 +12,8 @@ namespace SuiteLevelWebApp.Utils
 
         private static string _graphResourceId = "https://graph.microsoft.com/";
 
-        private static string _graphResourceUrl = "https://graph.microsoft.com/beta/";
+        private static string _graphResourceUrl = "https://graph.microsoft.com/v1.0/";
+        private static string _graphBetaResourceUrl = "https://graph.microsoft.com/beta/";
 
         private static string _outlookUrl = "https://outlook.office.com/";
 
@@ -71,6 +72,14 @@ namespace SuiteLevelWebApp.Utils
             get
             {
                 return _graphResourceUrl;
+            }
+        }
+
+        public static string GraphBetaResourceUrl
+        {
+            get
+            {
+                return _graphBetaResourceUrl;
             }
         }
 

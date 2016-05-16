@@ -19,426 +19,225 @@
     NSString *subject = [sendDataDic objectForKey:@"subject"];
     NSString *body = [sendDataDic objectForKey:@"body"];
     
-    MSGraphServiceMessage *message = [MSGraphServiceMessage alloc];
-    message.Subject = subject;
-    message.ToRecipients = [self getRecipients:to];
-    message.CcRecipients = [self getRecipients:cc];
-    message.Body = [[MSGraphServiceItemBody alloc] init];
-    [message.body setContent:body];
-    //message.Body.Content = body;
-    
-    ADAuthenticationError *error;
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
-    ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:[standardUserDefaults objectForKey:@"authority"] error:&error];
-    if (!context) { return; }
-    
-    NSString *clientId = [standardUserDefaults objectForKey:@"clientId"];
-    NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
-    NSString *graphResourceUrl = [standardUserDefaults objectForKey:@"graphResourceUrl"];
-    NSString *loginUser = [standardUserDefaults objectForKey:@"LogInUser"];
-    NSURL *redirectUri = [NSURL URLWithString:[standardUserDefaults objectForKey:@"redirectUriString"]];
-    
-    ADALDependencyResolver *resolver = [[ADALDependencyResolver alloc] initWithContext:context resourceId:graphResourceId clientId: clientId redirectUri:redirectUri];
-    MSGraphServiceClient *client = [[MSGraphServiceClient alloc] initWithUrl:[graphResourceUrl stringByAppendingString:clientId] dependencyResolver:resolver];
-    
-    MSGraphServiceUserFetcher *me = [[client users] getById:loginUser];
-    
-    [[me operations] sendMailWithMessage:message saveToSentItems:true callback:^(int returnValue, MSOrcError *error) {
-        callback(0,error);
+    [self getGraphServiceClient:^(MSGraphClient *client, NSError *error) {
+        if(client != nil){
+            MSGraphMessage *message = [[MSGraphMessage alloc] init];
+            message.subject = subject;
+            message.toRecipients= [self getRecipients:to];
+            message.ccRecipients = [self getRecipients:cc];
+            
+            MSGraphItemBody *itemBody = [[MSGraphItemBody alloc] init];
+            [itemBody setContent:body];
+            message.body = itemBody;
+            
+            MSGraphUserSendMailRequest *req = [[[client me] sendMailWithMessage:message saveToSentItems:true] request];
+            [req executeWithCompletion:^(NSDictionary *response, NSError *error) {
+                callback(0,error);
+            }];
+        }
+        else{
+            //error
+            callback(-1, nil);
+        }
+        
     }];
-    return;
 }
-
 -(NSMutableArray*)getRecipients : (NSString*)text{
     NSMutableArray* result = (NSMutableArray*)[NSMutableArray array];
     NSArray* recipients = [text componentsSeparatedByString:@","];
     for (NSString* r in recipients) {
-        MSGraphServiceRecipient* recipient = [[MSGraphServiceRecipient alloc] init];
-        recipient.emailAddress = [MSGraphServiceEmailAddress alloc];
-        [recipient.emailAddress setAddress:[r stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+        MSGraphRecipient * recipient = [[MSGraphRecipient alloc] init];
+        MSGraphEmailAddress *emailAddress = [[MSGraphEmailAddress alloc] init];
+        emailAddress.address = [r stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        [recipient setEmailAddress:emailAddress];
         [result addObject: recipient];
     }
     return result;
 }
 
--(void)getGroupNotes: (NSString *)groupId incidentId:(NSString *)incidentId callback:(void (^)(NSMutableDictionary *listDic, NSError *error))getGroupCallBack{
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString * authority =[standardUserDefaults objectForKey:@"authority"];
-    NSString *clientId = [standardUserDefaults objectForKey:@"clientId"];
-    NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
-    NSURL *redirectUri = [NSURL URLWithString:[standardUserDefaults objectForKey:@"redirectUriString"]];
-    NSString *oneNoteResourceId = [standardUserDefaults objectForKey:@"oneNoteResourceId"];
-    NSString *graphResourceUrl = [standardUserDefaults objectForKey:@"graphResourceUrl"];
-    
-    ADAuthenticationError *error;
-    ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:authority error:&error];
-    if (!context)
-    {
-        return getGroupCallBack(nil,error);
-    };
-    
-    ADALDependencyResolver *resolver = [[ADALDependencyResolver alloc] initWithContext:context resourceId:graphResourceId clientId: clientId redirectUri:redirectUri];
-    MSGraphServiceClient *client = [[MSGraphServiceClient alloc] initWithUrl:[graphResourceUrl stringByAppendingString:clientId] dependencyResolver:resolver];
-    
-    MSGraphServiceGroupFetcher *groupFetcher = [[client groups] getById:groupId];
-    [groupFetcher readWithCallback:^(MSGraphServiceGroup *group, MSOrcError *error) {
-        if(error!=nil){
-            return getGroupCallBack(nil,error);
-        }        
-        
-        EKNOneNoteService *oneNoteService = [[EKNOneNoteService alloc] init];
-        [oneNoteService getPagesWithCallBack:group incidentId:incidentId callback:^(NSString * notBookUrl,NSArray *pages, MSOrcError *error) {
-            NSMutableArray *array = [NSMutableArray array];
-            for(MSOneNoteApiPage *page in pages){
-                NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
-                [item setObject:page.title forKey:@"title"];
-                [item setObject:page.links.oneNoteWebUrl.href forKey:@"webUrl"];
-                [item setObject:page.links.oneNoteClientUrl.href forKey:@"clientUrl"];
-                [array addObject:item];
-            }
-            NSMutableDictionary *listDic = [[NSMutableDictionary alloc] init];
-            [listDic setObject:array forKey:@"list"];
-            [listDic setObject:notBookUrl forKey:@"viewAll"];
-            getGroupCallBack(listDic ,nil);
-        }];
-        
-    }];
-}
-
 -(void)getGroupFiles: (NSString *)groupId callback:(void (^)(NSMutableDictionary *listDic, NSError *error))getGroupCallBack{
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString * authority =[standardUserDefaults objectForKey:@"authority"];
-    NSString *clientId = [standardUserDefaults objectForKey:@"clientId"];
-    NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
-    NSURL *redirectUri = [NSURL URLWithString:[standardUserDefaults objectForKey:@"redirectUriString"]];
-    NSString *graphResourceUrl = [standardUserDefaults objectForKey:@"graphResourceUrl"];
-    NSString *demoSiteServiceResourceId = [standardUserDefaults objectForKey:@"demoSiteServiceResourceId"];
-    ADAuthenticationError *error;
-    ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:authority error:&error];
-    if (!context)
-    {
-        return getGroupCallBack(nil,error);
-    };
     
-    ADALDependencyResolver *resolver = [[ADALDependencyResolver alloc] initWithContext:context resourceId:graphResourceId clientId: clientId redirectUri:redirectUri];
-    MSGraphServiceClient *client = [[MSGraphServiceClient alloc] initWithUrl:[graphResourceUrl stringByAppendingString:clientId] dependencyResolver:resolver];
-    
-    MSGraphServiceGroupFetcher *groupFetcher = [[client groups] getById:groupId];
-    [groupFetcher readWithCallback:^(MSGraphServiceGroup *group, MSOrcError *error) {
-        if(error!=nil){
-            return getGroupCallBack(nil,error);
-        }
-        
-        
-        //files
-        NSMutableArray *array = [NSMutableArray array];
-        [groupFetcher.drive.root.children readWithCallback:^(NSArray *files, MSOrcError *error) {
-            for (MSGraphServiceDriveItem *file in files) {
-                NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
-                [item setObject:file.name forKey:@"fileName"];
-                [item setObject:file.createdBy.user.displayName forKey:@"author"];
-                [item setObject:file.lastModifiedDateTime forKey:@"lastmodified"];
-                [item setObject:[NSString stringWithFormat:@"%lli",file.size] forKey:@"size"];
-                [item setObject:file.webUrl forKey:@"webUrl"];
-                
-                if ([file.name.lowercaseString hasSuffix:@".docx"] | [file.name.lowercaseString hasSuffix:@".xlsx"] | [file.name.lowercaseString hasSuffix:@".pptx"]) {
+    [self getGraphServiceClient:^(MSGraphClient *client, NSError *error) {
+        if(client != nil){
+            [[[[[[client groups:groupId] drive] root] children] request] getWithCompletion:^(MSCollection *response, MSGraphDriveItemChildrenCollectionRequest *nextRequest, NSError *error) {
+                if(response != nil){
+                    NSMutableArray *array = [NSMutableArray array];
+                    for(MSGraphDriveItem *file in response.value){
+                        NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
+                        [item setObject:file.name forKey:@"fileName"];  
+                        [item setObject:file.createdBy.user.displayName forKey:@"author"];
+                        [item setObject:file.lastModifiedDateTime forKey:@"lastmodified"];
+                        [item setObject:[NSString stringWithFormat:@"%lli",file.size] forKey:@"size"];
+                        [item setObject:file.webUrl forKey:@"webUrl"];
+                        
+                        if ([file.name.lowercaseString hasSuffix:@".docx"] | [file.name.lowercaseString hasSuffix:@".xlsx"] | [file.name.lowercaseString hasSuffix:@".pptx"]) {
+                            [item setObject:file.webUrl forKey:@"webUrl"];
+                            if([file.name.lowercaseString hasSuffix:@".docx"] ){
+                                [item setObject:[NSString stringWithFormat:@"%@%@",[@"ms-word:ofv|u|" urlencode],file.webUrl] forKey:@"clientUrl"];
+                            }
+                            else if([file.name.lowercaseString hasSuffix:@".xlsx"] ){
+                                [item setObject:[NSString stringWithFormat:@"%@%@",[@"ms-excel:ofv|u|" urlencode],file.webUrl] forKey:@"clientUrl"];
+                            }
+                            else if([file.name.lowercaseString hasSuffix:@".pptx"] ){
+                                [item setObject:[NSString stringWithFormat:@"%@%@",[@"ms-powerpoint:ofv|u|" urlencode],file.webUrl] forKey:@"clientUrl"];
+                            }
+                        }
+                        [array addObject:item];
+                    }
+                    NSMutableDictionary *listDic = [[NSMutableDictionary alloc] init];
+                    [listDic setObject:array forKey:@"list"];
                     
-                    [item setObject:/*webUrl*/file.webUrl forKey:@"webUrl"];
-                    if([file.name.lowercaseString hasSuffix:@".docx"] ){
-                        [item setObject:[NSString stringWithFormat:@"%@%@",[@"ms-word:ofv|u|" urlEncode],file.webUrl] forKey:@"clientUrl"];
-                    }
-                    else if([file.name.lowercaseString hasSuffix:@".xlsx"] ){
-                        [item setObject:[NSString stringWithFormat:@"%@%@",[@"ms-excel:ofv|u|" urlEncode],file.webUrl] forKey:@"clientUrl"];
-                    }
-                    else if([file.name.lowercaseString hasSuffix:@".pptx"] ){
-                        [item setObject:[NSString stringWithFormat:@"%@%@",[@"ms-powerpoint:ofv|u|" urlEncode],file.webUrl] forKey:@"clientUrl"];
-                    }
+                    
+                    [listDic setObject:[NSString stringWithFormat:@"%@/_layouts/groupstatus.aspx?id=%@&target=Documents",[EKNEKNGlobalInfo getDemoSiteServiceResourceId],groupId] forKey:@"viewAll"];
+                    getGroupCallBack(listDic ,nil);
+                    return;
                 }
-                [array addObject:item];
-                
-            };
-            NSMutableDictionary *listDic = [[NSMutableDictionary alloc] init];
-            [listDic setObject:array forKey:@"list"];
-            
-            
-            [listDic setObject:[NSString stringWithFormat:@"%@/_layouts/groupstatus.aspx?id=%@&target=Documents",demoSiteServiceResourceId,groupId] forKey:@"viewAll"];
-            getGroupCallBack(listDic ,nil);
-        }];
+                getGroupCallBack(nil, nil);
+            }];
+        }
+        else{
+            //error
+            getGroupCallBack(nil, nil);
+        }
         
     }];
+    
+    
 }
 
--(void)getGroupMembers: (NSString *)groupId callback:(void (^)(NSMutableDictionary *listDic, NSError *error))getGroupCallBack{
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString * authority =[standardUserDefaults objectForKey:@"authority"];
-    NSString *clientId = [standardUserDefaults objectForKey:@"clientId"];
-    NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
-    NSURL *redirectUri = [NSURL URLWithString:[standardUserDefaults objectForKey:@"redirectUriString"]];
-    NSString *graphResourceUrl = [standardUserDefaults objectForKey:@"graphResourceUrl"];
-    NSString *outlookResourceId = [standardUserDefaults objectForKey:@"outlookResourceId"];
+-(void)getGroupMembers: (NSString *)groupId callback:(void (^)(NSMutableDictionary *listDic, NSString *error))getGroupCallBack{
     
-    ADAuthenticationError *error;
-    ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:authority error:&error];
-    if (!context)
-    {
-        return getGroupCallBack(nil,error);
-    };
-    
-    ADALDependencyResolver *resolver = [[ADALDependencyResolver alloc] initWithContext:context resourceId:graphResourceId clientId: clientId redirectUri:redirectUri];
-    MSGraphServiceClient *client = [[MSGraphServiceClient alloc] initWithUrl:[graphResourceUrl stringByAppendingString:clientId] dependencyResolver:resolver];
-    
-    MSGraphServiceGroupFetcher *groupFetcher = [[client groups] getById:groupId];
-    [groupFetcher readWithCallback:^(MSGraphServiceGroup *group, MSOrcError *error) {
-        
-        if(error!=nil){
-            return getGroupCallBack(nil,error);
+    [self getGraphServiceClient:^(MSGraphClient *client, NSError *error) {
+        if(client != nil){
+            [[[client groups:groupId] request] getWithCompletion:^(MSGraphGroup *response, NSError *error) {
+                MSGraphGroup *group = response;
+                [[[[client groups:groupId] members] request] getWithCompletion:^(MSCollection *response, MSGraphGroupMembersCollectionWithReferencesRequest *nextRequest, NSError *error) {
+                    if(response != nil){
+                        NSMutableArray *array = [NSMutableArray array];
+                        
+                        for (MSGraphDirectoryObject *dictoryobj in response.value) {
+                            MSGraphUser *member =[[MSGraphUser alloc] initWithDictionary:[dictoryobj dictionaryFromItem]];
+                            NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
+                            [item setObject:member.displayName forKey:@"name"];
+                            [item setObject:member.entityId forKey:@"memberId"];
+                            [array addObject:item];
+                        }
+                        
+                        NSMutableDictionary *listDic = [[NSMutableDictionary alloc] init];
+                        [listDic setObject:array forKey:@"list"];
+                        
+                        [listDic setObject:[NSString stringWithFormat:@"%@owa/#path=/group/%@/people",[EKNEKNGlobalInfo getOutlookResourceId],group.mail] forKey:@"viewAll"];
+                        getGroupCallBack(listDic ,nil);
+                    }
+                    else{
+                        getGroupCallBack(nil, nil);
+                    }
+                }];
+            }];
+            
+
+        }
+        else{
+            //error
+            getGroupCallBack(nil, nil);
         }
         
-        MSGraphServiceDirectoryObjectCollectionFetcher *getMembers = [[MSGraphServiceDirectoryObjectCollectionFetcher alloc] initWithUrl:@"members" parent:groupFetcher asClass:[MSGraphServiceUser class]];
-        [getMembers readWithCallback:^(NSArray *members, MSOrcError *error) {
-            
-            NSMutableArray *array = [NSMutableArray array];
-            
-            for (MSGraphServiceUser *member in members) {
-                NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
-                [item setObject:member.displayName forKey:@"name"];
-                [item setObject:member._id forKey:@"memberId"];
-                [array addObject:item];
-            }
-            
-            NSMutableDictionary *listDic = [[NSMutableDictionary alloc] init];
-            [listDic setObject:array forKey:@"list"];
-            
-            [listDic setObject:[NSString stringWithFormat:@"%@owa/#path=/group/%@/people",outlookResourceId,group.mail] forKey:@"viewAll"];
-            getGroupCallBack(listDic ,nil);
-        }];
     }];
 }
 
 -(void)getPersonImage:(NSString *)groupId memberid:(NSString *)memberId callback:(void (^)(UIImage *image, NSError *error))getPersonImageCallBack{
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString * authority =[standardUserDefaults objectForKey:@"authority"];
-    NSString *clientId = [standardUserDefaults objectForKey:@"clientId"];
-    NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
-    NSURL *redirectUri = [NSURL URLWithString:[standardUserDefaults objectForKey:@"redirectUriString"]];
-    NSString *graphResourceUrl = [standardUserDefaults objectForKey:@"graphResourceUrl"];
     
-    ADAuthenticationError *error;
-    ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:authority error:&error];
-    if (!context){
-        return getPersonImageCallBack(nil,error);
-    };
-    
-    ADALDependencyResolver *resolver = [[ADALDependencyResolver alloc] initWithContext:context resourceId:graphResourceId clientId: clientId redirectUri:redirectUri];
-    MSGraphServiceClient *client = [[MSGraphServiceClient alloc] initWithUrl:[graphResourceUrl stringByAppendingString:clientId] dependencyResolver:resolver];
-    
-    
-    //MSGraphServicePhotoFetcher *photoFetcher = [[[[client users] getById:memberId] userPhotos] getById:@"48X48"];
-    MSOrcEntityFetcher *photoBinaryFetcher = [[MSOrcEntityFetcher alloc] initWithUrl:@"$value" parent:[client.users getById:memberId].photo/*photoFetcher*/ asClass:[MSOrcEntityFetcher class]];
-    id<MSOrcRequest> request = [photoBinaryFetcher.parent.resolver createOrcRequest];
-    [photoBinaryFetcher orcExecuteRequest:request callback:^(id<MSOrcResponse> response, MSOrcError *error) {
-        UIImage *image = [UIImage imageWithData:response.data] ;
-        getPersonImageCallBack(image,nil);
+    [self getGraphServiceClient:^(MSGraphClient *client, NSError *error) {
+        if(client != nil){
+            [[[client users:memberId] photoValue] downloadWithCompletion:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                NSData * data = [NSData dataWithContentsOfURL:location];
+                UIImage *image  = [UIImage imageWithData:data];
+                getPersonImageCallBack(image, nil);
+            }];
+        }
+        else{
+            getPersonImageCallBack(nil, nil);
+        }
     }];
 }
 
 -(void)getGroupConversations: (NSString *)groupId callback:(void (^)(NSMutableDictionary *listDic, NSError *error))getGroupCallBack{
+    
+    [self getGraphServiceClient:^(MSGraphClient *client, NSError *error) {
+        if(client != nil){
+            [[[client groups:groupId] request] getWithCompletion:^(MSGraphGroup *response, NSError *error) {
+                MSGraphGroup *group =response;
+                [[[[client groups:groupId] conversations] request] getWithCompletion:^(MSCollection *response, MSGraphGroupConversationsCollectionRequest *nextRequest, NSError *error) {
+                    NSMutableArray *array = [NSMutableArray array];
+                    for(MSGraphConversation *conversation in response.value){
+                        NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
+                        [item setObject:conversation.topic forKey:@"topic"];
+                        [item setObject:conversation.preview forKey:@"preview"];
+                        [array addObject:item];
+                    }
+                    NSMutableDictionary *listDic = [[NSMutableDictionary alloc] init];
+                    [listDic setObject:array forKey:@"list"];
+                    [listDic setObject:[NSString stringWithFormat:@"%@owa/#path=/group/%@/mail",[EKNEKNGlobalInfo getOutlookResourceId],group.mail] forKey:@"viewAll"];
+                    getGroupCallBack(listDic ,nil);
+                }];
+            }];
+        }
+        else{
+            getGroupCallBack(nil, nil);
+        }
+    }];
+}
+-(void)getGraphServiceAccessToken:(void (^)(NSString* accessToken))callback{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString * authority =[standardUserDefaults objectForKey:@"authority"];
     NSString *clientId = [standardUserDefaults objectForKey:@"clientId"];
     NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
-    NSURL *redirectUri = [NSURL URLWithString:[standardUserDefaults objectForKey:@"redirectUriString"]];
-    NSString *graphResourceUrl = [standardUserDefaults objectForKey:@"graphResourceUrl"];
-    NSString *outlookResourceId = [standardUserDefaults objectForKey:@"outlookResourceId"];
-    
+    NSString *authority = [standardUserDefaults objectForKey:@"authority"];
+    NSString *redirectUriString = [standardUserDefaults objectForKey:@"redirectUriString"];
     ADAuthenticationError *error;
     ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:authority error:&error];
     if (!context)
     {
-        return getGroupCallBack(nil,error);
-    };
+        callback(nil);
+        return;
+    }
     
-    ADALDependencyResolver *resolver = [[ADALDependencyResolver alloc] initWithContext:context resourceId:graphResourceId clientId: clientId redirectUri:redirectUri];
-    MSGraphServiceClient *client = [[MSGraphServiceClient alloc] initWithUrl:[graphResourceUrl stringByAppendingString:clientId] dependencyResolver:resolver];
-    
-    MSGraphServiceGroupFetcher *groupFetcher = [[client groups] getById:groupId];
-    [groupFetcher readWithCallback:^(MSGraphServiceGroup *group, MSOrcError *error) {
-        if(error!=nil){
-            return getGroupCallBack(nil,error);
+    [context acquireTokenWithResource:graphResourceId clientId:clientId redirectUri:[NSURL URLWithString:redirectUriString] completionBlock:^(ADAuthenticationResult *result) {
+        if(result != nil && result.status == AD_SUCCEEDED){
+            callback(result.accessToken);
         }
-        
-        MSGraphServiceDirectoryObjectCollectionFetcher *getConversations = [[MSGraphServiceDirectoryObjectCollectionFetcher alloc] initWithUrl:@"Conversations" parent:groupFetcher asClass:[MSGraphServiceConversation  class]];
-        [getConversations readWithCallback:^(NSArray *conversations, MSOrcError *error) {
-            NSMutableArray *array = [NSMutableArray array];
-            for (MSGraphServiceConversation *conversation in conversations) {
-                NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
-                [item setObject:conversation.topic forKey:@"topic"];
-                [item setObject:conversation.preview forKey:@"preview"];
-                [array addObject:item];
-            }
-            NSMutableDictionary *listDic = [[NSMutableDictionary alloc] init];
-            [listDic setObject:array forKey:@"list"];
-            [listDic setObject:[NSString stringWithFormat:@"%@owa/#path=/group/%@/mail",outlookResourceId,group.mail] forKey:@"viewAll"];
-            getGroupCallBack(listDic ,nil);
-            
-        }];
-        
+        else{
+            [self clearUserTokenCachStore];
+            callback(nil);
+        }
     }];
+    
 }
-
--(void)updateTask:(NSString *)groupId incidentId:(NSString *)incidentId callback:(void (^)(NSString *error))updateTaskCallBack{
-    
+-(void)clearUserTokenCachStore{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString * authority =[standardUserDefaults objectForKey:@"authority"];
-    NSString *clientId = [standardUserDefaults objectForKey:@"clientId"];
-    NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
-    NSURL *redirectUri = [NSURL URLWithString:[standardUserDefaults objectForKey:@"redirectUriString"]];
-    NSString *graphResourceUrl = [standardUserDefaults objectForKey:@"graphResourceUrl"];
-    
+    NSString *authority = [standardUserDefaults objectForKey:@"authority"];
     ADAuthenticationError *error;
     ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:authority error:&error];
     if (!context)
     {
         return;
     }
+    [[context tokenCacheStore] removeAllWithError:&error];
+}
+-(void)getGraphServiceClient:(void (^)(MSGraphClient* client, NSError *error))callback{
     
-    [context acquireTokenWithResource:graphResourceId clientId:clientId redirectUri:redirectUri completionBlock:^(ADAuthenticationResult *result) {
-        if (result.status != AD_SUCCEEDED)
-        {
-            updateTaskCallBack(@"ADAuthenticationError");
+    [self getGraphServiceAccessToken:^(NSString *accessToken) {
+        if(accessToken != nil){
+            MSBlockAuthenticationProvider *provider = [MSBlockAuthenticationProvider providerWithBlock:^(NSMutableURLRequest *request, MSAuthenticationCompletion completion) {
+                NSString *oauthAuthorizationHeader = [NSString stringWithFormat:@"bearer %@", accessToken];
+                [request setValue:oauthAuthorizationHeader forHTTPHeaderField:@"Authorization"];
+                completion(request, nil);
+            }];
+            [MSGraphClient setAuthenticationProvider:provider];
+            callback([MSGraphClient client], nil);
         }
-        else
-        {
-            NSString *requestUrl = [NSString stringWithFormat:@"%@/groups/%@/plans", graphResourceUrl , groupId];
-            
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-            [request addValue:[NSString stringWithFormat:@"Bearer %@", result.accessToken] forHTTPHeaderField:@"Authorization"];
-            [request addValue:@"application/json" forHTTPHeaderField:@"accept"];
-            [request setHTTPMethod:@"GET"];
-            
-            NSURLSession *session = [NSURLSession sharedSession];
-            NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-                                          {
-                                              NSDictionary *retDict = [EKNEKNGlobalInfo parseResponseDataToDic: data];
-                                              if(retDict != nil){
-                                                  NSArray *retArray = [retDict objectForKey:@"value"];
-                                                  if(retArray != nil){
-                                                      NSString *planId = [(NSDictionary *)[retArray objectAtIndex:0] objectForKey:@"id"];
-                                                      NSString *requestUrl = [NSString stringWithFormat:@"%@/plans/%@/buckets", graphResourceUrl , planId];
-                                                      NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-                                                      [request addValue:[NSString stringWithFormat:@"Bearer %@", result.accessToken] forHTTPHeaderField:@"Authorization"];
-                                                      [request addValue:@"application/json" forHTTPHeaderField:@"accept"];
-                                                      [request setHTTPMethod:@"GET"];
-                                                      NSURLSessionDataTask *task  = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
-                                                          NSDictionary *retDict = [EKNEKNGlobalInfo parseResponseDataToDic: data];
-                                                          if(retDict != nil){
-                                                              NSArray *retArray = [retDict objectForKey:@"value"];
-                                                              NSString *bucketId =@"";
-                                                              for(NSDictionary* item in retArray) {
-                                                                  if([[item objectForKey:@"name"] isEqualToString: [NSString stringWithFormat:@"Incident [%@]", incidentId]]){
-                                                                      bucketId = [item objectForKey:@"id"];
-                                                                      break;
-                                                                  }
-                                                              }
-                                                              if(bucketId.length>0){
-                                                                  NSString *requestUrl = [NSString stringWithFormat:@"%@/buckets/%@/tasks", graphResourceUrl , bucketId];
-                                                                  
-                                                                  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-                                                                  [request addValue:[NSString stringWithFormat:@"Bearer %@", result.accessToken] forHTTPHeaderField:@"Authorization"];
-                                                                  [request addValue:@"application/json" forHTTPHeaderField:@"accept"];
-                                                                  [request setHTTPMethod:@"GET"];
-                                                                  NSURLSessionDataTask *task  = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-                                                                                                 {
-                                                                                                     NSDictionary *retDict = [EKNEKNGlobalInfo parseResponseDataToDic: data];
-                                                                                                     if(retDict != nil){
-                                                                                                         NSArray *retArray = [retDict objectForKey:@"value"];
-                                                                                                         for(NSDictionary* item in retArray) {
-                                                                                                             NSString *taskid =[item objectForKey:@"id"];
-                                                                                                             NSString *requestUrl = [NSString stringWithFormat:@"%@/tasks/%@", graphResourceUrl , taskid];
-                                                                                                             
-                                                                                                             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-                                                                                                             [request addValue:[NSString stringWithFormat:@"Bearer %@", result.accessToken] forHTTPHeaderField:@"Authorization"];
-                                                                                                             [request addValue:@"application/json" forHTTPHeaderField:@"accept"];
-                                                                                                             [request addValue:@"application/json" forHTTPHeaderField:@"content-type"];
-                                                                                                             
-                                                                                                             [request addValue:[item objectForKey:@"@odata.etag"] forHTTPHeaderField:@"If-Match"];
-                                                                                                             [request setHTTPMethod:@"PATCH"];
-                                                                                                             
-                                                                                                             
-                                                                                                             NSDictionary *tmp = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                                                                  [NSNumber numberWithInteger:100], @"percentComplete",
-                                                                                                                                  nil];
-                                                                                                             NSError *error;
-                                                                                                             NSData *postdata = [NSJSONSerialization dataWithJSONObject:tmp options:0 error:&error];
-                                                                                                             [request setHTTPBody:postdata];
-                                                                                                             NSURLSessionDataTask *task  = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
-                                                                                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                                                     if(![EKNEKNGlobalInfo requestSuccess:response])
-                                                                                                                     {
-                                                                                                                         NSLog(@"Patch Error");
-                                                                                                                     }
-                                                                                                                     else{
-                                                                                                                         NSLog(@"Patch Success");
-                                                                                                                     }
-                                                                                                                 });
-                                                                                                                 
-
-                                                                                                             }];
-                                                                                                             [task resume];
-                                                                                                         }
-                                                                                                     }
-                                                                                                 }];
-                                                                  [task resume];
-                                                              }
-                                                          }
-                                                          
-                                                      }];
-                                                      [task resume];
-                                                      
-                                                  }
-                                              }
-                                              
-                                          }];
-            [task resume];
+        else{
+            callback(nil, nil);
         }
     }];
-    
-    
 }
-/*-(void)uploadFileToGroup: (NSString *)groupId fileName:(NSString*)fileName fileStream:(NSStream*)fileStream callback:(void (^)(MSGraphItem *file, NSError *error))uploadFileCallBack{
- NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
- NSString * authority =[standardUserDefaults objectForKey:@"authority"];
- NSString *clientId = [standardUserDefaults objectForKey:@"clientId"];
- NSString *graphResourceId = [standardUserDefaults objectForKey:@"graphResourceId"];
- NSURL *redirectUri = [NSURL URLWithString:[standardUserDefaults objectForKey:@"redirectUriString"]];    NSString *graphResourceUrl = [standardUserDefaults objectForKey:@"graphResourceUrl"];
- 
- ADAuthenticationError *error;
- ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:authority error:&error];
- if (!context)
- {
- return uploadFileCallBack(nil,error);
- };
- 
- ADALDependencyResolver *resolver = [[ADALDependencyResolver alloc] initWithContext:context resourceId:graphResourceId clientId: clientId redirectUri:redirectUri];
- MSGraphClient *client = [[MSGraphClient alloc] initWithUrl:[graphResourceUrl stringByAppendingString:clientId] dependencyResolver:resolver];
- 
- MSGraphGroupFetcher *groupFetcher = [[client groups] getById:groupId];
- [groupFetcher readWithCallback:^(MSGraphGroup *group, MSOrcError *error) {
- if(error!=nil){
- return uploadFileCallBack(nil,error);
- }
- 
- MSGraphFile *file = [[MSGraphFile alloc] init];
- file.name = fileName;
- 
- [[groupFetcher files] add:file callback:^(MSGraphItem *item, MSOrcError *error) {
- MSGraphItemFetcher *fileFecther = [[groupFetcher files] getById:item.id];
- [[fileFecther operations] uploadContentWithContentStream:fileStream callback:^(int returnValue, MSOrcError *error) {
- uploadFileCallBack(item, error);
- }];
- }];
- }];
- }*/
-
 @end

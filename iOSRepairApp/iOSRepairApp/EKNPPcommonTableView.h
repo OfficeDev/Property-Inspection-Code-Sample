@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "EKNEKNGlobalInfo.h"
 #import "EKNGraphService.h"
+#import "EKNOneNoteService.h"
 #import "ConversationCell.h"
 #import "PropertyMembersCell.h"
 #import "OneNoteCell.h"

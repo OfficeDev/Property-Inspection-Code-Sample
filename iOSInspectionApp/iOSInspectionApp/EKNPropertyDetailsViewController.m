@@ -508,7 +508,7 @@
             [graph sendMail:emailDataDic callback:^(int returnValue, NSError *error)
              {
                 // NSLog(@" send email error %@,%d",error,returnValue);
-                 if (error ==nil) {
+                 if (returnValue != -1) {
                      //
                      NSLog(@"Send email success.");
                  }
@@ -978,6 +978,9 @@
     [self.propertyViewSpinner stopAnimating];
 }
 
+-(BOOL)isLoadingViewSpiner{
+    return [self.commentViewSpinner isAnimating];
+}
 -(void)startCommentViewSpiner:(CGRect)rect
 {
     [self.commentViewSpinner stopAnimating];
@@ -1252,6 +1255,7 @@
 -(void)doneButtonClicked
 {
     //here, first we create the incident item, then upload images that are taken by camera.
+    if([self isLoadingViewSpiner]) return;
     if ([self getCommentViewWhetherShow]) {
         [self commentViewDone];
     }
@@ -1650,27 +1654,32 @@
              else
              {
                  //retry one
-                 NSMutableDictionary *imagDic = [[[self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",(long)(long)insid]] objectForKey:[NSString stringWithFormat:@"%ld",(long)roomId]] objectAtIndex:imageIndex];
-                 
-                 if([imagDic objectForKey:@"trytimes"]!=nil)
-                 {
-                     NSInteger times =[[imagDic objectForKey:@"trytimes"] integerValue];
-                     if(times>=3)
-                     {
-                         
-                         [self stopPropertyViewSpiner];
+                 NSDictionary * insidic = [self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",(long)insid]];
+                 if(insidic != nil){
+                     NSArray *roomImagesArray =  [insidic objectForKey:[NSString stringWithFormat:@"%ld",(long)roomId]];
+                     if(roomImagesArray != nil){
+                         NSMutableDictionary *imagDic = [roomImagesArray objectAtIndex:imageIndex];
+                         if([imagDic objectForKey:@"trytimes"]!=nil)
+                         {
+                             NSInteger times =[[imagDic objectForKey:@"trytimes"] integerValue];
+                             if(times>=3)
+                             {
+                                 
+                                 [self stopPropertyViewSpiner];
+                             }
+                             else
+                             {
+                                 times=times+1;
+                                 [imagDic setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
+                                 [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
+                             }
+                         }
+                         else
+                         {
+                             [imagDic setObject:@"1" forKey:@"trytimes"];
+                             [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
+                         }
                      }
-                     else
-                     {
-                         times=times+1;
-                         [imagDic setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
-                         [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
-                     }
-                 }
-                 else
-                 {
-                     [imagDic setObject:@"1" forKey:@"trytimes"];
-                     [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
                  }
              }
          });
@@ -2779,7 +2788,11 @@
     EKNListItem *inspectionitem = nil;
     if([[self.rightPropertyListDic objectForKey:@"top"] count]>0)
     {
-        inspectionitem = [[self.rightPropertyListDic objectForKey:@"top"] objectAtIndex:0];
+        NSArray *rightPropertyList = [self.rightPropertyListDic objectForKey:@"top"];
+        if(rightPropertyList != nil){
+            inspectionitem = [rightPropertyList objectAtIndex:0];
+        }
+        
     }
     NSIndexPath *updateIndexPath = nil;
     if(inspectionitem!=nil)
@@ -2849,7 +2862,11 @@
     EKNListItem *inspectionitem = nil;
     if(self.selectRightPropertyTableIndexPath.section == 0)
     {
-        inspectionitem = [[self.rightPropertyListDic objectForKey:@"top"] objectAtIndex:0];
+        NSArray * rightPropertyList = [self.rightPropertyListDic objectForKey:@"top"];
+        if(rightPropertyList != nil ){
+            inspectionitem = [rightPropertyList objectAtIndex:0];
+        }
+        
     }
     else
     {

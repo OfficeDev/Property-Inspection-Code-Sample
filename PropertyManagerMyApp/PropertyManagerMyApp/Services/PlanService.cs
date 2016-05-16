@@ -7,20 +7,21 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using GraphModelsExtension;
 
 namespace SuiteLevelWebApp.Services
 {
     public class PlanService
     {
-        private static async Task<plan> CreatePlanAsync(Igroup group)
+        private static async Task<Plan> CreatePlanAsync(Group group)
         {
             var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
 
-            var pageEndPoint = string.Format("{0}plans", AADAppSettings.GraphResourceUrl);
+            var pageEndPoint = string.Format("{0}plans", AADAppSettings.GraphBetaResourceUrl);
 
             dynamic postPlanJSON = new JObject();
-            postPlanJSON.title = group.displayName + " Plan";
-            postPlanJSON.owner = group.id;
+            postPlanJSON.title = group.DisplayName + " Plan";
+            postPlanJSON.owner = group.Id;
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, pageEndPoint);
             requestMessage.Content = new StringContent(postPlanJSON.ToString(), System.Text.Encoding.UTF8, "application/json");
@@ -36,18 +37,18 @@ namespace SuiteLevelWebApp.Services
 
                 var payload = await responseMessage.Content.ReadAsStringAsync();
 
-                return new plan
+                return new Plan
                 {
                     id = JObject.Parse(payload)["id"].ToString()
                 };
             }
         }
 
-        public static async Task<Iplan> GetPlanAsync(Igroup group)
+        public static async Task<Plan> GetPlanAsync(Group group)
         {
             var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
 
-            var pageEndPoint = string.Format("{0}groups/{1}/plans", AADAppSettings.GraphResourceUrl, group.id);
+            var pageEndPoint = string.Format("{0}groups/{1}/plans", AADAppSettings.GraphBetaResourceUrl, group.Id);
 
             try
             {
@@ -66,7 +67,7 @@ namespace SuiteLevelWebApp.Services
 
                     if (jobject["value"].Children().Count() > 0)
                     {
-                        return new plan
+                        return new Plan
                         {
                             id = jobject["value"][0]["id"].ToString()
                         };
@@ -83,10 +84,10 @@ namespace SuiteLevelWebApp.Services
             }
         }
 
-        public static async Task<Ibucket> CreateBucketAsync(Ibucket bucket)
+        public static async Task<Bucket> CreateBucketAsync(Bucket bucket)
         {
             var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
-            var pageEndPoint = string.Format("{0}buckets", AADAppSettings.GraphResourceUrl);
+            var pageEndPoint = string.Format("{0}buckets", AADAppSettings.GraphBetaResourceUrl);
 
             dynamic postBucketJSON = new JObject();
             postBucketJSON.name = bucket.name;
@@ -108,7 +109,7 @@ namespace SuiteLevelWebApp.Services
 
                 var jobject = JObject.Parse(payload);
 
-                return new bucket
+                return new Bucket
                 {
                     id = jobject["id"].ToString(),
                     planId = jobject["planId"].ToString()
@@ -116,10 +117,10 @@ namespace SuiteLevelWebApp.Services
             }
         }
 
-        public static async Task CreateTaskAsync(Itask task)
+        public static async Task CreateTaskAsync(task task)
         {
             var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
-            var pageEndPoint = string.Format("{0}tasks", AADAppSettings.GraphResourceUrl);
+            var pageEndPoint = string.Format("{0}tasks", AADAppSettings.GraphBetaResourceUrl);
 
             dynamic postTaskJSON = new JObject();
             postTaskJSON.title = task.title;
@@ -143,13 +144,13 @@ namespace SuiteLevelWebApp.Services
             }
         }
 
-        public static async Task<task[]> GetTasksAsync(Iplan plan)
+        public static async Task<task[]> GetTasksAsync(Plan plan)
         {
             var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
 
             List<task> tasks = new List<task>();
 
-            var pageEndPoint = string.Format("{0}plans/{1}/Tasks?$filter=percentComplete+ne+100", AADAppSettings.GraphResourceUrl, plan.id);
+            var pageEndPoint = string.Format("{0}plans/{1}/Tasks?$filter=percentComplete+ne+100", AADAppSettings.GraphBetaResourceUrl, plan.id);
 
             using (var client = new HttpClient())
             {

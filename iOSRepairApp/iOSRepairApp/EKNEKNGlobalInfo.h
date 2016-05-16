@@ -75,6 +75,13 @@ typedef NS_ENUM(NSInteger, DocumentType){
 +(NSString *)createFileName:(NSString *)fileExtension;
 +(void)openUrl:(NSString *)url;
 +(NSDictionary*)parseResponseDataToDic:(NSData *)data;
++(NSArray*)parseResponseDataToArray:(NSData *)data;
+
++(NSString *)getGraphBetaResourceUrl;
++(NSString *)getGraphResourceUrl;
++(NSString *)getAuthority;
++(NSString *)getDemoSiteServiceResourceId;
++(NSString *)getOutlookResourceId;
 @end
 
 

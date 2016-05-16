@@ -130,5 +130,50 @@
                                                                  error:&error];
     return jsonResult;
 }
++(NSArray*)parseResponseDataToArray:(NSData *)data{
+    
+    NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"dataString:%@",dataString);
+    NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
+    NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    NSError *error ;
+    NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:bytes
+                                                               options: NSJSONReadingMutableContainers
+                                                                 error:&error];
+    if(jsonResult != nil){
+        NSArray *retArray = [jsonResult objectForKey:@"value"];
+        if(retArray != nil){
+            return retArray;
+        }
+    }
+    return nil;
+}
+
++(NSString *)getGraphBetaResourceUrl{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    return [standardUserDefaults objectForKey:@"graphBetaResourceUrl"];
+}
++(NSString *)getGraphResourceUrl{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    return [standardUserDefaults objectForKey:@"graphResourceUrl"];
+}
++(NSString *)getAuthority{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString * authority =[standardUserDefaults objectForKey:@"authority"];
+    return authority;
+}
++(NSString *)getDemoSiteServiceResourceId{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *demoSiteServiceResourceId = [standardUserDefaults objectForKey:@"demoSiteServiceResourceId"];
+    return demoSiteServiceResourceId;
+}
++(NSString *)getOutlookResourceId{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *outlookResourceId = [standardUserDefaults objectForKey:@"outlookResourceId"];
+    return outlookResourceId;
+}
+
 @end
 

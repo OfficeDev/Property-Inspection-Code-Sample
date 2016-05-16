@@ -3,6 +3,7 @@ using Microsoft.Graph;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Android.App;
+using System.Net.Http.Headers;
 
 namespace XamarinRepairApp
 {
@@ -11,12 +12,18 @@ namespace XamarinRepairApp
 		private static TokenCache tokenCache = new TokenCache();
 		private static AuthenticationContext authContext = new AuthenticationContext(Constants.AAD_AUTHORITY, false, tokenCache);
 
-		public static async Task<GraphService> GetGraphServiceAsync(Activity activity)
+		public static async Task<GraphServiceClient> GetGraphServiceAsync(Activity activity)
 		{
-			var rootUri = new Uri (Constants.GraphResourceUrl + Constants.DISPATCHEREMAIL.Split('@')[1]);
-			var accessToken = GetAccessTokenAsync (activity, Constants.GraphResourceId);
-			await accessToken;
-			return new GraphService(rootUri, () => accessToken);
+			var accessToken = await GetAccessTokenAsync(activity, Constants.GraphResourceId);
+            var authenticationProvider = new DelegateAuthenticationProvider(
+                (requestMessage) =>
+                {
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
+
+                    return Task.FromResult(0);
+                });
+
+            return new GraphServiceClient(Constants.GraphResourceUrl, authenticationProvider);
 		}
 
 		public static async Task<string> GetAccessTokenAsync(Activity activity, string resource)

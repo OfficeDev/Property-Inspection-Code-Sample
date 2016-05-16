@@ -7,15 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E15C0C31CD09D0700743A3A /* EKNPlanService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E15C0C21CD09D0700743A3A /* EKNPlanService.m */; };
+		0E4B9F851CD221A7000D94A7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E4B9F841CD221A7000D94A7 /* libPods.a */; };
 		0E54E1891BA6AFFB0065B960 /* video@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E54E1871BA6AFFB0065B960 /* video@2x~ipad.png */; };
 		0E54E18A1BA6AFFB0065B960 /* video~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E54E1881BA6AFFB0065B960 /* video~ipad.png */; };
-		0E6B87F31C059A9800B75986 /* libADALiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6B87EC1C059A9800B75986 /* libADALiOS.a */; };
-		0E6B87F41C059A9800B75986 /* libLiveSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6B87ED1C059A9800B75986 /* libLiveSDK.a */; };
-		0E6B87F51C059A9800B75986 /* libMSGraph-SDK-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6B87EE1C059A9800B75986 /* libMSGraph-SDK-iOS.a */; };
-		0E6B87F61C059A9800B75986 /* libMSOneNote-SDK-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6B87EF1C059A9800B75986 /* libMSOneNote-SDK-iOS.a */; };
-		0E6B87F71C059A9800B75986 /* libMSOutlook-SDK-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6B87F01C059A9800B75986 /* libMSOutlook-SDK-iOS.a */; };
-		0E6B87F81C059A9800B75986 /* liborc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6B87F11C059A9800B75986 /* liborc.a */; };
-		0E6B87F91C059A9800B75986 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6B87F21C059A9800B75986 /* libPods.a */; };
 		0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5B919CFF2C600BEF583 /* Foundation.framework */; };
 		0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */; };
 		0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */; };
@@ -136,20 +131,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E15C0C11CD09D0700743A3A /* EKNPlanService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNPlanService.h; path = iOSRepairApp/EKNPlanService.h; sourceTree = SOURCE_ROOT; };
+		0E15C0C21CD09D0700743A3A /* EKNPlanService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNPlanService.m; path = iOSRepairApp/EKNPlanService.m; sourceTree = SOURCE_ROOT; };
+		0E4B9F841CD221A7000D94A7 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Release-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		0E54E1871BA6AFFB0065B960 /* video@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@2x~ipad.png"; sourceTree = "<group>"; };
 		0E54E1881BA6AFFB0065B960 /* video~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video~ipad.png"; sourceTree = "<group>"; };
-		0E6B87E21C04209200B75986 /* libADALiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libADALiOS.a; path = "Pods/../build/Debug-iphoneos/libADALiOS.a"; sourceTree = "<group>"; };
-		0E6B87E31C04209200B75986 /* libLiveSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLiveSDK.a; path = "Pods/../build/Debug-iphoneos/libLiveSDK.a"; sourceTree = "<group>"; };
-		0E6B87E41C04209200B75986 /* libOffice365.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOffice365.a; path = "Pods/../build/Debug-iphoneos/libOffice365.a"; sourceTree = "<group>"; };
-		0E6B87E51C04209200B75986 /* liborc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liborc.a; path = "Pods/../build/Debug-iphoneos/liborc.a"; sourceTree = "<group>"; };
-		0E6B87E61C04209200B75986 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		0E6B87EC1C059A9800B75986 /* libADALiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libADALiOS.a; path = "Pods/../build/Debug-iphoneos/libADALiOS.a"; sourceTree = "<group>"; };
-		0E6B87ED1C059A9800B75986 /* libLiveSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLiveSDK.a; path = "Pods/../build/Debug-iphoneos/libLiveSDK.a"; sourceTree = "<group>"; };
-		0E6B87EE1C059A9800B75986 /* libMSGraph-SDK-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libMSGraph-SDK-iOS.a"; path = "Pods/../build/Debug-iphoneos/libMSGraph-SDK-iOS.a"; sourceTree = "<group>"; };
-		0E6B87EF1C059A9800B75986 /* libMSOneNote-SDK-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libMSOneNote-SDK-iOS.a"; path = "Pods/../build/Debug-iphoneos/libMSOneNote-SDK-iOS.a"; sourceTree = "<group>"; };
-		0E6B87F01C059A9800B75986 /* libMSOutlook-SDK-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libMSOutlook-SDK-iOS.a"; path = "Pods/../build/Debug-iphoneos/libMSOutlook-SDK-iOS.a"; sourceTree = "<group>"; };
-		0E6B87F11C059A9800B75986 /* liborc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liborc.a; path = "Pods/../build/Debug-iphoneos/liborc.a"; sourceTree = "<group>"; };
-		0E6B87F21C059A9800B75986 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		0EC4F5B619CFF2C600BEF583 /* iOSRepairApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSRepairApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EC4F5B919CFF2C600BEF583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -228,7 +214,6 @@
 		2FA9615D1BA1A2BE0069C9B9 /* EKNVideoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EKNVideoService.h; path = iOSRepairApp/EKNVideoService.h; sourceTree = SOURCE_ROOT; };
 		2FA9615E1BA1A2BE0069C9B9 /* EKNVideoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EKNVideoService.m; path = iOSRepairApp/EKNVideoService.m; sourceTree = SOURCE_ROOT; };
 		481833CFFB1FA410AE17FCD2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		4FDDCC949506D0ED88D9A210 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F31EFD9519FF895A005B04BD /* BaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseController.h; path = iOSRepairApp/BaseController.h; sourceTree = SOURCE_ROOT; };
 		F31EFD9619FF895A005B04BD /* BaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseController.m; path = iOSRepairApp/BaseController.m; sourceTree = SOURCE_ROOT; };
 		F37943E719FA2B5E00FDD9A3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = iOSRepairApp/Settings.bundle; sourceTree = "<group>"; };
@@ -311,13 +296,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E6B87F31C059A9800B75986 /* libADALiOS.a in Frameworks */,
-				0E6B87F41C059A9800B75986 /* libLiveSDK.a in Frameworks */,
-				0E6B87F51C059A9800B75986 /* libMSGraph-SDK-iOS.a in Frameworks */,
-				0E6B87F61C059A9800B75986 /* libMSOneNote-SDK-iOS.a in Frameworks */,
-				0E6B87F71C059A9800B75986 /* libMSOutlook-SDK-iOS.a in Frameworks */,
-				0E6B87F81C059A9800B75986 /* liborc.a in Frameworks */,
-				0E6B87F91C059A9800B75986 /* libPods.a in Frameworks */,
+				0E4B9F851CD221A7000D94A7 /* libPods.a in Frameworks */,
 				0EC4F5BC19CFF2C600BEF583 /* CoreGraphics.framework in Frameworks */,
 				0EC4F5BE19CFF2C600BEF583 /* UIKit.framework in Frameworks */,
 				0EC4F5BA19CFF2C600BEF583 /* Foundation.framework in Frameworks */,
@@ -377,22 +356,10 @@
 		0EC4F5B819CFF2C600BEF583 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0E6B87EC1C059A9800B75986 /* libADALiOS.a */,
-				0E6B87ED1C059A9800B75986 /* libLiveSDK.a */,
-				0E6B87EE1C059A9800B75986 /* libMSGraph-SDK-iOS.a */,
-				0E6B87EF1C059A9800B75986 /* libMSOneNote-SDK-iOS.a */,
-				0E6B87F01C059A9800B75986 /* libMSOutlook-SDK-iOS.a */,
-				0E6B87F11C059A9800B75986 /* liborc.a */,
-				0E6B87F21C059A9800B75986 /* libPods.a */,
-				0E6B87E21C04209200B75986 /* libADALiOS.a */,
-				0E6B87E31C04209200B75986 /* libLiveSDK.a */,
-				0E6B87E41C04209200B75986 /* libOffice365.a */,
-				0E6B87E51C04209200B75986 /* liborc.a */,
-				0E6B87E61C04209200B75986 /* libPods.a */,
+				0E4B9F841CD221A7000D94A7 /* libPods.a */,
 				0EC4F5B919CFF2C600BEF583 /* Foundation.framework */,
 				0EC4F5BB19CFF2C600BEF583 /* CoreGraphics.framework */,
 				0EC4F5BD19CFF2C600BEF583 /* UIKit.framework */,
-				4FDDCC949506D0ED88D9A210 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -458,6 +425,8 @@
 				0EE466FF1B9E6F9B0051904E /* EKNGraphService.m */,
 				2FA9615D1BA1A2BE0069C9B9 /* EKNVideoService.h */,
 				2FA9615E1BA1A2BE0069C9B9 /* EKNVideoService.m */,
+				0E15C0C11CD09D0700743A3A /* EKNPlanService.h */,
+				0E15C0C21CD09D0700743A3A /* EKNPlanService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -813,6 +782,7 @@
 				0EE467031B9E702C0051904E /* EKNOneNoteService.m in Sources */,
 				F379441719FA2D4700FDD9A3 /* EKNIncidentViewController.m in Sources */,
 				0EDF69961BA2D81D00437628 /* PropertyFileCell.m in Sources */,
+				0E15C0C31CD09D0700743A3A /* EKNPlanService.m in Sources */,
 				F379441E19FA2D7900FDD9A3 /* EKN+NavigationController.m in Sources */,
 				F379442519FA2D8E00FDD9A3 /* EKNListClient.m in Sources */,
 				F379441319FA2CE000FDD9A3 /* ContactOwnerCell.m in Sources */,
@@ -951,6 +921,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/build/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.canviz.iOSRepairApp;
@@ -982,6 +953,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/build/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.canviz.iOSRepairApp;

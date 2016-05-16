@@ -14,6 +14,21 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//appsforoffice.microsoft.com/fabric/1.0/fabric.min.css">
     <link rel="stylesheet" href="//appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css">
+    <style>
+        /* Fix for Persona card width.  We will remove this code once the Office UX Fabric GitHub repo
+           is updated with the fix and we use the latest version of the Office UX Fabric that includes the fix.
+        */
+        .ms-PersonaCard-actionDetails {
+            list-style: none;
+            width: 100%; 
+            float: left;
+            min-height: 48px;
+            color: #666;
+            padding: 9px 20px;
+            transition: max-height .267s cubic-bezier(.1,.9,.2,1) .2s;
+            box-sizing: border-box;
+        }
+    </style>
     @RenderSection("scripts", required: false)
 </head>
 <body>

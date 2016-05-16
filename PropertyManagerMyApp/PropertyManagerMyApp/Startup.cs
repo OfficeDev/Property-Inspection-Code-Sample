@@ -13,6 +13,7 @@ namespace SuiteLevelWebApp
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+
         }
     }
 }

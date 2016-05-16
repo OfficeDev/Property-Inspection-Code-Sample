@@ -7,7 +7,6 @@
 //
 
 #import <core/core.h>
-#import <MSGraph-SDK-iOS/MSGraphServiceModels.h>
 
 @interface SPVideoItemOperations : MSOrcOperations
 

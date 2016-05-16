@@ -21,41 +21,35 @@ namespace SuiteLevelWebApp.Controllers
     [Authorize, HandleAdalException]
     public class TestController : Controller
     {
-        public async Task<ActionResult> OneNote(string groupName = "Au Residence")
-        {
-            var service = await AuthenticationHelper.GetGraphServiceAsync();
+        //public async Task<ActionResult> OneNote(string groupName = "Au Residence")
+        //{
+        //    var service = await AuthenticationHelper.GetGraphServiceAsync();
 
-            var group =  await service.groups
-                .Where(i => i.displayName == groupName)
-                .ExecuteSingleAsync();
+        //    var group = await service.Groups.Request().Filter(string.Format("DisplayName eq '{0}'", groupName)).Top(1).GetAsync();
 
-            var groupFetcher = service.groups.GetById(group.id);
+        //    var groupFetcher = service.Groups[group[0].Id];
 
-            var notebook = await groupFetcher.notes.notebooks
-                .Where(i => i.name == groupName + " Notebook")
-                .ExecuteSingleAsync();
+        //    var notebook = await groupFetcher.notes.notebooks
+        //        .Where(i => i.name == groupName + " Notebook")
+        //        .ExecuteSingleAsync();
           
-            var tagBuilder = new TagBuilder("a");
-            tagBuilder.Attributes.Add("href", notebook.links.oneNoteWebUrl.href);
-            tagBuilder.InnerHtml = notebook.name;
+        //    var tagBuilder = new TagBuilder("a");
+        //    tagBuilder.Attributes.Add("href", notebook.links.oneNoteWebUrl.href);
+        //    tagBuilder.InnerHtml = notebook.name;
 
-            return Content(tagBuilder.ToString());
-        }
+        //    return Content(tagBuilder.ToString());
+        //}
         
-        public async Task<ActionResult> DeleteAllPropertyGroups()
-        {
-            var service = await AuthenticationHelper.GetGraphServiceAsync();
+        //public async Task<ActionResult> DeleteAllPropertyGroups()
+        //{
+        //    var service = await AuthenticationHelper.GetGraphServiceAsync();
+        //    var propertyGroups = await service.Groups.Request().Filter("Description eq 'Property Group'").GetAsync();
 
-            var groups = await (await service.groups.ExecuteAsync()).GetAllAsnyc();
-            var propertyGroups = groups
-                .Where(i => i.description == "Property Group")
-                .ToArray();
+        //    foreach (var group in propertyGroups)
+        //        await group.DeleteAsync();
 
-            foreach (var group in propertyGroups)
-                await group.DeleteAsync();
-
-            return Content(propertyGroups.Length + " property group(s) have been deleted.");
-        }
+        //    return Content(propertyGroups.Length + " property group(s) have been deleted.");
+        //}
 
     }
 }

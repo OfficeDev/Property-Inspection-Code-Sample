@@ -21,7 +21,7 @@
     {
         <div class="content-block">
             <button class="pull-left fs-smaller" id="annotateImagesButton" type="button" data-form-method="POST" data-form-target="_blank"
-                    data-form-action="@Url.Action("AnnotateImages", new { incidentId = Model.incidentId })" @(string.IsNullOrEmpty(Model.oneNoteUrl) ? "disabled" : "")>
+                    data-form-action="@Url.Action("AnnotateImages", new { incidentId = Model.incidentId })" @(Model.bAnnotateImage ? "": "disabled")>
                 Annotate images
             </button>
         </div>
@@ -91,6 +91,7 @@
                 .appendTo("body")
                 .submit()
                 .remove();
+            button.attr("disabled", "disabled");
         });
     });
     function popupwindow(type) {
