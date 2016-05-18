@@ -132,5 +132,72 @@ namespace SuiteLevelWebApp.Controllers
             }
             return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);
         }
+
+        public async Task<JsonResult> GetMessages()
+        {
+            Subscription subscription = System.Web.HttpContext.Current.Session["WebHookSubscription"] as Subscription;
+            if (subscription != null)
+            {
+                string xmlpath = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\Notifications.xml";
+                try
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(xmlpath);
+                    XmlNodeList items = doc.SelectNodes("//value");
+                    List<XmlNode> removeItems = new List<XmlNode>();
+
+                    List<string> resourceArray = new List<string>();
+                    List<Message> retMessageList = new List<Message>();
+
+                    foreach (XmlNode item in items)
+                    {
+                        string resource = string.Empty, clientState = string.Empty;
+                        foreach (XmlNode ss in item.ChildNodes)
+                        {
+                            if (ss.Name.ToLower().Equals("clientstate"))
+                            {
+                                if (ss.InnerText != subscription.ClientState)
+                                 {
+                                    resource = string.Empty;
+                                    break;
+                                }
+                            }
+                            if (ss.Name.ToLower().Equals("resource"))
+                            {
+                                resource = ss.InnerText;
+                            }
+                        }
+                        removeItems.Add(item);
+                        if (resource != string.Empty && resourceArray.IndexOf(resource) == -1)
+                        {
+                            resourceArray.Add(resource);
+                            break;
+                        }
+                    }
+                    if (removeItems.Count > 0)
+                    {
+                        XmlNode root = doc.DocumentElement;
+                        foreach (XmlNode node in removeItems)
+                        {
+                            root.RemoveChild(node);
+                        }
+                        doc.Save(xmlpath);
+                    }
+
+                    GraphServiceClient graphServiceClient = await AuthenticationHelper.GetGraphServiceAsync(AADAppSettings.GraphResourceUrl);
+                    foreach (var resource in resourceArray)
+                    {
+                        var requst = new MessageRequest(graphServiceClient.BaseUrl + "/" + resource, graphServiceClient, null);
+                        retMessageList.Add( await requst.GetAsync());
+                    }
+                    return Json(new { status = "ok", notifications = retMessageList }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

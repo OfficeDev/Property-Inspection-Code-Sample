@@ -377,7 +377,7 @@ Follow these steps to configure a listener, create a subscription, test and view
 - if the subscription does not exist, the code creates it and stores it in the session.
 - if the subscription exists, but it has expired, then the code deletes it and recreates it and stores it in the session.
 - if the subscription exists and it has not expire then the code does nothing.
-- Each subscription's ExpirationDateTime is set to 2 hours from the time it is created.
+- each subscription's ExpirationDateTime is set to 2 hours from the time it is created.
  
 **Test and View Notifications**
 

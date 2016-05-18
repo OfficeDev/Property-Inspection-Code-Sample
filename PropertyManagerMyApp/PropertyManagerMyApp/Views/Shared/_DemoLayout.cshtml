@@ -14,6 +14,8 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//appsforoffice.microsoft.com/fabric/1.0/fabric.min.css">
     <link rel="stylesheet" href="//appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <style>
         /* Fix for Persona card width.  We will remove this code once the Office UX Fabric GitHub repo
            is updated with the fix and we use the latest version of the Office UX Fabric that includes the fix.
@@ -27,6 +29,9 @@
             padding: 9px 20px;
             transition: max-height .267s cubic-bezier(.1,.9,.2,1) .2s;
             box-sizing: border-box;
+        }
+        #toast-container.toast-top-center>div{
+            margin-bottom:6px;
         }
     </style>
     @RenderSection("scripts", required: false)
@@ -56,5 +61,48 @@
         </div>
     </header>
     @RenderBody()
+    <script>
+        $(function () {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            function checkReceivedMessages() {
+                $.getJSON("/Notification/GetMessages?t=" + Math.random())
+                .done(function (data) {
+                    if (data.status == "ok" && data.notifications != null) {
+                        for (var i = 0; i < data.notifications.length; i++) {
+                            var from = data.notifications[i].From.EmailAddress.Name;
+                            var title = data.notifications[i].Subject;
+                            toastr["info"](from, title)
+                        }
+                    }
+                    setTimeout(checkReceivedMessages, 9000);
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    setTimeout(checkReceivedMessages, 9000);
+                });
+            };
+            toastr.options.onclick = function () {
+                window.open("https://outlook.office.com/owa/", "_blank");
+            };
+            if ($(".notification").length == 0) {
+                checkReceivedMessages();
+            }
+            
+        });
+    </script>
 </body>
 </html>
