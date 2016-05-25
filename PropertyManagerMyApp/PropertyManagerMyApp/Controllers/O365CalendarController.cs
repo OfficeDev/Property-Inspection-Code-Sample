@@ -35,9 +35,9 @@ namespace SuiteLevelWebApp.Controllers
             var restURL = "https://graph.microsoft.com/beta/me/findMeetingTimes";
             object[] attendeeArray = { new { type = "Required", emailAddress = new { address = userEmail } } };
             var timeZone = TimeZone.CurrentTimeZone.StandardName;//"Pacific Standard Time";
-            object[] TimeConstraintArray = { new { start = new { date = localDate, time = "8:00:00", timeZone =  timeZone},
+            object[] TimeConstraintArray = { new { start = new { date = localDate, time = "9:00:00", timeZone =  timeZone},
                                                    end = new { date = localDate, time = "17:00:00", timeZone = timeZone } } };
-            var TimeConstraint = new { timeslots = TimeConstraintArray, ActivityDomain = "Personal" };
+            var TimeConstraint = new { timeslots = TimeConstraintArray/*, ActivityDomain = "Personal" */};
 
             var requstBody = new { attendees = attendeeArray, timeConstraint = TimeConstraint, meetingDuration = "PT1H" , MaxCandidates = "10"};
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, restURL);
@@ -55,7 +55,7 @@ namespace SuiteLevelWebApp.Controllers
                 {
                     string stringResult = await responseMessage.Content.ReadAsStringAsync();
                     JObject ret = JObject.Parse(stringResult);
-                    JArray array = (JArray)ret["value"];
+                    JArray array = (JArray)ret["meetingTimeSlots"];
                     foreach (var item in array)
                     {
                         if (item["meetingTimeSlot"] != null)
