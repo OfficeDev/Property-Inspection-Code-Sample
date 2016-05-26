@@ -1,6 +1,6 @@
 package com.canviz.repairapp.graph;
 
-import com.microsoft.services.graph.ConversationThread;
+import com.microsoft.graph.extensions.ConversationThread;
 import com.microsoft.services.orc.core.ODataBaseEntity;
 
 /**

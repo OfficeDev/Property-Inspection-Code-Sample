@@ -7,7 +7,8 @@ public final class Constants {;
     public static final String AAD_AUTHORITY = "https://login.microsoftonline.com/common";
 	 
     public static final String GRAPH_RESOURCE_ID = "https://graph.microsoft.com/";
-    public static final String GRAPH_RESOURCE_URL = "https://graph.microsoft.com/beta/";
+    public static final String GRAPH_RESOURCE_URL = "https://graph.microsoft.com/v1.0/";
+    public static final String GRAPH_BETA_RESOURCE_URL = "https://graph.microsoft.com/beta/";
 	 
     public static final String SHAREPOINT_URL = "https://TENANCY.sharepoint.com";
     public static final String SHAREPOINT_SITE_PATH = "/sites/SuiteLevelAppDemo";
@@ -15,7 +16,6 @@ public final class Constants {;
 	 
     public static final String OUTLOOK_RESOURCE_ID = "https://outlook.office365.com/";
     public static final String ONENOTE_RESOURCE_ID = "https://onenote.com/";
-    public static final String ONENOTE_RESOURCE_URL = "https://www.onenote.com/api/beta/";
     public static final String ONENOTE_NAME = "Contoso Property Management";
     public static final String VIDEO_RESOURCE_URL = SHAREPOINT_URL + "/portals/hub";
     public static final String VIDEO_CHANNEL_NAME = "Incidents";

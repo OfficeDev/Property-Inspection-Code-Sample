@@ -16,7 +16,7 @@ import java.net.URL;
  */
 public class EmailHelper {
 
-    public static void sendMail(String userId, com.microsoft.services.graph.Message message, Boolean saveToSentItems) throws Exception {
+    public static void sendMail(String userId, com.microsoft.graph.extensions.Message message, Boolean saveToSentItems) throws Exception {
         JsonSerializer serializer = new GsonSerializer();
         java.util.Map<String, String> map = new java.util.HashMap<String, String>();
         map.put("Message", serializer.serialize(message));

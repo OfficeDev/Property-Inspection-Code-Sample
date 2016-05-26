@@ -14,7 +14,7 @@ The mobile Repair App in the demo may also be run on Android in addition to the 
 
 Some configuration is required to enable the Android Repair App to work with an Office 365 environment.  Read on to learn about the configuration process.
 
-> This sample was tested with  Android Studio version 1.3.1.
+> This sample was tested with  Android Studio version 2.1.
 
 Android Repair App Installation
 -------------------------------
@@ -57,7 +57,7 @@ To configure the Android Repair App follow these instructions.
 Items that you need a real Android device to run
 ------------------------------------------------
 
-Some of the functionality int he app will not work in the Android emulator.  You must run the app on a real device to use the following functionality.
+Some of the functionality in the app will not work in the Android emulator.  You must run the app on a real device to use the following functionality.
 
 1. Uploading a video to the Office 365 Video Portal.
 2. Opening Word, Excel, and PowerPoint documents in the native Android Office applications via Deep Links. 
@@ -103,7 +103,7 @@ The repair app uses deep links to automatically open the native Android OneNote 
 
 > **Note:** You can only install the OneNote native Android application in an ARM emulator, it will not work with the Intel HAXM emulators.
 
-> **Note:** We have had limited success with this approach.  It works on some computers and not on others.  If this doe snot work for you then install the native Android OneNote app on a real Android device and run the repair app ont he real Android device.
+> **Note:** We have had limited success with this approach. It works on some computers and not on others.  If this does not work for you then install the native Android OneNote app on a real Android device and run the repair app on the real Android device.
 
 1. Copy the OneNote.apk file to the Android SDK platform-tools folder on your machine.
 2. Open a command prompt as an administrator.
