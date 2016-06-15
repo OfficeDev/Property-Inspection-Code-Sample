@@ -16,14 +16,6 @@ namespace SuiteLevelWebApp.Controllers
     [Authorize, HandleAdalException]
     public class O365CalendarController : Controller
     {
-        public async Task<ActionResult> Index()
-        {
-            var graphServer = await Utils.AuthenticationHelper.GetGraphServiceAsync(AADAppSettings.GraphResourceUrl);
-            var events = await GetEventsByRestAPI();
-
-            return Content(events.Count.ToString());
-        }
-
         //
         //https://msdn.microsoft.com/en-us/office/office365/APi/calendar-rest-operations#Findmeetingtimespreview
         //
@@ -81,13 +73,6 @@ namespace SuiteLevelWebApp.Controllers
                 Value = string.Format("{0} - {1}", availableStart.ToString(@"hh\:mm"), availableEnd.ToString(@"hh\:mm"))
             };
             timeSlots.Add(timeSlot);
-        }
-
-        private async Task<List<Event>> GetEventsByRestAPI()
-        {
-            GraphServiceClient graphServiceClient = await AuthenticationHelper.GetGraphServiceAsync(AADAppSettings.GraphResourceUrl);
-            var queryEvents = await graphServiceClient.Me.Events.Request().GetAllAsnyc();
-            return queryEvents.ToList();
         }
     }
 }

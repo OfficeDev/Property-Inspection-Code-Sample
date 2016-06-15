@@ -14,20 +14,35 @@
 
 @implementation EKNEKNGlobalInfo
 
+/*Convert UTC string to UTC date*/
 +(NSDate *)converDateFromString:(NSString *)stringdate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [formatter setLocale:[NSLocale systemLocale]];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     NSDate *ret =[formatter dateFromString:stringdate];
     return ret;
 }
-+(NSString *)converStringFromDate:(NSDate *)date
+
++(NSString *)converUTCStringFromDate:(NSDate *)date
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     [formatter setDateFormat:@"MM'/'dd'/'yy"];
     NSString *ret =[formatter stringFromDate:date];
     return ret;
 }
+
++(NSString *)converLocalStringFromDate:(NSDate *)date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.timeZone = [NSTimeZone systemTimeZone];
+    [formatter setDateFormat:@"MM'/'dd'/'yy"];
+    NSString *ret =[formatter stringFromDate:date];
+    return ret;
+}
+/*UTC string to local string*/
 +(NSString *)converStringToDateString:(NSString *)stringDate
 {
     NSString *result = @"";
@@ -35,7 +50,9 @@
     {
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"MM'/'dd'/'yyyy"];
+        
         NSDate *date = [self converDateFromString:stringDate];
+        dateFormat.timeZone = [NSTimeZone systemTimeZone];
         result = [dateFormat stringFromDate:date];
     }
     

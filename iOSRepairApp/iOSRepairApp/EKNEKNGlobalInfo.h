@@ -63,8 +63,9 @@ typedef NS_ENUM(NSInteger, DocumentType){
     PPTType
 };
 @interface EKNEKNGlobalInfo : UIViewController
-+(NSDate *)converDateFromString:(NSString *)stringdate;
-+(NSString *)converStringFromDate:(NSDate *)date;
+
++(NSString *)converUTCStringFromDate:(NSDate *)date;
++(NSString *)converLocalStringFromDate:(NSDate *)date;
 +(NSString *)converStringToDateString:(NSString *)stringDate;
 +(BOOL)isBlankString:(NSString *)string;
 +(CGSize)getSizeFromStringWithFont:(NSString *)string font:(UIFont *)font;

@@ -30,7 +30,7 @@
     
     self.fileNameLabel.text = fileName;
     self.authorLabel.text = author;
-    self.lastModifyLabel.text = [NSString stringWithFormat:@"Last Modified: %@",[EKNEKNGlobalInfo converStringFromDate:lastmodified]];
+    self.lastModifyLabel.text = [NSString stringWithFormat:@"Last Modified: %@",[EKNEKNGlobalInfo converLocalStringFromDate:lastmodified]];
     self.sizeLabel.text = [NSString stringWithFormat:@"Size: %@",[NSByteCountFormatter stringFromByteCount:[filesize longLongValue] countStyle:NSByteCountFormatterCountStyleFile]];
     
     if([fileName.lowercaseString hasSuffix:@".docx"]){
