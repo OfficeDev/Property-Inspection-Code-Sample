@@ -67,7 +67,7 @@ See the [Training README](https://github.com/OfficeDev/Property-Inspection-Code-
 
 See the [Web App Installation README](https://github.com/OfficeDev/Property-Inspection-Code-Sample/blob/master/PropertyManagerMyApp/README.md) for web application installation instructions.
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard%203.jpg)
+![Property Manager web application dashboard a property management scenario](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard%203.jpg)
 
 ## iOS Android Cordova and Xamarin Mobile Applications
 
