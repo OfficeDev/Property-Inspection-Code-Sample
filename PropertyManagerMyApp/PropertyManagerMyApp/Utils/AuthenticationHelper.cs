@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace SuiteLevelWebApp.Utils
 {
@@ -11,15 +12,25 @@ namespace SuiteLevelWebApp.Utils
     {
         #region Get Service Client
 
-        public static async Task<GraphService> GetGraphServiceAsync()
+        public static async Task<GraphServiceClient> GetGraphServiceAsync(string url)
         {
-            var serviceRoot = new Uri(AADAppSettings.GraphResourceUrl);
+            //var serviceRoot = new Uri(AADAppSettings.GraphResourceUrl);
 
-            var accessToken = GetAccessTokenAsync(AADAppSettings.GraphResourceId);
-            // AdalException thrown by GetAccessTokenAsync is swallowed 
-            // by GraphService so we need to wait here.
-            await accessToken;
-            return new GraphService(serviceRoot, () => accessToken);
+            var accessToken = await GetAccessTokenAsync(AADAppSettings.GraphResourceId);
+            //// AdalException thrown by GetAccessTokenAsync is swallowed 
+            //// by GraphService so we need to wait here.
+            //await accessToken;
+
+            var graphserviceClient = new GraphServiceClient(url,
+                                          new DelegateAuthenticationProvider(
+                                                        (requestMessage) =>
+                                                        {
+                                                            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
+
+                                                            return Task.FromResult(0);
+                                                        }));
+
+            return graphserviceClient;
         }
 
         public static Task<ClientContext> GetDemoSiteClientContextAsync()

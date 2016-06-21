@@ -24,29 +24,29 @@
 +(NSDate *)converDateFromString:(NSString *)stringdate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [formatter setLocale:[NSLocale systemLocale]];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     NSDate *ret =[formatter dateFromString:stringdate];
     return ret;
 }
-+(NSString *)converStringFromDate:(NSDate *)date
+
++(NSString *)converUTCStringFromDate:(NSDate *)date
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     [formatter setDateFormat:@"MM'/'dd'/'yy"];
     NSString *ret =[formatter stringFromDate:date];
     return ret;
 }
-+(BOOL)isEqualTodayDate:(NSString *)tempDate
+
++(NSString *)converLocalStringFromDate:(NSDate *)date
 {
-    NSString *tempstr =[EKNEKNGlobalInfo converStringFromDate:[EKNEKNGlobalInfo converDateFromString:tempDate]];
-    NSString *currentstr = [EKNEKNGlobalInfo converStringFromDate:[NSDate date]];
-    if ([tempstr isEqualToString:currentstr]) {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
-    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.timeZone = [NSTimeZone systemTimeZone];
+    [formatter setDateFormat:@"MM'/'dd'/'yy"];
+    NSString *ret =[formatter stringFromDate:date];
+    return ret;
 }
 +(NSString *)createFileName:(NSString *)fileExtension
 {

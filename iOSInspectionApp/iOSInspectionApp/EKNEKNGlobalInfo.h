@@ -11,8 +11,8 @@
 @interface EKNEKNGlobalInfo : UIViewController
 
 +(NSDate *)converDateFromString:(NSString *)stringdate;
-+(NSString *)converStringFromDate:(NSDate *)date;
++(NSString *)converUTCStringFromDate:(NSDate *)date;
++(NSString *)converLocalStringFromDate:(NSDate *)date;
 +(NSString *)createFileName:(NSString *)fileExtension;
-+(BOOL)isEqualTodayDate:(NSString *)tempDate;
 +(id)getObjectFromDefault:(NSString *)key;
 @end

@@ -1,0 +1,45 @@
+﻿@model Microsoft.Graph.Subscription
+@{
+    Layout = "~/Views/Shared/_DemoLayout.cshtml";
+    ViewBag.Title = "Subscription";
+}
+
+<div class="container body-content home">
+    <div><h2>Subscription Detail</h2></div>
+    <br/>
+    <div>
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>Resource</th>
+                <th>changeType</th>
+                <th>Client State</th>
+                <th>subscriptionId</th>
+                <th>subscriptionExpirationDateTime</th>
+
+            </tr>
+            <tr>
+                <td>@Html.DisplayFor(modelItem=> Model.Resource)</td>
+                <td>@Html.DisplayFor(modelItem => Model.ChangeType)</td>
+                <td>@Html.DisplayFor(modelItem => Model.ClientState)</td>
+                <td>@Html.DisplayFor(modelItem => Model.Id)</td>
+                <td>@Html.DisplayFor(modelItem => Model.ExpirationDateTime)</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+
+    <div>
+        @using (Html.BeginForm("Notification", "WebHooks"))
+        {
+            <button type="submit" class="ms-Button">
+                <span class="ms-Button-icon">
+                    <i class="ms-Icon ms-Icon--plus"></i>
+                </span>
+                <span class="ms-Button-label">Watch for notifications</span>
+                <span class="ms-Button-description">Watch for notifications</span>
+            </button>
+        }
+    </div>
+</div>
+
+

@@ -17,7 +17,7 @@
     <item DisplayName="Carol Troup" PrincipalName="carolt" Password="TempP@ssw0rd!" GroupsDisplayName="" JobTitle="Property Owner" CompanyName="Troup Residence" OfficeLocation="4733 W Bertona St" MobilePhone="555.222.5004" BusinessPhone="555.222.5004"/>
   </List>
   <List name="Properties">
-    <item path="Content\Images\properties\house1.jpg">
+    <item path="Content\Images\properties\house1.jpg" excelPath="Content\Workbooks\Property1\Property-Costs.xlsx">
       <column name="Id"></column>
       <column name="Title">Au Residence</column>
       <column name="sl_owner">Margaret Au</column>
@@ -30,7 +30,7 @@
       <column name="sl_latitude">47.636701</column>
       <column name="sl_longitude">-122.350490</column>
     </item>
-    <item path="Content\Images\properties\house2.jpg">
+    <item path="Content\Images\properties\house2.jpg" excelPath="Content\Workbooks\Property2\Property-Costs.xlsx">
       <column name="Id"></column>
       <column name="Title">Wright Residence</column>
       <column name="sl_owner">Steven Wright</column>
@@ -43,7 +43,7 @@
       <column name="sl_latitude">47.641079</column>
       <column name="sl_longitude">-122.361961</column>
     </item>
-    <item path="Content\Images\properties\house3.jpg">
+    <item path="Content\Images\properties\house3.jpg" excelPath="Content\Workbooks\Property3\Property-Costs.xlsx">
       <column name="Id"></column>
       <column name="Title">Jump Residence</column>
       <column name="sl_owner">Dan Jump</column>
@@ -56,7 +56,7 @@
       <column name="sl_latitude">47.649310</column>
       <column name="sl_longitude">-122.367827</column>
     </item>
-    <item path="Content\Images\properties\house4.jpg">
+    <item path="Content\Images\properties\house4.jpg" excelPath="Content\Workbooks\Property4\Property-Costs.xlsx">
       <column name="Id"></column>
       <column name="Title">Johnson Residence</column>
       <column name="sl_owner">Chris Johnson</column>
@@ -69,7 +69,7 @@
       <column name="sl_latitude">47.670199</column>
       <column name="sl_longitude">-122.415486</column>
     </item>
-    <item path="Content\Images\properties\house5.jpg">
+    <item path="Content\Images\properties\house5.jpg" excelPath="Content\Workbooks\Property5\Property-Costs.xlsx">
       <column name="Id"></column>
       <column name="Title">Troup Residence</column>
       <column name="sl_owner">Carol Troup</column>

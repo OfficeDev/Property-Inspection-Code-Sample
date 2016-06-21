@@ -28,9 +28,9 @@ Configure Xamarin Android Repair App settings
 
 To configure the Xamarin Android Repair App follow these instructions.
 
-1. In Visual Studio, right click the **XamarinRepairApp solution** and select **Clean**.
-2. Open Visual Studio 2013 Studio.
-3. Open the **XamarinRepairApp.sln** Visual Studio 2013 Solution you cloned from the GitHub repository.
+1. Open Visual Studio 2015.
+2. Open the **XamarinRepairApp.sln** you cloned from the GitHub repository.
+3. In Visual Studio, right click the **XamarinRepairApp solution** and select **Clean**.
 4. In the **XamarinRepairApp project**, open the **Constants.cs** file.
 5. Edit the **SHAREPOINT_URL** variable to match your Office 365 / Azure Tenancy by **replacing the TENANCY placeholder** with your tenancy name.  In the example below, the TENANCY placeholder was replaced with contoso.
 

@@ -7,8 +7,6 @@
 //
 
 #import "EKNIncidentViewController.h"
-#import "BaseController.h"
-#import "EKNGraphService.h"
 
 @interface EKNIncidentViewController ()
 
@@ -556,7 +554,7 @@
 {
     [self showLoading];
     NSDate *currentDate = [NSDate date];
-    NSString *repairCompleted = [EKNEKNGlobalInfo converStringFromDate:currentDate];
+    NSString *repairCompleted = [EKNEKNGlobalInfo converUTCStringFromDate:currentDate];
     NSString *requestUrl = [NSString stringWithFormat:@"%@/_api/web/lists/GetByTitle('%@')/Items(%@)",self.siteUrl,@"Incidents",self.selectIncidentId];
     NSString *postString = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' },'sl_repairCompleted':'%@','sl_status':'Repair Pending Approval'}",repairCompleted];
     NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -616,7 +614,7 @@
     NSString *propertyName = [EKNEKNGlobalInfo getString:[self.propertyDetailDic objectForKey:@"Title"]];
     NSString *propertyAddress = [EKNEKNGlobalInfo getString:[self.propertyDetailDic objectForKey:@"sl_address1"]];
     NSMutableDictionary *emailDataDic = [[NSMutableDictionary alloc] init];
-    NSString *currentDate = [EKNEKNGlobalInfo converStringFromDate:[NSDate date]];
+    NSString *currentDate = [EKNEKNGlobalInfo converLocalStringFromDate:[NSDate date]];
     NSMutableString *body =[[NSMutableString alloc] initWithString:@"\r\nThe incident found during a recent inspection on your property has been repaired.\r\n"];
     [body appendFormat:@"\r\n\r\nProperty Name: %@\r\nProperty Address: %@\r\n\r\nRepair Date: %@\r\n\r\n",propertyName,propertyAddress,currentDate];
     
@@ -633,7 +631,7 @@
      {
          dispatch_async(dispatch_get_main_queue(), ^{
              // NSLog(@" send email error %@,%d",error,returnValue);
-             if (error ==nil) {
+             if (returnValue ==0) {
                  //
                  [self showHintAlertView:@"Success" message:@"Message sent Success!"];
                  NSLog(@"Send email success.");
@@ -648,11 +646,10 @@
      }];
     
     //update task
-    EKNGraphService *service = [[EKNGraphService alloc] init];
+     EKNPlanService *service = [[EKNPlanService alloc] init];
     [service updateTask:self.selectGroupId incidentId:self.selectIncidentId callback:^(NSString *error) {
     }];
     //
-    
 }
 
 -(void)sendDispatcherEmail
@@ -1076,7 +1073,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(tableView.tag == MpsIncidentsListTableViewTag)
     {
-        NSString *identifier = [NSString stringWithFormat:@"IncidentListItemCell-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];
+        NSString *identifier = [NSString stringWithFormat:@"IncidentListItemCell-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];
         IncidentListItemCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             [tableView registerNib:[UINib nibWithNibName:@"IncidentListItemCell" bundle:nil] forCellReuseIdentifier:identifier];
@@ -1088,7 +1085,7 @@
     }
     else if(tableView.tag ==  LpsIncidentmenuTableViewTag){
         
-        NSString *identifier = [NSString stringWithFormat:@"IncidentMenuCell-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];
+        NSString *identifier = [NSString stringWithFormat:@"IncidentMenuCell-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];
         IncidentMenuCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             [tableView registerNib:[UINib nibWithNibName:@"IncidentMenuCell" bundle:nil] forCellReuseIdentifier:identifier];
@@ -1101,7 +1098,7 @@
     else if(tableView.tag == LpsContactOwnerTableViewTag ||
             tableView.tag == LpsContactOfficeTableViewTag )
     {
-        NSString *identifier = [NSString stringWithFormat:@"ContactOwnerCell-%ld-%ld-%ld",tableView.tag ,indexPath.section, indexPath.row];
+        NSString *identifier = [NSString stringWithFormat:@"ContactOwnerCell-%ld-%ld-%ld",(long)tableView.tag ,(long)indexPath.section, (long)indexPath.row];
         ContactOwnerCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             [tableView registerNib:[UINib nibWithNibName:@"ContactOwnerCell" bundle:nil] forCellReuseIdentifier:identifier];
@@ -1131,7 +1128,7 @@
             
             if(indexPath.row==2)
             {
-                NSString *identifier = [NSString stringWithFormat:@"PropertyDetailsImage-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];
+                NSString *identifier = [NSString stringWithFormat:@"PropertyDetailsImage-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];
                 PropertyDetailsImage *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
                 if (cell == nil) {
                     [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsImage" bundle:nil] forCellReuseIdentifier:identifier];
@@ -1146,7 +1143,7 @@
             }
             else
             {
-                NSString *identifier = [NSString stringWithFormat:@"PropertyDetailsCell-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];
+                NSString *identifier = [NSString stringWithFormat:@"PropertyDetailsCell-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];
                 PropertyDetailsCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
                 if (cell == nil) {
                     [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsCell" bundle:nil] forCellReuseIdentifier:identifier];
@@ -1167,7 +1164,7 @@
         }
         else
         {
-            NSString *identifier = [NSString stringWithFormat:@"InspectionDetailsCell-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];
+            NSString *identifier = [NSString stringWithFormat:@"InspectionDetailsCell-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];
             PropertyDetailsCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
             if (cell == nil) {
                 [tableView registerNib:[UINib nibWithNibName:@"PropertyDetailsCell" bundle:nil] forCellReuseIdentifier:identifier];

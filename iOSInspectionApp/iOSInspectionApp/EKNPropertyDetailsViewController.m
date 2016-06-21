@@ -474,7 +474,7 @@
         if (to!=nil) {
             NSMutableDictionary *emailDataDic = [[NSMutableDictionary alloc] init];
             
-            NSString *currentDate = [EKNEKNGlobalInfo converStringFromDate:[NSDate date]];
+            NSString *currentDate = [EKNEKNGlobalInfo converLocalStringFromDate:[NSDate date]];
             UITableView *propertyDetailTable = (UITableView *)[self.view viewWithTag:LeftPropertyDetailTableViewTag];
             NSString *propertyName= [((PropertyDetailsCell *)[propertyDetailTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]) getLabelTitle];
             NSString *propertyAddress = [((PropertyDetailsCell *)[propertyDetailTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]) getLabelTitle];
@@ -508,7 +508,7 @@
             [graph sendMail:emailDataDic callback:^(int returnValue, NSError *error)
              {
                 // NSLog(@" send email error %@,%d",error,returnValue);
-                 if (error ==nil) {
+                 if (returnValue != -1) {
                      //
                      NSLog(@"Send email success.");
                  }
@@ -880,11 +880,11 @@
                     }
                     
                     NSDate *inspectiondatetime = [EKNEKNGlobalInfo converDateFromString:(NSString *)[tempitem getData:@"sl_datetime"]];
-                    NSString *convertDateStr =[EKNEKNGlobalInfo converStringFromDate:inspectiondatetime];
+                    NSString *convertDateStr =[EKNEKNGlobalInfo converUTCStringFromDate:inspectiondatetime];
                     [inspectionItem setObject:convertDateStr forKey:@"sl_datetime"];
                     
                     if([inspectiondatetime compare:[NSDate date]] == NSOrderedDescending
-                       ||[convertDateStr isEqualToString:[EKNEKNGlobalInfo converStringFromDate:[NSDate date]]])
+                       ||[convertDateStr isEqualToString:[EKNEKNGlobalInfo converUTCStringFromDate:[NSDate date]]])
                     {
                         //upcoming
                         [inspectionItem setObject:@"black" forKey:@"icon"];
@@ -978,6 +978,9 @@
     [self.propertyViewSpinner stopAnimating];
 }
 
+-(BOOL)isLoadingViewSpiner{
+    return [self.commentViewSpinner isAnimating];
+}
 -(void)startCommentViewSpiner:(CGRect)rect
 {
     [self.commentViewSpinner stopAnimating];
@@ -1178,7 +1181,7 @@
     {
         [self startCommentViewSpiner:CGRectMake(135,550+91,50,50)];
         NSString *insid = [self getSelectLeftInspectionItemId];
-        NSString *body = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.InspectionsListItem' }, 'sl_finalized':'%@'}",[NSDate date]];
+        NSString *body = [NSString stringWithFormat:@"{'__metadata': { 'type': 'SP.Data.InspectionsListItem' }, 'sl_finalized':'%@'}",[EKNEKNGlobalInfo converUTCStringFromDate:[NSDate date]]];
     
         [self.listClient updateListItem:@"Inspections" itemID:insid body:body callback: ^(
                                                                                                          NSData *data,
@@ -1252,6 +1255,7 @@
 -(void)doneButtonClicked
 {
     //here, first we create the incident item, then upload images that are taken by camera.
+    if([self isLoadingViewSpiner]) return;
     if ([self getCommentViewWhetherShow]) {
         [self commentViewDone];
     }
@@ -1650,27 +1654,32 @@
              else
              {
                  //retry one
-                 NSMutableDictionary *imagDic = [[[self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",(long)(long)insid]] objectForKey:[NSString stringWithFormat:@"%ld",(long)roomId]] objectAtIndex:imageIndex];
-                 
-                 if([imagDic objectForKey:@"trytimes"]!=nil)
-                 {
-                     NSInteger times =[[imagDic objectForKey:@"trytimes"] integerValue];
-                     if(times>=3)
-                     {
-                         
-                         [self stopPropertyViewSpiner];
+                 NSDictionary * insidic = [self.roomsOfInspectionDic objectForKey:[NSString stringWithFormat:@"%ld",(long)insid]];
+                 if(insidic != nil){
+                     NSArray *roomImagesArray =  [insidic objectForKey:[NSString stringWithFormat:@"%ld",(long)roomId]];
+                     if(roomImagesArray != nil){
+                         NSMutableDictionary *imagDic = [roomImagesArray objectAtIndex:imageIndex];
+                         if([imagDic objectForKey:@"trytimes"]!=nil)
+                         {
+                             NSInteger times =[[imagDic objectForKey:@"trytimes"] integerValue];
+                             if(times>=3)
+                             {
+                                 
+                                 [self stopPropertyViewSpiner];
+                             }
+                             else
+                             {
+                                 times=times+1;
+                                 [imagDic setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
+                                 [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
+                             }
+                         }
+                         else
+                         {
+                             [imagDic setObject:@"1" forKey:@"trytimes"];
+                             [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
+                         }
                      }
-                     else
-                     {
-                         times=times+1;
-                         [imagDic setObject:[NSString stringWithFormat:@"%ld",(long)times] forKey:@"trytimes"];
-                         [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
-                     }
-                 }
-                 else
-                 {
-                     [imagDic setObject:@"1" forKey:@"trytimes"];
-                     [self getRoomImageFileREST:path propertyId:proId inspectionId:insid roomId:roomId imageIndex:imageIndex];
                  }
              }
          });
@@ -2260,7 +2269,7 @@
 {
     
     NSMutableString *body =[[NSMutableString alloc] init];
-    [body appendFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' }, 'sl_inspectionIDId':%d,'sl_roomIDId':%d,'sl_date':'%@','sl_propertyIDId':%d",[insIdstr intValue],[roomIdstr intValue],[NSDate date],[proId intValue]];
+    [body appendFormat:@"{'__metadata': { 'type': 'SP.Data.IncidentsListItem' }, 'sl_inspectionIDId':%d,'sl_roomIDId':%d,'sl_date':'%@','sl_propertyIDId':%d",[insIdstr intValue],[roomIdstr intValue],[EKNEKNGlobalInfo converUTCStringFromDate:[NSDate date]],[proId intValue]];
     
     if(comment!=nil && comment.length>0)
     {
@@ -2723,7 +2732,7 @@
             BOOL showFinal = NO;
             if([[inspecdic objectForKey:@"bowner"] isEqualToString:@"YES"])
             {
-                if([[inspecdic objectForKey:@"sl_datetime"] isEqualToString:[EKNEKNGlobalInfo converStringFromDate:[NSDate date]]])
+                if([[inspecdic objectForKey:@"sl_datetime"] isEqualToString:[EKNEKNGlobalInfo converUTCStringFromDate:[NSDate date]]])
                 {
                     showPlus = YES;
                 }
@@ -2779,7 +2788,11 @@
     EKNListItem *inspectionitem = nil;
     if([[self.rightPropertyListDic objectForKey:@"top"] count]>0)
     {
-        inspectionitem = [[self.rightPropertyListDic objectForKey:@"top"] objectAtIndex:0];
+        NSArray *rightPropertyList = [self.rightPropertyListDic objectForKey:@"top"];
+        if(rightPropertyList != nil){
+            inspectionitem = [rightPropertyList objectAtIndex:0];
+        }
+        
     }
     NSIndexPath *updateIndexPath = nil;
     if(inspectionitem!=nil)
@@ -2849,7 +2862,11 @@
     EKNListItem *inspectionitem = nil;
     if(self.selectRightPropertyTableIndexPath.section == 0)
     {
-        inspectionitem = [[self.rightPropertyListDic objectForKey:@"top"] objectAtIndex:0];
+        NSArray * rightPropertyList = [self.rightPropertyListDic objectForKey:@"top"];
+        if(rightPropertyList != nil ){
+            inspectionitem = [rightPropertyList objectAtIndex:0];
+        }
+        
     }
     else
     {

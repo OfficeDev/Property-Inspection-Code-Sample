@@ -17,7 +17,7 @@
 - Visual Studio 2015 Update 1
 - [Microsoft Office Developer Tools Update 1 for Visual Studio 2015](http://go.microsoft.com/fwlink/?LinkID=703807&clcid=0x409)
 - Office 365 Video Portal
-	+ Before you start the installation process, ensure the Office 365 video portal is provisioned in your tenancy.  Follow the steps below to enable, provision and verify the Office 365 Video Portal is available in your tenancy.
+	+ Before you start the installation process, ensure the Office 365 Video Portal is provisioned in your tenancy.  Follow the steps below to enable, provision and verify the Office 365 Video Portal is available in your tenancy.
 	
 1. In your web browser, open the **Tenant Settings page** for your Office 365 tenancy.  The URL to the Tenant Settings page is shown below.
 
@@ -58,13 +58,14 @@
 	Example: https://contoso.sharepoint.com/_layouts/15/videoredirect.aspx
 	```
 
-Important Notes
----------------  
+**Important Notes**
 
 - Use Internet Explorer or Google Chrome to install and execute the web app portion of the code sample.  The Edge browser is not yet supported.
 - When you save the PropertyManagerMyApp directory to your local machine, save it to the root of one of your drives to ensure all Nuget functionality will work and your file paths will not become too long.
 
-To set up and configure the demo first download the Property Manager web app source code and open it in Visual Studio 2015.
+**Installation**
+
+To set up and configure the demo, first download the Property Manager web app source code and open it in Visual Studio 2015.
 
 **Restore the Nuget packages the web app depends on**
 
@@ -89,7 +90,7 @@ To register the Property Manager web app with your Azure Active Directory follow
 
 At this point Visual Studio will add the appropriate Office 365 Nuget packages to the Visual Studio Solution.
 
-**Add Microsoft Graph API permissions to the PropertyManagerMyApp AAD app**
+**Add Microsoft Graph  permissions to the PropertyManagerMyApp AAD app**
 
 1.	In your web browser, open https://portal.office.com and sign in with a global administrator account.
 2.	Click the **Admin tile**.
@@ -100,15 +101,15 @@ At this point Visual Studio will add the appropriate Office 365 Nuget packages t
 4.	Click **Applications**
 5.	In the Show dropdown list, select **Applications my company owns**.
 6.	Click the **checkmark** button.
-5.	Ensure the **PropertyManagerMyApp15** application exists, then click it.
+5.	Ensure the **PropertyManagerMyApp** application exists, then click it.
 6.	Click **Configure** 
 7.	Scroll down to **Permissions to other applications** and click **Add application**
-8.	Mouse over **Microsoft Graph API**  and click the **+ button**
+8.	Mouse over **Microsoft Graph**  and click the **+ button**
 9.	Click the **checkmark button** on the bottom right
-10.	Open the **Delegated Permissions dropdown list** for the Microsoft Graph API item you just added
+10.	Open the **Delegated Permissions dropdown list** for the Microsoft Graph item you just added
 11.	Select the following permissions:
-	- Read and write user notebooks (preview)
-	- Have full access to user files and files shared with user
+	- Read and write notebooks that the user can access (preview)
+	- Have full access to user files
 	- Have full access to user calendars
 	- Send mail as a user
 	- Read and write access to user mail
@@ -116,12 +117,13 @@ At this point Visual Studio will add the appropriate Office 365 Nuget packages t
 	- Read and write directory data
 	- Read and write all groups
 	- Read and write all users' full profiles
+	- Read items in all site collections
 	
 12.	Click **Save**
 
 **Edit web.config**
 
-The Property Manager web app stores configuration settings in the web.config file.  These settings must be configured for your environment in order for the Property Manager web app to work.  The Add Connected Service wizard creates some of these settings in the web.config file when it registers you app with Azure Active Directory.  These settings the Add Connected Service wizard creates include:
+The Property Manager web app stores configuration settings in the web.config file.  These settings must be configured for your environment in order for the Property Manager web app to work.  The Add Connected Service wizard creates some of these settings in the web.config file when it registers your app with Azure Active Directory.  These settings the Add Connected Service wizard creates include:
 
 - ida:ClientID
 - ida:ClientSecret
@@ -208,7 +210,7 @@ After you have performed the configuration steps described above, provision the 
 **Provision Site Collection and information architecture**
 
 3. In your web browser, navigate to **https://localhost:44312/O365SiteProvisioning** 
-4. Click **Create Demo Site Collection** to invoke the the O365SiteProvisioning controller and create the Site Collection, information architecture, and workflows.
+4. Click **Create Demo Site Collection** to invoke the O365SiteProvisioning controller and create the Site Collection, information architecture, and workflows.
 
 	> **Note:**  This process can take up to 20 minutes to complete.  Do not refresh the page during this process.  The page will refresh every minute and display the current time to let you know it is still running.  When the process completes you will see this screen:
 	
@@ -249,7 +251,7 @@ Finally, you will create the Azure Active Directory Groups, Users, and demo data
 
 9. Enter the date when you plan to execute the demo, then click the **Populate** button.
 
-	When the process completes you will see this screen.  Click the **Click here to inititalize OneNote site for demo Office 365 Groups** button.
+	When the process completes you will see this screen.  Click the **Click here to initialize OneNote site for demo Office 365 Groups** button.
 	
     ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/demo%20data%20provision%20success-2.png)
     
@@ -275,7 +277,7 @@ You must grant the repair person's account the permission to upload videos to Of
 3. Click the **Incidents** link.
 4. Click the **Channel Settings** link.
 5. Click the **Permissions** link.
-6. Add Ron Gabel to the **Editors** group.
+6. Add Rob Barker to the **Editors** group.
 7. Click **Save**.
 
 > **IMPORTANT NOTE!  READ THIS!**  
@@ -298,9 +300,31 @@ You must grant the repair person's account the permission to upload videos to Of
 
 **Mailbox setup**
 
-1. Next, log in with each user to your tenancy and access Outlook to set up their email.
+1. Next, log in with each user to your tenancy and access Outlook web access to set up their email accounts.
+
+**Time Zone Setup**
+
+This step is essential to ensure the Find Meeting Times Graph API call returns free times correctly for repair people on the incident details web page in the web app dashboard.
+
+2. Click the **Settings** button in the top right of the web page (it looks like a gear).
+3. In the **My app settings** section, click **Mail**
+4. In the Options section (on the left), expand **General**
+5. Click **Region and time zone**
+6. Set the **Current time zone** dropdown list value to the same time zone you specified in the WEBSITE_TIME_ZONE setting value in the PropertyManagerMyApp **web.config** file.
+7. Click **Save**
 
 > **Note:** It may take up to 24 hours for the Office 365 infrastructure to create an Exchange Mailbox and Calendar.  Usually, it takes 10 seconds.
+
+**Add people to Katie Jordan**
+1. Open a web browser and go to **https://portal.office.com**
+2. Login with the **Katie Jordan** user account
+3. Click the **launcher** button, then click the **People** button
+
+   ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/people.png)
+
+3. Add **Ron Gabel** and **Chris Gray** to Katie Jordan's contacts list.
+
+   ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/contacts.png)
 
 **Property Manager web app Configuration**
 This step is optional.  If you wish to add a custom logo to your Property Manager web app you can update the logo corresponding to the AAD App Visual Studio creates in your AAD.  
@@ -326,6 +350,53 @@ In future releases the Graph API will include the ability to query SharePoint li
 This is what the dashboard looks like.
 
 ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/dashboard%203.jpg)
+
+**Configure a listener, create a subscription, test and view notifications, and delete subscriptions**
+
+The following link contains more detailed information about webhook subscriptions. [link](https://graph.microsoft.io/en-us/docs/api-reference/v1.0/resources/webhooks "Subscription")
+
+Follow these steps to configure a listener, create a subscription, test and view notifications, and delete subscriptions.
+
+**Configure a Listener**
+
+1. Open the PropertyManagerMyApp Solution with Visual Studio 2015.
+2. Open the web.config file.
+3. Configure the NotificationUrl setting in the web.config:
+   
+	- **NotificationUrl** is the URL of the endpoint that will receive the notifications. This URL has to make use of the HTTPS protocol and be accessible from the Internet. 
+   
+   > **IMPORTANT NOTE!  READ THIS!**  
+   > 1. You need use your site URL instead of the placeholder **PropertyManagerMyAppSiteURL**.
+   > 2. Example: https://promantest.azurewebsites.net/Notification/Listen
+   >    Example: https://localhost:44312/Notification/Listen 
+
+**Create a Subscription**
+
+1. The page load event in the Incident Details page checks to see if a subscription exists in the session.  You do not have to do anything except go about using the demo normally and the subscription is created for your automatically.  When the Incident Details page loads...
+
+- if the subscription does not exist, the code creates it and stores it in the session.
+- if the subscription exists, but it has expired, then the code deletes it and recreates it and stores it in the session.
+- if the subscription exists and it has not expire then the code does nothing.
+- each subscription's ExpirationDateTime is set to 2 hours from the time it is created.
+ 
+**Test and View Notifications**
+
+To view notifications, follow these steps:
+
+   1. In a web browser go to https://YourPropertyManagerMyAppSiteURL/WebHooks/notification.
+
+      ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Webhook%20Listen%20Notification1.png)
+      
+   2. Send two emails to the user that is currently logged into the PropertyManagerMyApp site.  View the notifications on the page. 
+
+      ![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/Webhook%20Listen%20Notification2.png)
+
+**Delete a Subscription**
+
+To delete a subscription, follow these steps:
+
+   1. In a web browser go to https://YourPropertyManagerMyAppSiteURL/WebHooks/notification.
+   3. Click the **Delete subscription** button.  This will delete the subscription and unsubscribe the notification. 
 
 ## Installing the web app on an Azure Web Site
 In addition to your localhost development environment, the web app may also run on an Azure Web Site.

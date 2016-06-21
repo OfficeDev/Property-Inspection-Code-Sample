@@ -1,0 +1,69 @@
+﻿@model SuiteLevelWebApp.Models.Notification
+@{
+    Layout = "~/Views/Shared/_DemoLayout.cshtml";
+    ViewBag.Title = "Notification";
+
+}
+@section Scripts {
+
+    <script>
+        $(function () {
+            function checkNotificationWhetherExsit(resource) {
+                var bfind = false;
+                var table = $("#propertyManagerNotification table");
+                table.find(" tr>td:first-child").each(function () {
+                    var text = $(this).text();
+                    if (text == resource) {
+                        bfind = true;
+                        return false;
+                    }
+                })
+                return bfind;
+            }
+
+            function checkReciveNotification() {
+                $.getJSON("/Notification/GetNotification")
+                .done(function (data) {
+                    if (data.status == "ok" && data.notifications != null) {
+                        var table = $("#propertyManagerNotification table");
+
+                        for (var i = 0; i < data.notifications.length; i++) {
+
+                            if (!checkNotificationWhetherExsit(data.notifications[i].resource))
+                            {
+                                var row = $("<tr></tr>");
+                                $("<td></td>").text(data.notifications[i].resource).appendTo(row);
+                                $("<td></td>").text(data.notifications[i].changeType).appendTo(row);
+                                table.append(row);
+                            }
+                        }
+                        //if (counter++ > 50) return;
+                    }
+                    setTimeout(checkReciveNotification, 20000);
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    setTimeout(checkReciveNotification, 20000);
+                });
+            };
+            checkReciveNotification();
+        });
+    </script>
+}
+<div class="container body-content notification">
+    <h2>Notification</h2>
+    <p>You'll get a notification when your user receives an email. The Notification display below.</p>
+    <br />
+    <div id="propertyManagerNotification">
+        <table class="table table-bordered table-striped">
+            <tr><th>Resource</th><th>ChangeType</th></tr>
+        </table>
+    </div>
+    <br>
+    <div>
+        @using (Html.BeginForm("DeleteSubscription", "WebHooks"))
+        {
+            <button type="submit">Delete subscription</button>
+        }
+    </div>
+</div>
+

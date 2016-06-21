@@ -775,12 +775,18 @@ header .bg-teal {
         position: relative;
     }
 
-        #left-panel-wrapper .link-see-more a:nth-child(2) {
+        #left-panel-wrapper .link-see-more a:nth-child(2){
             float: right;
             margin-right: 18px;
             color: #008272;
         }
-
+        #accrued .link-see-more a{
+            color: #008272;
+        }
+        #accrued .link-see-more a:nth-child(3) {
+            float: right;
+            margin-right:40px;
+        }
         #left-panel-wrapper .link-see-more > .callout-wrapper {
             display: none;
             position: absolute;
@@ -811,11 +817,10 @@ header .bg-teal {
     .body-content .left-panel .upload-file-block .form-button {
         text-align: right;
         margin-right: 10px;
-        margin-left: 15px;
     }
 
         .body-content .left-panel .upload-file-block .form-button input[type=file] {
-            width: 240px;
+            width: 215px;
         }
 
 /*--------------------------------------------------------------------*/
@@ -1101,3 +1106,48 @@ header .bg-teal {
     clear: both;
     content: "";
 }
+
+.subsciption{
+    margin-top:20px;
+}
+
+.ui-autocomplete .ui-menu-item, 
+.ui-autocomplete-input {
+    width: 170px !important;
+    height: 20px;
+    border: none;
+    border-radius: 0;
+    font-family: sc_segoe-ui_light,'Segoe UI Light', Arial,sans-serif;
+    font-size: 12px;
+    color: #737373;
+    background-color: #fff !important;
+    background: #fff !important;
+    
+    line-height:20px;
+    padding-left:6px;
+    margin-left:0px;
+}
+
+.ui-autocomplete .ui-menu-item a{
+    font-family: sc_segoe-ui_light,'Segoe UI Light', Arial,sans-serif;
+    font-size: 12px;
+    color: #737373;
+    background-color: #fff !important;
+    background: #fff !important;
+}
+#repairPeopleImg {
+    display:inline-block;
+}
+#repairPeople-autocomplete-input {
+    display:inline-block;
+    vertical-align: top;
+}
+#repairPeopleImg .ui-icon{
+    width: 16px;
+    height: 16px;
+}
+
+#propertyManagerNotification table th,#propertyManagerNotification table td{
+    width:50%;
+}
+

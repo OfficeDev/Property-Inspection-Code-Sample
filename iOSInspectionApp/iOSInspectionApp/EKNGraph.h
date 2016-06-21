@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <ADALiOS/ADAL.h>
 #import <impl/impl.h>
-#import <MSGraph-SDK-iOS/MSGraphService.h>
-
+//#import <MSGraph-SDK-iOS/MSGraphService.h>
+#import <MSGraphSDK.h>
+#import <MSBlockAuthenticationProvider.h>
 
 @interface EKNGraph : NSObject
 -(void)sendMail:(NSDictionary *)sendDataDic callback:(void (^)(int returnValue, NSError *error))callback;
+
+-(void)getGraphServiceAccessToken:(void (^)(ADAuthenticationResult* result))callback;
+-(void)getGraphServiceClient:(void (^)(MSGraphClient* client, NSError *error))callback;
 @end

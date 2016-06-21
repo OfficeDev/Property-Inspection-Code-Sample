@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.Graph;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace SuiteLevelWebApp.Controllers
@@ -15,128 +16,63 @@ namespace SuiteLevelWebApp.Controllers
     [Authorize, HandleAdalException]
     public class O365CalendarController : Controller
     {
-        public async Task<ActionResult> Index()
+        //
+        //https://msdn.microsoft.com/en-us/office/office365/APi/calendar-rest-operations#Findmeetingtimespreview
+        //
+        public async Task<JsonResult> GetAvailableTimeSlots(string localDate, string userEmail)
         {
-            var graphServer = await Utils.AuthenticationHelper.GetGraphServiceAsync();
-            var events = await GetEventsByRestAPI();
-
-            return Content(events.Count.ToString());
-        }
-
-        public async Task<JsonResult> GetAvailableTimeSlots(string localTimeUtc)
-        {
-            // //Get the Utc time from 9 AM to 6 PM 
-            DateTime startLocalTimeUtc = Convert.ToDateTime(localTimeUtc).ToUniversalTime();
-            var beginTime = startLocalTimeUtc.AddHours(9);
-            var endTime = startLocalTimeUtc.AddHours(18);
-
-            // //Get all time slot that we need within 9AM - 6 PM
             List<TimeSlot> timeSlots = new List<TimeSlot>();
-            for (var i = 9; i < 18; i++)
+            var accessToken = await AuthenticationHelper.GetGraphAccessTokenAsync();
+
+            var restURL = "https://graph.microsoft.com/beta/me/findMeetingTimes";
+            object[] attendeeArray = { new { type = "Required", emailAddress = new { address = userEmail } } };
+            var timeZone = TimeZone.CurrentTimeZone.StandardName;//"Pacific Standard Time";
+            object[] TimeConstraintArray = { new { start = new { date = localDate, time = "9:00:00", timeZone =  timeZone},
+                                                   end = new { date = localDate, time = "17:00:00", timeZone = timeZone } } };
+            var TimeConstraint = new { timeslots = TimeConstraintArray/*, ActivityDomain = "Personal" */};
+
+            var requstBody = new { attendees = attendeeArray, timeConstraint = TimeConstraint, meetingDuration = "PT1H" , MaxCandidates = "10"};
+            var requestMessage = new HttpRequestMessage(HttpMethod.Post, restURL);
+            string contentString = JsonConvert.SerializeObject(requstBody, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            requestMessage.Content = new StringContent(contentString, System.Text.Encoding.UTF8, "application/json");
+
+            using (var client = new HttpClient())
             {
-                TimeSlot timeSlot = new TimeSlot
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Prefer", "outlook.timezone=\"" + timeZone + "\"");
+                HttpResponseMessage responseMessage = await client.SendAsync(requestMessage);
+
+                if (responseMessage.IsSuccessStatusCode)
                 {
-                    Start = i,
-                    Value = string.Format("{0}:00 - {1}:00", i, i + 1)
-                };
-                timeSlots.Add(timeSlot);
-            }
+                    string stringResult = await responseMessage.Content.ReadAsStringAsync();
+                    JObject ret = JObject.Parse(stringResult);
+                    JArray array = (JArray)ret["meetingTimeSlots"];
+                    foreach (var item in array)
+                    {
+                        if (item["meetingTimeSlot"] != null)
+                        {
+                            var start = item["meetingTimeSlot"]["start"];
+                            var end = item["meetingTimeSlot"]["end"];
 
-            List<CalendarEvent> myEvents = await GetEventsByRestAPI();
-
-            // Use the ExchangeClient object to call the Calendar API.
-            // Get all events that have an end time after now.
-            var eventsResults = (from i in myEvents
-                                 where ((i.Start >= beginTime && i.Start <= endTime) || (i.End >= beginTime && i.End <= endTime) || (i.Start <= beginTime && i.End >= endTime))
-                                 select i).Take(10);
-
-            // Order the results by start time.
-            var events = eventsResults.OrderBy(e => e.Start);
-
-            // Create a CalendarEvent object for each event returned
-            // by the API.
-            foreach (var calendarEvent in events)
-            {
-                if (calendarEvent.ShowAs == "busy")
-                {
-                    var Start = calendarEvent.Start;
-                    var End = calendarEvent.End;
-
-                    //Remove all time slot which is between Start and End
-                    RemoveBusyTime(startLocalTimeUtc, timeSlots, Start, End);
+                            AddTimeSlot(timeSlots, start["time"].ToString(), end["time"].ToString());
+                        }
+                    }
                 }
             }
-
             return Json(timeSlots, JsonRequestBehavior.AllowGet);
         }
-
-        private void RemoveBusyTime(DateTime startLocalTimeUtc, List<TimeSlot> timeSlots, DateTime start, DateTime end)
+        private void AddTimeSlot(List<TimeSlot> timeSlots, string start, string end)
         {
+            var availableStart = TimeSpan.Parse(start);
+            var availableEnd = TimeSpan.Parse(end);
 
-            if (timeSlots != null && timeSlots.Count > 0)
+            TimeSlot timeSlot = new TimeSlot
             {
-                for (int i = timeSlots.Count - 1; i >= 0; i--)
-                {
-                    var beginTimeSpan = startLocalTimeUtc.AddHours(Convert.ToInt32(timeSlots[i].Value.Split('-')[0].Trim().Split(':')[0]));
-                    var endTimeSpan = startLocalTimeUtc.AddHours(Convert.ToInt32(timeSlots[i].Value.Split('-')[1].Trim().Split(':')[0]));
-
-                    if (beginTimeSpan >= start && endTimeSpan <= end)
-                    {
-                        timeSlots.RemoveAt(i);
-                    }
-                }
-            }
+                Start = availableStart.Hours > 9 ? availableStart.Hours.ToString() : string.Format("0{0}", availableStart.Hours),
+                Value = string.Format("{0} - {1}", availableStart.ToString(@"hh\:mm"), availableEnd.ToString(@"hh\:mm"))
+            };
+            timeSlots.Add(timeSlot);
         }
-
-        private async Task<List<CalendarEvent>> GetEventsByRestAPI()
-        {
-            var result = new List<CalendarEvent>();
-            var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
-            var restURL = string.Format("{0}/me/events", AADAppSettings.GraphResourceUrl);
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    var accept = "application/json";
-
-                    client.DefaultRequestHeaders.Add("Accept", accept);
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await accessToken);
-
-                    using (var response = await client.GetAsync(restURL))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var jsonresult = JObject.Parse(await response.Content.ReadAsStringAsync());
-
-                            foreach (var item in jsonresult["value"])
-                            {
-                                result.Add(new CalendarEvent
-                                {
-                                    Start = !string.IsNullOrEmpty(item["start"]["dateTime"].ToString()) ? DateTime.Parse(item["start"]["dateTime"].ToString()) : new DateTime(),
-                                    End = !string.IsNullOrEmpty(item["end"]["dateTime"].ToString()) ? DateTime.Parse(item["end"]["dateTime"].ToString()) : new DateTime(),
-                                    ShowAs = !string.IsNullOrEmpty(item["showAs"].ToString()) ? item["showAs"].ToString() : string.Empty
-                                });
-                            }
-                        }
-
-                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                            throw new System.Web.Http.HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
-                    }
-                }
-            }
-            catch (Exception el)
-            {
-                el.ToString();
-            }
-
-            return result;
-        }
-    }
-
-    public class CalendarEvent
-    {
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public string ShowAs { get; set; }
     }
 }

@@ -14,20 +14,35 @@
 
 @implementation EKNEKNGlobalInfo
 
+/*Convert UTC string to UTC date*/
 +(NSDate *)converDateFromString:(NSString *)stringdate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [formatter setLocale:[NSLocale systemLocale]];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     NSDate *ret =[formatter dateFromString:stringdate];
     return ret;
 }
-+(NSString *)converStringFromDate:(NSDate *)date
+
++(NSString *)converUTCStringFromDate:(NSDate *)date
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     [formatter setDateFormat:@"MM'/'dd'/'yy"];
     NSString *ret =[formatter stringFromDate:date];
     return ret;
 }
+
++(NSString *)converLocalStringFromDate:(NSDate *)date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.timeZone = [NSTimeZone systemTimeZone];
+    [formatter setDateFormat:@"MM'/'dd'/'yy"];
+    NSString *ret =[formatter stringFromDate:date];
+    return ret;
+}
+/*UTC string to local string*/
 +(NSString *)converStringToDateString:(NSString *)stringDate
 {
     NSString *result = @"";
@@ -35,7 +50,9 @@
     {
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"MM'/'dd'/'yyyy"];
+        
         NSDate *date = [self converDateFromString:stringDate];
+        dateFormat.timeZone = [NSTimeZone systemTimeZone];
         result = [dateFormat stringFromDate:date];
     }
     
@@ -130,5 +147,50 @@
                                                                  error:&error];
     return jsonResult;
 }
++(NSArray*)parseResponseDataToArray:(NSData *)data{
+    
+    NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"dataString:%@",dataString);
+    NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
+    NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    NSError *error ;
+    NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:bytes
+                                                               options: NSJSONReadingMutableContainers
+                                                                 error:&error];
+    if(jsonResult != nil){
+        NSArray *retArray = [jsonResult objectForKey:@"value"];
+        if(retArray != nil){
+            return retArray;
+        }
+    }
+    return nil;
+}
+
++(NSString *)getGraphBetaResourceUrl{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    return [standardUserDefaults objectForKey:@"graphBetaResourceUrl"];
+}
++(NSString *)getGraphResourceUrl{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    return [standardUserDefaults objectForKey:@"graphResourceUrl"];
+}
++(NSString *)getAuthority{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString * authority =[standardUserDefaults objectForKey:@"authority"];
+    return authority;
+}
++(NSString *)getDemoSiteServiceResourceId{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *demoSiteServiceResourceId = [standardUserDefaults objectForKey:@"demoSiteServiceResourceId"];
+    return demoSiteServiceResourceId;
+}
++(NSString *)getOutlookResourceId{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *outlookResourceId = [standardUserDefaults objectForKey:@"outlookResourceId"];
+    return outlookResourceId;
+}
+
 @end
 

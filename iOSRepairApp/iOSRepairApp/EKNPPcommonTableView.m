@@ -50,7 +50,7 @@
     [self.actiondelegate showLoading];
     
     EKNGraphService *graph = [[EKNGraphService alloc] init];
-    [graph getGroupMembers:self.groupId callback:^(NSMutableDictionary *listDict, NSError *error){
+    [graph getGroupMembers:self.groupId callback:^(NSMutableDictionary *listDict, NSString *error){
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.actiondelegate hideLoading];
             
@@ -62,7 +62,7 @@
             }
             else
             {
-                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error code %ld,error message: %@",error.code, error.localizedDescription]];
+                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error message: %@",error]];
             }
         });
     }];
@@ -84,7 +84,7 @@
             }
             else
             {
-                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error code %d,error message: %@",error.code, error.localizedDescription]];
+                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error code %ld,error message: %@",(long)error.code, error.localizedDescription]];
             }
         });
     }];
@@ -92,8 +92,8 @@
 -(void)getOneNoteService:(NSString *)incidentId{
     [self.actiondelegate showLoading];
     
-    EKNGraphService *graph = [[EKNGraphService alloc] init];
-    [graph getGroupNotes:self.groupId incidentId:incidentId  callback:^(NSMutableDictionary *listDict, NSError *error){
+    EKNOneNoteService *oneNoteService = [[EKNOneNoteService alloc] init];
+    [oneNoteService getGroupNotePages:self.groupId incidentId:incidentId  callback:^(NSMutableDictionary *listDict, NSString *error){
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.actiondelegate hideLoading];
             
@@ -105,7 +105,7 @@
             }
             else
             {
-                 [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find OneNote item. Error code %d,error message: %@",error.code, error.localizedDescription]];
+                 [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find OneNote item. Error message: %@",error]];
             }
         });
     }];
@@ -126,7 +126,7 @@
             }
             else
             {
-                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error code %ld,error message: %@",error.code, error.localizedDescription]];
+                [self.actiondelegate showErrorMessage:[NSString stringWithFormat:@"Can't find conversation item. Error code %ld,error message: %@",(long)error.code, error.localizedDescription]];
             }
         });
     }];
@@ -257,7 +257,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(self.tag == RpsConversationViewTag){
-        NSString *identifier = [NSString stringWithFormat:@"ConversationCell-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];
+        NSString *identifier = [NSString stringWithFormat:@"ConversationCell-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];
         ConversationCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             [tableView registerNib:[UINib nibWithNibName:@"ConversationCell" bundle:nil] forCellReuseIdentifier:identifier];
@@ -270,7 +270,7 @@
         return  cell;
     }
     else if(self.tag == RpsPropertyMembersViewTag){
-        NSString *identifier = [NSString stringWithFormat:@"PropertyMembersCell-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];//@"";
+        NSString *identifier = [NSString stringWithFormat:@"PropertyMembersCell-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];//@"";
         PropertyMembersCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             [tableView registerNib:[UINib nibWithNibName:@"PropertyMembersCell" bundle:nil] forCellReuseIdentifier:identifier];
@@ -283,7 +283,7 @@
         return  cell;
     }
     else if(self.tag == RpsOneNoteViewTag){
-        NSString *identifier = [NSString stringWithFormat:@"OneNoteCell-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];//@"";
+        NSString *identifier = [NSString stringWithFormat:@"OneNoteCell-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];//@"";
         OneNoteCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             [tableView registerNib:[UINib nibWithNibName:@"OneNoteCell" bundle:nil] forCellReuseIdentifier:identifier];
@@ -297,7 +297,7 @@
     }
     else if(self.tag == RpsPropertyFilesViewTag
             || self.tag == RpsRecentDocumentViewTag){
-        NSString *identifier = [NSString stringWithFormat:@"PropertyFileCell-%ld-%ld-%ld",tableView.tag,indexPath.section, indexPath.row];//@"";//@"";
+        NSString *identifier = [NSString stringWithFormat:@"PropertyFileCell-%ld-%ld-%ld",(long)tableView.tag,(long)indexPath.section, (long)indexPath.row];//@"";//@"";
         PropertyFileCell *cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (cell == nil) {
             [tableView registerNib:[UINib nibWithNibName:@"PropertyFileCell" bundle:nil] forCellReuseIdentifier:identifier];

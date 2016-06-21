@@ -25,6 +25,6 @@ namespace XamarinRepairApp
 
         public static IncidentModel SelectedIncidet;
 
-		public static MSGraph.GraphService GraphService;
+		public static MSGraph.GraphServiceClient GraphService;
     }
 }

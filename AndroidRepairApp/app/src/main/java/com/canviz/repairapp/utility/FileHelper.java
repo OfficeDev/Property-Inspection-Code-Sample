@@ -5,11 +5,11 @@ import android.graphics.BitmapFactory;
 
 import com.canviz.repairapp.Constants;
 import com.canviz.repairapp.data.GroupVideoModel;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -294,53 +294,4 @@ public class FileHelper {
         }
         return byteBuffer.toByteArray();
     }
-
-    public static JSONObject getGroupNoteBookSiteCollection(String token, String nickName) {
-        try{
-            String groupSiteUrl = Constants.SHAREPOINT_URL + "/sites/" + nickName;
-            String url = Constants.ONENOTE_RESOURCE_URL + "myOrganization/siteCollections/FromUrl(url='" + groupSiteUrl + "')";
-
-            OkHttpClient okHttpClient = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(url)
-                    .addHeader("Authorization ","Bearer " + token)
-                    .addHeader("accept", "application/json;odata=verbose")
-                    .get()
-                    .build();
-            Response response = okHttpClient.newCall(request).execute();
-            if(response.code() == 200){
-                return new JSONObject(response.body().string());
-            }
-        }catch (Throwable t){
-            return null;
-        }
-        return null;
-    }
-
-    public static String getGroupNoteBookId(String token, String collectionId, String siteId, String displayName) {
-        try {
-            String groupNoteBookName = (displayName + " Notebook").replace(" ", "%20");
-            String url = Constants.ONENOTE_RESOURCE_URL + "myOrganization/siteCollections/" + collectionId + "/sites/"+ siteId + "/notes/notebooks?$filter=name%20eq%20'"+ groupNoteBookName +"'&$top=1";
-
-            OkHttpClient okHttpClient = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(url)
-                    .addHeader("Authorization ", "Bearer " + token)
-                    .addHeader("accept", "application/json;odata=verbose")
-                    .get()
-                    .build();
-            Response response = okHttpClient.newCall(request).execute();
-            if(response.code() == 200){
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                JSONArray jsonArray = jsonObject.getJSONArray("value");
-                if(jsonArray.length() == 1){
-                    return jsonArray.getJSONObject(0).getString("id");
-                }
-            }
-        }catch (Throwable t){
-            return null;
-        }
-        return null;
-    }
-
 }

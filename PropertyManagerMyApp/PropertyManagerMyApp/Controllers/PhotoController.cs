@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Graph;
+using System;
 
 namespace SuiteLevelWebApp.Controllers
 {
@@ -15,22 +17,16 @@ namespace SuiteLevelWebApp.Controllers
         [OutputCache(Duration = 600, VaryByParam = "*")]
         public async Task<ActionResult> UserPhoto(string userId)
         {
-            var token = AuthenticationHelper.GetGraphAccessTokenAsync();
-            var uri = string.Format("{0}Users/{1}/photos/48X48/$value", AADAppSettings.GraphResourceUrl, userId);
-
-            var request = (HttpWebRequest)HttpWebRequest.Create(uri);
-
-            request.Method = "GET";
-            request.Headers.Add("Authorization", "Bearer " + await token);
-
             try
             {
-                var response = (HttpWebResponse)(await request.GetResponseAsync());
-                if (response.StatusCode == HttpStatusCode.OK)
-                    return File(response.GetResponseStream(), response.ContentType);
+                GraphServiceClient graphService = await AuthenticationHelper.GetGraphServiceAsync(AADAppSettings.GraphResourceUrl);
+                var fileStream = await graphService.Users[userId].Photo.Content.Request().GetAsync();
+                if(fileStream != null)
+                      return File(fileStream, "image/jpeg");
             }
-            catch { }
+            catch {
 
+            }
             return File(Server.MapPath("/Content/images/DefaultUserPhoto.jpg"), "image/jpeg");
         }
 
@@ -39,9 +35,9 @@ namespace SuiteLevelWebApp.Controllers
         {
             try
             {
-                var graphService = await AuthenticationHelper.GetGraphServiceAsync();
-                var thumbnails = await graphService.groups.GetById(groupId).drive.items.GetById(fileId).thumbnails.GetById("0").ExecuteAsync();
-                var uri = thumbnails.medium.url;
+                var graphService = await AuthenticationHelper.GetGraphServiceAsync(AADAppSettings.GraphResourceUrl);
+                var thumbnails = await graphService.Groups[groupId].Drive.Items[fileId].Thumbnails["0"].Request().GetAsync();
+                var uri = thumbnails.Medium.Url;
                 var token = AuthenticationHelper.GetAccessTokenAsync(AppSettings.DemoSiteServiceResourceId);
                 var request = (HttpWebRequest)HttpWebRequest.Create(uri);
 

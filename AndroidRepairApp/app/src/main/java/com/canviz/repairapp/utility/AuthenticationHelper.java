@@ -1,6 +1,7 @@
 package com.canviz.repairapp.utility;
 
 import android.app.Activity;
+import android.app.Application;
 import android.util.Log;
 
 import com.canviz.repairapp.Constants;
@@ -9,8 +10,14 @@ import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.aad.adal.AuthenticationContext;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.PromptBehavior;
+import com.microsoft.graph.authentication.IAuthenticationProvider;
+import com.microsoft.graph.core.DefaultClientConfig;
+import com.microsoft.graph.core.IClientConfig;
+import com.microsoft.graph.authentication.IAuthenticationAdapter;
+import com.microsoft.graph.authentication.MSAAuthAndroidAdapter;
+import com.microsoft.graph.extensions.GraphServiceClient;
+import com.microsoft.graph.extensions.IGraphServiceClient;
 import com.microsoft.services.onenote.fetchers.OneNoteApiClient;
-import com.microsoft.services.graph.fetchers.GraphServiceClient;
 import com.microsoft.services.orc.resolvers.DefaultDependencyResolver;
 import com.microsoft.services.orc.core.DependencyResolver;
 import com.microsoft.services.orc.log.LogLevel;
@@ -93,45 +100,6 @@ public class AuthenticationHelper {
         return new ListClient(Constants.SHAREPOINT_URL, Constants.SHAREPOINT_SITE_PATH, credentials);
     }
 
-    private static <TClient> TClient getTClientAAD(String serverUrl, final String endpointUrl, final Class<TClient> clientClass) {
-        final SettableFuture<TClient> future = SettableFuture.create();
-
-        try {
-            getAuthenticationContext().acquireToken(
-                    mActivity, serverUrl,
-                    Constants.AAD_CLIENT_ID, Constants.AAD_REDIRECT_URL, PromptBehavior.Auto,
-                    new AuthenticationCallback<AuthenticationResult>() {
-
-
-                        public void onError(Exception exc) {
-                            future.setException(exc);
-                        }
-
-
-                        public void onSuccess(AuthenticationResult result) {
-                            TClient client;
-                            try {
-                                client = clientClass.getDeclaredConstructor(String.class, DependencyResolver.class)
-                                        .newInstance(endpointUrl, getDependencyResolver(result.getAccessToken()));
-                                future.set(client);
-                            } catch (Throwable t) {
-                                onError(new Exception(t));
-                            }
-                        }
-                    });
-
-
-        } catch (Throwable t) {
-            future.setException(t);
-        }
-        try {
-            return future.get();
-        } catch (Throwable t) {
-            Log.e(TAG, t.getMessage());
-            return null;
-        }
-    }
-
     private static DependencyResolver getDependencyResolver(final String token) {
         DefaultDependencyResolver dependencyResolver = new DefaultDependencyResolver(token);
         dependencyResolver.getLogger().setEnabled(true);
@@ -139,8 +107,11 @@ public class AuthenticationHelper {
         return dependencyResolver;
     }
 
-    public static GraphServiceClient getGraphServiceClient(){
-        return getTClientAAD(Constants.GRAPH_RESOURCE_ID, Constants.GRAPH_RESOURCE_URL + Constants.AAD_CLIENT_ID, GraphServiceClient.class);
+    public static IGraphServiceClient getGraphServiceClient(Application app, String token){
+        return new GraphServiceClient
+                .Builder()
+                .fromConfig(DefaultClientConfig.createWithAuthenticationProvider(new GraphAuthenticationProvider(app, token)))
+                .buildClient();
     }
 
     public static SettableFuture<String> getGraphAccessToken(){
@@ -167,9 +138,5 @@ public class AuthenticationHelper {
             future.setException(t);
         }
         return future;
-    }
-
-    public static OneNoteApiClient getOneNoteClient(String token) {
-        return new OneNoteApiClient(Constants.ONENOTE_RESOURCE_URL, getDependencyResolver(token));
     }
 }

@@ -54,13 +54,13 @@ namespace SuiteLevelWebApp.Controllers
             }
         }
 
-        private System.Collections.Generic.List<Igroup> office365groups
+        private System.Collections.Generic.List<Microsoft.Graph.Group> office365groups
         {
             get
             {
                 if (HttpContext.Application["office365groups"] != null)
                 {
-                    return HttpContext.Application["office365groups"] as System.Collections.Generic.List<Igroup>;
+                    return HttpContext.Application["office365groups"] as System.Collections.Generic.List<Microsoft.Graph.Group>;
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace SuiteLevelWebApp.Controllers
         {
             this.TempData["demoSiteToken"] = await AuthenticationHelper.GetAccessTokenAsync(AppSettings.DemoSiteServiceResourceId);
             this.TempData["demoSiteClientContext"] = await AuthenticationHelper.GetDemoSiteClientContextAsync();
-            this.TempData["graphService"] = await AuthenticationHelper.GetGraphServiceAsync();
+            this.TempData["graphService"] = await AuthenticationHelper.GetGraphServiceAsync(AADAppSettings.GraphResourceUrl);
             this.TempData["graphServiceToken"] = await AuthenticationHelper.GetGraphAccessTokenAsync();
 
             if (demoDataProvisioningTask != null && demoDataProvisioningTask.Phase != "Completed")
@@ -109,7 +109,7 @@ namespace SuiteLevelWebApp.Controllers
         //The api is consumed only by client side to check site provisioning status
         public JsonResult GetSiteProvisioningStatus()
         {
-            HttpContext.Session.Clear();
+            //HttpContext.Session.Clear();
             if (siteProvisioningTask != null)
             {
                 return Json(new { phase = siteProvisioningTask.Phase, status = siteProvisioningTask.Task.Status.ToString(), message = DateTime.Now.ToString() + " - " + siteProvisioningTask.Message }, JsonRequestBehavior.AllowGet);
@@ -122,7 +122,7 @@ namespace SuiteLevelWebApp.Controllers
 
         public JsonResult GetDemoDataProvisioningStatus()
         {
-            HttpContext.Session.Clear();
+            //HttpContext.Session.Clear();
 
             if (demoDataProvisioningTask != null)
             {
@@ -230,7 +230,7 @@ namespace SuiteLevelWebApp.Controllers
                     try
                     {
                         var token = this.TempData.Peek("demoSiteToken") as string;
-                        var graphService = this.TempData.Peek("graphService") as GraphService;
+                        var graphService = this.TempData.Peek("graphService") as GraphServiceClient ;
 
                         using (var clientContext = this.TempData.Peek("demoSiteClientContext") as Microsoft.SharePoint.Client.ClientContext)
                         {
@@ -246,12 +246,16 @@ namespace SuiteLevelWebApp.Controllers
                             await siteProvisioning.AddGroupsAndUsersAsync(graphService, graphServiceToken);
 
                             demoDataProvisioningTask.Phase = "provision o365 groups";
-                            demoDataProvisioningTask.Message = "The Demo users and AAD groups have been provisioned successfully.  Proceeding to provision Office 365 groups. Please be patient and do not refresh the page during this process.";
+                            demoDataProvisioningTask.Message = "The demo AAD users and groups have been provisioned successfully.  Proceeding to provision Office 365 Groups. Please be patient and do not refresh the page during this process.";
                             await siteProvisioning.CreateUnifiedGroupsForPropertiesAsync(graphService, graphServiceToken);
+
+                            demoDataProvisioningTask.Phase = "provision demo excel";
+                            demoDataProvisioningTask.Message = "The Office 365 Groups have been provisioned successfully.  Proceeding to provision Excel Workbooks. Please be patient and do not refresh the page during this process.";
+                            await siteProvisioning.UpdateExcelGroupsForPropertiesAsync(graphService, graphServiceToken);
 
                             office365groups = await GetO365DemoGroups(graphService);
                             demoDataProvisioningTask.Phase = "Completed";
-                            demoDataProvisioningTask.Message = "The AAD Groups, AAD Users, and demo data have been created successfully.  The initial password for all the users is: TempP@ssw0rd!";
+                            demoDataProvisioningTask.Message = "The AAD Users and Groups, Office 365 Groups, and all demo data have been successfully created.  The initial password for all the users is: TempP@ssw0rd!";
                         }
                     }
                     catch (Exception ex)
@@ -263,22 +267,22 @@ namespace SuiteLevelWebApp.Controllers
             }
         }
 
-        private async Task<bool> VerifyNotebooks(GraphService graphService)
-        {
-            foreach (var group in office365groups)
-            {
-                try
-                {
-                    await OneNoteService.GetNoteBookAsync(graphService.groups.GetById(group.id), group.displayName + " Notebook");
-                }
-                catch
-                {
-                    return false;
-                }
-            }
+        //private async Task<bool> VerifyNotebooks(GraphService graphService)
+        //{
+        //    foreach (var group in office365groups)
+        //    {
+        //        try
+        //        {
+        //            await OneNoteService.GetNoteBookByNameAsync(graphService.groups.GetById(group.id), group.displayName + " Notebook");
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         public JsonResult GetO365GroupLinks()
         {
@@ -286,18 +290,15 @@ namespace SuiteLevelWebApp.Controllers
 
             foreach (var group in office365groups)
             {
-                groupLinks.Add(new { link = string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=notebook", AppSettings.DemoSiteCollectionUrl, group.id) });
+                groupLinks.Add(new { link = string.Format("{0}/_layouts/groupstatus.aspx?id={1}&target=notebook", AppSettings.DemoSiteCollectionUrl, group.Id) });
             }
 
             return Json(groupLinks.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<System.Collections.Generic.List<Igroup>> GetO365DemoGroups(GraphService graphService)
+        public async Task<System.Collections.Generic.List<Microsoft.Graph.Group>> GetO365DemoGroups(GraphServiceClient graphService)
         {
-            var groups = await (await graphService.groups.ExecuteAsync()).GetAllAsnyc();
-            return groups
-                .Where(i => i.description == "Property Group")
-                .ToList();
+            return (await graphService.Groups.Request().GetAllAsnyc()).Where(x => x.Description == "Property Group").ToList();
         }
     }
 }

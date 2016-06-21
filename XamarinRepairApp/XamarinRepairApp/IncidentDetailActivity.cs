@@ -45,7 +45,6 @@ namespace XamarinRepairApp
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
             SetContentView(Resource.Layout.IncidentDetail);
 
             CurrentIncident = App.SelectedIncidet;
@@ -334,7 +333,7 @@ namespace XamarinRepairApp
             var recipient = CurrentIncident.GetProperty().GetEmail();
             var dispatcherRecipient = Constants.DISPATCHEREMAIL;
             var subject = string.Format("Repair Report - {0} - {1:MM/dd/yyyy}", CurrentIncident.GetProperty().GetTitle(), DateTime.Now);
-            var body = string.Format("The incident found during a recent inspection on you property has been repaired. Photographs taken during the inspection and after the repair are attached to this email." +
+            var bodyContent = string.Format("The incident found during a recent inspection on you property has been repaired. Photographs taken during the inspection and after the repair are attached to this email." +
                        "<br/>" +
                        "<br/><b>Property Name:</b> {0}" +
                        "<br/><b>Property Address:</b> {1}" +
@@ -364,42 +363,18 @@ namespace XamarinRepairApp
                            CurrentIncident.GetId(),
                            CurrentIncident.GetProperty().GetId()
                        );
-
-            var message = @"{
-                'Message': {
-                    'Subject': '" + subject + @"',
-                    'Body': {
-                        'ContentType': 'HTML',
-                        'Content': """ + body + @"""
-                    },
-                    'ToRecipients': [{
-                        'EmailAddress': {
-                            'Address': '" + dispatcherRecipient + @"'
-                        }
-                    }],
-                    'CcRecipients': [{
-                        'EmailAddress': {
-                            'Address': '" + recipient + @"'
-                        }
-                    }]
-                },
-                'SaveToSentItems': 'true'
-             }";
-
-            string requestUrl = string.Format("{0}me/Microsoft.Graph.sendMail", Constants.GraphResourceUrl);
-
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
-            request.Method = "POST";
+            var message = new Microsoft.Graph.Message {
+                Subject = subject,
+                Body = new ItemBody { ContentType = BodyType.Html, Content = bodyContent },
+                ToRecipients = new Recipient[] { new Recipient { EmailAddress = new EmailAddress { Address = dispatcherRecipient } } },
+                CcRecipients = new Recipient[] { new Recipient { EmailAddress = new EmailAddress { Address = recipient } } }
+            };
+            var requestBuilder = App.GraphService.Me.SendMail(message, true);
+            var request = requestBuilder.Request();
             request.ContentType = "application/json";
-            request.Headers.Add("Authorization", "Bearer " + graphToken);
-            byte[] btBodys = Encoding.UTF8.GetBytes(message);
-            request.GetRequestStream().Write(btBodys, 0, btBodys.Length);
-
+            request.Headers.Add(new HeaderOption("Authorization", "Bearer " + graphToken));
             process = ProgressDialog.Show(this, "Processing", "Sending email...");
-
-            using (HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse)
-            {}
-
+            await request.PostAsync();
             process.Dismiss();
         }
 
@@ -416,7 +391,7 @@ namespace XamarinRepairApp
 
             foreach (var task in tasks)
             {
-                var requestUrl = string.Format("{0}Tasks/{1}", Constants.GraphResourceUrl, task.TaskID);
+                var requestUrl = string.Format("{0}Tasks/{1}", Constants.GraphBetaResourceUrl, task.TaskID);
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
                 request.Method = "PATCH";
                 request.Accept = "application/json";
@@ -443,7 +418,7 @@ namespace XamarinRepairApp
 
             if (await bucketId == string.Empty) return results;
 
-            var requestUrl = string.Format("{0}buckets/{1}/Tasks", Constants.GraphResourceUrl, await bucketId);
+            var requestUrl = string.Format("{0}buckets/{1}/Tasks", Constants.GraphBetaResourceUrl, await bucketId);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
             request.Method = "GET";
             request.Accept = "application/json";
@@ -474,7 +449,7 @@ namespace XamarinRepairApp
 
         async Task<string> GetPlanId(string graphToken, string groupId)
         {
-            var requestUrl = string.Format("{0}groups/{1}/plans", Constants.GraphResourceUrl, groupId);
+            var requestUrl = string.Format("{0}groups/{1}/plans", Constants.GraphBetaResourceUrl, groupId);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
             request.Method = "GET";
             request.Accept = "application/json";
@@ -498,7 +473,7 @@ namespace XamarinRepairApp
 
         async Task<string> GetBucketId(string graphToken, string planId, string BucketName)
         {
-            var requestUrl = string.Format("{0}plans/{1}/Buckets", Constants.GraphResourceUrl, planId);
+            var requestUrl = string.Format("{0}plans/{1}/Buckets", Constants.GraphBetaResourceUrl, planId);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUrl);
             request.Method = "GET";
             request.Accept = "application/json";

@@ -105,7 +105,7 @@
     {
         settingsMissing = 1;
         
-        [standardUserDefaults setValue:@"https://TENANCY.sharepoint.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"]; 
+        [standardUserDefaults setValue:@"https://TENANCY.sharepoint.com/sites/SuiteLevelAppDemo" forKey:@"demoSiteCollectionUrl"];
 
         [standardUserDefaults synchronize];
     }
@@ -127,15 +127,7 @@
 		
 		[standardUserDefaults synchronize];
     }
-    
-    //Check to see if the graphResourceUrl setting exists
-    if (nil == [standardUserDefaults objectForKey:@"graphResourceUrl"])
-    {
-        settingsMissing = 1;
-        [standardUserDefaults setValue:@"https://graph.microsoft.com/beta/" forKey:@"graphResourceUrl"];
-        
-        [standardUserDefaults synchronize];
-    }
+
     //Check to see if the videoPortalEndpointUri setting exists
     if (nil == [standardUserDefaults objectForKey:@"videoPortalEndpointUri"])
     {
@@ -287,20 +279,5 @@
         });
     }];
 
-}
-//infact we can get the user id from the tokenCacheStoreItem
-- (void)getUsers:(ADTokenCacheStoreItem* )cach
-{
-    ///
-}
--(void)signOut{
-    ADAuthenticationError *error;
-    ADAuthenticationContext* context = [ADAuthenticationContext authenticationContextWithAuthority:self.authority error:&error];
-    if (!context)
-    {
-        //here need
-        return;
-    }
-    [[context tokenCacheStore] removeAllWithError:&error];
 }
 @end

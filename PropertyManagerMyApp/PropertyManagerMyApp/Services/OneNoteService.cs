@@ -13,47 +13,133 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Linq;
+using Newtonsoft.Json;
+using GraphModelsExtension;
 
 namespace SuiteLevelWebApp.Services
 {
     public class OneNoteService
     {
-        public static async Task<Inotebook> GetNoteBookAsync(IgroupFetcher groupFetcher, string name)
+        public static async Task<Notebook> GetNoteBookByURLAsync(string sectionUrl)
         {
-            return await groupFetcher.notes.notebooks.Where(i => i.name == name).ExecuteSingleAsync();
-        }
-
-        public static async Task CreateNoteBookAsync(IgroupFetcher groupFetcher, string name)
-        {
-            var note = new notebook
+            var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
+            try
             {
-                name = name
-            };
-
-            await groupFetcher.notes.notebooks.AddnotebookAsync(note);
-        }
-
-        public static async Task<Isection> GetOrCreateSectionIdAsync(InotebookFetcher notebookFetcher, string name)
-        {
-            Isection section = null;
-
-            section = await notebookFetcher.sections.Where(i => i.name == name).ExecuteSingleAsync();
-
-            if (section == null)
-            {
-                section = new section
+                using (var client = new HttpClient())
                 {
-                    name = name
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await accessToken);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var responseMessage = await client.GetAsync(sectionUrl);
+
+                    if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
+                        throw new Exception();
+
+                    var payload = await responseMessage.Content.ReadAsStringAsync();
+
+                    var jobject = JObject.Parse(payload);
+
+                    if (jobject["value"].Children().Count() > 0)
+                    {
+                        JToken jnotebook = jobject["value"][0];
+                        return new Notebook
+                        {
+                            id = jnotebook["id"].ToString(),
+                            name = jnotebook["name"].ToString(),
+                            sectionsUrl = jnotebook["sectionsUrl"].ToString(),
+                            sectionGroupsUrl = jnotebook["sectionGroupsUrl"].ToString(),
+                            oneNoteWebUrl = jnotebook["links"]["oneNoteWebUrl"]["href"].ToString(),
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public static async Task<Notebook> GetNoteBookByNameAsync(Group group, string name)
+        {
+            return await GetNoteBookByURLAsync(string.Format("{0}groups/{1}/notes/notebooks?$filter=name eq '{2}'", AADAppSettings.GraphBetaResourceUrl, group.Id, name));
+        }
+        public static async Task<Notebook> GetNoteBookByIdAsync(Group group, string Id)
+        {
+            return await GetNoteBookByURLAsync(string.Format("{0}groups/{1}/notes/notebooks?$filter=id eq '{2}'", AADAppSettings.GraphBetaResourceUrl, group.Id, Id));
+        }
+
+        public static async Task<Section> GetSectionByURLAsync(string sectionsUrl)
+        {
+            Section section = null;
+            var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await accessToken);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var responseMessage = await client.GetAsync(sectionsUrl);
+
+                if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
+                    throw new Exception();
+
+                var payload = await responseMessage.Content.ReadAsStringAsync();
+
+                var jobject = JObject.Parse(payload);
+
+                if (jobject["value"].Children().Count() > 0)
+                {
+                    section =  new Section
+                    {
+                        id = jobject["value"][0]["id"].ToString(),
+                        name = jobject["value"][0]["name"].ToString(),
+                        pagesUrl = jobject["value"][0]["pagesUrl"].ToString()
+                    };
+                }
+            }
+            return section;
+        }
+        public static async Task<Section> GetOrCreateSectionIdAsync(string sectionsUrl, string sectionName)
+        {
+            Section section = await GetSectionByURLAsync(string.Format("{0}?$filter=name eq '{1}'", sectionsUrl, sectionName));
+            if (section != null)
+            {
+                return section;
+            }
+            else
+            {
+                //create section
+                var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
+                section = new Section
+                {
+                    name = sectionName
                 };
 
-                await notebookFetcher.sections.AddsectionAsync(section);
+                var requestMessage = new HttpRequestMessage(HttpMethod.Post, sectionsUrl);
+                requestMessage.Content = new StringContent(JsonConvert.SerializeObject(section), System.Text.Encoding.UTF8, "application/json");
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await accessToken);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var responseMessage = await client.SendAsync(requestMessage);
+
+                    
+
+                    if (responseMessage.StatusCode != System.Net.HttpStatusCode.Created)
+                        throw new Exception();
+
+                    var payload = await responseMessage.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(payload);
+                    section.id = jobject["id"].ToString();
+                    section.pagesUrl = jobject["pagesUrl"].ToString();
+                }
             }
-
-
             return section;
         }
 
-        public async static Task<string> CreatePageForIncidentAsync(GraphService graphService, string siteRootDirectory, Igroup group, Isection section, Incident incident, IEnumerable<FileContent> inspectionPhotos, IEnumerable<Video> incidentVideos)
+        public async static Task<string> CreatePageForIncidentAsync(GraphServiceClient graphService, string siteRootDirectory, Group group, Section section, Incident incident, IEnumerable<FileContent> inspectionPhotos, IEnumerable<Models.Video> incidentVideos)
         {
             var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
             var templateFile = Path.Combine(siteRootDirectory, @"Templates\IncidentOneNotePage.cshtml");
@@ -74,7 +160,7 @@ namespace SuiteLevelWebApp.Services
                 content.Add(itemContent, image.Id);
             }
 
-            var pageEndPoint = string.Format("{0}groups/{1}/notes/sections/{2}/pages", AADAppSettings.GraphResourceUrl, group.id, section.id);
+            var pageEndPoint = string.Format("{0}groups/{1}/notes/sections/{2}/pages", AADAppSettings.GraphBetaResourceUrl, group.Id, section.id);
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, pageEndPoint);
             requestMessage.Content = content;
 
@@ -93,16 +179,50 @@ namespace SuiteLevelWebApp.Services
             }
         }
 
-        public static async Task<Ipage[]> GetOneNotePagesAsync(GraphService graphService, Igroup group)
+        public static async Task<HyperLink[]> GetOneNotePagesAsync(GraphServiceClient graphService, Group group)
         {
-            var section = await graphService.groups.GetById(group.id).notes.sections.Where(i => i.name == group.displayName).ExecuteSingleAsync();
+            List<HyperLink> hyperLinks = null;
 
-            if (section == null)
-                return new Ipage[0];
+            Section section = await GetSectionByURLAsync(string.Format("{0}groups/{1}/notes/sections?$filter=name eq '{2}'", AADAppSettings.GraphBetaResourceUrl, group.Id, group.DisplayName));
+            if(section!= null)
+            {
+                var accessToken = AuthenticationHelper.GetGraphAccessTokenAsync();
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await accessToken);
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        var responseMessage = await client.GetAsync(section.pagesUrl);
 
-            var pages = await (await graphService.groups.GetById(group.id).notes.sections.GetById(section.id).pages.ExecuteAsync()).GetAllAsnyc();
+                        if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
+                            throw new Exception();
 
-            return pages.OfType<Ipage>().ToArray();
+                        var payload = await responseMessage.Content.ReadAsStringAsync();
+
+                        var jobject = JObject.Parse(payload);
+
+                        if (jobject["value"].Children().Count() > 0)
+                        {
+                            hyperLinks = new List<HyperLink>();
+                            foreach (var item in jobject["value"].Children())
+                            {
+                                HyperLink hy = new HyperLink {
+                                    Title = item["title"].ToString(),
+                                    WebUrl = item["links"]["oneNoteWebUrl"]["href"].ToString()
+                                };
+                                hyperLinks.Add(hy);
+
+                            }
+                        }
+                    }
+
+                }
+                catch
+                {
+                }
+            }
+            return hyperLinks == null ? new HyperLink[0] : hyperLinks.ToArray();
         }
     }
 }

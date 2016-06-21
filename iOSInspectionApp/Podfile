@@ -3,7 +3,6 @@ platform :ios, '8.0'
 
 xcodeproj 'iOSInspectionApp'
 
-pod 'ADALiOS', '=1.2.4'
 pod 'orc'
-pod 'MSGraph-SDK-iOS'
-pod 'MSAADGraph-SDK-iOS'
+pod 'ADALiOS'
+pod 'MSGraphSDK'

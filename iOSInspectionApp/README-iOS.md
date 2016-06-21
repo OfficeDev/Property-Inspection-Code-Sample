@@ -29,14 +29,14 @@ Create Azure Active Directory App for the iPad Apps
 12. Expand the update your code section and **copy** the Redirect URI and Client ID values and **paste** them into a text file.  You will use these values when you configure the iPad app on your iPad.
 13. Click **CONFIGURE**
 14.	In the permissions to other applications section, click the **Add application** button.
-15.	Click the + button next to **Microsoft Office 365 SharePoint** and **Microsoft Graph API**.
+15.	Click the + button next to **Microsoft Office 365 SharePoint** and **Microsoft Graph**.
 16.	Click the **Checkmark button**
 17.	Open the **Delegated Permissions dropdown list** for the Microsoft Graph API item you just added
     Select the following permissions:
 	- Read and write all groups
 	- Read and write all users' full profiles
 	- Send mail as a user
-	- Read and write user notebooks (preview)
+	- Read and write notebooks that the user can access (preview)
 18.	Open the **Delegated Permissions dropdown list** for the Microsoft Office 365 SharePoint item you just added
     Select the following permissions:
     - Have full control of all site collections
@@ -51,7 +51,7 @@ In the iOSInspectionApp and iOSRepairApp folder you will find runnable sample co
 
 1. On a Mac machine, clone the GitHub repository.  
 
-The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.  To use Cocoapods to add the SDKs to the workspaces perform these steps for both the Inspection and Repair iOS Apps.
+The samples utilize Cocoapods to configure Orc, ADALiOS and MSGraphSDK.  To use Cocoapods to add the SDKs to the workspaces perform these steps for both the Inspection and Repair iOS Apps.
 
 1. Open Terminal.
 2. Navigate to inside the project's folder.
@@ -60,7 +60,7 @@ The samples utilize Cocoapods to configure both the Office365 SDKs and ADAL.  To
 
 See the screenshot of these commands being run in the terminal below for reference.
 
-![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/pod%20install.png)
+![](https://raw.githubusercontent.com/OfficeDev/Property-Inspection-Code-Sample/master/Documents/inspection%20pod%20install.png)
 
 > For more info on Cocoapods setup see the Office 365 SDK for iOS [wiki](https://github.com/OfficeDev/Office-365-SDK-for-iOS/wiki/Cocoapods-Setup) and [their site](http://cocoapods.org).
 
@@ -104,6 +104,7 @@ These are the values that must be configured.
 - **demoSiteServiceResourceId** Url for the root Site Collection in the Office 365 Tenancy. Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteServiceResourceId app setting.
 - **demoSiteCollectionUrl** Url for the Site Collection created by the Property Manager web app.  Use the same value you configured in the web.config for the Property Manager web app for the DemoSiteCollectionUrl app setting.
 - **dispatcherEmail** Email address for the dispatcher account you created.
+- **VideoPortalEndpointUri** Api Endpoint for the Video Portal which comes with your Office 365 tenancy.
 
 Enable Keychain Sharing
 -----------------------

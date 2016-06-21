@@ -4,10 +4,15 @@ import android.graphics.Bitmap;
 
 public class UserModel {
 
+    private String Id;
     private String Name;
     private String Mail;
     private Bitmap Image;
     private Boolean IsChanged;
+
+    public String getId() { return Id; }
+
+    public void setId(String id) { Id = id; }
 
     public void setImage(Bitmap bitmap){
         Image = bitmap;
@@ -25,9 +30,7 @@ public class UserModel {
         Name = name;
     }
 
-    public String getMail() {
-        return Mail;
-    }
+    public String getMail() { return Mail; }
 
     public void setMail(String mail) {
         Mail = mail;
