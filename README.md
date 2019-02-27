@@ -1,3 +1,24 @@
+---
+topic: sample
+products:
+- Office 365
+- Excel
+- Planner
+- Microsoft Teams
+- Outlook
+- OneDrive
+- SharePoint
+- OneNote
+languages:
+- JavaScript
+extensions:
+  contentType: samples
+  technologies:
+  - Add-ins
+  createdDate: 9/26/2014 4:59:57 PM
+  scenarios:
+  - Mobile
+---
 # Property Management Code Sample
 
 **Table of Contents**
