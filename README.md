@@ -1,25 +1,7 @@
----
-topic: sample
-products:
-- Office 365
-- Excel
-- Planner
-- Microsoft Teams
-- Outlook
-- OneDrive
-- SharePoint
-- OneNote
-languages:
-- JavaScript
-extensions:
-  contentType: samples
-  technologies:
-  - Add-ins
-  createdDate: 9/26/2014 4:59:57 PM
-  scenarios:
-  - Mobile
----
-# Property Management Code Sample
+# [ARCHIVED] Property Management Code Sample
+
+**Note:** This repo is archived and no longer actively maintained. Security vulnerabilities may exist in the project, or its dependencies. If you plan to reuse or run any code from this repo, be sure to perform appropriate security checks on the code or dependencies first. Do not use this project as the starting point of a production Office Add-in. Always start your production code by using the Office/SharePoint development workload in Visual Studio, or the [Yeoman generator for Office Add-ins](https://github.com/OfficeDev/generator-office), and follow security best practices as you develop the add-in.
+
 
 **Table of Contents**
 
